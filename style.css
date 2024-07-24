@@ -83,14 +83,15 @@ iframe {
     height: 0;
     overflow: hidden;
     max-width: 80%;
+    margin: 0 auto; /* Center the container */
     background: #000;
 }
 .video-container iframe {
     position: absolute;
     top: 0;
     left: 0;
-    width: 80%;
-    height: 80%;
+    width: 100%; /* Fill the container */
+    height: 100%; /* Fill the container */
 }
 
 ul {
