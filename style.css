@@ -83,7 +83,7 @@ iframe {
     height: 0;
     overflow: hidden;
     max-width: 100%;
-    width: 200px; /* 動画の幅を小さく設定 */
+    width: 300px; /* 動画の幅を小さく設定 */
     background: #000;
     margin: 10px auto; /* 中央揃えと余白を追加 */
     border-radius: 8px; /* 角を丸くする */
