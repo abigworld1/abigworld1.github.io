@@ -47,7 +47,7 @@ footer {
     width: 100%;
 }
 
-h1, h2 {
+h1, h2, h3 {
     font-family: 'Georgia', serif;
 }
 
@@ -58,6 +58,11 @@ h1 {
 h2 {
     font-size: 2em;
     color: #8b4513;
+}
+
+h3 {
+    font-size: 1.5em;
+    color: #000000;
 }
 
 section {
