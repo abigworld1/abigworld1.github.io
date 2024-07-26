@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>a big world</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>強化学習</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="study.html">勉強</a></li>
+                <li><a href="music.html">音楽</a></li>
+                <li><a href="sports.html">スポーツ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>強化学習とは？</h2>
+            <ul>
+                <li>実用英語技能検定　準1級　合格 [2021年度 第3回]</li>
+                <li>普通自動車第一種運転免許　取得 [令和4年3月23日]</li>
+                <li>ITパスポート試験　合格 [令和4年10月17日]</li>
+                <li>HSK　4級 (汉语水平考试　四级)　合格 [2022年9月17日]</li>
+                <li>JDLA Deep Learning for GENERAL (G検定)　合格 [2023#4]</li>
+                <li>基本情報技術者試験　合格 [令和5年10月16日]</li>
+                <li>TOEFL ITPテスト　557点取得 [2023年4月15日]</li>
+                <li>TOEIC公開テスト　795点取得 [2024年3月17日午前]</li>
+                <li>応用情報技術者試験　合格 [令和6年7月4日]</li>
+            </ul>
+        </section>
+        <section>
+            <h2>マルコフ決定過程とは？</h2>
+            <ul>
+                <li><a href="reinforcement_learning.html">強化学習</a></li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
