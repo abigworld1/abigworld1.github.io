@@ -109,6 +109,51 @@
                 <li>また、その最適方策は「決定論的方策」である。</li>
                 <li>最適方策における状態価値関数は、<b>最適状態価値関数</b>と呼ばれ、\(v_*\)で表す。</li>
             </ul>
+            <h3>ベルマン方程式</h3>
+            <ul>
+                <li>収益は\(G_t=R_t+(\gamma)R_{t+1}+\gamma^2R_{t+2}+...\)として定義される。</li>
+                <li>この式を変形すると、\(G_t=R_t+\gamma(R_{t+1}+(\gamma)R_{t+2}+...)=R_t+(\gamma)G_{t+1}\)となる。</li>
+                <li>状態価値関数は次のように定義される。\(v_{\pi}(s)=\mathbb{E_{\pi}}[G_t|S_t=s]\)</li>
+                <li>したがって、\(v_{\pi}(s)=\mathbb{E_{\pi}}[R_t+(\gamma)G_{t+1}|S_t=s]=\mathbb{E_{\pi}}[R_t|S_t=s]+\gamma\mathbb{E_{\pi}}[G_{t+1}|S_t=s]\)となる。</li>
+                <li>今、状態が\(s\)であり、エージェントが方策\(\pi(a|s)\)に従って行動し、状態遷移確率\(p(s'|s, a)\)に従って新しい状態\(s'\)に移行する場合を考える。</li>
+                <li>報酬関数が\(r(s, a, s')\)のとき、\(\mathbb{E_{\pi}}[R_t|S_t=s]=\sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)r(s, a, s')\)となる。</li>
+                <li>また、\(\mathbb{E_{\pi}}[G_{t+1}|S_t=s]=\sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)\mathbb{E_{\pi}}[G_{t+1}|S_{t+1}=s']=\sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)v_{\pi}(s')\)である。</li>
+                <li>以上より、\(v_{\pi}(s)=\mathbb{E_{\pi}}[R_t|S_t=s]+\gamma\mathbb{E_{\pi}}[G_{t+1}|S_t=s]=\sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)r(s, a, s')+\gamma\sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)v_{\pi}(s')=\sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)\{r(s, a, s')+(\gamma)v_{\pi}(s')\}\)</li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
         </section>
     </main>
 </body>
