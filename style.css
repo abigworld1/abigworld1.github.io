@@ -99,6 +99,21 @@ ul {
     padding-left: 20px;
 }
 
-div.horizontal-scroll{
-    overflow-x: auto;
+div.scroll{
+overflow-x: auto;
+overflow-y: hidden;
+}
+
+.scroll::-webkit-scrollbar{
+width: 15px;
+}
+.scroll::-webkit-scrollbar-thumb{
+background: #8b4513;
+border-radius: 10px;
+}
+.scroll::-webkit-scrollbar-track-piece:start{
+background: #cd853f;
+}
+.scroll::-webkit-scrollbar-track-piece:end{
+background: #cd853f;
 }
