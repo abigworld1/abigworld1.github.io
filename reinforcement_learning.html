@@ -220,7 +220,7 @@
                 <li>この式に最適方策\(\pi_{*}\)を代入すると、
                     <div class="horizontal-scroll">
                     \begin{align}
-                        q_{\pi}(s, a) 
+                        q_{*}(s, a) 
                         &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi_{*}(a'|s')q_{*}(s', a')\}
                     \end{align}
                     </div>
@@ -228,7 +228,7 @@
                 <li>状態価値関数のベルマン最適方程式と同様に展開すると、以下の式が得られる。
                     <div class="horizontal-scroll">
                     \begin{align}
-                        q_{\pi}(s, a) 
+                        q_{*}(s, a) 
                         &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\max_{a'}q_{*}(s', a')\}
                     \end{align}
                     </div>
