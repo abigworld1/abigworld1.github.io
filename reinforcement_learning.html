@@ -114,16 +114,39 @@
                 <li>収益は\(G_t=R_t+(\gamma)R_{t+1}+\gamma^2R_{t+2}+...\)として定義される。</li>
                 <li>この式を変形すると、
                     \begin{align}
-                    G_t=R_t+\gamma(R_{t+1}+(\gamma)R_{t+2}+...) \\
-                    &=R_t+(\gamma)G_{t+1}
+                    G_t &= R_t+\gamma(R_{t+1}+(\gamma)R_{t+2}+...) \\
+                    &= R_t+(\gamma)G_{t+1}
                     \end{align}
                     となる。</li>
                 <li>状態価値関数は次のように定義される。\(v_{\pi}(s)=\mathbb{E_{\pi}}[G_t|S_t=s]\)</li>
-                <li>したがって、\(v_{\pi}(s)=\mathbb{E_{\pi}}[R_t+(\gamma)G_{t+1}|S_t=s]=\mathbb{E_{\pi}}[R_t|S_t=s]+\gamma\mathbb{E_{\pi}}[G_{t+1}|S_t=s]\)となる。</li>
+                <li>したがって、
+                    \begin{align}
+                    v_{\pi}(s) &= \mathbb{E_{\pi}}[R_t+(\gamma)G_{t+1}|S_t=s] \\
+                    &= \mathbb{E_{\pi}}[R_t|S_t=s]+\gamma\mathbb{E_{\pi}}[G_{t+1}|S_t=s]
+                    \end{align}
+                    となる。</li>
                 <li>今、状態が\(s\)であり、エージェントが方策\(\pi(a|s)\)に従って行動し、状態遷移確率\(p(s'|s, a)\)に従って新しい状態\(s'\)に移行する場合を考える。</li>
-                <li>報酬関数が\(r(s, a, s')\)のとき、\(\mathbb{E_{\pi}}[R_t|S_t=s]=\sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)r(s, a, s')\)となる。</li>
-                <li>また、\(\mathbb{E}_{\pi}[G_{t+1}|S_t=s] = \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\mathbb{E}_{\pi}[G_{t+1}|S_{t+1}=s'] \\ = \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)v_{\pi}(s')\)である。</li>
-                <li>以上より、\(v_{\pi}(s) = \mathbb{E}_{\pi}[R_t|S_t=s] + \gamma\mathbb{E}_{\pi}[G_{t+1}|S_t=s] \\ = \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)r(s,a,s') + \gamma\sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)v_{\pi}(s') \\ = \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\}\)</li>
+                <li>報酬関数が\(r(s, a, s')\)のとき、
+                    \begin{align}
+                    \mathbb{E_{\pi}}[R_t|S_t=s] \\
+                    = \sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)r(s, a, s')
+                    \end{align}
+                    となる。</li>
+                <li>また、
+                    \begin{align}
+                    \mathbb{E}_{\pi}[G_{t+1}|S_t=s] \\
+                    &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\mathbb{E}_{\pi}[G_{t+1}|S_{t+1}=s'] \\ 
+                    &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)v_{\pi}(s')
+                    \end{align}
+                    である。</li>
+                <li>以上より、
+                    \begin{align}
+                    v_{\pi}(s) \\
+                    &= \mathbb{E}_{\pi}[R_t|S_t=s] + \gamma\mathbb{E}_{\pi}[G_{t+1}|S_t=s] \\ 
+                    &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)r(s,a,s') + \gamma\sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)v_{\pi}(s') \\ 
+                    &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\}
+                    \end{align}
+                    である。</li>
                 <li>この式が<b>ベルマン方程式</b>である。</li>
                 <li>ベルマン方程式は、「状態\(s\)の価値関数」と「その次に取り得る状態\(s'\)の価値関数」との関係性を表した式である。</li>
                 <li>このベルマン方程式は、すべての状態\(s\)とすべての方策\(\pi\)について成り立つ。</li>
@@ -137,7 +160,7 @@
                 <li>収益の期待値に関して、\(v_{\pi}(s)=\sum_{a}\pi(a|s)q_{\pi}(s, a)\)が成り立つ。</li>
                 <li>Q関数は
                     \begin{align}
-                    q_{\pi}(s, a)=\mathbb{E_{\pi}}[G_t|S_t=s, A_t=a] \\
+                    q_{\pi}(s, a) &= \mathbb{E_{\pi}}[G_t|S_t=s, A_t=a] \\
                     &= \mathbb{E_{\pi}}[R_t+(gamma)G_{t+1}|S_t=s, A_t=a] \\
                     &= \sum_{s'}p(s'|s, a)r(s, a, s')+gamma\sum_{s'}p(s'|s, a)\mathbb{E}_{\pi}[G_{t+1}|S_{t+1}=s']
                     &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+(\gamma)v_{\pi}(s')\}
