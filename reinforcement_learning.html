@@ -135,7 +135,15 @@
                 <li>\(q_{\pi}(s, a)\)の行動\(a\)は方策\(\pi\)とは関係なく、自由に決めることができる。</li>
                 <li>仮にQ関数の行動\(a\)を方策\(\pi\)に従って選ぶとすると、Q関数と状態価値関数は同じになる。</li>
                 <li>収益の期待値に関して、\(v_{\pi}(s)=\sum_{a}\pi(a|s)q_{\pi}(s, a)\)が成り立つ。</li>
-                <li>Q関数は\(q_{\pi}(s, a) = \mathbb{E_{\pi}}[G_t|S_t=s, A_t=a]\)</li>
+                <li>Q関数は
+                    \begin{align}
+                    \(q_{\pi}(s, a)=\mathbb{E_{\pi}}[G_t|S_t=s, A_t=a] \\
+                    &= \mathbb{E_{\pi}}[R_t+(gamma)G_{t+1}|S_t=s, A_t=a] \\
+                    &= \sum_{s'}p(s'|s, a)r(s, a, s')+gamma\sum_{s'}p(s'|s, a)\mathbb{E}_{\pi}[G_{t+1}|S_{t+1}=s']
+                    &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+(\gamma)v_{\pi}(s')\}
+                    &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+(\gamma)\sum_{a'}\pi(a'|s')q_{\pi}(s', a')\}\)
+                    \end{align}
+                    と展開できる。</li>
                 <li></li>
                 <li></li>
                 <li></li>
