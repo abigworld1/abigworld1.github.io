@@ -127,25 +127,30 @@
                     となる。</li>
                 <li>今、状態が\(s\)であり、エージェントが方策\(\pi(a|s)\)に従って行動し、状態遷移確率\(p(s'|s, a)\)に従って新しい状態\(s'\)に移行する場合を考える。</li>
                 <li>報酬関数が\(r(s, a, s')\)のとき、
+                    <div class="horizontal-scroll">
                     \begin{align}
-                    \mathbb{E_{\pi}}[R_t|S_t=s] \\
-                    &= \sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)r(s, a, s')
+                    \mathbb{E_{\pi}}[R_t|S_t=s] &= \sum_{a}\sum_{s'}\pi(a|s)(p(s'|s, a)r(s, a, s')
                     \end{align}
+                    </div>
                     となる。</li>
                 <li>また、
+                    <div class="horizontal-scroll">
                     \begin{align}
-                    \mathbb{E}_{\pi}[G_{t+1}|S_t=s] \\
+                    \mathbb{E}_{\pi}[G_{t+1}|S_t=s] 
                     &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\mathbb{E}_{\pi}[G_{t+1}|S_{t+1}=s'] \\ 
                     &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)v_{\pi}(s')
                     \end{align}
+                    </div>
                     である。</li>
                 <li>以上より、
+                    <div class="horizontal-scroll">
                     \begin{align}
-                    v_{\pi}(s) \\
+                    v_{\pi}(s) 
                     &= \mathbb{E}_{\pi}[R_t|S_t=s] + \gamma\mathbb{E}_{\pi}[G_{t+1}|S_t=s] \\ 
                     &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)r(s,a,s') + \gamma\sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)v_{\pi}(s') \\ 
                     &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\}
                     \end{align}
+                    </div>
                     である。</li>
                 <li>この式が<b>ベルマン方程式</b>である。</li>
                 <li>ベルマン方程式は、「状態\(s\)の価値関数」と「その次に取り得る状態\(s'\)の価値関数」との関係性を表した式である。</li>
@@ -159,6 +164,7 @@
                 <li>仮にQ関数の行動\(a\)を方策\(\pi\)に従って選ぶとすると、Q関数と状態価値関数は同じになる。</li>
                 <li>収益の期待値に関して、\(v_{\pi}(s)=\sum_{a}\pi(a|s)q_{\pi}(s, a)\)が成り立つ。</li>
                 <li>Q関数は
+                    <div class="horizontal-scroll">
                     \begin{align}
                     q_{\pi}(s, a) &= \mathbb{E_{\pi}}[G_t|S_t=s, A_t=a] \\
                     &= \mathbb{E_{\pi}}[R_t+\gamma G_{t+1}|S_t=s, A_t=a] \\
@@ -166,49 +172,63 @@
                     &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma v_{\pi}(s')\} \\
                     &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi(a'|s')q_{\pi}(s', a')\}
                     \end{align}
+                    </div>
                     と展開できる。</li>
                 <li>この式がQ関数を用いたベルマン方程式である。</li>
                 <li>ベルマン方程式は、ある方策\(\pi\)について成り立つ。</li>
                 <li>最適方策に関して成り立つ方程式を<b>ベルマン最適方程式</b>と呼ぶ。</li>
                 <li>ベルマン方程式は次の式で表される。
-                \begin{align}
-                    v_{\pi}(s) \\
-                    &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\} \\
-                    &= \sum_{a}\pi(a|s)\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\}
-                \end{align}</li>
+                    <div class="horizontal-scroll">
+                    \begin{align}
+                        v_{\pi}(s) 
+                        &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\} \\
+                        &= \sum_{a}\pi(a|s)\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\}
+                    \end{align}
+                    </div>
+                </li>    
                 <li>最適方策を\(\pi_{*}(a|s)\)とした場合、次のようにベルマン方程式が成り立つ。
-                \begin{align}
-                    v_{*}(s) \\
-                    &= \sum_{a}\pi_{*}(a|s)\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}
-                \end{align}
+                    <div class="horizontal-scroll">
+                    \begin{align}
+                        v_{*}(s) 
+                        &= \sum_{a}\pi_{*}(a|s)\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}
+                    \end{align}
+                    </div>
                 </li>
                 <li>最適方策は\(\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}\)の値が最大の行動を選び、その最大値がそのまま\(v_{*}\)になる。</li>
                 <li>これを数式で表すと、次のようになる。
-                \begin{align}
-                    v_{*}(s) \\
-                    &= \max_{a}\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}
-                \end{align}
+                    <div class="horizontal-scroll">
+                    \begin{align}
+                        v_{*}(s) \\
+                        &= \max_{a}\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}
+                    \end{align}
+                    </div>
                 </li>
                 <li>この式がベルマン最適方程式である。</li>
                 <li>行動価値関数（Q関数）についても同様にベルマン最適方程式を求めることができる。</li>
                 <li>最適方策における行動価値関数は<b>最適行動価値関数</b>と呼ばれる。</li>
                 <li>Q関数のベルマン方程式は次のとおり。
-                \begin{align}
-                    q_{\pi}(s, a) \\
-                    &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi(a'|s')q_{\pi}(s', a')\}
-                \end{align}
+                    <div class="horizontal-scroll">
+                    \begin{align}
+                        q_{\pi}(s, a) \\
+                        &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi(a'|s')q_{\pi}(s', a')\}
+                    \end{align}
+                    </div>
                 </li>
                 <li>この式に最適方策\(pi_{*}\)を代入すると、
-                \begin{align}
-                    q_{\pi}(s, a) \\
-                    &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi_{*}(a'|s')q_{*}(s', a')\}
-                \end{align}
+                    <div class="horizontal-scroll">
+                    \begin{align}
+                        q_{\pi}(s, a) \\
+                        &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi_{*}(a'|s')q_{*}(s', a')\}
+                    \end{align}
+                    </div>
                 となる。</li>
                 <li>状態価値関数のベルマン最適方程式と同様に展開すると、以下の式が得られる。
-                \begin{align}
-                    q_{\pi}(s, a) \\
-                    &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\max_{a'}q_{*}(s', a')\}
-                \end{align}
+                    <div class="horizontal-scroll">
+                    \begin{align}
+                        q_{\pi}(s, a) \\
+                        &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\max_{a'}q_{*}(s', a')\}
+                    \end{align}
+                    </div>
                 </li>
                 <li>この式がQ関数に関するベルマン最適方程式である。</li>
                 <li>\(\pi\)を用いずに表せるのは、MDPでは決定論的な最適方策が少なくとも一つ存在するからである。</li>
