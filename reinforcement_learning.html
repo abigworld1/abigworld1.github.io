@@ -21,6 +21,7 @@
         </nav>
     </header>
     <main>
+        ※数式はスクロールできます。
         <section>
             <h2>Overview</h2>
             強化学習とは
@@ -120,10 +121,12 @@
                     となる。</li>
                 <li>状態価値関数は\(v_{\pi}(s)=\mathbb{E_{\pi}}[G_t|S_t=s]\)と定義される。</li>
                 <li>したがって、
+                    <div class="horizontal-scroll">
                     \begin{align}
                     v_{\pi}(s) &= \mathbb{E_{\pi}}[R_t+\gamma G_{t+1}|S_t=s] \\
                     &= \mathbb{E_{\pi}}[R_t|S_t=s]+\gamma\mathbb{E_{\pi}}[G_{t+1}|S_t=s]
                     \end{align}
+                    </div>
                     となる。</li>
                 <li>今、状態が\(s\)であり、エージェントが方策\(\pi(a|s)\)に従って行動し、状態遷移確率\(p(s'|s, a)\)に従って新しい状態\(s'\)に移行する場合を考える。</li>
                 <li>報酬関数が\(r(s, a, s')\)のとき、
@@ -198,7 +201,7 @@
                 <li>これを数式で表すと、次のようになる。
                     <div class="horizontal-scroll">
                     \begin{align}
-                        v_{*}(s) \\
+                        v_{*}(s) 
                         &= \max_{a}\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}
                     \end{align}
                     </div>
@@ -209,15 +212,15 @@
                 <li>Q関数のベルマン方程式は次のとおり。
                     <div class="horizontal-scroll">
                     \begin{align}
-                        q_{\pi}(s, a) \\
+                        q_{\pi}(s, a) 
                         &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi(a'|s')q_{\pi}(s', a')\}
                     \end{align}
                     </div>
                 </li>
-                <li>この式に最適方策\(pi_{*}\)を代入すると、
+                <li>この式に最適方策\(\pi_{*}\)を代入すると、
                     <div class="horizontal-scroll">
                     \begin{align}
-                        q_{\pi}(s, a) \\
+                        q_{\pi}(s, a) 
                         &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi_{*}(a'|s')q_{*}(s', a')\}
                     \end{align}
                     </div>
@@ -225,7 +228,7 @@
                 <li>状態価値関数のベルマン最適方程式と同様に展開すると、以下の式が得られる。
                     <div class="horizontal-scroll">
                     \begin{align}
-                        q_{\pi}(s, a) \\
+                        q_{\pi}(s, a) 
                         &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\max_{a'}q_{*}(s', a')\}
                     \end{align}
                     </div>
