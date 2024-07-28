@@ -98,3 +98,8 @@ iframe {
 ul {
     padding-left: 20px;
 }
+
+span.MJXc-display{
+	overflow-x: auto;
+	overflow-y: hidden;
+}
