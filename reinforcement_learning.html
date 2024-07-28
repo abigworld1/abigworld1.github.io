@@ -173,17 +173,23 @@
                 <li>ベルマン方程式は次の式で表される。
                 \begin{align}
                     v_{\pi}(s) \\
-                    = \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\}
+                    &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\} \\
+                    &= \sum_{a}\pi(a|s)\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\}
                 \end{align}</li>
                 <li>最適方策を\(\pi_{*}(a|s)\)とした場合、次のようにベルマン方程式が成り立つ。
                 \begin{align}
                     v_{*}(s) \\
-                    = \sum_{a}\sum_{s'}\pi_{*}(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}
+                    &= \sum_{a}\pi_{*}(a|s)\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}
                 \end{align}
                 </li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li>最適方策は\(\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}\)の値が最大の行動を選び、その最大値がそのまま\(v_{*}\)になる。</li>
+                <li>これを数式で表すと、次のようになる。
+                \begin{align}
+                    v_{*}(s) \\
+                    &= max_{a}\sum_{s'}p(s'|s,a)\{r(s,a,s') + \gamma v_{*}(s')\}
+                \end{align}
+                </li>
+                <li>この式がベルマン最適方程式である。</li>
                 <li></li>
                 <li></li>
                 <li></li>
