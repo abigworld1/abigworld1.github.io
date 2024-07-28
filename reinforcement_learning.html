@@ -250,13 +250,20 @@
                     <div class="scroll">
                     \begin{align}
                         q_{\pi}(s, a) 
-                        &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi(a'|s')q_{\pi}(s', a')\}
+                        &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma v_{\pi}(s')\}
                     \end{align}
                     </div>
                 </li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li>この式の最適方策版を先の最適な行動を表す式に代入すると、以下の式が得られる。
+                    <div class="scroll">
+                    \begin{align}
+                        \mu_{*}(s) 
+                        &= \argmax_{a}\sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma v_{*}(s')\}
+                    \end{align}
+                    </div>
+                </li>
+                <li>このように、最適状態価値関数\(v_{*}(s)\)を使って、最適方策\(\mu_{*}(s)\)を得ることができる。</li>
+                <li>最適な行動価値関数を最大とするような行動であるため、「greedyな方策」といえる。</li>
                 <li></li>
                 <li></li>
                 <li></li>
