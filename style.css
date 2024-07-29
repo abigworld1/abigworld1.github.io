@@ -121,11 +121,6 @@ div.scroll {
   border-radius: 5px;
 }
 
-h4 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 input[type="text"],
 input[type="password"] {
   width: 93%;
