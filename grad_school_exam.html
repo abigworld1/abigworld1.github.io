@@ -129,6 +129,7 @@
                 <li><b>式を用いて方策\(\pi(s, a)\)の例を示せ。</b></li>
                 <ul>
                     <li>
+                        グリーディ方策
                         <div class="scroll">
                         \begin{align}
                         \pi(s) = \arg\max\limits_a Q(s, a)
@@ -136,6 +137,7 @@
                         </div>
                     </li>
                     <li>
+                        ε-グリーディ方策
                         <div class="scroll">
                         \begin{align}
                         \pi(s) = 
@@ -147,6 +149,7 @@
                         </div>
                     </li>
                     <li>
+                        ソフトマックス方策
                         <div class="scroll">
                         \begin{align}
                         \pi(a|s) = \frac{e^{Q(s, a) / \tau}}{\sum\limits_{b} e^{Q(s, b) / \tau}}
