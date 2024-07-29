@@ -128,7 +128,31 @@
                 </ul>
                 <li><b>式を用いて方策\(\pi(s, a)\)の例を一つ示せ。</b></li>
                 <ul>
-                    <li></li>
+                    <li>
+                        <div class="scroll">
+                        \begin{align}
+                        \pi(s) = \arg\max\limits_a Q(s, a)
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="scroll">
+                        \begin{align}
+                        \pi(s) = 
+                        \begin{cases} 
+                        \arg\max\limits_a Q(s, a) & \text{with probability } 1 - \epsilon \\
+                        \text{random action} & \text{with probability } \epsilon
+                        \end{cases}
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="scroll">
+                        \begin{align}
+                        \pi(a|s) = \frac{e^{Q(s, a) / \tau}}{\sum\limits_{b} e^{Q(s, b) / \tau}}
+                        \end{align}
+                        </div>
+                    </li>
                 </ul>
                 <li></li>
                 <li></li>
