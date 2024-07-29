@@ -126,7 +126,7 @@
                     <li>マルコフ性を満たす環境においてエージェントが意思決定をして状態が確率的に遷移し、状態や行動が有限であるということ。</li>
                     <li>環境がマルコフ性を持つとは、過去の環境の履歴すべてが、現在の環境情報に集約されていることを指す。</li>
                 </ul>
-                <li><b>式を用いて方策\(\pi(s, a)\)の例を一つ示せ。</b></li>
+                <li><b>式を用いて方策\(\pi(s, a)\)の例を示せ。</b></li>
                 <ul>
                     <li>
                         <div class="scroll">
@@ -154,10 +154,19 @@
                         </div>
                     </li>
                 </ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li><b>エージェントが状態\(s_t\)において取った行動を\(a_t\)とするとき、行動価値\(Q(s_t, a_t)\)の更新を式で表せ。</b></li>
+                <ul>
+                    <li>
+                        <div class="scroll">
+                        \begin{align}
+                        Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \left( r_{t+1} + \gamma \max\limits_a Q(s_{t+1}, a) - Q(s_t, a_t) \right)
+                        \end{align}
+                        </div>
+                    </li>
+                </ul>
+                <li><b></b></li>
+                <li><b></b></li>
+                <li><b></b></li>
             </ul>
         </section>
     </main>
