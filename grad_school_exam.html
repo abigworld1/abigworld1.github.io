@@ -132,7 +132,7 @@
                         グリーディ方策
                         <div class="scroll">
                         \begin{align}
-                        \pi(s) = \arg\max\limits_a Q(s, a)
+                        \pi(s, a) = \arg\max\limits_a Q(s, a)
                         \end{align}
                         </div>
                     </li>
@@ -140,7 +140,7 @@
                         ε-グリーディ方策
                         <div class="scroll">
                         \begin{align}
-                        \pi(s) = 
+                        \pi(s, a) = 
                         \begin{cases} 
                         \arg\max\limits_a Q(s, a) & \text{with probability } 1 - \epsilon \\
                         \text{random action} & \text{with probability } \epsilon
@@ -152,7 +152,7 @@
                         ソフトマックス方策
                         <div class="scroll">
                         \begin{align}
-                        \pi(a|s) = \frac{e^{Q(s, a) / \tau}}{\sum\limits_{b} e^{Q(s, b) / \tau}}
+                        \pi(s, a) = \frac{e^{Q(s, a) / \tau}}{\sum\limits_{b} e^{Q(s, b) / \tau}}
                         \end{align}
                         </div>
                     </li>
@@ -171,8 +171,62 @@
                 <ul>
                     <li>真の最適行動価値関数に収束する。</li>
                 </ul>
+            </ul>
+            <h3>ニューラルネットワーク</h3>
+            <ul>
+                <li><b>ニューラルネットワークの教師あり学習における学習プロセスを説明せよ。</b></li>
+                <ul>
+                    <li>入力層に入力信号を与えて順方向に中間層の出力を計算し、出力層からの出力を計算する。</li>
+                    <li>出力層からの出力と教師信号との誤差から<b>損失関数</b>の値を計算する。</li>
+                    <li><b>誤差逆伝播法</b>を用いて出力層から入力層に向かう逆方向に各ユニット間の<b>重み</b>に対する<b>勾配</b>を計算する。</li>
+                    <li><b>損失関数</b>の値を最小化するために、<b>最急降下法</b>を適用して各ユニット間の<b>重み</b>を更新する。</li>
+                    <li>終了条件を満たすまで以上を繰り返す。</li>
+                </ul>
+                <li><b>上記の学習プロセスにおいて更新する重みを\(w_i\)、学習率を\(\alpha\)、損失関数を\(L(\cdot)\)とするとき、偏微分を用いて最急降下法による重みの更新式を示せ。</b></li>
+                <ul>
+                    <li>
+                        <div class="scroll">
+                        \begin{align}
+                        w_{i+1} &= w_i - \alpha \frac{\partial L}{\partial w_i}
+                        \end{align}
+                        </div>
+                    </li>
+                </ul>
+                <li><b>活性化関数にシグモイド関数がよく使われるのはなぜか。</b></li>
+                <ul>
+                    <li>シグモイド関数は非線形な関数であり、ニューラルネットワークに複雑なパターンや関係を学習する能力を持たせることができるから。</li>
+                </ul>
+                <li><b>最急降下法は使用するサンプルの数により、バッチ最急降下法と確率的最急降下法がある。その違い、およびそれぞれメリットとデメリットを簡単に説明せよ。</b></li>
+                <ul>
+                    <li>バッチ最急降下法では、すべてのトレーニングデータを使用して勾配を計算するため、各ステップの勾配は安定していて、収束は滑らかだが、計算コストが高く、メモリの使用量も多い。</li>
+                    <li>一方、確率的最急降下法ではトレーニングデータからランダムに選んだ1つのサンプルを用いるため、計算コストが低いが、収束が不安定である。</li>
+                </ul>
                 <li><b></b></li>
+                <ul>
+                    <li></li>
+                </ul>
+            </ul>
+            <h3></h3>
+            <ul>
                 <li><b></b></li>
+                <ul>
+                    <li></li>
+                </ul>
+                <li><b></b></li>
+                <ul>
+                    <li></li>
+                </ul>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li><b></b></li>
+                <ul>
+                    <li></li>
+                </ul>
+                <li><b></b></li>
+                <ul>
+                    <li></li>
+                </ul>
             </ul>
         </section>
     </main>
