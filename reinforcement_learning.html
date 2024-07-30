@@ -585,8 +585,15 @@
                     \end{align}
                     </div>
                 </li>
-                <li></li>
-                <li></li>
+                <li>ここで\(\rho(x)=\frac{\pi(x)}{b(x)}\)とすれば、各\(x\)には「重み」として\(\rho(x)\)が掛けられていると見なすことができる。</li>
+                <li>以上から、上式に基づいたモンテカルロ法は以下のようになる。
+                <div class="scroll">
+                    \begin{align}
+                    &\text{sampling: } x^{(i)} \sim b \quad (i=1, 2, \ldots, n) \\
+                    &\mathbb{E}_{\pi}[x] \simeq \frac{\rho(x^{(1)})x^{(1)} + \rho(x^{(2)})x^{(2)} + \cdots + \rho(x^{(n)})x^{(n)}}{n}
+                    \end{align}
+                    </div>
+                </li>
                 <li></li>
                 <li></li>
                 <li></li>
