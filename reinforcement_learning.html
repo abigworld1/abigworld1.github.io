@@ -560,7 +560,7 @@
                 <li>ここで、次の期待値を考える。
                     <div class="scroll">
                     \begin{align}
-                    
+                    \mathbb{E}_{\pi}[x] &= \sum x \pi(x)
                     \end{align}
                     </div>
                 </li>
@@ -575,7 +575,15 @@
                 </li>
                 <li>ここで、\(x\)が\(\pi\)ではなく、\(b\)という確率分布からサンプリングされたとする。</li>
                 <li>この場合、期待値\(\mathbb{E}_{\pi}[x]\)はどのように近似できるか。</li>
-                <li></li>
+                <li>期待値\(\mathbb{E}_{\pi}[x]\)は以下のように式変形できる。
+                    <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}_{\pi}[x] &= \sum x \pi(x) \\
+                    &= \sum x frac{b(x)}{b(x)} \pi(x) \\
+                    &= \sum x frac{\pi(x)}{b(x)} b(x)
+                    \end{align}
+                    </div>
+                </li>
                 <li></li>
                 <li></li>
                 <li></li>
