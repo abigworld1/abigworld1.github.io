@@ -2,12 +2,12 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
-    line-height: 1.6; /* Added for better readability */
+    background-color: #faf7f0; /* Updated background color */
+    line-height: 1.6;
 }
 
 header {
-    background-color: #8b4513;
+    background-color: #b17457; /* Updated background color */
     color: white;
     padding: 20px;
     text-align: center;
@@ -33,16 +33,16 @@ nav ul li a {
 main {
     margin: 20px;
     padding: 20px;
-    background-color: white;
+    background-color: #faf7f0; /* Updated background color */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    line-height: 1.8; /* Added for better readability */
+    line-height: 1.8;
 }
 
 footer {
     text-align: center;
     padding: 10px;
-    background-color: #8b4513;
+    background-color: #b17457; /* Updated background color */
     color: white;
     position: fixed;
     bottom: 0;
@@ -59,11 +59,11 @@ h1 {
 
 h2 {
     font-size: 2em;
-    color: #8b4513;
+    color: #4a4947; /* Updated text color */
 }
 
 h3 {
-    font-family: 'arial';
+    font-family: 'Arial';
     font-size: 1.5em;
     color: #000000;
 }
@@ -72,47 +72,42 @@ section {
     margin-bottom: 20px;
 }
 
-/* Center the iframe and make it responsive */
 iframe {
     display: block;
     margin: 0 auto;
     max-width: 100%;
     height: auto;
-    border: 0; /* Removes border */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
-    border-radius: 10px; /* Adds rounded corners */
+    border: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }
 
-/* Container to keep the aspect ratio */
 .video-container {
     position: relative;
-    padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+    padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     max-width: 80%;
     margin: 0 auto;
     margin-bottom: 20px;
-    background: #f2e8dc; /* Warm, coffee-like background color */
-    border: 1px solid #d3b8ae; /* Border to add to the cafe feel */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
+    background: #faf7f0; /* Updated background color */
+    border: 1px solid #d8d2c2; /* Updated border color */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Position the iframe correctly within the container */
 .video-container iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 10px; /* Matching rounded corners */
+    border-radius: 10px;
 }
-
-
 
 ul {
     padding-left: 20px;
-    line-height: 1.8; /* Added for better readability */
+    line-height: 1.8;
 }
 
 div.scroll {
@@ -121,7 +116,7 @@ div.scroll {
 }
 
 button[type="submit"]:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
 .example {
