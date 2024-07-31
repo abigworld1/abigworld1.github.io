@@ -99,7 +99,23 @@
                     </li>
                     <li>ここで、少なくとも一つの <em>c<sub>i</sub></em> が0ではない（つまり、非自明な解が存在する）場合である。</li>
                 </ul>
-                <li>\(f(x) = Ax\)を満たす行列\(A\)（表現行列）が正則であることと、\(f\)が全単射であることは同値である。</li>
+                <li>具体例</li>
+                <div class="example">
+                    <h3>線形独立の例</h3>
+                    <p>ベクトル <em>v<sub>1</sub> = (1, 0)</em> と <em>v<sub>2</sub> = (0, 1)</em> は線形独立です。なぜなら、</p>
+                    <p>
+                        <em>c<sub>1</sub> (1, 0) + c<sub>2</sub> (0, 1) = (0, 0)</em>
+                    </p>
+                    <p>が成り立つのは <em>c<sub>1</sub> = 0</em> かつ <em>c<sub>2</sub> = 0</em> のときだけだからです。</p>
+                </div>
+                <div class="example">
+                    <h3>線形従属の例</h3>
+                    <p>ベクトル <em>v<sub>1</sub> = (1, 2)</em> と <em>v<sub>2</sub> = (2, 4)</em> は線形従属です。なぜなら、</p>
+                    <p>
+                        <em>2 (1, 2) - 1 (2, 4) = (0, 0)</em>
+                    </p>
+                    <p>という関係があり、非自明な解 <em>c<sub>1</sub> = 2, c<sub>2</sub> = -1</em> が存在するからです。</p>
+                </div>                
             </ul>
         </section>
         <section id="info-math">
