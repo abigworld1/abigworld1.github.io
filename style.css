@@ -79,7 +79,8 @@ iframe {
     max-width: 100%;
     height: auto;
     border: 0; /* Removes border */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+    border-radius: 10px; /* Adds rounded corners */
 }
 
 /* Container to keep the aspect ratio */
@@ -91,9 +92,10 @@ iframe {
     max-width: 80%;
     margin: 0 auto;
     margin-bottom: 20px;
-    background: #000; /* Background color */
+    background: #f2e8dc; /* Warm, coffee-like background color */
+    border: 1px solid #d3b8ae; /* Border to add to the cafe feel */
     border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
 }
 
 /* Position the iframe correctly within the container */
@@ -105,6 +107,7 @@ iframe {
     height: 100%;
     border-radius: 10px; /* Matching rounded corners */
 }
+
 
 
 ul {
