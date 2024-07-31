@@ -31,6 +31,10 @@ nav ul li a {
 }
 
 main {
+    background-color: #faf7f0;
+}
+
+section {
     margin: 20px;
     padding: 20px;
     background-color: #faf7f0; /* Updated background color */
@@ -66,13 +70,6 @@ h3 {
     font-family: 'Arial';
     font-size: 1.5em;
     color: #000000;
-}
-
-section {
-    padding: 20px;
-    margin: 20px;
-    border: 1px solid #d8d2c2;
-    background-color: #fff;
 }
 
 iframe {
