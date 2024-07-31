@@ -112,8 +112,8 @@ button[type="submit"]:hover {
 }
 
 .example {
-    background-color: #f9f9f9;
-    border-left: 4px solid #ccc;
+    background-color: #f5deb3;
+    border-left: 4px solid #daa520;
     padding: 10px;
     margin: 10px 0;
 }
