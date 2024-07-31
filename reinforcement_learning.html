@@ -624,17 +624,23 @@
                 <li>この収益を用いて、価値関数は以下のように定義される。
                     <div class="scroll">
                     \begin{align}
-                    v_{\pi}(s) &= \mathbb{E_{\pi}}[G_{t}|S_t=s] \\
-                    &= \mathbb{E_{\pi}}[R_t+\gamma G_{t+1}|S_t=s]
+                    v_{\pi}(s) &= \mathbb{E_{\pi}}[G_{t}|S_t=s] & \text{(a)}\\
+                    &= \mathbb{E_{\pi}}[R_t+\gamma G_{t+1}|S_t=s] & \text{(b)}
                     \end{align}
                     </div>
                 </li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li>MC法を使った手法は式(a)から、DP法を使った手法は式(b)から導くことができる。</li>
+                <li>MC法では、期待値を計算する代わりに、実際に得られた収益のサンプルデータを平均することで、式(a)の期待値を近似する。</li>
+                <li>平均には、標本平均と指数移動平均の２つがある。</li>
+                <li>指数移動平均を実現するには、新しい収益が得られるたびに固定値\(\alpha\)で更新する。</li>
+                <li>これを数式で表すと次のようになる。
+                    <div class="scroll">
+                    \begin{align}
+                    V'_{\pi}(S_t)=V_{\pi}(S_t)+\alpha\{G_t-V_{\pi}(S_t)\}
+                    \end{align}
+                    </div>
+                </li>
+                <li>ここで、現状の価値関数を\(V_{pi}\)、更新後の価値関数を\(V'_{\pi}\)とする。</li>
                 <li></li>
                 <li></li>
                 <li></li>
