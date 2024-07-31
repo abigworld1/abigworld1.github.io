@@ -49,26 +49,62 @@
           しかし、今後の自分の研究に役立てたいので、専門科目1では「確率・統計」を、専門科目2では「アルゴリズムとデータ構造」と「人工知能」を選択しようと思います。
         <section id="basic-math">
           <h2>基礎数学</h2>
-            <h3>全射・単射・全単射</h3>
-            <p>参考にしたサイトは以下のとおり。</p>
+            <h3>線形写像</h3>
+            参考にしたサイトは以下のとおり。
             <ul>
                 <li><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra13#1-3">うさぎでもわかる線形代数　第13羽　線形写像（後編）　核空間・像空間　線形写像の全射・単射について _ 工業大学生ももやまのうさぎ塾.html</a></li>
             </ul>
             <ul>
                 <li>集合\(V\)から集合\(W\)への写像があるとする。</li>
-                <li><b>全射</b>：\(W\)の要素すべてが\(V\)のどれかの要素と対応しているような写像。</li>
-                <li><b>単射</b>：\(W\)のある要素に写すための\(V\)の要素は１つしかない（２つ以上存在しない）写像。</li>
-                <li><b>全単射</b>：全射の条件、単射の条件の両方を満たすような写像。\(V\)の要素と\(W\)の要素は１対１の関係になる。</li>
+                <ul>
+                    <li><b>全射</b>：\(W\)の要素すべてが\(V\)のどれかの要素と対応しているような写像。</li>
+                    <li><b>単射</b>：\(W\)のある要素に写すための\(V\)の要素は１つしかない（２つ以上存在しない）写像。</li>
+                    <li><b>全単射</b>：全射の条件、単射の条件の両方を満たすような写像。\(V\)の要素と\(W\)の要素は１対１の関係になる。</li>
+                </ul>
+                <li>\(f(x) = Ax\)を満たす行列\(A\)（表現行列）が正則であることと、\(f\)が全単射であることは同値である。</li>
+            </ul>
+            <h3>線形独立・線形従属</h3>
+            参考にしたサイトは以下のとおり。
+            <ul>
+                <li><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra06#google_vignette">うさぎでもわかる線形代数　第06羽　1次独立・1次従属 _ 工業大学生ももやまのうさぎ塾.html</a></li>
+            </ul>
+            <ul>
+                <li>線形独立</li>
+                <ul>
+                    <li>ベクトルの集合が線形独立であるとは、集合内のどのベクトルも他のベクトルの線形結合として表せないことを意味する。
+                        具体的には、ベクトル <em>v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub></em> が線形独立であるとは、次の方程式が成り立つときである：
+                        <div class="scroll">
+                        \begin{align}
+                        c<sub>1</sub> v<sub>1</sub> + c<sub>2</sub> v<sub>2</sub> + ... + c<sub>n</sub> v<sub>n</sub> = 0
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>ここで、すべてのスカラー <em>c<sub>i</sub></em> が0である場合に限り成り立つ。つまり、
+                        <div class="scroll">
+                        \begin{align}
+                        c<sub>1</sub> = c<sub>2</sub> = ... = c<sub>n</sub> = 0
+                        \end{align}
+                        </div>
+                    </li>
+                </ul>
+                <li>線形従属</li>
+                <ul>
+                    <li>一方、ベクトルの集合が線形従属であるとは、少なくとも一つのベクトルが他のベクトルの線形結合として表せることを意味する。
+                        つまり、ベクトル <em>v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub></em> が線形従属であるとは、次の方程式が成り立つときである：
+                        <div class="scroll">
+                        \begin{align}
+                        c<sub>1</sub> v<sub>1</sub> + c<sub>2</sub> v<sub>2</sub> + ... + c<sub>n</sub> v<sub>n</sub> = 0
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>ここで、少なくとも一つの <em>c<sub>i</sub></em> が0ではない（つまり、非自明な解が存在する）場合である。</li>
+                </ul>
+                <li>\(f(x) = Ax\)を満たす行列\(A\)（表現行列）が正則であることと、\(f\)が全単射であることは同値である。</li>
             </ul>
         </section>
         <section id="info-math">
           <h2>情報数学</h2>
-          <ul>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-          </ul>
+            <h3></h3>
         </section>
         <section id="probability-statistics">
           <h2>確率・統計</h2>
