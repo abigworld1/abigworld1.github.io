@@ -120,8 +120,7 @@ button[type="submit"]:hover {
 }
 
 .example {
-    background-color: #faf7f0;
-    border-left: 4px solid #d8d2c2;
+    background-color: #d8d2c2;
     padding: 10px;
     margin: 10px 0;
 }
