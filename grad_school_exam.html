@@ -72,14 +72,14 @@
                 <li>線形独立</li>
                 <ul>
                     <li>ベクトルの集合が線形独立であるとは、集合内のどのベクトルも他のベクトルの線形結合として表せないことを意味する。
-                        具体的には、ベクトル <em>v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub></em> が線形独立であるとは、次の方程式が成り立つときである：
+                        具体的には、ベクトル\(v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub>\)が線形独立であるとは、次の方程式が成り立つときである：
                         <div class="scroll">
                         \begin{align}
                         c<sub>1</sub> v<sub>1</sub> + c<sub>2</sub> v<sub>2</sub> + ... + c<sub>n</sub> v<sub>n</sub> = 0
                         \end{align}
                         </div>
                     </li>
-                    <li>ここで、すべてのスカラー <em>c<sub>i</sub></em> が0である場合に限り成り立つ。つまり、
+                    <li>ここで、すべてのスカラー\(c<sub>i</sub>\) が0である場合に限り成り立つ。つまり、
                         <div class="scroll">
                         \begin{align}
                         c<sub>1</sub> = c<sub>2</sub> = ... = c<sub>n</sub> = 0
@@ -90,31 +90,35 @@
                 <li>線形従属</li>
                 <ul>
                     <li>一方、ベクトルの集合が線形従属であるとは、少なくとも一つのベクトルが他のベクトルの線形結合として表せることを意味する。
-                        つまり、ベクトル <em>v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub></em> が線形従属であるとは、次の方程式が成り立つときである：
+                        つまり、ベクトル\(v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub>\)が線形従属であるとは、次の方程式が成り立つときである：
                         <div class="scroll">
                         \begin{align}
                         c<sub>1</sub> v<sub>1</sub> + c<sub>2</sub> v<sub>2</sub> + ... + c<sub>n</sub> v<sub>n</sub> = 0
                         \end{align}
                         </div>
                     </li>
-                    <li>ここで、少なくとも一つの <em>c<sub>i</sub></em> が0ではない（つまり、非自明な解が存在する）場合である。</li>
+                    <li>ここで、少なくとも一つの\(c<sub>i</sub>\)が0ではない（つまり、非自明な解が存在する）場合である。</li>
                 </ul>
                 <li>具体例</li>
                 <div class="example">
                     <h3>線形独立の例</h3>
-                    <p>ベクトル <em>v<sub>1</sub> = (1, 0)</em> と <em>v<sub>2</sub> = (0, 1)</em> は線形独立です。なぜなら、</p>
-                    <p>
-                        <em>c<sub>1</sub> (1, 0) + c<sub>2</sub> (0, 1) = (0, 0)</em>
-                    </p>
-                    <p>が成り立つのは <em>c<sub>1</sub> = 0</em> かつ <em>c<sub>2</sub> = 0</em> のときだけだからです。</p>
+                    <p>ベクトル\(v<sub>1</sub> = (1, 0)\) と \(v<sub>2</sub> = (0, 1)\) は線形独立である。なぜなら、</p>
+                        <div class="scroll">
+                        \begin{align}
+                        c<sub>1</sub> (1, 0) + c<sub>2</sub> (0, 1) = (0, 0)
+                        \end{align}
+                        </div>                  
+                    <p>が成り立つのは \(c<sub>1</sub> = 0\)かつ \(c<sub>2</sub> = 0\) のときだけだからである。</p>
                 </div>
                 <div class="example">
                     <h3>線形従属の例</h3>
-                    <p>ベクトル <em>v<sub>1</sub> = (1, 2)</em> と <em>v<sub>2</sub> = (2, 4)</em> は線形従属です。なぜなら、</p>
-                    <p>
-                        <em>2 (1, 2) - 1 (2, 4) = (0, 0)</em>
-                    </p>
-                    <p>という関係があり、非自明な解 <em>c<sub>1</sub> = 2, c<sub>2</sub> = -1</em> が存在するからです。</p>
+                    <p>ベクトル \(v<sub>1</sub> = (1, 2)\) と \(v<sub>2</sub> = (2, 4)\) は線形従属である。なぜなら、</p>
+                        <div class="scroll">
+                        \begin{align}
+                        2 (1, 2) - 1 (2, 4) = (0, 0)
+                        \end{align}
+                        </div>                      
+                    <p>という関係があり、非自明な解 \(c<sub>1</sub> = 2, c<sub>2</sub> = -1\) が存在するからである。</p>
                 </div>                
             </ul>
         </section>
