@@ -110,3 +110,10 @@ div.scroll {
 button[type="submit"]:hover {
   background-color: #45a049;
 }
+
+.example {
+    background-color: #f9f9f9;
+    border-left: 4px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+}
