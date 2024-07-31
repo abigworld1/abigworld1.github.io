@@ -141,7 +141,7 @@
                 <li>この式を変形すると、以下のようになる。
                     <div class="scroll">
                     \begin{align}
-                    G_t &= R_t+\gamma(R_{t+1}(\gamma R_{t+2}+...) \\
+                    G_t &= R_t+\gamma\{R_{t+1}(\gamma R_{t+2}+...)\} \\
                     &= R_t+\gamma G_{t+1}
                     \end{align}
                     </div>
@@ -593,7 +593,7 @@
                 </li>
                 <li>ここで\(\rho(x)=\frac{\pi(x)}{b(x)}\)とすれば、各\(x\)には「重み」として\(\rho(x)\)が掛けられていると見なすことができる。</li>
                 <li>以上から、上式に基づいたモンテカルロ法は以下のようになる。
-                <div class="scroll">
+                    <div class="scroll">
                     \begin{align}
                     &\text{sampling: } x^{(i)} \sim b \quad (i=1, 2, \ldots, n) \\
                     &\mathbb{E}_{\pi}[x] \simeq \frac{\rho(x^{(1)})x^{(1)} + \rho(x^{(2)})x^{(2)} + \cdots + \rho(x^{(n)})x^{(n)}}{n}
@@ -605,16 +605,30 @@
                 <li>重点サンプリングを使えば、方策オフ型を実現できる。</li>
                 <li>具体的には、挙動方策という確率分布からサンプリングされたデータを使って、ターゲット方策に関する期待値が計算できる。</li>
                 <h3 id="td">Temporal Difference</h3>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li>モンテカルロ法は、エピソードの「終わり」にたどり着いてからでないと、価値関数の更新ができない。</li>
+                <li>なぜなら、エピソードの終わりになって初めて「収益」が確定するから。</li>
+                <li>連続タスクの場合、モンテカルロ法は使うことができない。</li>
+                <li>エピソードタスクであっても、エピソードを終えるのに時間がかかる場合は、モンテカルロ法だと価値関数の更新に多くの時間を要する。</li>
+                <li>特にエピソードの最初の段階では、エージェントの方策はランダムなことが多いため、さらに多くの時間を必要とする。</li>
+                <li>TD法では、環境のモデルを使わずに、行動を１つ行うたびに価値関数を更新する手法である。</li>
+                <li>エピソードの終わりを待つのではなく、一定の時間が進むごとに方策の評価と改善を行う。</li>
+                <li>TD法は、「モンテカルロ法」と「動的計画法」を合わせたような手法である。</li>
+                <li>収益は以下のように定義される。
+                    <div class="scroll">
+                    \begin{align}
+                    G_t &= R_t+\gamma\{R_{t+1}(\gamma R_{t+2}+...)\} \\
+                    &= R_t+\gamma G_{t+1}
+                    \end{align}
+                    </div>
+                </li>
+                <li>この収益を用いて、価値関数は以下のように定義される。
+                    <div class="scroll">
+                    \begin{align}
+                    v_{\pi}(s) &= \mathbb{E_{\pi}}[G_{t}|S_t=s] \\
+                    &= \mathbb{E_{\pi}}[R_t+\gamma G_{t+1}|S_t=s]
+                    \end{align}
+                    </div>
+                </li>
                 <li></li>
                 <li></li>
                 <li></li>
