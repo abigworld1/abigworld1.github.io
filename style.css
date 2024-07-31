@@ -69,7 +69,7 @@ h3 {
 }
 
 section {
-    padding: 20px;
+    padding: 0px;
     margin: 20px;
     border: 1px solid #d8d2c2;
     background-color: #fff;
@@ -123,8 +123,8 @@ button[type="submit"]:hover {
 }
 
 .example {
-    background-color: #faebd7;
-    border-left: 4px solid #d2b48c;
+    background-color: #faf7f0;
+    border-left: 4px solid #d8d2c2;
     padding: 10px;
     margin: 10px 0;
 }
