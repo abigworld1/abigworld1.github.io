@@ -679,8 +679,8 @@
                 <li>TD法を数式から導く。
                     <div class="scroll">
                     \begin{align}
-                    v_{\pi}(s) &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\} & \text{c}
-                    &= \mathbb{E_{\pi}}[R_t+\gamma v_{\pi}(S_{t+1})|S_t=s] & \text{d}
+                    v_{\pi}(s) &= \sum_{a}\sum_{s'}\pi(a|s)p(s'|s,a)\{r(s,a,s') + \gamma v_{\pi}(s')\} & \text{(c)} \\ 
+                    &= \mathbb{E_{\pi}}[R_t+\gamma v_{\pi}(S_{t+1})|S_t=s] & \text{(d)}
                     \end{align}
                     </div>
                 </li>
