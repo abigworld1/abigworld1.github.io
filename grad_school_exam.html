@@ -51,9 +51,7 @@
           <h2>基礎数学</h2>
             <h3>線形写像</h3>
             参考にしたサイトは以下のとおり。
-            <ul>
-                <li><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra13#1-3">うさぎでもわかる線形代数　第13羽　線形写像（後編）　核空間・像空間　線形写像の全射・単射について _ 工業大学生ももやまのうさぎ塾.html</a></li>
-            </ul>
+            <a href="https://www.momoyama-usagi.com/entry/math-linear-algebra13#1-3">うさぎでもわかる線形代数　第13羽　線形写像（後編）　核空間・像空間　線形写像の全射・単射について _ 工業大学生ももやまのうさぎ塾.html</a>
             <ul>
                 <li>集合\(V\)から集合\(W\)への写像があるとする。</li>
                 <ul>
@@ -65,9 +63,7 @@
             </ul>
             <h3>線形独立・線形従属</h3>
             参考にしたサイトは以下のとおり。
-            <ul>
-                <li><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra06#google_vignette">うさぎでもわかる線形代数　第06羽　1次独立・1次従属 _ 工業大学生ももやまのうさぎ塾.html</a></li>
-            </ul>
+            <a href="https://www.momoyama-usagi.com/entry/math-linear-algebra06#google_vignette">うさぎでもわかる線形代数　第06羽　1次独立・1次従属 _ 工業大学生ももやまのうさぎ塾.html</a>
             <ul>
                 <li>線形独立</li>
                 <ul>
@@ -125,6 +121,51 @@
         <section id="info-math">
           <h2>情報数学</h2>
             <h3>二変数間の停留点</h3>
+            参考にしたサイトは以下のとおり。
+            <a href="https://pictblog.com/twoparadiffer">【微積分】二変数関数の停留点(極大点・極小点・鞍点).html</a>
+            <ul>
+                <li>二変数関数\(f(x, y)\)の停留点\((a_x, a_y)\)を求めることを考える。</li>
+                <li>関数の変化がなくなる点が停留点であるため、停留点では\(x\)方向、\(y\)方向ともにその変化量が0、すなわち
+                    <div class="scroll">
+                    \begin{align}
+                    \frac{\partial f(x,y)}{\partial x}=\frac{\partial f(x,y)}{\partial y}=0
+                    \end{align}
+                    </div>
+                を満たす点が停留点となる。</li>
+                <li>停留点\((a_x, a_y)\)を求めたら、次はその種類をヘッセ行列により判定する。</li>
+                <li>ヘッセ行列は次の式で表される。
+                    <div class="scroll">
+                    \begin{align}
+                    \mathsf{H}=
+                        \begin{pmatrix}\displaystyle{\frac{\partial^{2} f(x,y)}{\partial x^{2}}}&\displaystyle{\frac{\partial^{2} f(x,y)}{\partial x\partial y}} \\ \\ 
+                        \displaystyle{\frac{\partial^{2} f(x,y)}{\partial x\partial y}}&\displaystyle{\frac{\partial^{2} f(x,y)}{\partial y^{2}}}\end{pmatrix}
+                    \end{align}
+                    </div>
+                </li>
+                <li>ヘッセ行列に停留点の座標\((a_x, a_y)\)を代入する。
+                    <div class="scroll">
+                    \begin{align}
+                    \mathsf{H}=
+                        \mathsf{H}_{(a_{x},a_{y})}
+                        =\begin{pmatrix}\displaystyle{\left.\frac{\partial^{2} f(x,y)}{\partial x^{2}}\right|_{x=a_{x},y=a_{y}}}
+                        &\displaystyle{\left.\frac{\partial^{2} f(x,y)}{\partial x\partial y}\right|_{x=a_{x},y=a_{y}}} \\ \\ 
+                        \displaystyle{\left.\frac{\partial^{2} f(x,y)}{\partial x\partial y}\right|_{x=a_{x},y=a_{y}}}
+                        &\displaystyle{\left.\frac{\partial^{2} f(x,y)}{\partial y^{2}}\right|_{x=a_{x},y=a_{y}}}\end{pmatrix}
+                    \end{align}
+                    </div>
+                </li>
+                <li>この行列の固有値を\(\lambda_{1},\lambda_{2}\)とすると、次のように停留点の種類を判別できる。
+                    <div class="scroll">
+                    \begin{align}
+                    \begin{cases}
+                        \lambda_{1}>0,\lambda_{2}>0&\to\,\text{極小点}\\ 
+                        \lambda_{1}<0,\lambda_{2}<0&\to\,\text{極大点}\\ 
+                        \lambda_{1}\lambda_{2}<0&\to\,\text{鞍点} 
+                    \end{cases}
+                    \end{align}
+                    </div>
+                </li>
+            </ul>
         </section>
         <section id="probability-statistics">
           <h2>確率・統計</h2>
