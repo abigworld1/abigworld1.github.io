@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【研究ノート】走る作曲家のAIカフェ - 強化学習</title>
+    <title>【研究ノート】走る作曲家のAIカフェ - 強化学習メモ</title>
     <link rel="stylesheet" href="style.css"> 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -26,24 +26,12 @@
             <ul>
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#source">Source</a></li>
-                <li><a href="#preparation">Preparation</a>
-                    <ul>
-                        <li><a href="#bandit-problem">Bandit Problem</a></li>
-                        <li><a href="#mdp">Markov Decision Process</a></li>
-                        <li><a href="#bellman-equation">Bellman Equation</a></li>
-                    </ul>
-                </li>
-                <li><a href="#planning">Planning</a>
-                    <ul>
-                        <li><a href="#dynamic-programming">Dynamic Programming</a></li>
-                    </ul>
-                </li>
-                <li><a href="#solution">Solution</a>
-                    <ul>
-                        <li><a href="#mc">Monte Carlo Method</a></li>
-                        <li><a href="#td">Temporal Difference</a></li>
-                    </ul>
-                </li>
+                <li><a href="#bandit-problem">Bandit Problem</a></li>
+                <li><a href="#mdp">Markov Decision Process</a></li>
+                <li><a href="#bellman-equation">Bellman Equation</a></li>
+                <li><a href="#dynamic-programming">Dynamic Programming</a></li>
+                <li><a href="#mc">Monte Carlo Method</a></li>
+                <li><a href="#td">Temporal Difference</a></li>
             </ul>
         </section>
         <section id="overview">
@@ -55,7 +43,7 @@
             </ul>
             という手法です。このページでは、全くの初学者である私が、強化学習についてまとめていきます。
         </section>
-        <section>
+        <section id="source">
             <h2>Source</h2>
             以下の書籍・講座を参考にしました。
             <ul>
@@ -69,9 +57,8 @@
                 <li><a href="https://weblab.t.u-tokyo.ac.jp/education/deep-reinforcement-learning/">深層強化学習 Deep Learning 応用講座 2024 Summer</a></li>
             </ul>
         </section>
-        <section id="source">
-            <h2>Preparation</h2>
-            <h3 id="bandit-problem">Bandit Problem</h3>
+        <section id="bandit-problem">
+            <h2>Bandit Problem</h2>
             <ul>
                 <li>強化学習の中で最もシンプルな問題の１つ。</li>
                 <li>「バンディット」とは、「スロットマシン」のこと。</li>
@@ -102,7 +89,9 @@
                 <li>したがって、更新式は、\(Q_n = Q_{n-1} + α(R_n - Q_{n-1})\)となる。</li>
                 <li>この式では、各報酬に対する重みが、過去になるにつれて指数関数的に減少することから、この計算は<b>指数移動平均</b>と呼ばれる。</li>
             </ul>
-            <h3 id="mdp">Markov Decision Process</h3>
+        </section>
+        <section id="mdp">
+            <h3>Markov Decision Process</h3>
             <ul>
                 <li>エージェントの行動によって状況が変わる問題の一部は<b>マルコフ決定過程（MDP）</b>として定式化される。</li>
                 <li>決定性とは、エージェントが（環境と相互作用しながら）行動を決定する過程。</li>
@@ -135,7 +124,9 @@
                 <li>また、その最適方策は「決定論的方策」である。</li>
                 <li>最適方策における状態価値関数は、<b>最適状態価値関数</b>と呼ばれ、\(v_*\)で表す。</li>
             </ul>
-            <h3 id="bellman-equation">Bellman Equation</h3>
+        </section>
+        <section id="bellman-equation">
+            <h3>Bellman Equation</h3>
             <ul>
                 <li>収益は\(G_t=R_t+\gamma R_{t+1}+\gamma^2R_{t+2}+...\)として定義される。</li>
                 <li>この式を変形すると、以下のようになる。
@@ -291,9 +282,8 @@
                 <li>最適な行動価値関数を最大とするような行動であるため、「greedyな方策」といえる。</li>
             </ul>
         </section>
-        <section>
-            <h2 id="planning">Planning</h2>
-            <h3 id="dynamic-programming">Dynamic Programming</h3>
+        <section id="dynamic-programming">
+            <h2>Dynamic Programming</h2>
             <ul>
                 <li>動的計画法を使えば、状態と行動の数がある程度大きくなっても価値関数を評価することができる。</li>
                 <li>強化学習の問題は、多くの場合、<b>方策評価</b>と<b>方策制御</b>の２つのタスクに取り組むことになる。</li>
@@ -476,9 +466,8 @@
                 <li>つまり、greedyな方策を求めれば、それが最適方策となる。</li>
             </ul>
         </section>
-        <section>
-            <h2 id="solution">Solution</h2>
-            <h3 id="mc">Monte Carlo Method</h3>
+        <section id="mc">
+            <h2>Monte Carlo Method</h2>
             <ul>
                 <li>動的計画法では、「環境のモデル（状態遷移確率と報酬関数）」が既知である必要がある。</li>
                 <li><b>モンテカルロ法</b>とは、データのサンプリングを繰り返し行って、その結果から推定する手法の総称である。</li>
@@ -606,7 +595,10 @@
                 <li>重点サンプリングを行うときには、２つの確率分布を近づけることで分散を小さくすることができる。</li>
                 <li>重点サンプリングを使えば、方策オフ型を実現できる。</li>
                 <li>具体的には、挙動方策という確率分布からサンプリングされたデータを使って、ターゲット方策に関する期待値が計算できる。</li>
-                <h3 id="td">Temporal Difference</h3>
+            </ul>
+        </section>
+        <section id="td">
+            <h2>Temporal Difference</h2>
                 <li>モンテカルロ法は、エピソードの「終わり」にたどり着いてからでないと、価値関数の更新ができない。</li>
                 <li>なぜなら、エピソードの終わりになって初めて「収益」が確定するから。</li>
                 <li>連続タスクの場合、モンテカルロ法は使うことができない。</li>
