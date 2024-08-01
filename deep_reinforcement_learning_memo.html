@@ -154,7 +154,7 @@
             <ul>
                 <li>価値反復法では、状態遷移確率\(P\)と報酬関数\(r\)が既知のプランニング問題を対象にしていた。</li>
                 <li>また、状態空間のサイズが有限だった。</li>
-                <li>強化学習では\(r\)や\(P\)の値が未知な場合を扱いい、深層強化学習では状態空間のサイズが無限の場合を扱う。</li>
+                <li>強化学習では\(r\)や\(P\)の値が未知な場合を扱い、深層強化学習では状態空間のサイズが無限の場合を扱う。</li>
                 <li>価値反復法の更新式
                     <div class="scroll">
                     \begin{align}
@@ -177,23 +177,45 @@
                 <li>Q学習では、\(S \times A\)マスの行列を用意し、各\((s, a)\)マスに\(Q(s, a)\)の値を格納していた。</li>
                 <li>これからは「状態（画像など）を受け取り、行動空間上の値を返すネットワーク」を使ってQ関数を表現する。</li>
                 <li><b>DQN(Deep Q-Network)</b>では、ベルマン誤差を小さくするようにネットワーク\(Q_{\theta}\)を更新する。</li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li>ミニバッチ\(D\)を使って、
+                    <div class="scroll">
+                    \begin{align}
+                    \theta \leftarrow arg\min_{\theta} \mathbb{E}_{D}[(\text{Q_{\theta}のベルマン誤差})^2]
+                    \end{align}
+                    </div>
+                と更新すればよい。</li>
+                <li>DQNには、性能を上げる工夫がいくつか導入されている。
+                <ul>
+                    <li>ターゲットネットワークの利用：学習の安定化</li>
+                    <li>Experience Replayの利用：過去の経験を蓄積して学習に利用</li>
+                </ul></li>
+                <li>単純に\(Q_{\theta}\)のベルマン誤差を
+                    <div class="scroll">
+                    \begin{align}
+                    Q_{\theta}(s, a) - (r(s, a) + \gamma \max_{a'} Q_{\theta} (s', a'))
+                    \end{align}
+                    </div>
+                とした場合を考える。</li>
+                <li>このとき、DQNの誤差関数は
+                    <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}_{D}[(\text{Q_{\theta}のベルマン誤差})^2] = \mathbb{E}_{D} [Q_{\theta}(s, a) - (r(s, a) + \gamma \max_{a'} Q_{\theta} (s', a'))]
+                    \end{align}
+                    </div>
+                となり、\(r(s, a) + \gamma \max_{a'} Q_{\theta} (s', a')\)が回帰問題における正解ラベルになる。</li>
+                <li>この正解ラベルの値は\(\theta\)を更新するたびに変化するため、学習が不安定になってしまう。</li>
+                <li>そこで、学習を安定化させる１つ目の工夫として、<b>ターゲットネットワーク</b>がある。</li>
+                <li>DQNでは\(Q_{\theta}\)以外にラベル用のネットワーク\(Q_{\overline{\theta}}\)を使って
+                    <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}_{D} [Q_{\theta}(s, a) - (r(s, a) + \gamma \max_{a'} Q_{\overline{\theta}} (s', a'))]
+                    \end{align}
+                    </div>
+                を損失関数にする。</li>
+                <li>教師あり学習と同じで、更新ごとに使うデータのミニバッチ\(D\)はなるべく偏らない方が良い。</li>
+                <li>更新データに偏りがあると、学習が不安定になってしまう。</li>
+                <li>そこで、学習を安定化させる２つ目の工夫として、Experience Replayがある。</li>
+                <li>DQNでは過去に経験した\((s, a, r, s')\)のペアを<b>リプレイバッファ</b>と呼ばれるデータセットに蓄積しておき、そこからサンプリングしてミニバッチ学習する。</li>
             </ul>
             <h3>セクションのまとめ</h3>
             <ul>
