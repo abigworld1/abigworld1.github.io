@@ -123,14 +123,31 @@
                 <li>価値反復法のように、マルコフ決定過程の帰納的な性質を利用して最適方策を求めるアルゴリズムを動的計画法と呼ぶ。</li>
                 <li>価値反復法は強化学習アルゴリズムではなく、プランニング問題に対するアルゴリズムである。</li>
                 <li>価値反復法は次の価値関数を利用して最適方策を見つける。</li>
-                <li>方策\(\pi\)の状態行動価値関数\(Q^{\pi}(s, a) = \mathbb{E}_{\pi} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t) \mid s_0 = s, a_0 = a \right]\)は、
-                状態\(s\)、行動\(a\)から方策\(\pi\)で無限ステップ逐次意思決定したときに期待される割引収益を表す。</li>
+                <li>方策\(\pi\)の状態行動価値関数
+                    <div class="scroll">
+                    \begin{align}
+                    Q^{\pi}(s, a) = \mathbb{E}_{\pi} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t) \mid s_0 = s, a_0 = a \right]
+                    \end{align}
+                    </div>
+                    は、状態\(s\)、行動\(a\)から方策\(\pi\)で無限ステップ逐次意思決定したときに期待される割引収益を表す。</li>
                 <li>これはQ関数とも呼ばれ、行列で表現可能である。</li>
                 <li>最終目標は\(\pi^{*}\)を見つけることである。</li>
                 <li>\(\pi^{*}\)の価値関数\(Q^{\pi^{*}}\)が見つかれば、\(\pi^{*}\)も見つかる。</li>
                 <li>これは、「\(Q^{\pi}\)を基準とすると、期待収益が必ず向上するように方策\(\pi\)を更新可能である」という原理に基づく。</li>
-                <li>\(Q^{\pi^{*}}\)はベルマン方程式\(Q^\pi(s, a) = R(s, a) + \gamma \sum_{s'} P(s' \mid s, a) \sum_{a'} \pi(a' \mid s') Q^\pi(s', a')\)を満たすため、このベルマン方程式を満たす\(Q\)を見つければよい。</li>
-                <li>したがって、ベルマン誤差\(delta(s, a) = Q^\pi(s, a) - \left[ R(s, a) + \gamma \sum_{s'} P(s' \mid s, a) \max_{a'} Q^\pi(s', a') \right]\)が小さくなるようにQ関数を更新すればよい。</li>
+                <li>\(Q^{\pi^{*}}\)はベルマン方程式
+                    <div class="scroll">
+                    \begin{align}
+                    Q^{\pi^{*}}(s, a) = r(s, a) + \gamma \sum_{s'} P(s' \mid s, a) \max_{a'} Q^{\pi^{*}}(s', a')
+                    \end{align}
+                    </div>
+                    を満たすため、このベルマン方程式を満たす\(Q\)を見つければよい。</li>
+                <li>したがって、ベルマン誤差
+                    <div class="scroll">
+                    \begin{align}
+                    \delta(s, a) = Q(s, a) - \{ r(s, a) + \gamma \sum_{s'} P(s' \mid s, a) \max_{a'} Q(s', a') \}
+                    \end{align}
+                    </div>
+                    が小さくなるようにQ関数を更新すればよい。</li>
                 <li>価値反復法はベルマン誤差を小さくするようにQ関数を更新し、収束したQ関数の貪欲方策を出力する。</li>
             </ul>
             <h3>Q学習アルゴリズム</h3>
@@ -138,8 +155,20 @@
                 <li>価値反復法では、状態遷移確率\(P\)と報酬関数\(r\)が既知のプランニング問題を対象にしていた。</li>
                 <li>また、状態空間のサイズが有限だった。</li>
                 <li>強化学習では\(r\)や\(P\)の値が未知な場合を扱いい、深層強化学習では状態空間のサイズが無限の場合を扱う。</li>
-                <li>価値反復法の更新式\(Q_{k+1}(s, a) = R(s, a) + \gamma \sum_{s'} P(s' \mid s, a) \max_{a'} Q_k(s', a')\)における\(\sum_{s'} P(s' \mid s, a)\)がしばしば計算できない。</li>
-                <li>そこで、サンプルを使って期待値を近似し、以下のように\(Q(s, a) \leftarrow Q(s, a) + \alpha \left[ R(s, a) + \gamma \max_{a'} Q(s', a') - Q(s, a) \right]\)Q関数を更新する。</li>                
+                <li>価値反復法の更新式
+                    <div class="scroll">
+                    \begin{align}
+                    Q_{k+1}(s, a) = r(s, a) + \gamma \sum_{s'} P(s' \mid s, a) \max_{a'} Q_k(s', a')
+                    \end{align}
+                    </div>
+                    における\(\sum_{s'} P(s' \mid s, a)\)がしばしば計算できない。</li>
+                <li>そこで、サンプルを使って期待値を近似し、
+                    <div class="scroll">
+                    \begin{align}
+                    Q(s, a) \leftarrow Q(s, a) + \alpha \left[ R(s, a) + \gamma \max_{a'} Q(s', a') - Q(s, a) \right]
+                    \end{align}
+                    </div>
+                    によってQ関数を更新する。</li>                
                 <li>\(s\), \(a\)が「すべての状態行動\(S \times A\)をカバーする」＆「\(\alpha\)が十分小さい」ならば、このサンプル近似による更新は\(Q^{\pi^{*}}\)へ収束する。</li>
             </ul>
             <h3>DQNアルゴリズム</h3>
@@ -147,6 +176,23 @@
                 <li>ネットワークが行動に対応するQ値を出力する。</li>
                 <li>Q学習では、\(S \times A\)マスの行列を用意し、各\((s, a)\)マスに\(Q(s, a)\)の値を格納していた。</li>
                 <li>これからは「状態（画像など）を受け取り、行動空間上の値を返すネットワーク」を使ってQ関数を表現する。</li>
+                <li><b>DQN(Deep Q-Network)</b>では、ベルマン誤差を小さくするようにネットワーク\(Q_{\theta}\)を更新する。</li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
                 <li></li>
             </ul>
             <h3>セクションのまとめ</h3>
