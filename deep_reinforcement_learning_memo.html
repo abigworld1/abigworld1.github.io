@@ -180,7 +180,7 @@
                 <li>ミニバッチ\(D\)を使って、
                     <div class="scroll">
                     \begin{align}
-                    \theta \leftarrow arg\min_{\theta} \mathbb{E}_{D}[(\text{Q_{\theta}のベルマン誤差})^2]
+                    \theta \leftarrow arg\min_{\theta} \mathbb{E}_{D}[(Q_{\theta}\text{のベルマン誤差})^2]
                     \end{align}
                     </div>
                 と更新すればよい。</li>
@@ -199,7 +199,7 @@
                 <li>このとき、DQNの誤差関数は
                     <div class="scroll">
                     \begin{align}
-                    \mathbb{E}_{D}[(\text{Q_{\theta}のベルマン誤差})^2] = \mathbb{E}_{D} [Q_{\theta}(s, a) - (r(s, a) + \gamma \max_{a'} Q_{\theta} (s', a'))]
+                    \mathbb{E}_{D}[(Q_{\theta}\text{のベルマン誤差})^2] = \mathbb{E}_{D} [Q_{\theta}(s, a) - (r(s, a) + \gamma \max_{a'} Q_{\theta} (s', a'))]
                     \end{align}
                     </div>
                 となり、\(r(s, a) + \gamma \max_{a'} Q_{\theta} (s', a')\)が回帰問題における正解ラベルになる。</li>
@@ -214,7 +214,7 @@
                 を損失関数にする。</li>
                 <li>教師あり学習と同じで、更新ごとに使うデータのミニバッチ\(D\)はなるべく偏らない方が良い。</li>
                 <li>更新データに偏りがあると、学習が不安定になってしまう。</li>
-                <li>そこで、学習を安定化させる２つ目の工夫として、Experience Replayがある。</li>
+                <li>そこで、学習を安定化させる２つ目の工夫として、<b>Experience Replay</b>がある。</li>
                 <li>DQNでは過去に経験した\((s, a, r, s')\)のペアを<b>リプレイバッファ</b>と呼ばれるデータセットに蓄積しておき、そこからサンプリングしてミニバッチ学習する。</li>
             </ul>
             <h3>セクションのまとめ</h3>
