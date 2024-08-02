@@ -165,6 +165,76 @@
                     \end{align}
                     </div>
                 </li>
+                <li>具体例</li>
+                <div class="example">
+                    <b>\( f(x, y) = -3x^2 + 2xy - 4y^3 \)の停留点を調べる。</b>
+                    <p>一階偏微分を求める。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        f_x = \frac{\partial f}{\partial x} = -6x + 2y \\
+                        f_y = \frac{\partial f}{\partial y} = 2x - 12y^2
+                        \end{align}
+                        </div>
+                    <p>これらの一階偏微分を0に設定して連立方程式を解く。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        -6x + 2y = 0 \quad \Rightarrow \quad y = 3x \\
+                        2x - 12(3x)^2 = 0 \quad \Rightarrow \quad 2x - 108x^2 = 0 \quad \Rightarrow \quad x(2 - 108x) = 0
+                        \end{align}
+                        </div>
+                    <p>よって、 \( x = 0 \) または \( x = \frac{1}{54} \) である。</p>
+                    <p>それぞれの場合に対応する \( y \) を求める。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        x = 0 \quad \Rightarrow \quad y = 0 \\
+                        x = \frac{1}{54} \quad \Rightarrow \quad y = \frac{1}{18}
+                        \end{align}
+                        </div>
+                    <p>停留点は \( (0, 0) \) と \( \left( \frac{1}{54}, \frac{1}{18} \right) \) である。</p>
+                    <p>次に、二階偏微分を求める。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        f_{xx} = \frac{\partial^2 f}{\partial x^2} = -6 \\
+                        f_{xy} = \frac{\partial^2 f}{\partial x \partial y} = 2 \\
+                        f_{yy} = \frac{\partial^2 f}{\partial y^2} = -24y
+                        \end{align}
+                        </div>
+                    <p>ヘッセ行列 \( H \) は以下の通りである：</p>
+                        <div class="scroll">
+                        \begin{align}
+                        H = \begin{bmatrix}
+                            f_{xx} & f_{xy} \\
+                            f_{xy} & f_{yy}
+                        \end{bmatrix}
+                        = \begin{bmatrix}
+                            -6 & 2 \\
+                            2 & -24y
+                        \end{bmatrix}
+                        \end{align}
+                        </div>
+                    <p>ヘッセ行列の判別式 \( D \) を求める。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        D = f_{xx} f_{yy} - (f_{xy})^2
+                        \end{align}
+                        </div>
+                    <p>停留点 \( (0, 0) \) の場合、</p>
+                        <div class="scroll">
+                        \begin{align}
+                        f_{xx}(0, 0) = -6, \quad f_{yy}(0, 0) = 0, \quad f_{xy}(0, 0) = 2 \\
+                        D(0, 0) = (-6)(0) - (2)^2 = -4
+                        \end{align}
+                        </div>
+                    <p>\( D < 0 \) なので、 \( (0, 0) \) は鞍点である。</p>
+                    <p>停留点 \( \left( \frac{1}{54}, \frac{1}{18} \right) \) の場合</p>
+                        <div class="scroll">
+                        \begin{align}
+                        f_{xx}\left( \frac{1}{54}, \frac{1}{18} \right) = -6, \quad f_{yy}\left( \frac{1}{54}, \frac{1}{18} \right) = -\frac{4}{3}, \quad f_{xy}\left( \frac{1}{54}, \frac{1}{18} \right) = 2 \\
+                        D\left( \frac{1}{54}, \frac{1}{18} \right) = (-6) \left( -\frac{4}{3} \right) - (2)^2 = 8 - 4 = 4
+                        \end{align}
+                        </div>
+                    <p>\( D > 0 \) かつ \( f_{xx} < 0 \) なので、 \( \left( \frac{1}{54}, \frac{1}{18} \right) \) は極大点である。</p>
+                </div>
             </ul>
             <h3>極座標変換</h3>
             <p>参考にしたサイトは以下のとおり。</p>
