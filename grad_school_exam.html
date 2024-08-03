@@ -456,66 +456,52 @@
                     <li>これにより、標本平均 \(\bar{X}\) の期待値は母平均 \(\mu\) に等しいことが示された。</li>
                 </ul>
                 <li><b>不偏分散の不偏性の証明</b></li>
-                <p>不偏分散 <span class="scroll"> \(\hat{\sigma}^2\) </span> は次のように定義される：</p>
+                <li>不偏分散 <span class="scroll"> \(\hat{\sigma}^2\) </span> は次のように定義される：
                 <div class="scroll">
+                    \begin{align}
                     \(\hat{\sigma}^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2\)
+                    \end{align}
                 </div>
-                <p>ここで、<span class="scroll"> \(X_1, X_2, \ldots, X_n\) </span> は独立同分布の標本であり、<span class="scroll"> \(\bar{X}\) </span> は標本平均を表す。標本平均 <span class="scroll"> \(\bar{X}\) </span> は次のように定義される：</p>
+                ここで、\(X_1, X_2, \ldots, X_n\) は独立同分布の標本であり、 \(\bar{X}\) は標本平均を表す。</li>
+                <li>母集団分散 \(\sigma^2\) は次のように定義される：
                 <div class="scroll">
-                    \(\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i\)
+                    \begin{align}
+                    \sigma^2 = \mathbb{E}[(X_i - \mu)^2]
+                    \end{align}
                 </div>
-                <p>不偏分散の不偏性を証明するためには、<span class="scroll"> \(\hat{\sigma}^2\) </span> の期待値が母分散 <span class="scroll"> \(\sigma^2\) </span> に等しいことを示す必要がある。すなわち、</p>
+                ここで、\(\mu = \mathbb{E}[X_i]\) は母平均である。</li>
+                <li>次に、\(\sum_{i=1}^{n} (X_i - \bar{X})^2\) を展開する：
                 <div class="scroll">
-                    \(\mathbb{E}[\hat{\sigma}^2] = \sigma^2\)
+                    \begin{align}
+                    \sum_{i=1}^{n} (X_i - \bar{X})^2 &= \sum_{i=1}^{n} \left( (X_i - \mu) - (\bar{X} - \mu) \right)^2 \\
+                    &= \sum_{i=1}^{n} \left( (X_i - \mu)^2 - 2(X_i - \mu)(\bar{X} - \mu) + (\bar{X} - \mu)^2 \right)
+                    \end{align}
                 </div>
-                <b>1. 分散の定義</b>
-                <p>まず、母集団分散 <span class="scroll"> \(\sigma^2\) </span> は次のように定義される：</p>
+                </li>
+                <li>期待値をとる。独立同分布であることから、\(\mathbb{E}[X_i - \mu] = 0\) であり、以下のようになる：
                 <div class="scroll">
-                    \(\sigma^2 = \mathbb{E}[(X_i - \mu)^2]\)
+                    \begin{align}
+                    \mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)^2\right] = n\sigma^2 \\
+                    \mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)(\bar{X} - \mu)\right] = \sum_{i=1}^{n} \mathbb{E}\left[(X_i - \mu)\right] \mathbb{E}\left[(\bar{X} - \mu)\right] = 0 \\
+                    \mathbb{E}\left[\sum_{i=1}^{n} (\bar{X} - \mu)^2\right] = n\mathbb{E}\left[(\bar{X} - \mu)^2\right] = n \cdot \frac{\sigma^2}{n} = \sigma^2
+                    \end{align}
                 </div>
-                <p>ここで、<span class="scroll"> \(\mu = \mathbb{E}[X_i]\) </span> は母平均である。</p>
-                <b>2. 標本分散の期待値を求める</b>
-                <p>次に、標本分散 <span class="scroll"> \(\hat{\sigma}^2\) </span> の期待値を計算する。</p>
+                </li>
+                <li>これらを合計すると、
                 <div class="scroll">
-                    \(\hat{\sigma}^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2\)
+                    \begin{align}
+                    \mathbb{E}\left[\sum_{i=1}^{n} (X_i - \bar{X})^2\right] = n\sigma^2 - 0 + \sigma^2 = n\sigma^2 - \sigma^2 = (n-1)\sigma^2
+                    \end{align}
                 </div>
-                <p>標本平均 <span class="scroll"> \(\bar{X}\) </span> を用いて、<span class="scroll"> \((X_i - \bar{X})^2\) </span> を展開する：</p>
+                <li>よって、
                 <div class="scroll">
-                    \(\sum_{i=1}^{n} (X_i - \bar{X})^2 = \sum_{i=1}^{n} \left( (X_i - \mu) - (\bar{X} - \mu) \right)^2\)
+                    \begin{align}
+                    \mathbb{E}[\hat{\sigma}^2] = \mathbb{E}\left[\frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2\right] = \frac{1}{n-1} \mathbb{E}\left[\sum_{i=1}^{n} (X_i - \bar{X})^2\right] = \frac{1}{n-1} (n-1) \sigma^2 = \sigma^2
+                    \end{align}
                 </div>
-                <p>これをさらに展開すると：</p>
-                <div class="scroll">
-                    \(\sum_{i=1}^{n} \left( (X_i - \mu)^2 - 2(X_i - \mu)(\bar{X} - \mu) + (\bar{X} - \mu)^2 \right)\)
-                </div>
-                <b>3. 期待値をとる</b>
-                <p>この式の期待値をとる。独立同分布であることから、<span class="scroll"> \(\mathbb{E}[X_i - \mu] = 0\) </span> であり、以下の項に注目する：</p>
-                <div class="scroll">
-                    \(\mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)^2\right] = n\sigma^2\)
-                </div>
-                <div class="scroll">
-                    \(\mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)(\bar{X} - \mu)\right] = \sum_{i=1}^{n} \mathbb{E}\left[(X_i - \mu)\right] \mathbb{E}\left[(\bar{X} - \mu)\right] = 0\)
-                </div>
-                <div class="scroll">
-                    \(\mathbb{E}\left[\sum_{i=1}^{n} (\bar{X} - \mu)^2\right] = n\mathbb{E}\left[(\bar{X} - \mu)^2\right] = n \cdot \frac{\sigma^2}{n} = \sigma^2\)
-                </div>
-                <b>4. 合計して期待値を求める</b>
-                <p>これらを合計すると、</p>
-                <div class="scroll">
-                    \(\mathbb{E}\left[\sum_{i=1}^{n} (X_i - \bar{X})^2\right] = n\sigma^2 - 0 + \sigma^2 = n\sigma^2 - \sigma^2 = (n-1)\sigma^2\)
-                </div>
-                <b>5. 不偏性の証明</b>
-                <p>よって、</p>
-                <div class="scroll">
-                    \(\mathbb{E}[\hat{\sigma}^2] = \mathbb{E}\left[\frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2\right] = \frac{1}{n-1} \mathbb{E}\left[\sum_{i=1}^{n} (X_i - \bar{X})^2\right] = \frac{1}{n-1} (n-1) \sigma^2 = \sigma^2\)
-                </div>
-                <p>したがって、不偏分散 <span class="scroll"> \(\hat{\sigma}^2\) </span> は母分散 <span class="scroll"> \(\sigma^2\) </span> の不偏推定量であることが証明された。</p>
+                となる。</li>
+                <li>したがって、不偏分散 \(\hat{\sigma}^2\) は母分散 \(\sigma^2\) の不偏推定量であることが証明された。</li>
             </ul>
-          <ul>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-          </ul>
         </section>
         <section id="algorithms-data-structures">
           <h2>アルゴリズムとデータ構造</h2>
