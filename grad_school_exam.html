@@ -347,9 +347,9 @@
                             <li>文字列の長さはゼロ以上</li>
                         </ul>
                     </li>
-                    <li>つまり、<code>Σ*</code> は次のような集合である：
+                    <li>つまり、\(Σ*\) は次のような集合である：
                         <ul>
-                            <<li>\(ε\)（空文字列）</li>
+                            <li>\(ε\)（空文字列）</li>
                             <li>長さ1の文字列： \(a, b\)</li>
                             <li>長さ2の文字列： \(aa, ab, ba, bb\)</li>
                             <li>長さ3の文字列： \(aaa, aab, aba, abb, baa, bab, bba, bbb\)</li>
@@ -359,8 +359,6 @@
                 </ul>
                 <li><b>ポンピング定理</b></li>
                 <ul>
-                    <li>ポンピング補題は次のような定理である：</li>
-                    <li><strong>正規言語に関するポンピング補題</strong>：</li>
                     <li>任意の正規言語 \(L\) について、あるポンピング長 \(p\)（自然数）が存在して、\(L\) のすべての文字列 \(s\) が以下の条件を満たす場合に限り、\(s \in L\) である：
                         <ul>
                             <li>\(s\) の長さは \(p\) 以上である。</li>
@@ -372,6 +370,7 @@
                     </li>
                     <li>具体例</li>
                     <div class="example">
+                        <b>言語 \(L = \{0^n 1^n \mid n \geq 0\}\) が正規言語でないことをポンピング定理を使って証明する。</b>
                         <p>仮に、言語 \(L = \{0^n 1^n \mid n \geq 0\}\) が正規言語であると仮定する。すると、ポンピング長 \(p\) が存在するはずである。</p>
                         <ol>
                             <li>\(L\) から \(s\) を選ぶ。ここで、\(s = 0^p 1^p\) とする。この文字列 \(s\) の長さは \(2p\) で、ポンピング補題の条件を満たす。</li>
@@ -395,6 +394,35 @@
         </section>
         <section id="probability-statistics">
           <h2>確率・統計</h2>
+            <h3>推定量の一致性と不偏性</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra13#1-3">うさぎでもわかる線形代数　第13羽　線形写像（後編）　核空間・像空間　線形写像の全射・単射について _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>推定量の一致性 (Consistency of Estimators)</li>
+                <ul>
+                    <li><strong>定義</strong>: 推定量 \(\hat{\theta}_n\) が母数 \(\theta\) の一致推定量であるとは、標本のサイズ \(n\) が無限大に近づくとき、\(\hat{\theta}_n\) が確率収束により母数 \(\theta\) に収束することを言う。</li>
+                    <li>すなわち、任意の正の数 \(\epsilon\) に対して、
+                    <div class="scroll">
+                        \begin{align}
+                        \lim_{{n \to \infty}} P(|\hat{\theta}_n - \theta| < \epsilon) = 1
+                        \end{align}
+                    </div> 
+                    であるとき、\(\hat{\theta}_n\) は \(\theta\) の一致推定量と呼ばれる。</li>
+                    <li>これは、推定量が標本サイズの増加に伴って母数に限りなく近づくことを意味する。</li>
+                </ul>
+                <li>推定量の不偏性 (Unbiasedness of Estimators)</li>
+                <ul>
+                    <li><strong>定義</strong>: 推定量 \(\hat{\theta}\) が母数 \(\theta\) の不偏推定量であるとは、推定量の期待値が母数 \(\theta\) に等しいことを言う。</li>
+                    <li>すなわち、
+                    <div class="scroll">
+                        \begin{align}
+                        E[\hat{\theta}] = \theta
+                        \end{align}
+                    </div> 
+                    であるとき、\(\hat{\theta}\) は \(\theta\) の不偏推定量と呼ばれる。</li>
+                    <li>これは、推定量の平均が真の母数に一致することを意味する。</li>
+                </ul>
+            </ul>
           <ul>
               <li></li>
               <li></li>
