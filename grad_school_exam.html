@@ -459,7 +459,7 @@
                 <li>不偏分散 <span class="scroll"> \(\hat{\sigma}^2\) </span> は次のように定義される：
                 <div class="scroll">
                     \begin{align}
-                    \(\hat{\sigma}^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2\)
+                    \hat{\sigma}^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2
                     \end{align}
                 </div>
                 ここで、\(X_1, X_2, \ldots, X_n\) は独立同分布の標本であり、 \(\bar{X}\) は標本平均を表す。</li>
@@ -470,7 +470,7 @@
                     \end{align}
                 </div>
                 ここで、\(\mu = \mathbb{E}[X_i]\) は母平均である。</li>
-                <li>次に、\(\sum_{i=1}^{n} (X_i - \bar{X})^2\) を展開する：
+                <li>\(\sum_{i=1}^{n} (X_i - \bar{X})^2\) を展開する：
                 <div class="scroll">
                     \begin{align}
                     \sum_{i=1}^{n} (X_i - \bar{X})^2 &= \sum_{i=1}^{n} \left( (X_i - \mu) - (\bar{X} - \mu) \right)^2 \\
@@ -481,9 +481,9 @@
                 <li>期待値をとる。独立同分布であることから、\(\mathbb{E}[X_i - \mu] = 0\) であり、以下のようになる：
                 <div class="scroll">
                     \begin{align}
-                    \mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)^2\right] = n\sigma^2 \\
-                    \mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)(\bar{X} - \mu)\right] = \sum_{i=1}^{n} \mathbb{E}\left[(X_i - \mu)\right] \mathbb{E}\left[(\bar{X} - \mu)\right] = 0 \\
-                    \mathbb{E}\left[\sum_{i=1}^{n} (\bar{X} - \mu)^2\right] = n\mathbb{E}\left[(\bar{X} - \mu)^2\right] = n \cdot \frac{\sigma^2}{n} = \sigma^2
+                    &\mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)^2\right] = n\sigma^2 \\
+                    &\mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)(\bar{X} - \mu)\right] = \sum_{i=1}^{n} \mathbb{E}\left[(X_i - \mu)\right] \mathbb{E}\left[(\bar{X} - \mu)\right] = 0 \\
+                    &\mathbb{E}\left[\sum_{i=1}^{n} (\bar{X} - \mu)^2\right] = n\mathbb{E}\left[(\bar{X} - \mu)^2\right] = n \cdot \frac{\sigma^2}{n} = \sigma^2
                     \end{align}
                 </div>
                 </li>
