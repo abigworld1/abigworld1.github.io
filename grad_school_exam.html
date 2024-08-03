@@ -255,6 +255,51 @@
                     </div>
                 </li>
                 <li>よって、\(dxdy = r \ dr d \theta\)となる。</li>
+                <li>具体例</li>
+                <div class="example">
+                    <b>\(\int _{-1}^1\int _{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}e^{\sqrt{x^2+y^2}}dydx\)を計算する。</b>
+                    <p>極座標変換を行う。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \int _{-1}^1\int _{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}e^{\sqrt{x^2+y^2}}dydx = \int _{0}^{2\pi}\int _{0}^{1}e^{r}rdrd\theta
+                        \end{align}
+                        </div>                  
+                    <p>内側の積分をまず計算する。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \int _{0}^{1}re^{r}dr
+                        \end{align}
+                        </div>        
+                    <p>この積分は部分積分を用いて解く。<br>部分積分の公式： \(\int u dv = uv - \int v du\)</p>
+                    <ul>
+                        <li>\(u = r \Rightarrow du = dr\)</li>
+                        <li>\(dv = e^r dr \Rightarrow v = e^r\)</li>
+                    </ul>
+                        <div class="scroll">
+                        \begin{align}
+                        \int r e^r dr = r e^r - \int e^r dr = r e^r - e^r
+                        \end{align}
+                        </div> 
+                    <p>これを\(0\)から\(1\)の範囲で評価する：</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \left[ r e^r - e^r \right]_{0}^{1} = (1 e^1 - e^1) - (0 e^0 - e^0) = (e - e) - (0 - 1) = 1
+                        \end{align}
+                        </div> 
+                    <p>したがって、内側の積分の結果は \(1\) である。</p>
+                    <p>次に外側の積分を計算する：<</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \int _{0}^{2\pi} 1 d\theta = \int _{0}^{2\pi} d\theta = 2\pi
+                        \end{align}
+                        </div> 
+                    <p>したがって、元の2重積分の結果は：<</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \int _{-1}^1\int _{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}e^{\sqrt{x^2+y^2}}dydx = 2\pi
+                        \end{align}
+                        </div> 
+                </div>
             </ul>
         </section>
         <section id="info-math">
