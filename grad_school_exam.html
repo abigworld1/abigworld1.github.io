@@ -502,6 +502,39 @@
                 となる。</li>
                 <li>したがって、不偏分散 \(\hat{\sigma}^2\) は母分散 \(\sigma^2\) の不偏推定量であることが証明された。</li>
             </ul>
+            <li><b>標本平均の一致性の証明</b></li>
+                <ul>
+                    <li>標本平均 \(\bar{X}\) は、次のように定義される。
+                    <div class="scroll">
+                        \begin{align}
+                        \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li>期待値の線形性により、次の式が成り立つ。
+                    <div class="scroll">
+                        \begin{align}
+                        E\left[\bar{X}\right] = E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] = \frac{1}{n} \sum_{i=1}^n E[X_i]
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li>母集団からの各標本 \(X_i\) の期待値は母平均 \(\mu\) に等しい。</li>
+                    <li>つまり、
+                    <div class="scroll">
+                        \begin{align}
+                        E[X_i] = \mu \quad \forall i
+                        \end{align}
+                    </div> 
+                    である。</li>
+                    <li>以上を踏まえて、標本平均 \(\bar{X}\) の期待値を計算する。
+                    <div class="scroll">
+                        \begin{align}
+                        E\left[\bar{X}\right] = \frac{1}{n} \sum_{i=1}^n E[X_i] = \frac{1}{n} \sum_{i=1}^n \mu = \frac{1}{n} \cdot n \cdot \mu = \mu
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li>これにより、標本平均 \(\bar{X}\) の期待値は母平均 \(\mu\) に等しいことが示された。</li>
+                </ul>
         </section>
         <section id="algorithms-data-structures">
           <h2>アルゴリズムとデータ構造</h2>
