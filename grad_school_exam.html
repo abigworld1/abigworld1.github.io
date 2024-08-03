@@ -398,7 +398,7 @@
             <p>参考にしたサイトは以下のとおり。</p>
             <p><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra13#1-3">うさぎでもわかる線形代数　第13羽　線形写像（後編）　核空間・像空間　線形写像の全射・単射について _ 工業大学生ももやまのうさぎ塾.html</a></p>
             <ul>
-                <li>推定量の一致性 (Consistency of Estimators)</li>
+                <li><b>推定量の一致性 (Consistency of Estimators)</b></li>
                 <ul>
                     <li><strong>定義</strong>: 推定量 \(\hat{\theta}_n\) が母数 \(\theta\) の一致推定量であるとは、標本のサイズ \(n\) が無限大に近づくとき、\(\hat{\theta}_n\) が確率収束により母数 \(\theta\) に収束することを言う。</li>
                     <li>すなわち、任意の正の数 \(\epsilon\) に対して、
@@ -410,7 +410,7 @@
                     であるとき、\(\hat{\theta}_n\) は \(\theta\) の一致推定量と呼ばれる。</li>
                     <li>これは、推定量が標本サイズの増加に伴って母数に限りなく近づくことを意味する。</li>
                 </ul>
-                <li>推定量の不偏性 (Unbiasedness of Estimators)</li>
+                <li><b>推定量の不偏性 (Unbiasedness of Estimators)</b></li>
                 <ul>
                     <li><strong>定義</strong>: 推定量 \(\hat{\theta}\) が母数 \(\theta\) の不偏推定量であるとは、推定量の期待値が母数 \(\theta\) に等しいことを言う。</li>
                     <li>すなわち、
@@ -421,6 +421,79 @@
                     </div> 
                     であるとき、\(\hat{\theta}\) は \(\theta\) の不偏推定量と呼ばれる。</li>
                     <li>これは、推定量の平均が真の母数に一致することを意味する。</li>
+                </ul>
+                <li><b>標本平均の不偏性の証明</b></li>
+                <ul>
+                    <li>標本平均 \(\bar{X}\) は、次のように定義される。
+                    <div class="scroll">
+                        \begin{align}
+                        \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li>期待値の線形性により、次の式が成り立つ。
+                    <div class="scroll">
+                        \begin{align}
+                        E\left[\bar{X}\right] = E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] = \frac{1}{n} \sum_{i=1}^n E[X_i]
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li>母集団からの各標本 \(X_i\) の期待値は母平均 \(\mu\) に等しい。</li>
+                    <li>つまり、
+                    <div class="scroll">
+                        \begin{align}
+                        E[X_i] = \mu \quad \forall i
+                        \end{align}
+                    </div> 
+                    である。</li>
+                    <li>以上を踏まえて、標本平均 \(\bar{X}\) の期待値を計算する。
+                    <div class="scroll">
+                        \begin{align}
+                        E\left[\bar{X}\right] = \frac{1}{n} \sum_{i=1}^n E[X_i] = \frac{1}{n} \sum_{i=1}^n \mu = \frac{1}{n} \cdot n \cdot \mu = \mu
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li>これにより、標本平均 \(\bar{X}\) の期待値は母平均 \(\mu\) に等しいことが示された。</li>
+                </ul>
+                <li><b>不偏分散の不偏性の証明</b></li>
+                <ul>
+                    <li>標本 \(\{X_1, X_2, \ldots, X_n\}\) の不偏分散は次のように定義される。
+                    <div class="scroll">
+                        \begin{align}
+                        \hat{\sigma^2} = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li>この期待値は、以下のように計算できる。
+                    <div class="scroll">
+                        \begin{align}
+                        E(\hat{\sigma^2}) &= E\biggl(\frac{1}{n-1}\sum_{n=1}^{N}\bigl( X_i-\bar{X} \bigr)^2\biggr)  \\
+                         &= \frac{1}{n-1}E\biggl( \sum_{n=1}^{N} \Bigl( X_i-\mu+\mu-\bar{X}  \Bigr)^2  \biggr) \\ 
+                         &= \frac{1}{n-1}E\biggl( \sum_{n=1}^{N} \bigl( X_i-\mu \bigr)^2  +2\bigl( \mu-\bar{X} \bigr) \sum_{n=1}^{N} \bigl(  X_i -\mu \bigr)  + \sum_{n=1}^{N}  \bigl( \mu - \bar{X}  \bigr)^2   \bigr)   \biggr)  \\ 
+                         &= \frac{1}{n-1}E\biggl( \sum_{n=1}^{N} \bigl( X_i-\mu \bigr)^2  -2n\bigl( \bar{X}-\mu \bigr)^2 + n \bigl( \bar{X}-\mu   \bigr)^2  \biggr)  \\ 
+                         &= \frac{1}{n-1}\biggl( E \Bigl( \sum_{n=1}^{N} \bigl( X_i-\mu  \bigr)^2 \Bigr) -E\Bigl(n \bigl(  \bar{X} - \mu \bigr) ^2   \Bigr) \biggr)  \\ 
+                         &= \frac{1}{n-1} \biggl(   n \sigma^2 - n \frac{\sigma^2}{n}  \biggr) \\
+                         &= \frac{1}{n-1} \bigl( n-1 \bigr)\sigma^2 \\
+                         &= \sigma^2 
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li><strong>各標本の期待値</strong>: 母集団からの各標本 \(X_i\) の期待値は母平均 \(\mu\) に等しいとする。</li>
+                    <li>つまり、
+                    <div class="scroll">
+                        \begin{align}
+                        E[X_i] = \mu \quad \forall i
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li><strong>期待値の計算</strong>: 上記の事実を用いて、標本平均 \(\bar{X}\) の期待値を計算する。
+                    <div class="scroll">
+                        \begin{align}
+                        E\left[\bar{X}\right] = \frac{1}{n} \sum_{i=1}^n E[X_i] = \frac{1}{n} \sum_{i=1}^n \mu = \frac{1}{n} \cdot n \cdot \mu = \mu
+                        \end{align}
+                    </div> 
+                    </li>
+                    <li>これにより、標本平均 \(\bar{X}\) の期待値は母平均 \(\mu\) に等しいことが示された。</li>
                 </ul>
             </ul>
           <ul>
