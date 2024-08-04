@@ -519,6 +519,55 @@
                     </li>
                     <li>したがって、標本分散は不偏性を持たず、不偏分散は不偏性を持つ。</li>
                 </ul>
+                <h3>条件付き確率とベイズの定理</h3>
+                <p>参考にしたサイトは以下のとおり。</p>
+                <p><a href="https://mathphysnote.com/bayes-theorem/">条件付き確率とベイズの定理 〜検査結果の陽性が正しい確率を求める〜 - とある数物研究者の覚書.html</a></p>
+                <ul>
+                    <li>事象\(B\)が起こったときの事象\(A\)が起こる条件付き確率\(P(A|B)\)を以下のように定義する。
+                        <div class="scroll">
+                        \begin{align}
+                        P(A|B) = \frac{P(A \cap B)}{P(B)}
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>次のベイズの定理は、\(P(B|A)\)が分かっている状態で\(P(A|B)\)を求めたいときに有効である。
+                        <div class="scroll">
+                        \begin{align}
+                        P(A|B) = \frac{P(A)P(B|A)}{P(B)}
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>この式は、条件付き確率の定義を用いて、\(P(A \cap B)\)を二通りで表すことによって導くことができる。</li>
+                    <li>具体例</li>
+                    <div class="example">
+                        <b>検査結果の陽性が正しい確率</b>
+                        <p>ある病気の検査結果について、以下の事実が分かっている。</p>
+                        <ol>
+                            <li>この検査の真陽性率（感度; True positive）は90%である。</li>
+                            <li>この検査の真陰性率（特異度; True negative）は80%である。</li>
+                            <li>全体の人口の5%がこの病気に罹患している。</li>
+                        </ol>
+                        <p>検査で陽性と判定された場合、実際に病気に罹患している確率を求めたい。</p>
+                        <div class="scroll">
+                        \begin{table}[h]
+                            \centering
+                            \begin{tabular}{|c|c|c|}
+                                \hline
+                                \multicolumn{2}{|c|}{検査結果} & \\
+                                \hline
+                                \multicolumn{2}{|c|}{} & 陽性（事象B） & 陰性 \\
+                                \hline
+                                \multirow{2}{*}{病気に罹っているか} & 罹っている（事象A） & $a$ & $b$ \\
+                                \cline{2-4}
+                                & 罹っていない & $c$ & $d$ \\
+                                \hline
+                            \end{tabular}
+                            \caption{検査結果の表}
+                            \label{tab:result}
+                        \end{table}
+                        </div>
+                </div>
+                </ul>
             </ul>
         </section>
         <section id="algorithms-data-structures">
