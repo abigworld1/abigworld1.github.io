@@ -490,43 +490,37 @@
                 <li>不偏推定量でなければ、推定には<b>偏り</b>があるといい、偏りを\(E[\hat{\theta}] - \theta\)で定義する。</li>
                 <li><b>標本平均</b></li>
                 <ul>
-                    <li>大数の弱法則\(\overline{x} xrightarrow{P} \mu\)から、平均\(\overline{x}\)は\(n\)が大きくなると母平均に近づく。</li>
+                    <li>
+                        <div class="scroll">
+                        \begin{align}
+                        E[\overline{x}] = \frac{1}{n} \sum_{i=1}^{n} E[x_i] = frac{1}{n} \sum_{i=1}^{n} \mu = \mu
+                        \end{align}
+                        </div>
+                    </li>
                 </ul>
-                <li><b>標本分散</b></li>
+                <li><b>分散</b></li>
                 <ul>
-                    <li>標本分散は以下の式で表される。
+                    <li>偏差平方和を\(T_{xx} = \sum (x_i - \overline{x})^2\)とおくと、
                         <div class="scroll">
                         \begin{align}
-                        s^2 = 1/n \sum_{i=1}^n (x_i - \overline{x})^2
+                        T_{xx} &= \sum (x_i - \overline{x})^2 \\
+                            &= \sum [(x_i - \mu) - (\overline{x} - \mu)]^2 \\
+                            &= \sum (x_i - \mu)^2 - n(\overline{x} - \mu)^2 \\
+                        \end{align}
+                        </div>
+                    となる。</li>
+                    <li>ここで期待値を計算すると次の結果が得られる。
+                        <div class="scroll">
+                        \begin{align}
+                        E[T_{xx}] &= \sum E[(x_i - \mu)^2] - n E[(\overline{x} - \mu)^2] \\
+                            &= \sum V[x_i] - nV[\overline{x}]
+                            &= n \sigma^2 - n \frac{\sigma^2}{n}
+                            &= (n-1) \sigma^2
                         \end{align}
                         </div>
                     </li>
-                    <li>この式は、以下のように変形できる。
-                        <div class="scroll">
-                        \begin{align}
-                        s^2 &= 1/n \sum_{i=1}^n (x_i - \overline{x})^2 \\
-                            &= 1/n \sum_{i=1}^n ((x_i - \mu) - (\overline{x} - \mu))^2 \\
-                            &= 1/n \sum_{i=1}^n (x_i - \mu)^2 - (\overline{x} - \mu)^2 \\
-                        \end{align}
-                        </div>
-                    </li>
-                    <li>この式の第２項は\((\overline{x} - \mu) \xrightarrow{P} 0\)であるため、\((\overline{x} - \mu)^2 \xrightarrow{P} 0\)となる。</li>
-                    <li>また、\(\nu_i = (x_i - \mu)^2\)とおくと、\(\nu_i\)は互いに独立で同じ分布に従う確率変数となり、大数の法則を適用できる。</li>
-                    <li>これから、第１項は\(\overline{\nu} \xrightarrow{P} \sigma^2\)となり、\(s^2 \xrightarrow{P} \sigma^2\)がいえる。</li>
+                    <li>したがって、標本分散は不偏性を持たず、不偏分散は不偏性を持つ。</li>
                 </ul>
-                <li><b>不偏分散</b></li>
-                <ul>
-                    <li>不偏分散は以下の式で表される。
-                        <div class="scroll">
-                        \begin{align}
-                        u^2 = frac{1}{n-1} \sum_{i=1}^n (x_i - \overline{x})^2
-                        \end{align}
-                        </div>
-                    </li>
-                    <li>\(n \rightarrow \infinity\)のとき、無限大に発散する分母について、\(s^2\)と高々１しか差がない\(u^2\)も一致性を持つ。</li>
-                </ul>
-                <li></li>
-                <li></li>
             </ul>
         </section>
         <section id="algorithms-data-structures">
