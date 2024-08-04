@@ -383,8 +383,16 @@
                         </ol>
                         <p>しかし、\(i \neq 1\) の場合を考える。</p>
                         <ul>
-                            <li>\(i = 0\) のとき、\(xy^0z = xz = 0^a 0^{p-a-b} 1^p = 0^{p-b} 1^p\) である。ここで、\(b > 0\) なので、この文字列は \(0\) の数と \(1\) の数が一致せず、\(L\) に属さない。</li>
-                            <li>\(i = 2\) のとき、\(xy^2z = xyyz = 0^a 0^{2b} 0^{p-a-b} 1^p = 0^{p+b} 1^p\) である。ここでも、\(b > 0\) なので、この文字列も \(0\) の数と \(1\) の数が一致せず、\(L\) に属さない。</li>
+                            <li>\(i = 0\) のとき、
+                                <div class="scroll">
+                                xy^0z = xz = 0^a 0^{p-a-b} 1^p = 0^{p-b} 1^p
+                                </div>
+                            である。ここで、\(b > 0\) なので、この文字列は \(0\) の数と \(1\) の数が一致せず、\(L\) に属さない。</li>
+                            <li>\(i = 2\) のとき、
+                                <div class="scroll">
+                                xy^2z = xyyz = 0^a 0^{2b} 0^{p-a-b} 1^p = 0^{p+b} 1^p
+                                </div>
+                            である。ここでも、\(b > 0\) なので、この文字列も \(0\) の数と \(1\) の数が一致せず、\(L\) に属さない。</li>
                         </ul>
                         <p>これらの例から、\(xy^iz\) が \(L\) に属さない \(i\) が存在することが示される。したがって、ポンピング補題の条件を満たさないため、仮定に矛盾する。</p>
                         <p>したがって、言語 \(L = \{0^n 1^n \mid n \geq 0\}\) は正規言語ではないことが証明された。</p>
@@ -548,23 +556,31 @@
                             <li>全体の人口の5%がこの病気に罹患している。</li>
                         </ol>
                         <p>検査で陽性と判定された場合、実際に病気に罹患している確率を求めたい。</p>
+                        
                         <div class="scroll">
-                        \begin{table}[h]
-                            \centering
-                            \begin{tabular}{|c|c|c|}
-                                \hline
-                                \multicolumn{2}{|c|}{検査結果} & \\
-                                \hline
-                                \multicolumn{2}{|c|}{} & 陽性（事象B） & 陰性 \\
-                                \hline
-                                \multirow{2}{*}{病気に罹っているか} & 罹っている（事象A） & $a$ & $b$ \\
-                                \cline{2-4}
-                                & 罹っていない & $c$ & $d$ \\
-                                \hline
-                            \end{tabular}
-                            \caption{検査結果の表}
-                            \label{tab:result}
-                        \end{table}
+                        <table>
+                            <tr>
+                                <th colspan="2"></th>
+                                <th colspan="2">検査結果</th>
+                            </tr>
+                            <tr>
+                                <th rowspan="2" class="rotate">病気に<br>罹っているか</th>
+                                <th></th>
+                                <th>陽性（事象B）</th>
+                                <th>陰性</th>
+                            </tr>
+                            <tr>
+                                <th>罹っている（事象A）</th>
+                                <td>a</td>
+                                <td>b</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>罹っていない</th>
+                                <td>c</td>
+                                <td>d</td>
+                            </tr>
+                        </table>
                         </div>
                 </div>
                 </ul>
