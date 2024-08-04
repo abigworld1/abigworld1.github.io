@@ -583,7 +583,30 @@
                         </div>
                         <p>表のように事象\(A, B\)を定めると、求めたい確率は\(P(A|B)\)となる。</p>
                         <p>１つ目の条件より、\(P(B|A) = 0.90\)である。</p>
-                        <p>２つ目の条件より、\(P(B|A) = 0.90\)である。</p>
+                        <p>２つ目の条件より、\(P(B^c|A^c) = 0.80\)、すなわち、\(P(B|A^c) = 1.00 - 0.80 = 0.20\)である。</p>
+                        <p>３つ目の条件より、\(P(A) = 0.05\)、すなわち、\(P(A^c) = 0.95\)である。</p>
+                        <p>また、\(P(B)\)は以下のように展開できる。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        P(B) &= B \cap \Omega \\
+                            &= B \cap (A \cup A^c) \\
+                            &= (B \cap A) \cup (B cap A^c)
+                        \end{align}
+                        </div>
+                        <p>この式に、条件付き確率の式\(P(B|A) = \frac{P(B \cap A)}{P(A)}\)を用いると、ベイズの式は以下のように変形できる。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        P(A|B) &= \frac{P(A)P(B|A)}{P(B)} \\
+                            &= \frac{P(A)P(B|A)}{P(A)P(B|A) + P(A^c)P(B|A^c)}
+                        \end{align}
+                        </div>
+                        <p>したがって、</p>
+                        <div class="scroll">
+                        \begin{align}
+                        P(A|B) &= \frac{0.05 \times 0.90}{0.05 \times 0.90 + 0.95 \times 0.20} \simeq 0.19
+                        \end{align}
+                        </div>
+                        <p>となる。</p>
                 </div>
                 </ul>
             </ul>
