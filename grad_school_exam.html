@@ -352,7 +352,13 @@
                             <li>\(ε\)（空文字列）</li>
                             <li>長さ1の文字列： \(a, b\)</li>
                             <li>長さ2の文字列： \(aa, ab, ba, bb\)</li>
-                            <li>長さ3の文字列： \(aaa, aab, aba, abb, baa, bab, bba, bbb\)</li>
+                            <li>長さ3の文字列： 
+                                <div class="scroll">
+                                \begin{align}
+                                aaa, aab, aba, abb, baa, bab, bba, bbb
+                                \end{align}
+                                </div> 
+                            </li>
                             <li>など、任意の有限長のすべての組み合わせ</li>
                         </ul>
                     </li>
@@ -394,117 +400,51 @@
         </section>
         <section id="probability-statistics">
           <h2>確率・統計</h2>
-            <h3>推定量の一致性と不偏性</h3>
             <p>参考にした本は以下のとおり。</p>
             <p><a href="https://www.amazon.co.jp/%E6%94%B9%E8%A8%82%E7%89%88-%E6%97%A5%E6%9C%AC%E7%B5%B1%E8%A8%88%E5%AD%A6%E4%BC%9A%E5%85%AC%E5%BC%8F%E8%AA%8D%E5%AE%9A-%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A2%E7%B4%9A%E5%AF%BE%E5%BF%9C-%E7%B5%B1%E8%A8%88%E5%AD%A6%E5%9F%BA%E7%A4%8E-%E7%94%B0%E4%B8%AD%E8%B1%8A/dp/4489022271/ref=sr_1_3?adgrpid=118645167349&dib=eyJ2IjoiMSJ9.tqheIVwzNsAlWRtDMXpk4NQuS-Y3KADO2zuJVrYBspygQ-wuTir-4Zh8ZccMsf6hif_83PZ9kySPkkoITDdWUa6ipD1MaPRi0Pvb8Fsxyoen0-IcBaseJIM5lZbG_2f-Bmy9i4NWn4GJlyD2nWgtvjYngUr26gaISrg2sSB7CBeIDGkgl9iHQpriMgPZCYevDn16ax_7dg_j2YfDOTEsEUUnGkaOOcuYJtUGSL1REs-viAjaz9CfdZaetJeMn8edfB5RF27GSp4DK5Im-q-9yKoe3FTymhvb6z2cCOblnC0.AYS8Y7i56awkZav04EPeM51WBXaA4QbTF7kHfUD_MQE&dib_tag=se&hvadid=666001842902&hvdev=c&hvqmt=b&hvtargid=kwd-536488505477&hydadcr=27299_14701689&jp-ad-ap=0&keywords=%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A2%E7%B4%9A&qid=1722681801&sr=8-3">改訂版　日本統計学会公式認定　統計検定２級対応　統計学基礎</a></p>
+            <h3>チェビシェフの不等式</h3>
             <ul>
-                <li><b>推定量の一致性 (Consistency of Estimators)</b></li>
+                <li>期待値\(\mu\)、分散\(\sigma\)をもつ確率分布に従う確率変数\(X\)があるとする。</li>
+                <li>このとき、任意の\(k\)に対して次の不等式が成り立つ。
+                    <div class="scroll">
+                    \begin{align}
+                    P(|X-\mu| \geq k\sigma) \leq 1/k^2
+                    \end{align}
+                    </div>
+                </li>
+                <li>\(\epsilon = k\sigma\)とおくと、次の式に変形できる。
+                    <div class="scroll">
+                    \begin{align}
+                    P(|X-\mu|\geq\epsilon)\leq\frac{\sigma^2}{\epsilon^2} \\
+                    P(|X-\mu|<\epsilon)\geq\frac{1-\sigma^2}{\epsilon^2}
+                    \end{align}
+                    </div>
+                </li>
+            </ul>
+            <h3>大数の法則</h3>
+            <ul>
+                <li>大数の法則は多数回の試行の結果として得られたデータの平均（標本平均）や相対度数が、試行回数\(n\)を大きくするとき、確率分布の平均（母平均）や生起確率に近づくことを保証する理論的根拠となっている定理である。</li>
+                <li>\(X_1, X_2, ..., X_n\)が互いに独立に平均\(\mu\)、分散\(\sigma^2\)の同一の確率分布に従うとする。</li>
+                <li>このとき、平均\(\overline{X}=(X_1+X_2+...+X_n)/n\)の期待値と分散は\(E[\overline{X}]=\mu, V[\overline{X}]=\frac{\sigma^2}{n}\)となる。</li>
+                <li>\(\overline{X}\)の場合についてチェビシェフの不等式を求めると
+                    <div class="scroll">
+                    \begin{align}
+                    P(|\overline{X}-\mu|<\epsilon)\geq\frac{1-\sigma^2}{n\epsilon^2}
+                    \end{align}
+                    </div>
+                となり、\(n\)を大きくするとき次の性質を持つことがいえる。</li>
+                <li><b>定理（大数の弱法則）</b></li>
                 <ul>
-                    <li><strong>定義</strong>: 推定量 \(\hat{\theta}_n\) が母数 \(\theta\) の一致推定量であるとは、標本のサイズ \(n\) が無限大に近づくとき、\(\hat{\theta}_n\) が確率収束により母数 \(\theta\) に収束することを言う。</li>
-                    <li>すなわち、任意の正の数 \(\epsilon\) に対して、
-                    <div class="scroll">
+                    <li>\(X_1, X_2, ..., X_n\)が互いに独立に平均\(\mu\)、分散\(\sigma^2\)の同一の確率分布に従うとき、任意の\(\epsilon\)に対して
+                        <div class="scroll">
                         \begin{align}
-                        \lim_{{n \to \infty}} P(|\hat{\theta}_n - \theta| < \epsilon) = 1
+                        \lim_{n \to \infty} P(|\overline{X}-\mu|<\epsilon)=1
                         \end{align}
-                    </div> 
-                    であるとき、\(\hat{\theta}_n\) は \(\theta\) の一致推定量と呼ばれる。</li>
-                    <li>これは、推定量が標本サイズの増加に伴って母数に限りなく近づくことを意味する。</li>
+                        </div>
+                    が成り立つ。</li>
+                    <li>これを標本平均\overline{X}は母平均\(\mu\)に確率収束するといい、\(\overline{X} \xrightarrow{P} \mu\)と表す。</li>
+                    <li>これより、標本平均\overline{X}は\(n\)を無限に大きくするとき期待値（母平均）\(\mu\)に近づくことがわかる。</li>
                 </ul>
-                <li><b>推定量の不偏性 (Unbiasedness of Estimators)</b></li>
-                <ul>
-                    <li><strong>定義</strong>: 推定量 \(\hat{\theta}\) が母数 \(\theta\) の不偏推定量であるとは、推定量の期待値が母数 \(\theta\) に等しいことを言う。</li>
-                    <li>すなわち、
-                    <div class="scroll">
-                        \begin{align}
-                        E[\hat{\theta}] = \theta
-                        \end{align}
-                    </div> 
-                    であるとき、\(\hat{\theta}\) は \(\theta\) の不偏推定量と呼ばれる。</li>
-                    <li>これは、推定量の平均が真の母数に一致することを意味する。</li>
-                </ul>
-                <li><b>標本平均の不偏性の証明</b></li>
-                <ul>
-                    <li>標本平均 \(\bar{X}\) は、次のように定義される。
-                    <div class="scroll">
-                        \begin{align}
-                        \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i
-                        \end{align}
-                    </div> 
-                    </li>
-                    <li>期待値の線形性により、次の式が成り立つ。
-                    <div class="scroll">
-                        \begin{align}
-                        E\left[\bar{X}\right] = E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] = \frac{1}{n} \sum_{i=1}^n E[X_i]
-                        \end{align}
-                    </div> 
-                    </li>
-                    <li>母集団からの各標本 \(X_i\) の期待値は母平均 \(\mu\) に等しい。</li>
-                    <li>つまり、
-                    <div class="scroll">
-                        \begin{align}
-                        E[X_i] = \mu \quad \forall i
-                        \end{align}
-                    </div> 
-                    である。</li>
-                    <li>以上を踏まえて、標本平均 \(\bar{X}\) の期待値を計算する。
-                    <div class="scroll">
-                        \begin{align}
-                        E\left[\bar{X}\right] = \frac{1}{n} \sum_{i=1}^n E[X_i] = \frac{1}{n} \sum_{i=1}^n \mu = \frac{1}{n} \cdot n \cdot \mu = \mu
-                        \end{align}
-                    </div> 
-                    </li>
-                    <li>これにより、標本平均 \(\bar{X}\) の期待値は母平均 \(\mu\) に等しいことが示された。</li>
-                </ul>
-                <li><b>不偏分散の不偏性の証明</b></li>
-                <ul>
-                    <li>不偏分散 <span class="scroll"> \(\hat{\sigma}^2\) </span> は次のように定義される：
-                    <div class="scroll">
-                        \begin{align}
-                        \hat{\sigma}^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2
-                        \end{align}
-                    </div>
-                    ここで、\(X_1, X_2, \ldots, X_n\) は独立同分布の標本であり、 \(\bar{X}\) は標本平均を表す。</li>
-                    <li>母集団分散 \(\sigma^2\) は次のように定義される：
-                    <div class="scroll">
-                        \begin{align}
-                        \sigma^2 = \mathbb{E}[(X_i - \mu)^2]
-                        \end{align}
-                    </div>
-                    ここで、\(\mu = \mathbb{E}[X_i]\) は母平均である。</li>
-                    <li>\(\sum_{i=1}^{n} (X_i - \bar{X})^2\) を展開する：
-                    <div class="scroll">
-                        \begin{align}
-                        \sum_{i=1}^{n} (X_i - \bar{X})^2 &= \sum_{i=1}^{n} \left( (X_i - \mu) - (\bar{X} - \mu) \right)^2 \\
-                        &= \sum_{i=1}^{n} \left( (X_i - \mu)^2 - 2(X_i - \mu)(\bar{X} - \mu) + (\bar{X} - \mu)^2 \right)
-                        \end{align}
-                    </div>
-                    </li>
-                    <li>期待値をとる。独立同分布であることから、\(\mathbb{E}[X_i - \mu] = 0\) であり、以下のようになる：
-                    <div class="scroll">
-                        \begin{align}
-                        &\mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)^2\right] = n\sigma^2 \\
-                        &\mathbb{E}\left[\sum_{i=1}^{n} (X_i - \mu)(\bar{X} - \mu)\right] = \sum_{i=1}^{n} \mathbb{E}\left[(X_i - \mu)\right] \mathbb{E}\left[(\bar{X} - \mu)\right] = 0 \\
-                        &\mathbb{E}\left[\sum_{i=1}^{n} (\bar{X} - \mu)^2\right] = n\mathbb{E}\left[(\bar{X} - \mu)^2\right] = n \cdot \frac{\sigma^2}{n} = \sigma^2
-                        \end{align}
-                    </div>
-                    </li>
-                    <li>これらを合計すると、
-                    <div class="scroll">
-                        \begin{align}
-                        \mathbb{E}\left[\sum_{i=1}^{n} (X_i - \bar{X})^2\right] = n\sigma^2 - 0 + \sigma^2 = n\sigma^2 - \sigma^2 = (n-1)\sigma^2
-                        \end{align}
-                    </div>
-                    <li>よって、
-                    <div class="scroll">
-                        \begin{align}
-                        \mathbb{E}[\hat{\sigma}^2] = \mathbb{E}\left[\frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2\right] = \frac{1}{n-1} \mathbb{E}\left[\sum_{i=1}^{n} (X_i - \bar{X})^2\right] = \frac{1}{n-1} (n-1) \sigma^2 = \sigma^2
-                        \end{align}
-                    </div>
-                    となる。</li>
-                    <li>したがって、不偏分散 \(\hat{\sigma}^2\) は母分散 \(\sigma^2\) の不偏推定量であることが証明された。</li>
-                </ul>
-                <li><b>標本平均の一致性の証明</b></li>
-                <li><b>不偏分散の一致性の証明</b></li>
             </ul>
         </section>
         <section id="algorithms-data-structures">
