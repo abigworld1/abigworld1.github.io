@@ -125,3 +125,19 @@ button[type="submit"]:hover {
     padding: 10px;
     margin: 10px 0;
 }
+
+table {
+    width: 50%;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+.rotate {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
