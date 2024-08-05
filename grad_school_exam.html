@@ -1226,19 +1226,19 @@ def GCD(a, b):
                 </b></li>
                 <ul>     
                         <li>活性化関数 \( f \) は恒等関数 \( f(s) = s \) であるため、 \( z^\mu = y^\mu \) となる。したがって、</li>
-                        <li style="text-align: center;">\( z^\mu = \sum_{j=1}^K w_j x_j^\mu + b \)</li>
+                        <p style="text-align: center;">\( z^\mu = \sum_{j=1}^K w_j x_j^\mu + b \)</p>
                         <li>次に、誤差関数 \( E \) を \( b \) で偏微分する。</li>
-                        <li style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \right) \)</li>
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \right) \)</p>
                         <li>これをチェーンルールを用いて計算する。まず、 \( (t^\mu - z^\mu)^2 \) の \( b \) に関する偏微分を求める。</li>
-                        <li style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) \left( \frac{\partial}{\partial b} (t^\mu - z^\mu) \right) \)</li>
+                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) \left( \frac{\partial}{\partial b} (t^\mu - z^\mu) \right) \)</p>
                         <li>次に、 \( \frac{\partial}{\partial b} (t^\mu - z^\mu) \) を求める。</li>
-                        <li style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu) = \frac{\partial}{\partial b} \left( t^\mu - \left( \sum_{j=1}^K w_j x_j^\mu + b \right) \right) = -1 \)</li>
+                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu) = \frac{\partial}{\partial b} \left( t^\mu - \left( \sum_{j=1}^K w_j x_j^\mu + b \right) \right) = -1 \)</p>
                         <li>したがって、</li>
-                        <li style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) (-1) = -2 (t^\mu - z^\mu) \)</li>
+                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) (-1) = -2 (t^\mu - z^\mu) \)</p>
                         <li>これを誤差関数 \( E \) の偏微分に戻す。</li>
-                        <li style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{1}{2} \sum_\mu \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = \frac{1}{2} \sum_\mu (-2) (t^\mu - z^\mu) = -\sum_\mu (t^\mu - z^\mu) \)</li>
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{1}{2} \sum_\mu \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = \frac{1}{2} \sum_\mu (-2) (t^\mu - z^\mu) = -\sum_\mu (t^\mu - z^\mu) \)</p>
                         <li>まとめると、誤差関数 \( E \) のバイアス \( b \) に関する偏微分は次のようになる。</li>
-                        <li style="text-align: center;">\( \frac{\partial E}{\partial b} = -\sum_\mu (t^\mu - z^\mu) \)</li>
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = -\sum_\mu (t^\mu - z^\mu) \)</p>
                 </ul>
                 <li><b style="color:brown">
                     【2】【1】のモデルを使って、２クラス分類問題を考える。入力\(x^\mu\)に対する正解ラベルは\(t^\mu \in {0, 1}\)とする。
@@ -1246,57 +1246,59 @@ def GCD(a, b):
                     ただし、\(\ln\)はネイピア数\(e\)を底とする自然対数である。
                     <div class="scroll">\begin{align}
                         f(y^\mu) = \frac{1}{1 + e^{-y^\mu}} \tag{2.1} \) \\
-                        E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2} 
+                        E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2}
+                        \end{align}</div>
                 </b></li>
                 <ul>
                     <li>シグモイド関数 \( f \) は以下のように定義される。</li>
-                    <li style="text-align: center;">\( f(y^\mu) = \frac{1}{1 + e^{-y^\mu}} \tag{2.1} \)</li>                    
+                    <p style="text-align: center;">\( f(y^\mu) = \frac{1}{1 + e^{-y^\mu}} \tag{2.1} \)</p>                    
                     <li>交差エントロピー誤差関数 \( E \) は以下のように定義される。</li>
-                    <li style="text-align: center;">\( E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2} \)</li>                    
+                    <p style="text-align: center;">\( E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2} \)</p>                    
                     <li>ここで、\( z^\mu = f(y^\mu) \) である。次に、誤差関数 \( E \) を \( b \) で偏微分する。</li>
-                    <li style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \right) \)</li>                    
+                    <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \right) \)</p>                    
                     <li>チェーンルールを用いて計算する。まず、 \( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \) の \( z^\mu \) に関する偏微分を求める。</li>
-                    <li style="text-align: center;">\( \frac{\partial}{\partial z^\mu} \left[ -t^\mu \ln z^\mu - (1 - t^\mu) \ln (1 - z^\mu) \right] = -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \)</li>
+                    <p style="text-align: center;">\( \frac{\partial}{\partial z^\mu} \left[ -t^\mu \ln z^\mu - (1 - t^\mu) \ln (1 - z^\mu) \right] = -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \)</p>
                     <li>次に、 \( z^\mu \) を \( y^\mu \) で偏微分する。</li>
-                    <li style="text-align: center;">\( \frac{\partial z^\mu}{\partial y^\mu} = z^\mu (1 - z^\mu) \)</li>
+                    <p style="text-align: center;">\( \frac{\partial z^\mu}{\partial y^\mu} = z^\mu (1 - z^\mu) \)</p>
                     <li>したがって、</li>
-                    <li style="text-align: center;">\( \frac{\partial E}{\partial y^\mu} = \left( -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \right) z^\mu (1 - z^\mu) = z^\mu - t^\mu \)</li>                    
+                    <p style="text-align: center;">\( \frac{\partial E}{\partial y^\mu} = \left( -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \right) z^\mu (1 - z^\mu) = z^\mu - t^\mu \)</p>                    
                     <li>最後に、\( y^\mu \) を \( b \) で偏微分する。</li>
-                    <li style="text-align: center;">\( \frac{\partial y^\mu}{\partial b} = 1 \)</li>
+                    <p style="text-align: center;">\( \frac{\partial y^\mu}{\partial b} = 1 \)</p>
                     <li>まとめると、</li>
-                    <li style="text-align: center;">\( \frac{\partial E}{\partial b} = \sum_\mu (z^\mu - t^\mu) \)</li>
+                    <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \sum_\mu (z^\mu - t^\mu) \)</p>
                 </ul>
                 <li><b style="color:brown">
-                    <ol>
-                        <li>
-                            <strong>方法1: ドロップアウト（Dropout）</strong><br>
-                            ドロップアウトは、ニューラルネットワークの訓練中にランダムにいくつかのノード（ニューロン）を無効化する（ゼロにする）手法である。
-                            これは、ネットワークが特定のノードやその結合に過度に依存するのを防ぎ、より汎用的な特徴を学習するのを助ける。
-                            <ul>
-                                <li>説明:
-                                    <ol>
-                                        <li>各訓練ステップで、指定された確率（例えば50%）でノードを無効化する。</li>
-                                        <li>テスト時には全てのノードを使用するが、訓練時に無効化した確率に応じてノードの出力をスケールする。</li>
-                                    </ol>
-                                </li>
-                            </ul>
-                        </li>
-                        
-                        <li>
-                            <strong>方法2: L2正則化（L2 Regularization）</strong><br>
-                            L2正則化は、重みパラメータに対してペナルティを加える手法である。具体的には、損失関数に重みの二乗和を加えることで、大きな重みが成長するのを防ぎ、過学習を抑制する。
-                            <ul>
-                                <li>説明:
-                                    <ol>
-                                        <li>損失関数 \( L \) に対して、以下のようなペナルティ項 \( \lambda \sum w^2 \) を追加する。</li>
-                                        <li>ここで、\( \lambda \) は正則化の強さを制御するハイパーパラメータであり、\( w \) は重みパラメータを表す。</li>
-                                        <li>このペナルティにより、重みが大きくなることを抑制し、モデルの複雑さを制限する。</li>
-                                    </ol>
-                                </li>
-                            </ul>
-                        </li>
-                    </ol>
+                    【3】中間層を持つ多層のニューラルネットワークの学習において、訓練データにはよく適合するが、訓練データではない未知のデータ（テストデータ）には適合しない過学習の状態に陥ることがある。この過学習を抑制する方法を2つ挙げ、その方法について説明せよ。
                 </b></li>
+                <ol>
+                    <li>
+                        <strong>方法1: ドロップアウト（Dropout）</strong><br>
+                        ドロップアウトは、ニューラルネットワークの訓練中にランダムにいくつかのノード（ニューロン）を無効化する（ゼロにする）手法である。
+                        これは、ネットワークが特定のノードやその結合に過度に依存するのを防ぎ、より汎用的な特徴を学習するのを助ける。
+                        <ul>
+                            <li>説明:
+                                <ol>
+                                    <li>各訓練ステップで、指定された確率（例えば50%）でノードを無効化する。</li>
+                                    <li>テスト時には全てのノードを使用するが、訓練時に無効化した確率に応じてノードの出力をスケールする。</li>
+                                </ol>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>方法2: L2正則化（L2 Regularization）</strong><br>
+                        L2正則化は、重みパラメータに対してペナルティを加える手法である。具体的には、損失関数に重みの二乗和を加えることで、大きな重みが成長するのを防ぎ、過学習を抑制する。
+                        <ul>
+                            <li>説明:
+                                <ol>
+                                    <li>損失関数 \( L \) に対して、以下のようなペナルティ項 \( \lambda \sum w^2 \) を追加する。</li>
+                                    <li>ここで、\( \lambda \) は正則化の強さを制御するハイパーパラメータであり、\( w \) は重みパラメータを表す。</li>
+                                    <li>このペナルティにより、重みが大きくなることを抑制し、モデルの複雑さを制限する。</li>
+                                </ol>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
             </ul>
             <h3>サポートベクターマシン</h3>
             <ul>
