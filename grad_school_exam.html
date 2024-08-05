@@ -1222,40 +1222,50 @@ def GCD(a, b):
                         E &= \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \tag{1.3}
                         \end{align}
                     </div>
-                    誤差関数を式(1.3)で示す２乗和誤差とし、勾配法によりバイアス\(b\)の最適化を行うために必要となる\(\frac{\partial E}{\partial b}\)を導出せよ。
+                    【1】誤差関数を式(1.3)で示す２乗和誤差とし、勾配法によりバイアス\(b\)の最適化を行うために必要となる\(\frac{\partial E}{\partial b}\)を導出せよ。
+                </b></li>
+                <ul>     
+                        <li>活性化関数 \( f \) は恒等関数 \( f(s) = s \) であるため、 \( z^\mu = y^\mu \) となる。したがって、</li>
+                        <li style="text-align: center;">\( z^\mu = \sum_{j=1}^K w_j x_j^\mu + b \)</li>
+                        <li>次に、誤差関数 \( E \) を \( b \) で偏微分する。</li>
+                        <li style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \right) \)</li>
+                        <li>これをチェーンルールを用いて計算する。まず、 \( (t^\mu - z^\mu)^2 \) の \( b \) に関する偏微分を求める。</li>
+                        <li style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) \left( \frac{\partial}{\partial b} (t^\mu - z^\mu) \right) \)</li>
+                        <li>次に、 \( \frac{\partial}{\partial b} (t^\mu - z^\mu) \) を求める。</li>
+                        <li style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu) = \frac{\partial}{\partial b} \left( t^\mu - \left( \sum_{j=1}^K w_j x_j^\mu + b \right) \right) = -1 \)</li>
+                        <li>したがって、</li>
+                        <li style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) (-1) = -2 (t^\mu - z^\mu) \)</li>
+                        <li>これを誤差関数 \( E \) の偏微分に戻す。</li>
+                        <li style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{1}{2} \sum_\mu \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = \frac{1}{2} \sum_\mu (-2) (t^\mu - z^\mu) = -\sum_\mu (t^\mu - z^\mu) \)</li>
+                        <li>まとめると、誤差関数 \( E \) のバイアス \( b \) に関する偏微分は次のようになる。</li>
+                        <li style="text-align: center;">\( \frac{\partial E}{\partial b} = -\sum_\mu (t^\mu - z^\mu) \)</li>
+                </ul>
+                <li><b style="color:brown">
+                    【2】【1】のモデルを使って、２クラス分類問題を考える。入力\(x^\mu\)に対する正解ラベルは\(t^\mu \in {0, 1}\)とする。
+                    活性化関数\(f\)を式(2.1)で示すシグモイド関数にして、誤差関数\(E\)に式(2.2)で示す交差エントロピーを用いた時の\(\frac{\partial E}{\partial b}\)を導出せよ。
+                    ただし、\(\ln\)はネイピア数\(e\)を底とする自然対数である。
+                    <div class="scroll">\begin{align}
+                        f(y^\mu) = \frac{1}{1 + e^{-y^\mu}} \tag{2.1} \) \\
+                        E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2} 
                 </b></li>
                 <ul>
-                        <p>誤差関数 \( E \) は以下のように定義される。</p>
-                        <p style="text-align: center;">\( E = \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \tag{1.4} \)</p>
-                        
-                        <p>ここで、 \( z^\mu \) は次のように定義される。</p>
-                        <p style="text-align: center;">\( z^\mu = f(y^\mu) \tag{1.2} \)</p>
-                        <p>そして、</p>
-                        <p style="text-align: center;">\( y^\mu = \sum_{j=1}^K w_j x_j^\mu + b \tag{1.1} \)</p>
-                        
-                        <p>活性化関数 \( f \) は恒等関数 \( f(s) = s \) であるため、 \( z^\mu = y^\mu \) となる。したがって、</p>
-                        <p style="text-align: center;">\( z^\mu = \sum_{j=1}^K w_j x_j^\mu + b \)</p>
-                        
-                        <p>次に、誤差関数 \( E \) を \( b \) で偏微分する。</p>
-                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \right) \)</p>
-                        
-                        <p>これをチェーンルールを用いて計算する。まず、 \( (t^\mu - z^\mu)^2 \) の \( b \) に関する偏微分を求める。</p>
-                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) \left( \frac{\partial}{\partial b} (t^\mu - z^\mu) \right) \)</p>
-                        
-                        <p>次に、 \( \frac{\partial}{\partial b} (t^\mu - z^\mu) \) を求める。</p>
-                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu) = \frac{\partial}{\partial b} \left( t^\mu - \left( \sum_{j=1}^K w_j x_j^\mu + b \right) \right) = -1 \)</p>
-                        
-                        <p>したがって、</p>
-                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) (-1) = -2 (t^\mu - z^\mu) \)</p>
-                        
-                        <p>これを誤差関数 \( E \) の偏微分に戻す。</p>
-                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{1}{2} \sum_\mu \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = \frac{1}{2} \sum_\mu (-2) (t^\mu - z^\mu) = -\sum_\mu (t^\mu - z^\mu) \)</p>
-                        
-                        <p>まとめると、誤差関数 \( E \) のバイアス \( b \) に関する偏微分は次のようになる。</p>
-                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = -\sum_\mu (t^\mu - z^\mu) \)</p>
+                    <li>シグモイド関数 \( f \) は以下のように定義される。</li>
+                    <li style="text-align: center;">\( f(y^\mu) = \frac{1}{1 + e^{-y^\mu}} \tag{2.1} \)</li>                    
+                    <li>交差エントロピー誤差関数 \( E \) は以下のように定義される。</li>
+                    <li style="text-align: center;">\( E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2} \)</li>                    
+                    <li>ここで、\( z^\mu = f(y^\mu) \) である。次に、誤差関数 \( E \) を \( b \) で偏微分する。</li>
+                    <li style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \right) \)</li>                    
+                    <li>チェーンルールを用いて計算する。まず、 \( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \) の \( z^\mu \) に関する偏微分を求める。</li>
+                    <li style="text-align: center;">\( \frac{\partial}{\partial z^\mu} \left[ -t^\mu \ln z^\mu - (1 - t^\mu) \ln (1 - z^\mu) \right] = -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \)</li>
+                    <li>次に、 \( z^\mu \) を \( y^\mu \) で偏微分する。</li>
+                    <li style="text-align: center;">\( \frac{\partial z^\mu}{\partial y^\mu} = z^\mu (1 - z^\mu) \)</li>
+                    <li>したがって、</li>
+                    <li style="text-align: center;">\( \frac{\partial E}{\partial y^\mu} = \left( -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \right) z^\mu (1 - z^\mu) = z^\mu - t^\mu \)</li>                    
+                    <li>最後に、\( y^\mu \) を \( b \) で偏微分する。</li>
+                    <li style="text-align: center;">\( \frac{\partial y^\mu}{\partial b} = 1 \)</li>
+                    <li>まとめると、</li>
+                    <li style="text-align: center;">\( \frac{\partial E}{\partial b} = \sum_\mu (z^\mu - t^\mu) \)</li>
                 </ul>
-                
-                
             </ul>
             <h3>サポートベクターマシン</h3>
             <ul>
