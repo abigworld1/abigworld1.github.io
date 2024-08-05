@@ -1224,6 +1224,36 @@ def GCD(a, b):
                     </div>
                     誤差関数を式(1.3)で示す２乗和誤差とし、勾配法によりバイアス\(b\)の最適化を行うために必要となる\(\frac{\partial E}{\partial b}\)を導出せよ。
                 </b></li>
+                <ul>
+                        <p>誤差関数 \( E \) は以下のように定義される。</p>
+                        <p style="text-align: center;">\( E = \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \tag{1.4} \)</p>
+                        
+                        <p>ここで、 \( z^\mu \) は次のように定義される。</p>
+                        <p style="text-align: center;">\( z^\mu = f(y^\mu) \tag{1.2} \)</p>
+                        <p>そして、</p>
+                        <p style="text-align: center;">\( y^\mu = \sum_{j=1}^K w_j x_j^\mu + b \tag{1.1} \)</p>
+                        
+                        <p>活性化関数 \( f \) は恒等関数 \( f(s) = s \) であるため、 \( z^\mu = y^\mu \) となる。したがって、</p>
+                        <p style="text-align: center;">\( z^\mu = \sum_{j=1}^K w_j x_j^\mu + b \)</p>
+                        
+                        <p>次に、誤差関数 \( E \) を \( b \) で偏微分する。</p>
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \right) \)</p>
+                        
+                        <p>これをチェーンルールを用いて計算する。まず、 \( (t^\mu - z^\mu)^2 \) の \( b \) に関する偏微分を求める。</p>
+                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) \left( \frac{\partial}{\partial b} (t^\mu - z^\mu) \right) \)</p>
+                        
+                        <p>次に、 \( \frac{\partial}{\partial b} (t^\mu - z^\mu) \) を求める。</p>
+                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu) = \frac{\partial}{\partial b} \left( t^\mu - \left( \sum_{j=1}^K w_j x_j^\mu + b \right) \right) = -1 \)</p>
+                        
+                        <p>したがって、</p>
+                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) (-1) = -2 (t^\mu - z^\mu) \)</p>
+                        
+                        <p>これを誤差関数 \( E \) の偏微分に戻す。</p>
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{1}{2} \sum_\mu \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = \frac{1}{2} \sum_\mu (-2) (t^\mu - z^\mu) = -\sum_\mu (t^\mu - z^\mu) \)</p>
+                        
+                        <p>まとめると、誤差関数 \( E \) のバイアス \( b \) に関する偏微分は次のようになる。</p>
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = -\sum_\mu (t^\mu - z^\mu) \)</p>
+                </ul>
                 
                 
             </ul>
