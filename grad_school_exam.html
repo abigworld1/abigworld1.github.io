@@ -1217,9 +1217,9 @@ def GCD(a, b):
                     活性化関数 \( f \) を用いて式 (1.2) で計算される。ここでは、活性化関数は恒等関数 \( f(s) = s \) とする。
                     <div class="scroll">
                         \begin{align}
-                        y^\mu = \sum_{j=1}^K w_j x_j^\mu + b \tag{1.1} \\
-                        z^\mu = f(y^\mu) \tag{1.2} \\
-                        E = \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \tag{1.3}
+                        y^\mu &= \sum_{j=1}^K w_j x_j^\mu + b \tag{1.1} \\
+                        z^\mu &= f(y^\mu) \tag{1.2} \\
+                        E &= \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \tag{1.3}
                         \end{align}
                     </div>
                     誤差関数を式(1.3)で示す２乗和誤差とし、勾配法によりバイアス\(b\)の最適化を行うために必要となる\(\frac{\partial E}{\partial b}\)を導出せよ。
