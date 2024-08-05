@@ -383,8 +383,8 @@
                             <div class="scroll">\[ f_1(x) = a_1 \cosh x + b_1 \sinh x \]</div>
                             <div class="scroll">\[ f_2(x) = a_2 \cosh x + b_2 \sinh x \]</div></li>
                             <li>これらの和を計算する：
-                            <div class="scroll">\[ f_1(x) + f_2(x) = (a_1 \cosh x + b_1 \sinh x) + (a_2 \cosh x + b_2 \sinh x) \]</div>
-                            <div class="scroll">\[ = (a_1 + a_2) \cosh x + (b_1 + b_2) \sinh x \]</div></li>
+                            <div class="scroll">\begin{align} f_1(x) + f_2(x) &= (a_1 \cosh x + b_1 \sinh x) + (a_2 \cosh x + b_2 \sinh x) \\
+                            &= (a_1 + a_2) \cosh x + (b_1 + b_2) \sinh x \end{align}</div></li>
                             <li>ここで、\( a_1 + a_2 \) および \( b_1 + b_2 \) も実数であるため、\( f_1(x) + f_2(x) \in F(I) \) であることがわかる。したがって、加法は閉じている。</li>
                             <li>次に、任意の \( f(x) \in F(I) \) とスカラー \( c \in \mathbb{R} \) を取り、それぞれ次のように表す：
                             <div class="scroll">\[ f(x) = a \cosh x + b \sinh x \]</div></li>
@@ -416,6 +416,49 @@
                             <li>したがって、\( \cosh x \) と\( \sinh x \) は直交することが示された。</li>
                         </ul>
                         <li><b>関数の組\(\{\cosh x, \sinh x\}\)が\(F(I)\)の基底となることを証明せよ。</b></li>
+                        <ul>
+                            <li>関数の組 \( \{ \cosh x, \sinh x \} \) が基底であるための条件：
+                                <ol>
+                                    <li>一次独立であること。</li>
+                                    <li>\( F(I) \) を生成すること。</li>
+                                </ol>
+                            </li>
+                    
+                            <li>1. 一次独立性の証明
+                                <ul>
+                                    <li>関数 \( \cosh x \)と \( \sinh x \)が一次独立であることを示すには、任意の定数 \( a \)および\( b \)に対して次の関係式が成り立つ場合に\( a = 0 \) および\( b = 0 \) であることを証明する：
+                                        <div class="scroll">\begin{align} a \cosh x + b \sinh x = 0 \end{align}</div>
+                                    </li>
+                                    <li>この式は全ての \( x \) に対して成り立つと仮定する。特に、\( x = 0 \)のとき、
+                                        \( \cosh(0) = 1 \) および \( \sinh(0) = 0 \) なので、
+                                        <div class="scroll">\begin{align} a \cosh(0) + b \sinh(0) = a \cdot 1 + b \cdot 0 = a = 0 \end{align}</div>
+                                    </li>
+                                    <li>次に、\( x = 1 \) のとき、
+                                        \( \cosh(1) \) および \( \sinh(1) \) なので、
+                                        <div class="scroll">\begin{align} a \cosh(1) + b \sinh(1) = 0 \end{align}</div>
+                                    </li>
+                                    <li>既に \( a = 0 \) であることを示しているので、残りの式は次のようになる：
+                                        <div class="scroll">\begin{align} b \sinh(1) = 0 \end{align}</div>
+                                    </li>
+                                    <li>ここで、\( \sinh(1) \neq 0 \) であるため、
+                                        <div class="scroll">\begin{align} b = 0 \end{align}</div>
+                                    </li>
+                                    <li>したがって、\( \cosh x \) と \( \sinh x \) は一次独立である。</li>
+                                </ul>
+                            </li>
+                    
+                            <li>2. 生成性の証明
+                                <ul>
+                                    <li>\( F(I) \) が \( \{ \cosh x, \sinh x \} \) によって生成されることを示すには、任意の関数 \( f(x) \in F(I) \) が \( \cosh x \) および \( \sinh x \) の線形結合として表現できることを示す必要がある。</li>
+                                    <li>\( F(I) \) の定義によれば、任意の関数 \( f(x) \in F(I) \) は次の形式で表現できる：
+                                        <div class="scroll">\begin{align} f(x) = a \cosh x + b \sinh x \end{align}</div>
+                                        ここで、\( a \) および \( b \) は実数である。
+                                    </li>
+                                    <li>任意の \( f(x) \in F(I) \) を取ると、\( f(x) \) は常にこの形式で表現できる。これにより、\( \{ \cosh x, \sinh x \} \) が \( F(I) \) を生成することが示された。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <li><b>微分が、\(F(I)\)から\(F(I)\)への線形写像となることを証明せよ。</b></li>
                         <ul>
                             <li>微分が線形写像であるためには、次の2つの条件を満たす必要がある。</li>
                             <ol>
