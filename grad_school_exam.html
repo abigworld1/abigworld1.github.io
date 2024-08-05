@@ -1082,7 +1082,7 @@ def GCD(a, b):
                                 <li>ユークリッドの互除法では、各ステップで \( a \) と \( b \) の割り算を行う。</li>
                                 <li>割り算の計算量は \( O((\log_2 a)^2) \) であるため、1ステップあたりの計算量は \( O(\log a) \) である。</li>
                                 <li>各ステップで少なくとも半分に値が減少するため、最大で \( \log_2 a \) 回のステップが必要である。</li>
-                                <li>したがって、全体の計算量は \( O((\log_2 a)^2) \times O(\log_2 a) = O((\log a)^3) \) となる。</li>
+                                <li>したがって、全体の計算量は <div class="scroll">\( O((\log_2 a)^2) \times O(\log_2 a) = O((\log a)^3) \)</div> となる。</li>
                                 <li>これにより、GCD(a, b) は \( O(\log_2 a) \) の多項式時間で計算できることが示された。</li>
                             </ol>
                         </li>
@@ -1253,15 +1253,23 @@ def GCD(a, b):
                     <li>シグモイド関数 \( f \) は以下のように定義される。</li>
                     <p style="text-align: center;">\( f(y^\mu) = \frac{1}{1 + e^{-y^\mu}} \tag{2.1} \)</p>                    
                     <li>交差エントロピー誤差関数 \( E \) は以下のように定義される。</li>
-                    <p style="text-align: center;">\( E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2} \)</p>                    
+                    <div class="scroll">
+                    <p style="text-align: center;">\( E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2} \)</p>
+                    </div>
                     <li>ここで、\( z^\mu = f(y^\mu) \) である。次に、誤差関数 \( E \) を \( b \) で偏微分する。</li>
+                    <div class="scroll">
                     <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \right) \)</p>                    
+                    </div>
                     <li>チェーンルールを用いて計算する。まず、 \( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \) の \( z^\mu \) に関する偏微分を求める。</li>
+                    <div class="scroll">
                     <p style="text-align: center;">\( \frac{\partial}{\partial z^\mu} \left[ -t^\mu \ln z^\mu - (1 - t^\mu) \ln (1 - z^\mu) \right] = -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \)</p>
+                    </div>
                     <li>次に、 \( z^\mu \) を \( y^\mu \) で偏微分する。</li>
                     <p style="text-align: center;">\( \frac{\partial z^\mu}{\partial y^\mu} = z^\mu (1 - z^\mu) \)</p>
                     <li>したがって、</li>
+                    <div class="scroll">
                     <p style="text-align: center;">\( \frac{\partial E}{\partial y^\mu} = \left( -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \right) z^\mu (1 - z^\mu) = z^\mu - t^\mu \)</p>                    
+                    </div>
                     <li>最後に、\( y^\mu \) を \( b \) で偏微分する。</li>
                     <p style="text-align: center;">\( \frac{\partial y^\mu}{\partial b} = 1 \)</p>
                     <li>まとめると、</li>
