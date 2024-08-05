@@ -307,9 +307,9 @@
             <ul>
                 <li>双曲線関数は、以下のように定義される。</li>
                 <ul>
-                    <li>\(coshx = \frac{e^x+e^{-x}}{2}\)</li>
-                    <li>\(sinhx = \frac{e^x-e^{-x}}{2}\)</li>
-                    <li>\(tanhx = \frac{sinhx}{coshx} = \frac{e^x-e^{-x}}{e^x+e^{-x}}\)</li>
+                    <li>\(cosh x = \frac{e^x+e^{-x}}{2}\)</li>
+                    <li>\(sinh x = \frac{e^x-e^{-x}}{2}\)</li>
+                    <li>\(tanh x = \frac{sinh x}{cosh x} = \frac{e^x-e^{-x}}{e^x+e^{-x}}\)</li>
                 </ul>
                 <li>双曲線関数について、以下の関係式が成り立つ。</li>
                 <ul>
@@ -319,15 +319,15 @@
                 </ul>
                 <li>双曲線関数を微分すると、以下のようになる。</li>
                 <ul>
-                    <li>\((coshx)'=sinhx\)</li>
-                    <li>\((sinhx)'=coshx\)</li>
-                    <li>\((tanhx)'=\frac{1}{cosh^2 x}\)</li>
+                    <li>\((cosh x)'=sinh x\)</li>
+                    <li>\((sinh x)'=cosh x\)</li>
+                    <li>\((tanh x)'=\frac{1}{cosh^2 x}\)</li>
                 </ul>
                 <li>双曲線関数を積分すると、以下のようになる。</li>
                 <ul>
                     <li>\(\int \cosh x \, dx = \sinh x + C\)</li>
                     <li>\(\int \sinh x \, dx = \cosh x + C\)</li>
-                    <li>\(\int \tanh x \, dx = log(\coshx) + C\)</li>
+                    <li>\(\int \tanh x \, dx = log(\cosh x) + C\)</li>
                 </ul>
                 <li>具体例</li>
                 <div class="example">
@@ -348,10 +348,8 @@
                         \end{align}
                         </div>
                         という二つの関数を定義する。
-                        
                         更に、上で定義された関数の集合 \(F(I)\) を
-                    </p>
-                
+                    </p>               
                     <p>
                         <div class="scroll">
                         \begin{align}
@@ -396,6 +394,7 @@
                             <li>ここで、\( ca \) および \( cb \) も実数であるため、\( c f(x) \in F(I) \) であることがわかる。したがって、スカラー倍も閉じている。</li>
                             <li>これにより、\( F(I) \) が \( C^\infty(I) \) の線形部分空間であることが示された。</li>
                         </ul>
+                        <li>\(cosh x\)と\(sinh x\)が、上で定義した内積に関して直交することを証明せよ。</li>
                     </ol>
                 </div>
             </ul>
