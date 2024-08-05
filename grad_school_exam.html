@@ -389,64 +389,55 @@
                             <li>次に、任意の \( f(x) \in F(I) \) とスカラー \( c \in \mathbb{R} \) を取り、それぞれ次のように表す：
                             <div class="scroll">\[ f(x) = a \cosh x + b \sinh x \]</div></li>
                             <li>これのスカラー倍を計算する：</li>
-                            <div class="scroll">\[ c f(x) = c (a \cosh x + b \sinh x) \]</div>
-                            <div class="scroll">\[ = (ca) \cosh x + (cb) \sinh x \]</div></li>
+                            <div class="scroll">\begin{align} c f(x) &= c (a \cosh x + b \sinh x)  \\
+                            &= (ca) \cosh x + (cb) \sinh x \end{align}</div></li>
                             <li>ここで、\( ca \) および \( cb \) も実数であるため、\( c f(x) \in F(I) \) であることがわかる。したがって、スカラー倍も閉じている。</li>
                             <li>これにより、\( F(I) \) が \( C^\infty(I) \) の線形部分空間であることが示された。</li>
                         </ul>
                         <li><b>\(\cosh x\)と\(\sinh x\)が、上で定義した内積に関して直交することを証明せよ。</b></li>
                         <ul>
                             <li>内積を計算する：
-                                <br>
-                                <div class="scroll">\( \langle \cosh x, \sinh x \rangle = \int_{-1}^{1} \cosh(x) \sinh(x) \, dx \)</div>
+                                <div class="scroll">\begin{align} \langle \cosh x, \sinh x \rangle = \int_{-1}^{1} \cosh(x) \sinh(x) \, dx \end{align}</div>
                             </li>
-                            <li>定義により、<div class="scroll">\( \cosh(x) = \frac{e^x + e^{-x}}{2} \)</div>、<div class="scroll">\( \sinh(x) = \frac{e^x - e^{-x}}{2} \)</div> である。これを使って積を計算する。
-                                <br>
-                                <div class="scroll">\( \cosh(x) \sinh(x) = \left(\frac{e^x + e^{-x}}{2}\right)\left(\frac{e^x - e^{-x}}{2}\right) = \frac{e^{2x} - e^{-2x}}{4} \)</div>
+                            <li>定義により、\( \cosh(x) = \frac{e^x + e^{-x}}{2} \)、\( \sinh(x) = \frac{e^x - e^{-x}}{2} \) である。これを使って積を計算する。
+                                <div class="scroll">\begin{align} \cosh(x) \sinh(x) = \left(\frac{e^x + e^{-x}}{2}\right)\left(\frac{e^x - e^{-x}}{2}\right) = \frac{e^{2x} - e^{-2x}}{4} \end{align}</div>
                             </li>
                             <li>これを内積の定義に従って積分する。
-                                <br>
-                                <div class="scroll">\( \langle \cosh x, \sinh x \rangle = \int_{-1}^{1} \frac{e^{2x} - e^{-2x}}{4} \, dx \)</div>
+                                <div class="scroll">\begin{align} \langle \cosh x, \sinh x \rangle = \int_{-1}^{1} \frac{e^{2x} - e^{-2x}}{4} \, dx \end{align}</div>
                             </li>
                             <li>積分を計算する。
-                                <br>
-                                <div class="scroll">\( = \frac{1}{4} \int_{-1}^{1} e^{2x} \, dx - \frac{1}{4} \int_{-1}^{1} e^{-2x} \, dx \)</div>
-                                <br>
-                                <div class="scroll">\( = \frac{1}{4} \left[ \frac{e^{2x}}{2} \right]_{-1}^{1} - \frac{1}{4} \left[ -\frac{e^{-2x}}{2} \right]_{-1}^{1} \)</div>
-                                <br>
-                                <div class="scroll">\( = \frac{1}{4} \left( \frac{e^2 - e^{-2}}{2} \right) - \frac{1}{4} \left( \frac{e^{-2} - e^2}{2} \right) \)</div>
-                                <br>
-                                <div class="scroll">\( = \frac{1}{8} (e^2 - e^{-2}) - \frac{1}{8} (e^{-2} - e^2) \)</div>
-                                <br>
-                                <div class="scroll">\( = \frac{1}{8} (e^2 - e^{-2} - e^{-2} + e^2) = \frac{1}{8} (2e^2 - 2e^{-2}) = 0 \)</div>
+                                <div class="scroll">\begin{align}
+                                &= \frac{1}{4} \int_{-1}^{1} e^{2x} \, dx - \frac{1}{4} \int_{-1}^{1} e^{-2x} \, dx 
+                                &= \frac{1}{4} \left[ \frac{e^{2x}}{2} \right]_{-1}^{1} - \frac{1}{4} \left[ -\frac{e^{-2x}}{2} \right]_{-1}^{1} 
+                                &= \frac{1}{4} \left( \frac{e^2 - e^{-2}}{2} \right) - \frac{1}{4} \left( \frac{e^{-2} - e^2}{2} \right) 
+                                &= \frac{1}{8} (e^2 - e^{-2}) - \frac{1}{8} (e^{-2} - e^2) 
+                                &= \frac{1}{8} (e^2 - e^{-2} - e^{-2} + e^2) = \frac{1}{8} (2e^2 - 2e^{-2}) = 0 \end{align}</div>
                             </li>
-                            <li>したがって、<div class="scroll">\( \cosh x \)</div> と <div class="scroll">\( \sinh x \)</div> は直交することが示された。</li>
+                            <li>したがって、\( \cosh x \) と\( \sinh x \) は直交することが示された。</li>
                         </ul>
                         <li><b>関数の組\(\{\cosh x, \sinh x\}\)が\(F(I)\)の基底となることを証明せよ。</b></li>
                         <ul>
                             <li>微分が線形写像であるためには、次の2つの条件を満たす必要がある。</li>
                             <ol>
                                 <li>線形性の保持：
-                                    <br>
-                                    <div class="scroll">\( D(af + bg) = aD(f) + bD(g) \)</div>
-                                    <br>
-                                    ここで、<div class="scroll">\( f, g \in F(I) \)</div> であり、<div class="scroll">\( a, b \in \mathbb{R} \)</div> である。
+                                    <div class="scroll">\begin{align} D(af + bg) = aD(f) + bD(g)\end{align}</div>
+                                    ここで、\( f, g \in F(I) \) であり、\( a, b \in \mathbb{R} \) である。
                                 </li>
-                                <li>関数 <div class="scroll">\( f(x) = a \cosh x + b \sinh x \in F(I) \)</div> に対する微分が再び <div class="scroll">\( F(I) \)</div> に属すること。</li>
+                                <li>関数 <div class="scroll">\( f(x) = a \cosh x + b \sinh x \in F(I) \)</div> に対する微分が再び \( F(I) \) に属すること。</li>
                             </ol>
                             <li>まず、線形性の保持を確認する。
                                 <br>
                                 <div class="scroll">\( D(af + bg) = D(a \cosh x + b \sinh x) = aD(\cosh x) + bD(\sinh x) \)</div>
                             </li>
                             <li>次に、微分を計算する。
-                                <br>
-                                <div class="scroll">\( D(\cosh x) = \sinh x \)</div>、<div class="scroll">\( D(\sinh x) = \cosh x \)</div>
+                                <div class="scroll">\begin{align}
+                                    D(\cosh x) = \sinh x \\
+                                    D(\sinh x) = \cosh x \end{align}</div>
                             </li>
                             <li>したがって、
-                                <br>
                                 <div class="scroll">\( D(a \cosh x + b \sinh x) = a \sinh x + b \cosh x \in F(I) \)</div>
                             </li>
-                            <li>以上より、微分が <div class="scroll">\( F(I) \)</div> から <div class="scroll">\( F(I) \)</div> への線形写像であることが示された。</li>
+                            <li>以上より、微分が \( F(I) \)から <\( F(I) \) への線形写像であることが示された。</li>
                         </ul>
                     </ol>
                 </div>
