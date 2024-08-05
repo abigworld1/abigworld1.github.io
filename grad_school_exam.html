@@ -333,16 +333,31 @@
                 <div class="example">
                     <p>開区間 \(I := [-1, 1]\) で定義された、無限回微分可能な実数値関数全体からなる集合 \(C^∞(I)\) は、
                     通常の関数の和と定数倍に関して線形空間（ベクトル空間）をなす。また、任意の \(f(x), g(x) ∈ C^∞(I)\) に対して</p>
-                
                     <p>
-                        \(⟨f(x), g(x)⟩ := ∫_(-1)^1 f(x)g(x)dx\)<br>
-                        と定義すると、\(⟨f(x), g(x)⟩\) は \(C^∞(I)\) の内積となる。<br>
-                        自然対数の底を \(e\) とし、\(cosh x := (e^x + e^(-x))/2\)、\(sinh x := (e^x - e^(-x))/2\) という二つの関数を定義する。<br>
+                        <div class="scroll">
+                        \begin{align}
+                        \langle f(x), g(x) \rangle := \int_{-1}^{1} f(x) g(x) \, dx
+                        \end{align}
+                        </div>
+                        と定義すると、\(\langle f(x), g(x) \rangle\) は \(C^{\infty}(I)\) の内積となる。
+                        
+                        自然対数の底を \(e\) とし、
+                        <div class="scroll">
+                        \begin{align}
+                        \cosh x := \frac{e^x + e^{-x}}{2}, \quad \sinh x := \frac{e^x - e^{-x}}{2}
+                        \end{align}
+                        </div>
+                        という二つの関数を定義する。
+                        
                         更に、上で定義された関数の集合 \(F(I)\) を
                     </p>
                 
                     <p>
-                        \(F(I) := \{a \cosh x + b \sinh x | a, b ∈ \mathbb{R}\}\)<br>
+                        <div class="scroll">
+                        \begin{align}
+                        F(I) := \{a \cosh x + b \sinh x | a, b ∈ \mathbb{R}\}
+                        \end{align}
+                        </div><br>
                         によって定義する。ここで、\(\mathbb{R}\) は実数全体からなる集合を表す。以下の設問に答えよ。
                     </p>
                 
