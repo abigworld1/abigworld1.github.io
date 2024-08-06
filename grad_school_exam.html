@@ -115,7 +115,63 @@
                         \end{align}
                         </div>                      
                     <p>という関係があり、非自明な解 \(c_{1} = 2, c_{2} = -1\) が存在するからである。</p>
-                </div>                
+                </div>
+                <div class="example">
+                    <b>問題</b>
+                    <p>互いに他方の定数倍ではない3次元空間内の2点 \( x_1, x_2 \in \mathbb{R}^3 \) を考え、これらを横に並べてできる \( 3 \times 2 \) の行列 \( A = (x_1 \ x_2) \) を作る。このとき、\( A^T A \) が正則であることを証明せよ。ここで、\( A^T \) は \( A \) の転置を表す。</p>
+                    <ul>
+                        <li>行列 \( A \) を次のように定義する：
+                            <div class="scroll">
+                                \begin{align}
+                                A = \begin{pmatrix} x_{11} & x_{12} \\ x_{21} & x_{22} \\ x_{31} & x_{32} \end{pmatrix}
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>グラム行列 \( A^T A \) は次のように求められる：
+                            <div class="scroll">
+                                \begin{align}
+                                A^T A = \begin{pmatrix} x_{11} & x_{21} & x_{31} \\ x_{12} & x_{22} & x_{32} \end{pmatrix} \begin{pmatrix} x_{11} & x_{12} \\ x_{21} & x_{22} \\ x_{31} & x_{32} \end{pmatrix} = \begin{pmatrix} x_{11}^2 + x_{21}^2 + x_{31}^2 & x_{11}x_{12} + x_{21}x_{22} + x_{31}x_{32} \\ x_{11}x_{12} + x_{21}x_{22} + x_{31}x_{32} & x_{12}^2 + x_{22}^2 + x_{32}^2 \end{pmatrix}
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>この行列が正則であることを示すためには、行列 \( A^T A \) の行列式がゼロでないことを確認する必要がある：
+                            <div class="scroll">
+                                \begin{align}
+                                \det(A^T A) = \left(x_{11}^2 + x_{21}^2 + x_{31}^2\right)\left(x_{12}^2 + x_{22}^2 + x_{32}^2\right) - \left(x_{11}x_{12} + x_{21}x_{22} + x_{31}x_{32}\right)^2
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>ここで、以下のように表すことができる：
+                            <div class="scroll">
+                                \begin{align}
+                                \|x_1\|^2 &= x_{11}^2 + x_{21}^2 + x_{31}^2 \\
+                                \|x_2\|^2 &= x_{12}^2 + x_{22}^2 + x_{32}^2 \\
+                                x_1 \cdot x_2 &= x_{11}x_{12} + x_{21}x_{22} + x_{31}x_{32} \\
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>すると、行列式は次のようになる：
+                            <div class="scroll">
+                                \begin{align}
+                                \det(A^T A) = \|x_1\|^2 \|x_2\|^2 - (x_1 \cdot x_2)^2
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>これは、コーシー・シュワルツの不等式より、0以上である。</li>
+                        <li>コーシー・シュワルツの不等式は、ベクトルの内積の定義を使って、以下のように導かれる：
+                            <div class="scroll">
+                                \begin{align}
+                                m \cdot n &= \|m\| \|n\| \cos \theta \\
+                                (m \cdot n)^2 &= \|m\|^2 \|n\|^2 \cos^2 \theta \\
+                                \|m\|^2 \|n\|^2 &\geq (m \cdot n)^2
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>したがって、\(\theta = 0, \pi\)のとき、つまり２本のベクトルが互いに他方の定数倍であるときに、コーシー・シュワルツの不等式における等号が成立する。</li>
+                        <li>今回は２本のベクトルが互いに他方の定数倍でないため、\( A^T A \)の行列式は必ず正となって、0になることはない。</li>
+                        <li>よって、\( A^T A \)は正則である。</li>
+                    </ul>
+                </div>
             </ul>
             <h3>二変数間の停留点</h3>
             <p>参考にしたサイトは以下のとおり。</p>
