@@ -933,6 +933,104 @@
                     </ul>
                 </ul>
                 </div>
+            </ul>
+            <h3>テイラー展開</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://mathlandscape.com/taylor-expansion/">テイラー展開・マクローリン展開とは【解析的な関数と具体例】 _ 数学の景色.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                <b>定義</b>
+                <ul>
+                    <li>テイラー展開（Taylor series）は、関数をある点 \( a \) の周りで無限級数として表現する方法である。この方法は、関数の各点での値や導関数の値を利用して関数を近似する。</li>
+                    <li>テイラー展開は次のように定義される：</li>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x) = f(a) + f'(a)(x - a) + \frac{f''(a)}{2!}(x - a)^2 + \frac{f'''(a)}{3!}(x - a)^3 + \cdots + \frac{f^{(n)}(a)}{n!}(x - a)^n + \cdots
+                        \end{align}
+                    </div>
+                    <li>この定義を ∑（シグマ）記号を使って表現すると、以下のようになる：</li>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x - a)^n
+                        \end{align}
+                    </div>
+                </ul>
+                
+                <b>例</b>
+                <ul>
+                    <li>代表的な関数のテイラー展開をいくつか紹介する。</li>
+                </ul>
+                
+                <h3>1. \(\sin x\) のテイラー展開（\(a = 0\）の場合）</h3>
+                <ul>
+                    <div class="scroll">
+                        \begin{align}
+                        \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots
+                        \end{align}
+                    </div>
+                    <li>一般形は、</li>
+                    <div class="scroll">
+                        \begin{align}
+                        \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!}
+                        \end{align}
+                    </div>
+                </ul>
+                
+                <b>2. \(\cos x\) のテイラー展開（\(a = 0\）の場合）</b>
+                <ul>
+                    <div class="scroll">
+                        \begin{align}
+                        \cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots
+                        \end{align}
+                    </div>
+                    <li>一般形は、</li>
+                    <div class="scroll">
+                        \begin{align}
+                        \cos x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!}
+                        \end{align}
+                    </div>
+                </ul>
+                
+                <b>3. \( e^x \) のテイラー展開（\(a = 0\）の場合）</b>
+                <ul>
+                    <div class="scroll">
+                        <li>
+                        \begin{align}
+                        e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
+                        \end{align}
+                        </li>
+                    </div>
+                    <li>一般形は、</li>
+                    <div class="scroll">
+                        <li>
+                        \begin{align}
+                        e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!}
+                        \end{align}
+                        </li>
+                    </div>
+                </ul>
+                
+                <b>4. \(\ln(1 + x)\) のテイラー展開（\(a = 0\）の場合）</b>
+                <ul>
+                    <div class="scroll">
+                        <li>
+                        \begin{align}
+                        \ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots
+                        \end{align}
+                        </li>
+                    </div>
+                    <li>一般形は、</li>
+                    <div class="scroll">
+                        <li>
+                        \begin{align}
+                        \ln(1 + x) = \sum_{n=1}^{\infty} (-1)^{n+1} \frac{x^n}{n}
+                        \end{align}
+                        </li>
+                    </div>
+                </ul>
+                </div>
+            </ul>
         </section>
         <section id="info-math">
           <h2>情報数学</h2>
