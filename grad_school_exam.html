@@ -243,7 +243,7 @@
                 <li>具体例</li>
                 <div class="example">
                     <b>行列の\(n\)乗を求める問題</b>
-                    <p>次の行列 \( A \) の\(n\)乗を求める。</p>
+                    <p>次の行列 \( A \) の\(n\)乗を求めよ。</p>
                     <div class="scroll">
                         \begin{align}
                         A = \begin{pmatrix} 2 & 4 \\ 1 & -1 \end{pmatrix} 
@@ -749,6 +749,99 @@
                             <li>以上より、微分が \( F(I) \)から \( F(I) \) への線形写像であることが示された。</li>
                         </ul>
                     </ol>
+                </div>
+            </ul>
+            <h3>逆三角関数(\cos^{-1}, \sin^{-1}, \tan^{-1})</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-analysis02#i-4">うさぎでもわかる解析　Part02　逆三角関数 _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p>関数 \( f(x, y) = \tan^{-1} \left( \frac{y}{x} \right) \) が調和関数であることを示す。</p>
+                    <ul>
+                
+                    <li>調和関数とは、ラプラス方程式<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} = 0
+                        \end{align}
+                    </div>
+                    を満たす関数のことである。<br></li>
+                
+                    <li>\( f(x, y) = \tan^{-1} \left( \frac{y}{x} \right) \) の偏微分を計算<br>
+                    まず、関数 \( f(x, y) \) の偏微分を計算する。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x, y) = \tan^{-1} \left( \frac{y}{x} \right)
+                        \end{align}
+                    </div></li>
+                
+                    <li>\( x \) に関する1次偏微分<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial f}{\partial x} &= \frac{\partial}{\partial x} \tan^{-1} \left( \frac{y}{x} \right) \\
+                        &= \frac{1}{1 + \left( \frac{y}{x} \right)^2} \cdot \frac{\partial}{\partial x} \left( \frac{y}{x} \right) \\
+                        &= \frac{1}{1 + \left( \frac{y}{x} \right)^2} \cdot \left( -\frac{y}{x^2} \right) \\
+                        &= \frac{-y}{x^2 + y^2}
+                        \end{align}
+                    </div></li>
+                
+                    <li>\( y \) に関する1次偏微分<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial f}{\partial y} &= \frac{\partial}{\partial y} \tan^{-1} \left( \frac{y}{x} \right) \\
+                        &= \frac{1}{1 + \left( \frac{y}{x} \right)^2} \cdot \frac{\partial}{\partial y} \left( \frac{y}{x} \right) \\
+                        &= \frac{1}{1 + \left( \frac{y}{x} \right)^2} \cdot \left( \frac{1}{x} \right) \\
+                        &= \frac{x}{x^2 + y^2}
+                        \end{align}
+                    </div></li>
+                
+                    <li>\( x \) に関する2次偏微分<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial x^2} = \frac{\partial}{\partial x} \left( \frac{-y}{x^2 + y^2} \right)
+                        \end{align}
+                    </div>
+                    まず、以下の部分を計算する。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial}{\partial x} \left( \frac{1}{x^2 + y^2} \right) = -\frac{2x}{(x^2 + y^2)^2}
+                        \end{align}
+                    </div>
+                    これを使って、2次偏微分を求める。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial x^2} = -y \cdot \left( -\frac{2x}{(x^2 + y^2)^2} \right) = \frac{2xy}{(x^2 + y^2)^2}
+                        \end{align}
+                    </div></li>
+                
+                    <li>\( y \) に関する2次偏微分<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial y^2} = \frac{\partial}{\partial y} \left( \frac{x}{x^2 + y^2} \right)
+                        \end{align}
+                    </div>
+                    同様に、以下の部分を計算する。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial}{\partial y} \left( \frac{1}{x^2 + y^2} \right) = -\frac{2y}{(x^2 + y^2)^2}
+                        \end{align}
+                    </div>
+                    これを使って、2次偏微分を求める。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial y^2} = x \cdot \left( -\frac{2y}{(x^2 + y^2)^2} \right) = -\frac{2xy}{(x^2 + y^2)^2}
+                        \end{align}
+                    </div></li>
+                
+                    <li>調和関数の条件を確認<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} = \frac{2xy}{(x^2 + y^2)^2} - \frac{2xy}{(x^2 + y^2)^2} = 0
+                        \end{align}
+                    </div>
+                    よって、\( f(x, y) = \tan^{-1} \left( \frac{y}{x} \right) \) が調和関数であることが証明された。</li>
+                    </ul>
                 </div>
             </ul>
         </section>
