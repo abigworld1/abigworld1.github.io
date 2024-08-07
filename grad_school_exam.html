@@ -844,6 +844,111 @@
                     </ul>
                 </div>
             </ul>
+            <h3>マクローリン展開</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/570">マクローリン展開 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                <b>定義</b>
+                <ul>
+                    <li>マクローリン展開（Maclaurin series）は、関数を原点（\( x = 0 \)）周りでテイラー展開する特別なケースである。これは、関数を無限級数として表現する方法であり、関数の各点での値や導関数の値を利用して関数を近似する。</li>
+                    <li>マクローリン展開は次のように定義される：</li>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f'''(0)}{3!}x^3 + \cdots + \frac{f^{(n)}(0)}{n!}x^n + \cdots
+                        \end{align}
+                    </div>
+                    <li>この定義を ∑（シグマ）記号を使って表現すると、以下のようになる：</li>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^n
+                        \end{align>
+                    </div>
+                </ul>
+                
+                <b>例</b>
+                <ul>
+                    <li>代表的な関数のマクローリン展開をいくつか紹介する。</li>
+                </ul>
+                <ul>
+                    <li>1. \(\sin x\) のマクローリン展開</li>
+                    <ul>
+                        <div class="scroll">
+                            <li>
+                            \begin{align}
+                            \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots
+                            \end{align}
+                            </li>
+                        </div>
+                        <li>一般形は、</li>
+                        <div class="scroll">
+                            <li>
+                            \begin{align>
+                            \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!}
+                            \end{align}
+                            </li>
+                        </div>
+                    </ul>
+                    
+                    <li>2. \(\cos x\) のマクローリン展開</li>
+                    <ul>
+                        <div class="scroll">
+                            <li>
+                            \begin{align>
+                            \cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots
+                            \end{align>
+                            </li>
+                        </div>
+                        <li>一般形は、</li>
+                        <div class="scroll">
+                            <li>
+                            \begin{align>
+                            \cos x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!}
+                            \end{align}
+                            </li>
+                        </div>
+                    </ul>
+                    
+                    <li>3. \( e^x \) のマクローリン展開</li>
+                    <ul>
+                        <div class="scroll">
+                            <li>
+                            \begin{align>
+                            e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
+                            \end{align>
+                            </li>
+                        </div>
+                        <li>一般形は、</li>
+                        <div class="scroll">
+                            <li>
+                            \begin{align>
+                            e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!}
+                            </end{align>
+                            </li>
+                        </div>
+                    </ul>
+                    
+                    <li>4. \(\ln(1 + x)\) のマクローリン展開</li>
+                    <ul>
+                        <div class="scroll">
+                            <li>
+                            \begin{align>
+                            \ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots
+                            </end{align>
+                            </li>
+                        </div>
+                        <li>一般形は、</li>
+                        <div class="scroll">
+                            <li>
+                            \begin{align>
+                            \ln(1 + x) = \sum_{n=1}^{\infty} (-1)^{n+1} \frac{x^n}{n}
+                            </end{align>
+                            </li>
+                        </div>
+                    </ul>
+                </ul>
+                </div>
         </section>
         <section id="info-math">
           <h2>情報数学</h2>
