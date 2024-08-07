@@ -172,56 +172,174 @@
                         <li>よって、\( A^T A \)は正則である。</li>
                     </ul>
                 </div>
+            </ul>
+            <h3>直交射影行列</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/2486">射影行列のイメージと楽しい公式 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>具体例</li>
                 <div class="example">
                     <b>直交射影行列の問題</b>
                     <p>\( 3 \times 2 \) の行列 \( A = (x_1 \ x_2) \) において、\( 3 \times 3 \)行列\( P = A(A^T A)^{-1} A^T \) を作る。
                         このとき、\(P\)は任意の3次元空間内の点を \( x_1 \) と \( x_2 \) で張られる平面へ垂直に射影（直交射影）することを示せ。</p>
-                    <li>
-                        解答の流れ<br>
-                        1. 行列 \( P \) の性質を調べる。<br>
-                        2. \( P \) が直交射影行列であることを証明する。
+                    <ul>
+                        <li>
+                            解答の流れ<br>
+                            1. 行列 \( P \) の性質を調べる。<br>
+                            2. \( P \) が直交射影行列であることを証明する。
+                        </li>
+                        <li>
+                            証明<br>
+                            1. 行列 \( P \) の性質:<br>
+                            行列 \( P \) は \( A \) と \( A^T \) を用いて定義されている。<br>
+                            <div class="scroll">
+                                    \begin{align}
+                                        P = A(A^T A)^{-1} A^T
+                                    \end{align}
+                            </div>
+                        </li>
+                        <li>
+                            2. 直交射影行列の定義:<br>
+                            行列 \( P \) が直交射影行列であるためには、以下の2つの条件を満たす必要がある。<br>
+                            ・ \( P^2 = P \)（冪等性）<br>
+                            ・ \( P^T = P \)（対称性）
+                        </li>
+                        <li>
+                            3. 冪等性の証明:<br>
+                            <div class="scroll">
+                                    \begin{align}
+                                        P^2 &= (A(A^T A)^{-1} A^T)(A(A^T A)^{-1} A^T) \\
+                                         &= A(A^T A)^{-1} (A^T A) (A^T A)^{-1} A^T \\
+                                         &= A(A^T A)^{-1} A^T 
+                                    \end{align}
+                            </div>
+                            したがって、\( P^2 = P \)。
+                        </li>
+                        <li>
+                            4. 対称性の証明:<br>
+                            <div class="scroll">
+                                    \begin{align}
+                                        P^T &= (A(A^T A)^{-1} A^T)^T \\
+                                         &= (A^T)^T ((A^T A)^{-1})^T A^T \\
+                                         &= A (A^T A)^{-1} A^T 
+                                    \end{align}
+                            </div>
+                            したがって、\( P^T = P \)。
+                        </li>
+                        <li>
+                            以上より、行列 \( P = A(A^T A)^{-1} A^T \) は \( x_1 \) と \( x_2 \) で張られる平面への垂直射影行列であることが証明された。
+                        </li>
+                    </ul>
+                </div>
+            </ul>
+            <h3>行列のべき乗</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra18">うさぎでもわかる線形代数　第18羽　対角化を用いた行列のn乗の求め方・行列の無限乗 _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <b>行列の\(n\)乗を求める問題</b>
+                    <p>次の行列 \( A \) の\(n\)乗を求める。</p>
+                    <div class="scroll">
+                        \( A = \begin{pmatrix} 2 & 4 \\ 1 & -1 \end{pmatrix} \)
+                    </div>
+                    <ul>
+                    <li>1. 固有値の計算<br>
+                    行列 \( A \) の固有値を求めるために、特性方程式の解を求める。<br>
+                    <div class="scroll">
+                        \( \det(A - \lambda I) = 0 \)
+                    </div>
+                    行列式を計算すると、<br>
+                    <div class="scroll">
+                        \( \det \begin{pmatrix} 2 - \lambda & 4 \\ 1 & -1 - \lambda \end{pmatrix} = 0 \)
+                    </div>
+                    よって、<br>
+                    <div class="scroll">
+                        \( \lambda^2 - \lambda - 6 = 0 \)
+                    </div>
+                    この二次方程式の解は、<br>
+                    <div class="scroll">
+                        \( \lambda = \frac{1 \pm \sqrt{1 + 24}}{2} = \frac{1 \pm 5}{2} \)
+                    </div>
+                    <div class="scroll">
+                        \( \lambda_1 = 3, \quad \lambda_2 = -2 \)
+                    </div>
                     </li>
-                    <li>
-                        証明<br>
-                        <strong>1. 行列 \( P \) の性質:</strong><br>
-                        行列 \( P \) は \( A \) と \( A^T \) を用いて定義されている。<br>
-                        <div class="scroll">
-                                \begin{align}
-                                    P = A(A^T A)^{-1} A^T
-                                \end{align}
-                        </div>
+                
+                    <li>2. 固有ベクトルの計算<br>
+                    固有値 \( \lambda_1 = 3 \) の場合：<br>
+                    <div class="scroll">
+                        \( (A - 3I)v = 0 \)
+                    </div>
+                    <div class="scroll">
+                        \( \begin{pmatrix} -1 & 4 \\ 1 & -4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = 0 \)
+                    </div>
+                    この方程式を解くと、<br>
+                    <div class="scroll">
+                        \( -1x + 4y = 0 \implies x = 4y \)
+                    </div>
+                    したがって、固有ベクトルは \( v_1 = \begin{pmatrix} 4 \\ 1 \end{pmatrix} \) である。<br>
+                
+                    固有値 \( \lambda_2 = -2 \) の場合：<br>
+                    <div class="scroll">
+                        \( (A + 2I)v = 0 \)
+                    </div>
+                    <div class="scroll">
+                        \( \begin{pmatrix} 4 & 4 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = 0 \)
+                    </div>
+                    この方程式を解くと、<br>
+                    <div class="scroll">
+                        \( 4x + 4y = 0 \implies x = -y \)
+                    </div>
+                    したがって、固有ベクトルは \( v_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix} である。<br>
                     </li>
-                    <li>
-                        2. 直交射影行列の定義:<br>
-                        行列 \( P \) が直交射影行列であるためには、以下の2つの条件を満たす必要がある。<br>
-                        ・ \( P^2 = P \)（冪等性）<br>
-                        ・ \( P^T = P \)（対称性）
+                
+                    <li>3. 行列の対角化<br>
+                    行列 \( A \) は次のように対角化できる。
+                    <div class="scroll">
+                        \( A = PDP^{-1} \)
+                    </div>
+                    ここで、<br>
+                    <div class="scroll">
+                        \( P = \begin{pmatrix} 4 & 1 \\ 1 & -1 \end{pmatrix}, \quad D = \begin{pmatrix} 3 & 0 \\ 0 & -2 \end{pmatrix} \)
+                    </div>
                     </li>
-                    <li>
-                        3. 冪等性の証明:<br>
-                        <div class="scroll">
-                                \begin{align}
-                                    P^2 &= (A(A^T A)^{-1} A^T)(A(A^T A)^{-1} A^T) \\
-                                     &= A(A^T A)^{-1} (A^T A) (A^T A)^{-1} A^T \\
-                                     &= A(A^T A)^{-1} A^T 
-                                \end{align}
-                        </div>
-                        したがって、\( P^2 = P \)。
+                        
+                    <li>4. 行列のべき乗<br>
+                    行列のべき乗 \( A^n \) は次のように計算できる。<br>
+                    <div class="scroll">
+                        \( A^n = PD^nP^{-1} \)
+                    </div>
+                    <div class="scroll">
+                        \( D^n = \begin{pmatrix} 3^n & 0 \\ 0 & (-2)^n \end{pmatrix} \)
+                    </div>
+                    したがって、<br>
+                    <div class="scroll">
+                        \( A^n = \begin{pmatrix} 4 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} 3^n & 0 \\ 0 & (-2)^n \end{pmatrix} \begin{pmatrix} \frac{1}{5} & \frac{1}{5} \\ \frac{1}{5} & -\frac{4}{5} \end{pmatrix} \)
+                    </div>
                     </li>
-                    <li>
-                        4. 対称性の証明:<br>
-                        <div class="scroll">
-                                \begin{align}
-                                    P^T &= (A(A^T A)^{-1} A^T)^T \\
-                                     &= (A^T)^T ((A^T A)^{-1})^T A^T \\
-                                     &= A (A^T A)^{-1} A^T 
-                                \end{align}
-                        </div>
-                        したがって、\( P^T = P \)。
+                
+                    <li>5. \( P^{-1} \) の計算<br>
+                    行列 \( P \) の逆行列を求める。<br>
+                    <div class="scroll">
+                        \( P^{-1} = \frac{1}{\det P}\begin{pmatrix} -1 & -1 \\ -1 & 4 \end{pmatrix} \)
+                    </div>
+                    ここで、<br>
+                    <div class="scroll">
+                        \( \det P = (4 \times (-1)) - (1 \times 1) = -5 \)
+                    </div>
+                    したがって、<br>
+                    <div class="scroll">
+                        \( P^{-1} = \frac{1}{-5}\begin{pmatrix} -1 & -1 \\ -1 & 4 \end{pmatrix} = \begin{pmatrix} \frac{1}{5} & \frac{1}{5} \\ \frac{1}{5} & -\frac{4}{5} \end{pmatrix} \)
+                    </div>
                     </li>
-                    <li>
-                        以上より、行列 \( P = A(A^T A)^{-1} A^T \) は \( x_1 \) と \( x_2 \) で張られる平面への垂直射影行列であることが証明された。
-                    </li>                    
+                
+                    <li>6. 最終的な結果
+                    行列 \( A^n \) は次のように求められる。<br>
+                    <div class="scroll">
+                        \( A^n = \begin{pmatrix} 4 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} 3^n & 0 \\ 0 & (-2)^n \end{pmatrix} \begin{pmatrix} \frac{1}{5} & \frac{1}{5} \\ \frac{1}{5} & -\frac{4}{5} \end{pmatrix} \)
+                    </div>
+                    この結果を具体的に計算することで、行列 \( A^n \) を求めることができる。
                 </div>
             </ul>
             <h3>二変数間の停留点</h3>
