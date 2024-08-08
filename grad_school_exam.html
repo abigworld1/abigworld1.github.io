@@ -1315,7 +1315,7 @@
                             <div class="scroll">
                                 \begin{align}
                                 &(\neg x \land \neg y \land z) \lor (x \land \neg y \land z) \lor (x \land y \land \neg z) \lor (x \land y \land z) \\
-                                &= (\neg y \land z) \lor (x \land y)
+                                = &(\neg y \land z) \lor (x \land y)
                                 \end{align}
                             </div>
                             </li>
@@ -1323,7 +1323,7 @@
                             <div class="scroll">
                                 \begin{align}
                                 &(\neg x \land \neg y \land \neg z) \lor (\neg x \land \neg y \land z) \lor (\neg x \land y \land \neg z) \lor (x \land y \land z) \\
-                                &= (\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z)
+                                = &(\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z)
                                 \end{align}
                             </div>
                             </li>
@@ -1333,8 +1333,31 @@
                     <li>和積標準形を作るには、全体の真理値が０になる最大項をANDでつなげばよいが、積和標準形を二重否定してド・モルガン即を使うだけでよい。
                         よって、
                         <ul>
-                            <li>１つ目の論理式の和積標準形は、\( (\neg x \lor y \lor \neg z) \land (\neg x \lor y \lor z) \)</li>
-                            <li>２つ目の論理式の和積標準形は、\( (\neg x \lor y \lor z) \land (x \lor \neg y \lor \neg z) \land (x \lor \neg y \lor z) \land (x \lor y \lor \neg z)\)</li>
+                            <li>１つ目の論理式の積和標準形は、
+                            <div class="scroll">
+                                \begin{align}
+                                &\neg(\neg((\neg y \land z) \lor (x \land y))) \\
+                                = &\neg(\neg(\neg y \land z) \land \neg(x \land y)) \\
+                                = &\neg((y \lor \neg z) \land (\neg x \lor \neg y)) \\
+                                = &\neg((y \land \neg x) \lor (y \land \neg y) \lor (\neg z \land \neg x) \lor (\neg z \land \neg y)) \\
+                                = &\neg((y \land \neg x) \lor (\neg z \land \neg x) \lor (\neg z \land \neg y)) \\
+                                = &\neg((y \land \neg x) \lor (\neg z \land \neg y)) \text{∵カルノー図を用いた} \\
+                                = &(\neg y \lor x) \land (z \lor y)
+                                \end{align}
+                            </div>
+                            </li>
+                            <li>２つ目の論理式の積和標準形は、
+                            <div class="scroll">
+                                \begin{align}
+                                &(\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z) \\
+                                = &\neg(\neg((\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z))) \\
+                                = &\neg((x \lor y) \land (x \lor z) \land (\neg x \lor \neg y \lor \neg z)) \\
+                                = &\neg((\neg x \land z) \lor (\neg x \land y) \lor (\neg y \land x) \lor (\neg y \land z) \lor (\neg z \land x) \lor (\neg z \land y)) \\
+                                = &\neg((\neg x \land z) \lor (\neg y \land x) \lor (\neg z \land y)) \text{∵カルノー図を用いた} \\
+                                = &(x \lor \neg z) \land (y \lor \neg x) \land (z \lor \neg y) \\
+                                \end{align}
+                            </div>
+                            </li>
                         </ul>
                         となる。
                     </li>
