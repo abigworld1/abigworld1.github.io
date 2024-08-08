@@ -1248,6 +1248,46 @@
                     </div>
                 </ul>
             </ul>
+            <h3>論理式</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://art.ist.hokudai.ac.jp/~seto/lecture/lskp/lskp_02.pdf">大規模知識処理特論 第２回 脊戸和寿</a></p>
+            <ul>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                <b>問題</b> 
+                <p>以下の命題論理式それぞれについて、その積和標準形 (DNF; 選言標準形) および和積標準形 (CNF; 連言標準形) を求めよ。ただし、∨ は論理和、∧ は論理積、¬ は否定、→ は含意を表す。なお、どの論理式が求めた DNF や CNF であるかを明示すること。</p>
+                <p>1. \(\left((x \rightarrow \neg y) \rightarrow (\neg y \rightarrow z)\right) \land (x \lor \neg y)\)</p>
+                <p>2. \((x \rightarrow y \land z) \land (y \land z \rightarrow x)\)</p>
+                <ul>
+                    <li>１つ目の論理式について、真理値表は以下のようになる。
+                        <div class="scroll">
+                            <table>
+                            <tr>
+                                <th>x</th>
+                                <th>y</th>
+                                <th>z</th>
+                                <th>&not; y</th>
+                                <th>x &rarr; &not; y</th>
+                                <th>&not; y &rarr; z</th>
+                                <th>(x &rarr; &not; y) &rarr; (&not; y &rarr; z)</th>
+                                <th>x &or; &not; y</th>
+                                <th>((x &rarr; &not; y) &rarr; (&not; y &rarr; z)) &and; (x &or; &not; y)</th>
+                            </tr>
+                            <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                            <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+                            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>                                
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+                </div>
+            </ul>
         </section>
         <section id="probability-statistics">
           <h2>確率・統計</h2>
