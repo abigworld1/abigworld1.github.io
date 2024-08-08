@@ -1311,8 +1311,22 @@
                     <li>積和標準形を作るには、全体の真理値が１になる最小項をORでつなげばよい。
                         よって、
                         <ul>
-                            <li>１つ目の論理式の積和標準形は、\( (x \land y) \lor (\neg y \land z)\)</li>
-                            <li>２つ目の論理式の積和標準形は、\( (\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z)\)</li>
+                            <li>１つ目の論理式の積和標準形は、
+                            <div class="scroll">
+                                \begin{align}
+                                (\neg x \land \neg y \land z) \lor (x \land \neg y \land z) \lor (x \land y \land \neg z) \lor (x \land y \land z) \\
+                                &= (\neg y \land z) \lor (x \land y)
+                                \end{align}
+                            </div>
+                            </li>
+                            <li>２つ目の論理式の積和標準形は、
+                            <div class="scroll">
+                                \begin{align}
+                                (\neg x \land \neg y \land \neg z) \lor (\neg x \land \neg y \land z) \lor (\neg x \land y \land \neg z) \lor (x \land y \land z) \\
+                                &= (\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z)
+                                \end{align}
+                            </div>
+                            </li>
                         </ul>
                         となる。
                     </li>
