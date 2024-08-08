@@ -1341,9 +1341,39 @@
                                 = &\neg((y \lor \neg z) \land (\neg x \lor \neg y)) \\
                                 = &\neg((y \land \neg x) \lor (y \land \neg y) \lor (\neg z \land \neg x) \lor (\neg z \land \neg y)) \\
                                 = &\neg((y \land \neg x) \lor (\neg z \land \neg x) \lor (\neg z \land \neg y)) \\
-                                = &\neg((y \land \neg x) \lor (\neg z \land \neg y)) \text{∵カルノー図を用いた} \\
+                                = &\neg((y \land \neg x) \lor (\neg z \land \neg y)) \text{　∵下のカルノー図を用いた} \\
                                 = &(\neg y \lor x) \land (z \lor y)
                                 \end{align}
+                            </div>
+                            <div class="scroll">
+                                <table>
+                                    <tr>
+                                        <th colspan="2"></th>
+                                        <th colspan="2">yz</th>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="3">x</th>
+                                        <th></th>
+                                        <th>00</th>
+                                        <th>01</th>
+                                        <th>11</th>
+                                        <th>10</th>
+                                    </tr>
+                                    <tr>
+                                        <th>0</th>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <th>1</th>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                    </tr>
+                                </table>
                             </div>
                             </li>
                             <li>２つ目の論理式の積和標準形は、
@@ -1353,9 +1383,39 @@
                                 = &\neg(\neg((\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z))) \\
                                 = &\neg((x \lor y) \land (x \lor z) \land (\neg x \lor \neg y \lor \neg z)) \\
                                 = &\neg((\neg x \land z) \lor (\neg x \land y) \lor (\neg y \land x) \lor (\neg y \land z) \lor (\neg z \land x) \lor (\neg z \land y)) \\
-                                = &\neg((\neg x \land z) \lor (\neg y \land x) \lor (\neg z \land y)) \text{∵カルノー図を用いた} \\
+                                = &\neg((\neg x \land z) \lor (\neg y \land x) \lor (\neg z \land y)) \text{　∵下のカルノー図を用いた} \\
                                 = &(x \lor \neg z) \land (y \lor \neg x) \land (z \lor \neg y) \\
                                 \end{align}
+                            </div>
+                            <div class="scroll">
+                                <table>
+                                    <tr>
+                                        <th colspan="2"></th>
+                                        <th colspan="2">yz</th>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="3">x</th>
+                                        <th></th>
+                                        <th>00</th>
+                                        <th>01</th>
+                                        <th>11</th>
+                                        <th>10</th>
+                                    </tr>
+                                    <tr>
+                                        <th>0</th>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <th>1</th>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                    </tr>
+                                </table>
                             </div>
                             </li>
                         </ul>
