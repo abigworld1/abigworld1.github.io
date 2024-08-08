@@ -1256,7 +1256,7 @@
                 <li>具体例</li>
                 <div class="example">
                 <b>問題</b> 
-                <p>以下の命題論理式それぞれについて、その積和標準形 (DNF; 選言標準形) および和積標準形 (CNF; 連言標準形) を求めよ。ただし、∨ は論理和、∧ は論理積、¬ は否定、→ は含意を表す。なお、どの論理式が求めた DNF や CNF であるかを明示すること。</p>
+                <p><b>以下の命題論理式それぞれについて、その積和標準形 (DNF; 選言標準形) および和積標準形 (CNF; 連言標準形) を求めよ。ただし、∨ は論理和、∧ は論理積、¬ は否定、→ は含意を表す。なお、どの論理式が求めた DNF や CNF であるかを明示すること。</b></p>
                 <p>1. \(\left((x \rightarrow \neg y) \rightarrow (\neg y \rightarrow z)\right) \land (x \lor \neg y)\)</p>
                 <p>2. \((x \rightarrow y \land z) \land (y \land z \rightarrow x)\)</p>
                 <ul>
@@ -1274,13 +1274,13 @@
                                 <th>x &or; &not; y</th>
                                 <th>((x &rarr; &not; y) &rarr; (&not; y &rarr; z)) &and; (x &or; &not; y)</th>
                             </tr>
-                            <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
                             <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-                            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
                             <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
-                            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
                             <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-                            <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
                             <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>                                
                             </table>
                         </div>
@@ -1307,6 +1307,22 @@
                             <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>                            
                             </table>
                         </div>
+                    </li>
+                    <li>積和標準形を作るには、全体の真理値が１になる最小項をORでつなげばよい。
+                        よって、
+                        <ul>
+                            <li>１つ目の論理式の積和標準形は、\( (x \land y) \lor (\neg y \land z)\)</li>
+                            <li>２つ目の論理式の積和標準形は、\( (\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z)\)</li>
+                        </ul>
+                        となる。
+                    </li>
+                    <li>和積標準形を作るには、全体の真理値が０になる最大項をANDでつなげばよい。
+                        よって、
+                        <ul>
+                            <li>１つ目の論理式の和積標準形は、\( (\neg x \lor y \lor \neg z) \land (\neg x \lor y \lor z) \)</li>
+                            <li>２つ目の論理式の和積標準形は、\( (\neg x \lor y \lor z) \land (x \lor \neg y \lor \neg z) \land (x \lor \neg y \lor z) \land (x \lor y \lor \neg z)\)</li>
+                        </ul>
+                        となる。
                     </li>
                 </ul>
                 </div>
