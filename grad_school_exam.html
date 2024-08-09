@@ -1438,10 +1438,7 @@
                         <li>二項関係 \( x \equiv y \) が同値関係であることを証明せよ。</li>
                         <li>同値関係 \( x \equiv y \) に対して、\(\mathbb{Z}\) の \(\equiv\) による商集合（すなわち、すべての同値類の集合） \(\mathbb{Z}/\equiv\) を示せ。</li>
                     </ol>
-                    
-                    <b>(1) の解答</b>
-                    <p><strong>命題論理式:</strong> \( x \equiv y \)</p>
-                    
+
                     <b>1. \( x \equiv y \) が同値関係であることの証明</b>
                     <p>同値関係は、以下の3つの性質を満たす必要がある：</p>
                     <ul>
@@ -1454,36 +1451,26 @@
                     
                     <b>反射律</b>
                     <ul>
-                        <li>任意の \( x \in \mathbb{Z} \) について、</li>
-                        <li>\( x = x + 3 \cdot 0 \)</li>
-                        <li>が成り立つ。したがって、\( x \equiv x \) である。</li>
+                        <li>任意の \( x \in \mathbb{Z} \) について、\( x = x + 3 \cdot 0 \)が成り立つ。したがって、\( x \equiv x \) である。</li>
                     </ul>
                     
                     <b>対称律</b>
                     <ul>
-                        <li>任意の \( x, y \in \mathbb{Z} \) について、\( x \equiv y \) ならば、</li>
-                        <li>\( x = y + 3k \)</li>
-                        <li>を満たす \( k \in \mathbb{Z} \) が存在する。このとき、</li>
-                        <li>\( y = x - 3k \)</li>
-                        <li>であり、\( -k \in \mathbb{Z} \) なので、\( y \equiv x \) である。</li>
+                        <li>任意の \( x, y \in \mathbb{Z} \) について、\( x \equiv y \) ならば、\( x = y + 3k \)を満たす \( k \in \mathbb{Z} \) が存在する。
+                            このとき、\( y = x - 3k \)であり、\( -k \in \mathbb{Z} \) なので、\( y \equiv x \) である。</li>
                     </ul>
                     
                     <b>推移律</b>
                     <ul>
-                        <li>任意の \( x, y, z \in \mathbb{Z} \) について、\( x \equiv y \) かつ \( y \equiv z \) ならば、</li>
-                        <li>\( x = y + 3k \)</li>
-                        <li>および</li>
-                        <li>\( y = z + 3m \)</li>
-                        <li>を満たす \( k, m \in \mathbb{Z} \) が存在する。このとき、</li>
-                        <li>\( x = (z + 3m) + 3k = z + 3(m + k) \)</li>
-                        <li>であり、\( m + k \in \mathbb{Z} \) なので、\( x \equiv z \) である。</li>
+                        <li>任意の \( x, y, z \in \mathbb{Z} \) について、\( x \equiv y \) かつ \( y \equiv z \) ならば、\( x = y + 3k \)および\( y = z + 3m \)を満たす \( k, m \in \mathbb{Z} \) が存在する。
+                        このとき、\( x = (z + 3m) + 3k = z + 3(m + k) \)であり、\( m + k \in \mathbb{Z} \) なので、\( x \equiv z \) である。</li>
                     </ul>
                     
                     <p>以上より、二項関係 \( x \equiv y \) は同値関係であることが示された。</p>
                     
                     <b>2. 同値関係 \( x \equiv y \) に対して、\(\mathbb{Z}\) の \(\equiv\) による商集合 \(\mathbb{Z}/\equiv\) を示せ</b>
                     <p>同値関係 \( x \equiv y \) による同値類は、\( 3 \) の倍数の差を持つ整数の集合である。具体的には、任意の \( x \in \mathbb{Z} \) について、次のように同値類を表すことができる：</p>
-                    <p>\([x] = \{ y \in \mathbb{Z} \mid y \equiv x \}\)</p>
+                    <div class="scroll">\begin{align}[x] = \{ y \in \mathbb{Z} \mid y \equiv x \}\end{align}</div>
                     
                     <p>整数全体の集合 \(\mathbb{Z}\) に対して、同値類は次の3つに分類される：</p>
                     <ul>
@@ -1494,6 +1481,52 @@
                     
                     <p>したがって、\(\mathbb{Z}/\equiv\) は次のように表せる：</p>
                     <p>\(\mathbb{Z}/\equiv = \{ [0], [1], [2] \}\)</p>                    
+                </div>
+            </ul>
+            <h3>完全二部グラフ</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-risan09">うさぎでもわかる離散数学（グラフ理論）　第9羽　グラフの基礎3 _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <b>問題</b>
+                    <p>無向グラフ \( G = (V, E) \) が \( V = V_1 \cup V_2 \), \( V_1 \cap V_2 = \emptyset \), \(|V_1| = m\), \(|V_2| = n\), \( E = V_1 \times V_2 \) を満たすときに、このグラフを完全二部グラフ \( K_{m,n} \) とよぶ。ここで、頂点集合を \( V = \{v_1, v_2, \dots, v_{m+n}\} \) とする。この完全二部グラフ \( K_{m,n} \) において、以下を満たす頂点の系列 \( v_{i_0}, v_{i_1}, \dots, v_{i_k} \) を長さ \( k \) の単純パスとよぶ。ここで、\( v_{ij} \in V \) である。</p>
+                    <p>任意の \( 0 \leq j < k \) に対して \( (v_{ij}, v_{i_{j+1}}) \in E \) が成立し、任意の \( 0 \leq j' \leq k \) に対して \( v_{ij} \neq v_{ij'} \) が成立する。</p>
+                    <p>なお、2つの系列 \( v_{i_0}, v_{i_1}, \dots, v_{i_k} \) と \( v_{i_k}, v_{i_{k-1}}, \dots, v_{i_0} \) は同じ単純パスとみなす。</p>
+                    <ol>
+                        <li>\( K_{3,2} \) での長さ最大の単純パスの個数を求めよ。</li>
+                        <li>\( K_{m,2} \)（\( m > 2 \)）での長さ最大の単純パスの個数を求めよ。</li>
+                        <li>\( K_{m,n} \)（\( m > n \)）での長さ最大の単純パスの個数を求めよ。</li>
+                        <li>\( K_{n,n} \) での長さ最大の単純パスの個数を求めよ。</li>
+                    </ol>  
+                    <p><b>問１</b></p>
+                    <ul>
+                        <li>\(K_{3, 2}\)においては、長さ最大の単純パスは必ず\(V_1 \rightarrow V_2 \rightarrow V_1 \rightarrow V_2 \rightarrow V1\)の順番で頂点をたどって形成される。</li>
+                        <li>したがって、\(\frac{1}{2} \times 3 \times 2 \times 2 \times 1 \times 1 = 6\)通りある。</li>
+                    </ul>
+                    <p><b>問２</b></p>
+                    <ul>
+                        <li>\(K_{m, 2} \text{ m > 2 }\)においても、長さ最大の単純パスは必ず\(V_1 \rightarrow V_2 \rightarrow V_1 \rightarrow V_2 \rightarrow V1\)の順番で頂点をたどって形成される。</li>
+                        <li>したがって、\(\frac{1}{2} \times m \times 2 \times (m-1) \times 1 \times (m-2) = m(m-1)(m-2)\)通りある。</li>
+                    </ul>
+                    <p><b>問３</b></p>
+                    <ul>
+                        <li>\(K_{m, n} \text{ m > n }\)においても、長さ最大の単純パスは必ず\(V_1 \rightarrow V_2 \rightarrow V_1 \rightarrow V_2 \rightarrow V1 \cdots\)の順番で頂点をたどって形成される。</li>
+                        <li>したがって、
+                            <div class="scroll">
+                            \begin{align}
+                                &\frac{1}{2} \times m \times n \times (m-1) \times (n-1) \times (m-2) \times (n-2) \times \cdots \times (m-n-1) \times 1 \times (m-n) \\ 
+                                = &\frac{1}{2} \times m \times (m-1) \times (m-2) \times (m-n) \times \cdots \times n \times (n-1) \times (n-2) \times \cdots \times 1  \\
+                                = &\frac{m!n!}{(m-n-1)!}
+                            \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                    <p><b>問４</b></p>
+                    <ul>
+                        <li>\(V_1\)からスタートするとき、これまでの議論より、\(\frac{n!n!}{2}\)通り。</li>
+                        <li>\(V_2\)からスタートする場合も同数なので、全部で\(n!n!\)通り。</li>
+                    </ul>
                 </div>
             </ul>
         </section>
