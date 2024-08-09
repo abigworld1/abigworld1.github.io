@@ -1426,6 +1426,76 @@
                 </ul>
                 </div>
             </ul>
+            <h3>二項関係・同値関係</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/1314">同値関係といろいろな例 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <b>問題</b>
+                    <p>整数全体の集合を \(\mathbb{Z}\) とし、\(\mathbb{Z}\) 上での二項関係 \( x \equiv y \) は、\( x = y + 3k \) を満たすような \( k \in \mathbb{Z} \) が存在することを表すとする。この二項関係 \(\equiv\) について、以下の問いに答えよ。</p>
+                    <ol>
+                        <li>二項関係 \( x \equiv y \) が同値関係であることを証明せよ。</li>
+                        <li>同値関係 \( x \equiv y \) に対して、\(\mathbb{Z}\) の \(\equiv\) による商集合（すなわち、すべての同値類の集合） \(\mathbb{Z}/\equiv\) を示せ。</li>
+                    </ol>
+                    
+                    <b>(1) の解答</b>
+                    <p><strong>命題論理式:</strong> \( x \equiv y \)</p>
+                    
+                    <b>1. \( x \equiv y \) が同値関係であることの証明</b>
+                    <p>同値関係は、以下の3つの性質を満たす必要がある：</p>
+                    <ul>
+                        <li>反射律：任意の \( x \in \mathbb{Z} \) について、\( x \equiv x \)</li>
+                        <li>対称律：任意の \( x, y \in \mathbb{Z} \) について、\( x \equiv y \) ならば \( y \equiv x \)</li>
+                        <li>推移律：任意の \( x, y, z \in \mathbb{Z} \) について、\( x \equiv y \) かつ \( y \equiv z \) ならば \( x \equiv z \)</li>
+                    </ul>
+                    
+                    <p>これらの性質を順に確認する。</p>
+                    
+                    <b>反射律</b>
+                    <ul>
+                        <li>任意の \( x \in \mathbb{Z} \) について、</li>
+                        <li>\( x = x + 3 \cdot 0 \)</li>
+                        <li>が成り立つ。したがって、\( x \equiv x \) である。</li>
+                    </ul>
+                    
+                    <b>対称律</b>
+                    <ul>
+                        <li>任意の \( x, y \in \mathbb{Z} \) について、\( x \equiv y \) ならば、</li>
+                        <li>\( x = y + 3k \)</li>
+                        <li>を満たす \( k \in \mathbb{Z} \) が存在する。このとき、</li>
+                        <li>\( y = x - 3k \)</li>
+                        <li>であり、\( -k \in \mathbb{Z} \) なので、\( y \equiv x \) である。</li>
+                    </ul>
+                    
+                    <b>推移律</b>
+                    <ul>
+                        <li>任意の \( x, y, z \in \mathbb{Z} \) について、\( x \equiv y \) かつ \( y \equiv z \) ならば、</li>
+                        <li>\( x = y + 3k \)</li>
+                        <li>および</li>
+                        <li>\( y = z + 3m \)</li>
+                        <li>を満たす \( k, m \in \mathbb{Z} \) が存在する。このとき、</li>
+                        <li>\( x = (z + 3m) + 3k = z + 3(m + k) \)</li>
+                        <li>であり、\( m + k \in \mathbb{Z} \) なので、\( x \equiv z \) である。</li>
+                    </ul>
+                    
+                    <p>以上より、二項関係 \( x \equiv y \) は同値関係であることが示された。</p>
+                    
+                    <b>2. 同値関係 \( x \equiv y \) に対して、\(\mathbb{Z}\) の \(\equiv\) による商集合 \(\mathbb{Z}/\equiv\) を示せ</b>
+                    <p>同値関係 \( x \equiv y \) による同値類は、\( 3 \) の倍数の差を持つ整数の集合である。具体的には、任意の \( x \in \mathbb{Z} \) について、次のように同値類を表すことができる：</p>
+                    <p>\([x] = \{ y \in \mathbb{Z} \mid y \equiv x \}\)</p>
+                    
+                    <p>整数全体の集合 \(\mathbb{Z}\) に対して、同値類は次の3つに分類される：</p>
+                    <ul>
+                        <li>\([0] = \{ \ldots, -6, -3, 0, 3, 6, \ldots \}\)</li>
+                        <li>\([1] = \{ \ldots, -5, -2, 1, 4, 7, \ldots \}\)</li>
+                        <li>\([2] = \{ \ldots, -4, -1, 2, 5, 8, \ldots \}\)</li>
+                    </ul>
+                    
+                    <p>したがって、\(\mathbb{Z}/\equiv\) は次のように表せる：</p>
+                    <p>\(\mathbb{Z}/\equiv = \{ [0], [1], [2] \}\)</p>                    
+                </div>
+            </ul>
         </section>
         <section id="probability-statistics">
           <h2>確率・統計</h2>
