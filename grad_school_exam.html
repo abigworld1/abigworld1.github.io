@@ -1527,7 +1527,7 @@
                     <p><b>問４</b></p>
                     <ul>
                         <li>\(V_1\)からスタートするとき、これまでの議論より、\(\frac{n!n!}{2}\)通り。</li>
-                        <li>\(V_2\)からスタートする場合も同数なので、全部で\(n!n!\)通り。</li>
+                        <li>\(V_2\)からスタートする場合も同数あるので、全部で\(n!n!\)通り。</li>
                     </ul>
                 </div>
             </ul>
@@ -1884,7 +1884,42 @@
                                     </div>
                                 </ol>
                             </li>
-                        </ol>                       
+                        </ol> 
+                    </div>
+                    <div class="example">
+                        <b>確率変数の分散に関する問題</b>
+                        <b>問題文</b>
+                        <p>独立同分布な確率変数 \( X_1, X_2, \dots, X_n \) について、それぞれの分散が \( \sigma^2 \) であるとする。</p>
+                        <ol>
+                            <li>確率変数 \( S = \sum_{i=1}^n X_i \) の分散 \( \text{Var}(S) \) を求めよ。</li>
+                            <li>確率変数 \( T = X_1/n \) の分散 \( \text{Var}(T) \) を求めよ。</li>
+                        </ol>
+                
+                        <b>解答</b>
+                
+                        <b>1. 確率変数 \( S = \sum_{i=1}^n X_i \) の分散 \( \text{Var}(S) \) を求める</b>
+                        <p>確率変数 \( S \) は \( X_1, X_2, \dots, X_n \) の和で表される。</p>
+                        <p>分散の性質を利用すると、独立な確率変数 \( X_i \) の和の分散は次のように計算される：</p>
+                        <p class="scroll">
+                            \(\text{Var}(S) = \text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i)\)
+                        </p>
+                        <p>各 \( X_i \) の分散は \( \sigma^2 \) であるので、</p>
+                        <p class="scroll">
+                            \(\text{Var}(S) = \sum_{i=1}^n \sigma^2 = n\sigma^2\)
+                        </p>
+                        <p>したがって、確率変数 \( S = \sum_{i=1}^n X_i \) の分散 \( \text{Var}(S) \) は \( n\sigma^2 \) である。</p>
+                
+                        <b>2. 確率変数 \( T = X_1/n \) の分散 \( \text{Var}(T) \) を求める</b>
+                        <p>確率変数 \( T \) は \( X_1 \) を \( n \) で割ったものである。</p>
+                        <p>分散の性質を利用すると、定数倍された確率変数の分散は次のように計算される：</p>
+                        <p class="scroll">
+                            \(\text{Var}(T) = \text{Var}\left(\frac{X_1}{n}\right) = \frac{1}{n^2} \text{Var}(X_1)\)
+                        </p>
+                        <p>\( X_1 \) の分散は \( \sigma^2 \) であるので、</p>
+                        <p class="scroll">
+                            \(\text{Var}(T) = \frac{1}{n^2} \sigma^2 = \frac{\sigma^2}{n^2}\)
+                        </p>
+                        <p>したがって、確率変数 \( T = X_1 / n \) の分散 \( \text{Var}(T) \) は \( \frac{\sigma^2}{n^2} \) である。</p>
             </ul>
         </section>
         <section id="algorithms-data-structures">
