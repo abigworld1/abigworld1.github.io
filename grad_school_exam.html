@@ -408,18 +408,18 @@
                                 \end{align}
                             </div>
                         </li>
-                        <li>両辺の複素共役転置*をとると、以下のようになる。
+                        <li>両辺の複素共役転置\(^*\)をとると、以下のようになる。
                             <div class="scroll">
-                                \begin{align}
-                                \mathbf{x*}H = \overline{\lambda}\mathbf{x*}
-                                \end{align}
+                                \begin{align>
+                                \mathbf{x}^*H = \overline{\lambda}\mathbf{x}^*
+                                </end{align>
                             </div>
                         </li>
                         <li>両辺に右から\(\mathbf{x}\)をかけると、
                             <div class="scroll">
-                                \begin{align}
-                                \mathbf{x*}H\mathbf{x} &= \overline{\lambda}\mathbf{x*}\mathbf{x} \\
-                                \mathbf{x*}\lambda\mathbf{x} &= \overline{\lambda}\mathbf{x*}\mathbf{x} \\
+                                <begin{align}
+                                \mathbf{x}^*H\mathbf{x} &= \overline{\lambda}\mathbf{x}^*\mathbf{x} \\
+                                \mathbf{x}^*\lambda\mathbf{x} &= \overline{\lambda}\mathbf{x}^*\mathbf{x} \\
                                 \lambda\|\mathbf{x}\|^2 &= \overline{\lambda}\|\mathbf{x}\|^2 \\
                                 \end{align}
                             </div>
@@ -429,65 +429,65 @@
                     <ul>
                         <li>相異なる固有値 \( \lambda_1, \lambda_2 \) に対応する固有ベクトル \( \mathbf{x}_1, \mathbf{x}_2 \) に対して、次の関係が成り立つ：
                             <div class="scroll">
-                                \begin{align}
+                                <begin{align}
                                 H \mathbf{x}_1 = \lambda_1 \mathbf{x}_1 \\
                                 H \mathbf{x}_2 = \lambda_2 \mathbf{x}_2
-                                \end{align}
+                                </end{align}
                             </div>
                         </li>
                         <li>２つ目の式の共役転置をとると、以下のようになる。
                             <div class="scroll">
-                                \begin{align}
-                                \mathbf{x*}_2 H = \lambda_2 \mathbf{x*}_2
-                                \end{align}
+                                <begin{align}
+                                \mathbf{x}_2^* H = \lambda_2 \mathbf{x}_2^*
+                                </end{align>
                             </div>
                         </li>
-                        <li>ここで、２次形式\(\mathbf{x*}_2 H \mathbf{x}_1\)に対して２通りの変形をする。</li>
-                        <li>\(\mathbf{x}_1\)についての式より、\(\mathbf{x*}_2 H \mathbf{x}_1 = \lambda_1 \mathbf{x*}_2 \mathbf{x}_1\)</li>
-                        <li>\(\mathbf{x*}_2\)についての式より、\(\mathbf{x*}_2 H \mathbf{x}_1 = \lambda_2 \mathbf{x*}_2 \mathbf{x}_1\)</li>
-                        <li>よって、\(\mathbf{x*}_2 \mathbf{x}_1 (\lambda_1 - \lambda_2) = 0\)となり、内積\(\mathbf{x*}_2 \mathbf{x}_1\)が0になる。</li>
+                        <li>ここで、２次形式\(\mathbf{x}_2^* H \mathbf{x}_1\)に対して２通りの変形をする。</li>
+                        <li>\(\mathbf{x}_1\)についての式より、\(\mathbf{x}_2^* H \mathbf{x}_1 = \lambda_1 \mathbf{x}_2^* \mathbf{x}_1\)</li>
+                        <li>\(\mathbf{x}_2^*\)についての式より、\(\mathbf{x}_2^* H \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^* \mathbf{x}_1\)</li>
+                        <li>よって、\(\mathbf{x}_2^* \mathbf{x}_1 (\lambda_1 - \lambda_2) = 0\)となり、内積\(\mathbf{x}_2^* \mathbf{x}_1\)が0になる。</li>
                     </ul>
                     <p><b>(3)の解答</b></p>
                     <ul>
                         <li>エルミート行列\(H\)の固有値分解を、\(H = PDP^{-1}\)とする。</li>
                         <li>\(P\)は\(H\)の固有ベクトルのなす正規直交基底をその列ベクトルとして並べて得られるユニタリー行列である。</li>
                         <li>\(D\)は対応する固有値を主対角成分に並べた対角行列である。</li>
-                        <li>ここで、\(y = P^{-1}\)とすると、ユニタリー行列\(P\)は\(P^{-1} = P*\)が成り立つため、以下のように変形できる。
+                        <li>ここで、\(y = P^{-1}\)とすると、ユニタリー行列\(P\)は\(P^{-1} = P^*\)が成り立つため、以下のように変形できる。
                             <div class="scroll">
-                                \begin{align}
-                                \mathbf{x*}H\mathbf{x} = \mathbf{x*}PDP^{-1}\mathbf{x} = \mathbf{y*}D\mathbf{y}
-                                \end{align}
+                                <begin{align}
+                                \mathbf{x}^*H\mathbf{x} = \mathbf{x}^*PDP^{-1}\mathbf{x} = \mathbf{y}^*D\mathbf{y}
+                                </end{align>
                             </div>
                         </li>
-                        <li>したがって、\(\mathbf{y*}D\mathbf{y} > 0\)を示せばよい。</li>
-                        <li>固有値すべて正であることを用いると、\(\mathbf{y*}D\mathbf{y} = \sum \lambda \|\mathbf{y}\|^2 > 0\)であり、\(\mathbf{x*}H\mathbf{x} > 0\)が成り立つ。</li>
+                        <li>したがって、\(\mathbf{y}^*D\mathbf{y} > 0\)を示せばよい。</li>
+                        <li>固有値すべて正であることを用いると、\(\mathbf{y}^*D\mathbf{y} = \sum \lambda \|\mathbf{y}\|^2 > 0\)であり、\(\mathbf{x}^*H\mathbf{x} > 0\)が成り立つ。</li>
                     </ul>
                     <p><b>(4)の解答</b></p>
                     <ul>
                         <li>(3)と同様に、\(H = PDP^{-1}\)とすると、
                             <div class="scroll">
-                                \begin{align}
+                                <begin{align}
                                 H = PDP^{-1} \\
                                 H^{-1} = P^{-1} D^{-1} P
-                                \end{align}
+                                </end{align>
                             </div>
                         である。</li>
                         <li>また、\(y = P\mathbf{x}\)とすると、
                             <div class="scroll">
-                                \begin{align}
-                                \mathbf{y*} = \mathbf{x*} P* = \mathbf{x*} P^{-1}
-                                \end{align}
+                                <begin{align>
+                                \mathbf{y}^* = \mathbf{x}^* P^* = \mathbf{x}^* P^{-1}
+                                </end{align>
                             </div>
                         である。</li>
-                        <li>これらを用いると、\(\mathbf{x*} H^{-1} \mathbf{x}\)は以下のように変形できる。
+                        <li>これらを用いると、\(\mathbf{x}^* H^{-1} \mathbf{x}\)は以下のように変形できる。
                             <div class="scroll">
-                                \begin{align}
-                                \mathbf{x*} H^{-1} \mathbf{x} = \mathbf{x*} P^{-1} D^{-1} P \mathbf{x} = \mathbf{y*}D^{-1} \mathbf{y}
-                                \end{align}
+                                <begin{align>
+                                \mathbf{x}^* H^{-1} \mathbf{x} = \mathbf{x}^* P^{-1} D^{-1} P \mathbf{x} = \mathbf{y}^*D^{-1} \mathbf{y}
+                                </end{align>
                             </div>
                         </li>
-                        <li>したがって、\(\mathbf{y*}D^{-1} \mathbf{y} > 0\)を示せばよい。</li>
-                        <li>逆行列の固有値は、元の行列の固有値の逆数であるから、(3)と同様に固有値がすべて正であることを用いると、\(\mathbf{x*} H^{-1} \mathbf{x}\)がいえる。</li>
+                        <li>したがって、\(\mathbf{y}^*D^{-1} \mathbf{y} > 0\)を示せばよい。</li>
+                        <li>逆行列の固有値は、元の行列の固有値の逆数であるから、(3)と同様に固有値がすべて正であることを用いると、\(\mathbf{x}^* H^{-1} \mathbf{x}\)がいえる。</li>
                     </ul>
                 </div>
             </ul>
