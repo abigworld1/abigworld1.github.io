@@ -725,26 +725,26 @@
                         <li>(2)で求めたヤコビアンを使って一気に極座標の３重積分によって求めると、以下のようになる。
                             <div class="scroll">
                                 \begin{align}
-                                \int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}}\int_{0}^{1}r^2\cos \theta \, dr \, d\theta \, d\varphi \\
-                                = \int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}} \left[ \int_{0}^{1} r^2 \, dr \right] \cos \theta \, d\theta \, d\varphi \\
-                                = \int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}} \left[ \frac{1}{3} \right] \cos \theta \, d\theta \, d\varphi \\
-                                = \frac{1}{3} \int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}} \cos \theta \, d\theta \, d\varphi \\
-                                = \frac{1}{3} \int_{0}^{2\pi} \left[ \int_{0}^{\frac{\pi}{6}} \cos \theta \, d\theta \right] d\varphi \\
-                                = \frac{1}{3} \int_{0}^{2\pi} \left[ \sin \theta \right]_{0}^{\frac{\pi}{6}} d\varphi \\
-                                = \frac{1}{3} \int_{0}^{2\pi} \left[ \frac{1}{2} \right] d\varphi \\
-                                = \frac{1}{6} \int_{0}^{2\pi} d\varphi \\
-                                = \frac{1}{6} \left[ \varphi \right]_{0}^{2\pi} \\
-                                = \frac{1}{6} \cdot 2\pi = \frac{\pi}{3}
+                                &\int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}}\int_{0}^{1}r^2\cos \theta \, dr \, d\theta \, d\varphi \\
+                                = &\int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}} \left[ \int_{0}^{1} r^2 \, dr \right] \cos \theta \, d\theta \, d\varphi \\
+                                = &\int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}} \left[ \frac{1}{3} \right] \cos \theta \, d\theta \, d\varphi \\
+                                = &\frac{1}{3} \int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}} \cos \theta \, d\theta \, d\varphi \\
+                                = &\frac{1}{3} \int_{0}^{2\pi} \left[ \int_{0}^{\frac{\pi}{6}} \cos \theta \, d\theta \right] d\varphi \\
+                                = &\frac{1}{3} \int_{0}^{2\pi} \left[ \sin \theta \right]_{0}^{\frac{\pi}{6}} d\varphi \\
+                                = &\frac{1}{3} \int_{0}^{2\pi} \left[ \frac{1}{2} \right] d\varphi \\
+                                = &\frac{1}{6} \int_{0}^{2\pi} d\varphi \\
+                                = &\frac{1}{6} \left[ \varphi \right]_{0}^{2\pi} \\
+                                = &\frac{1}{6} \cdot 2\pi = \frac{\pi}{3}
                                 \end{align}
                             </div>
                         </li>
                         <li>回転体をドーム（上側）と円錐（下側）に分解して解くと、以下のようになる。
                             <div class="scroll">
                                 \begin{align}
-                                \pi \times (\frac{\sqrt{3}}{2})^2 \times \frac{1}{2} \times \frac{1}{2}
+                                &\pi \times (\frac{\sqrt{3}}{2})^2 \times \frac{1}{2} \times \frac{1}{2}
                                 + \int_{\frac{1}{2}}^{1} \pi \times (\sqrt{1-z^2})^2 \, dz \\
-                                = \frac{\pi}{8} + \frac{5\pi}{24} \\
-                                = \frac{\pi}{3}
+                                = &\frac{\pi}{8} + \frac{5\pi}{24} \\
+                                = &\frac{\pi}{3}
                                 \end{align}
                             </div>
                         </li>
@@ -1734,15 +1734,46 @@
                         <ul>
                             <li>\( 0 \in I \) であること：</li>
                             <ul>
-                                <li>任意の整数 \( c_1, c_2, \dots, c_k \) に対して \( c_1 = c_2 = \dots = c_k = 0 \) を選べば、\( 0 = 0 \times a_1 + 0 \times a_2 + \dots + 0 \times a_k \in I \) であるため、\( 0 \in I \) が成立する。</li>
+                            <li>任意の整数 \( c_1, c_2, \dots, c_k \) に対して \( c_1 = c_2 = \dots = c_k = 0 \) を選べば、
+                                <div class="scroll">
+                                    \begin{align}
+                                    0 = 0 \times a_1 + 0 \times a_2 + \dots + 0 \times a_k \in I
+                                    \end{align}
+                                </div>
+                                であるため、\( 0 \in I \) が成立する。</li>
                             <li>\( x, y \in I \) ならば、 \( x + y \in I \) であること：</li>
                             </ul>
                             <ul>
-                            <li>\( x, y \in I \) であれば、それぞれ \( x = c_1a_1 + c_2a_2 + \dots + c_ka_k \)、\( y = d_1a_1 + d_2a_2 + \dots + d_ka_k \) で表される。したがって、\( x + y = (c_1 + d_1)a_1 + (c_2 + d_2)a_2 + \dots + (c_k + d_k)a_k \in I \) であり、\( x + y \) も \( I \) に属する。</li>
+                            <li>\( x, y \in I \) であれば、それぞれ
+                                <div class="scroll">
+                                    \begin{align}
+                                     x = c_1a_1 + c_2a_2 + \dots + c_ka_k \\
+                                     y = d_1a_1 + d_2a_2 + \dots + d_ka_k
+                                    \end{align}
+                                </div>
+                                で表される。したがって、
+                                <div class="scroll">
+                                    \begin{align}
+                                     x + y = (c_1 + d_1)a_1 + (c_2 + d_2)a_2 + \dots + (c_k + d_k)a_k \in I
+                                    \end{align}
+                                </div>
+                                であり、\( x + y \) も \( I \) に属する。</li>
                             </ul>
                             <li>任意の \( c \in \mathbb{Z} \) に対して、 \( cx \in I \) であること：</li>
                             <ul>
-                            <li>\( x \in I \) であれば、\( x = c_1a_1 + c_2a_2 + \dots + c_ka_k \) で表される。したがって、\( cx = (cc_1)a_1 + (cc_2)a_2 + \dots + (cc_k)a_k \in I \) であり、\( cx \) も \( I \) に属する。</li>
+                            <li>\( x \in I \) であれば、
+                                <div class="scroll">
+                                    \begin{align}
+                                     x = c_1a_1 + c_2a_2 + \dots + c_ka_k
+                                    \end{align}
+                                </div>
+                                で表される。したがって、
+                                <div class="scroll">
+                                    \begin{align}
+                                     cx = (cc_1)a_1 + (cc_2)a_2 + \dots + (cc_k)a_k \in I
+                                    \end{align}
+                                </div>
+                                であり、\( cx \) も \( I \) に属する。</li>
                             </ul>
                         </ul>
                         <p>以上の条件が満たされるため、\( I \) は \( \mathbb{Z} \) のイデアルであることが示された。</p>
