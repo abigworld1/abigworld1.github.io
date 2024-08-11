@@ -1723,9 +1723,21 @@
                 <div class="example">
                     <p><b>問題</b></p>
                     <ol>
-                        <li>正の整数 \( a_1, a_2, \dots, a_k \) に対して、\( I = \{c_1a_1 + c_2a_2 + \dots + c_k a_k \mid c_1, c_2, \dots, c_k \in \mathbb{Z} \} \) とおく。このとき、\( I \) は \( \mathbb{Z} \) のイデアルであることを証明せよ。</li>
+                        <li>正の整数 \( a_1, a_2, \dots, a_k \) に対して、
+                            <div class="scroll">
+                                \begin{align}
+                                I = \{c_1a_1 + c_2a_2 + \dots + c_k a_k \mid c_1, c_2, \dots, c_k \in \mathbb{Z} \}
+                                \end{align}
+                            </div>
+                        とおく。このとき、\( I \) は \( \mathbb{Z} \) のイデアルであることを証明せよ。</li>
                         <li>\( I = d\mathbb{Z} \) となる正の整数 \( d \) が存在するとき、この \( d \) は \( a_1, a_2, \dots, a_k \) の最大公約数になることを証明せよ。</li>
-                        <li>正の整数 \( a_1, a_2, \dots, a_k \) に対して、任意の \( j \) (2 ≤ j ≤ k) について、\( a_j \) を \( a_1 \) で割ったときの商を \( q_j \)、余りを \( r_j \) とするとき、次が成立つことを示せ。\(\text{gcd}(a_1, a_2, \dots, a_k) = \text{gcd}(a_1, r_2, \dots, r_k)\)</li>
+                        <li>正の整数 \( a_1, a_2, \dots, a_k \) に対して、任意の \( j \) (2 ≤ j ≤ k) について、\( a_j \) を \( a_1 \) で割ったときの商を \( q_j \)、余りを \( r_j \) とするとき、次が成立つことを示せ。
+                            <div class="scroll">
+                                \begin{align}
+                                \text{gcd}(a_1, a_2, \dots, a_k) = \text{gcd}(a_1, r_2, \dots, r_k)
+                                \end{align}
+                            </div>
+                            </li>
                         <li>(3) を利用することで gcd(8413, 10561, 11993) を求めよ。解答には (3) を利用した過程を示すこと。</li>
                     </ol>
                     <p><b>(1)の解答</b></p>
@@ -1747,14 +1759,14 @@
                             <li>\( x, y \in I \) であれば、それぞれ
                                 <div class="scroll">
                                     \begin{align}
-                                     x = c_1a_1 + c_2a_2 + \dots + c_ka_k \\
-                                     y = d_1a_1 + d_2a_2 + \dots + d_ka_k
+                                    x = c_1a_1 + c_2a_2 + \dots + c_ka_k \\
+                                    y = d_1a_1 + d_2a_2 + \dots + d_ka_k
                                     \end{align}
                                 </div>
                                 で表される。したがって、
                                 <div class="scroll">
                                     \begin{align}
-                                     x + y = (c_1 + d_1)a_1 + (c_2 + d_2)a_2 + \dots + (c_k + d_k)a_k \in I
+                                    x + y = (c_1 + d_1)a_1 + (c_2 + d_2)a_2 + \dots + (c_k + d_k)a_k \in I
                                     \end{align}
                                 </div>
                                 であり、\( x + y \) も \( I \) に属する。</li>
@@ -1764,13 +1776,13 @@
                             <li>\( x \in I \) であれば、
                                 <div class="scroll">
                                     \begin{align}
-                                     x = c_1a_1 + c_2a_2 + \dots + c_ka_k
+                                    x = c_1a_1 + c_2a_2 + \dots + c_ka_k
                                     \end{align}
                                 </div>
                                 で表される。したがって、
                                 <div class="scroll">
                                     \begin{align}
-                                     cx = (cc_1)a_1 + (cc_2)a_2 + \dots + (cc_k)a_k \in I
+                                    cx = (cc_1)a_1 + (cc_2)a_2 + \dots + (cc_k)a_k \in I
                                     \end{align}
                                 </div>
                                 であり、\( cx \) も \( I \) に属する。</li>
@@ -1779,13 +1791,37 @@
                         <p>以上の条件が満たされるため、\( I \) は \( \mathbb{Z} \) のイデアルであることが示された。</p>
                     <p><b>(2)の解答</b></p>
                     <ul>
-                        <li>\(c_1, c_2, \cdots, c_k\)が任意の整数であることに注意すると、\(a_1, a_2, \cdots, a_k \in I\)である。</li>
-                        <li>したがって、\(a_1 = d b_1, a_2 = d b_2, \cdots a_k = d b_k\)とかける。</li>
+                        <li>\(c_1, c_2, \cdots, c_k\)が任意の整数であることに注意すると、a_1, a_2, \cdots, a_k \in I\)である。</li>
+                        <li>したがって、
+                            <div class="scroll">
+                                \begin{align}
+                                a_1 = d b_1, a_2 = d b_2, \cdots a_k = d b_k
+                                \end{align}
+                            </div>
+                        とかける。</li>
                         <li>ここで、\(b_1, b_2, \cdots b_k \in \mathbb{Z}\)である。</li>
                         <li>よって、\(d\)は\(a_1, a_2, \cdots, a_k\)の公約数である。</li>
-                        <li>\(m\)を正の整数\(a_1, a_2, \cdots, a_k\)の公約数とすると、\(a_1 = m a_1', a_2 = m a_2', \cdots a_k = m a_k'\)とかける。</li>
+                        <li>\(m\)を正の整数\(a_1, a_2, \cdots, a_k\)の公約数とすると、
+                            <div class="scroll">
+                                \begin{align}
+                                a_1 = m a_1', a_2 = m a_2', \cdots a_k = m a_k'
+                                \end{align}
+                            </div>
+                        とかける。</li>
                         <li>ここで、\(a_1', a_2', \cdots a_k' \in \mathbb{Z}\)である。</li>
-                        <li>一方、\(d = c_1 a_1 + c_2 a_2 + \cdots + c_k a_k\)とかけるから、\(d = m(c_1 a_1' + c_2 a_2' + \cdots c_k a_k')\)となる。</li>
+                        <li>一方、
+                            <div class="scroll">
+                                \begin{align}
+                                d = c_1 a_1 + c_2 a_2 + \cdots + c_k a_k
+                                \end{align}
+                            </div>
+                        とかけるから、
+                            <div class="scroll">
+                                \begin{align}
+                                d = m(c_1 a_1' + c_2 a_2' + \cdots c_k a_k'
+                                \end{align}
+                            </div>
+                        となる。</li>
                         <li>すなわち、\(m\)は\(d\)の約数である。</li>
                         <li>ゆえに、\(d\)は\(a_1, a_2, \cdots, a_k\)の最大公約数である。</li>
                     </ul>
