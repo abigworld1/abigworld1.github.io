@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【院試対策|北海道大学 情報科学院 - 基礎数学】走る作曲家のAIカフェ</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>走る作曲家のAIカフェ</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="study.html">勉強</a></li>
+                <li><a href="music.html">音楽</a></li>
+                <li><a href="sports.html">スポーツ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+          <h2>目次</h2>
+          <ul>
+            <li><a href="#overview">概要</a></li>
+            <li><a href="#strategy">戦略</a></li>
+            <li><a href="#basic-math">基礎数学</a></li>
+            <li><a href="#info-math">情報数学</a></li>
+            <li><a href="#probability-statistics">確率・統計</a></li>
+            <li><a href="#algorithms-data-structures">アルゴリズムとデータ構造</a></li>
+            <li><a href="#artificial-intelligence">人工知能</a></li>
+          </ul>
+        </section>
+        <section id="overview">
+          <h2>概要</h2>
+          このページでは、「北海道大学大学院情報科学院修士課程入学試験」（令和6年8月実施）の対策を行います。過去問から傾向を掴み、必要な知識や要点をまとめていきます。
+        </section>
+        <section id="strategy">
+          <h2>戦略</h2>
+          院試は以下の内容で構成されます。
+          <ul>
+            <li>専門科目1: 基礎数学、情報数学、【選択】確率・統計、【選択】情報理論（4問のうち基礎数学と情報数学を含む3問を解答）</li>
+            <li>専門科目2: アルゴリズムとデータ構造、人工知能、コンピュータシステム、応用数学（4問のうち2問を選択し解答）</li>
+          </ul>
+          俗に、専門科目1では「情報理論」が、専門科目2では「アルゴリズムとデータ構造」と「コンピュータシステム」が簡単だと言われています。
+          しかし、今後の自分の研究に役立てたいので、専門科目1では「確率・統計」を、専門科目2では「アルゴリズムとデータ構造」と「人工知能」を選択しようと思います。
+        </section>
+        <section id="basic-math">
+          <h2>基礎数学</h2>
+            <h3>線形写像</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra13#1-3">うさぎでもわかる線形代数　第13羽　線形写像（後編）　核空間・像空間　線形写像の全射・単射について _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>集合\(V\)から集合\(W\)への写像があるとする。</li>
+                <ul>
+                    <li><b>全射</b>：\(W\)の要素すべてが\(V\)のどれかの要素と対応しているような写像。</li>
+                    <li><b>単射</b>：\(W\)のある要素に写すための\(V\)の要素は１つしかない（２つ以上存在しない）写像。</li>
+                    <li><b>全単射</b>：全射の条件、単射の条件の両方を満たすような写像。\(V\)の要素と\(W\)の要素は１対１の関係になる。</li>
+                </ul>
+                <li>\(f(x) = Ax\)を満たす行列\(A\)（表現行列）が正則であることと、\(f\)が全単射であることは同値である。</li>
+            </ul>
+            <h3>線形独立・線形従属</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra06#google_vignette">うさぎでもわかる線形代数　第06羽　1次独立・1次従属 _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>線形独立</li>
+                <ul>
+                    <li>ベクトルの集合が線形独立であるとは、集合内のどのベクトルも他のベクトルの線形結合として表せないことを意味する。
+                        具体的には、ベクトル\(v_{1}, v_{2}, ..., v_{n}\)が線形独立であるとは、次の方程式が成り立つときである：
+                        <div class="scroll">
+                        \begin{align}
+                        c_{1} v_{1} + c_{2} v_{2} + ... + c_{n} v_{n} = 0
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>ここで、すべてのスカラー\(c_{i}\) が0である場合に限り成り立つ。つまり、
+                        <div class="scroll">
+                        \begin{align}
+                        c_{1} = c_{2} = ... = c_{n} = 0
+                        \end{align}
+                        </div>
+                    </li>
+                </ul>
+                <li>線形従属</li>
+                <ul>
+                    <li>一方、ベクトルの集合が線形従属であるとは、少なくとも一つのベクトルが他のベクトルの線形結合として表せることを意味する。
+                        つまり、ベクトル\(v_{1}, v_{2}, ..., v_{n}\)が線形従属であるとは、次の方程式が成り立つときである：
+                        <div class="scroll">
+                        \begin{align}
+                        c_{1} v_{1} + c_{2} v_{2} + ... + c_{n} v_{n} = 0
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>ここで、少なくとも一つの\(c_{i}\)が0ではない（つまり、非自明な解が存在する）場合である。</li>
+                </ul>
+                <li>具体例</li>
+                <div class="example">
+                    <b>線形独立の例</b>
+                    <p>ベクトル\(v_{1} = (1, 0)\) と \(v_{2} = (0, 1)\) は線形独立である。なぜなら、</p>
+                        <div class="scroll">
+                        \begin{align}
+                        c_{1} (1, 0) + c_{2} (0, 1) = (0, 0)
+                        \end{align}
+                        </div>                  
+                    <p>が成り立つのは \(c_{1} = 0\)かつ \(c_{2} = 0\) のときだけだからである。</p>
+                </div>
+                <div class="example">
+                    <b>線形従属の例</b>
+                    <p>ベクトル\(v_{1} = (1, 2)\) と \(v_{2} = (2, 4)\)は線形従属である。なぜなら、</p>
+                        <div class="scroll">
+                        \begin{align}
+                        2 (1, 2) - 1 (2, 4) = (0, 0)
+                        \end{align}
+                        </div>                      
+                    <p>という関係があり、非自明な解 \(c_{1} = 2, c_{2} = -1\) が存在するからである。</p>
+                </div>
+            </ul>
+            <h3>グラム行列\(A^T A\)</h3>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <b>グラム行列の問題</b>
+                    <p>互いに他方の定数倍ではない3次元空間内の2点 \( x_1, x_2 \in \mathbb{R}^3 \) を考え、これらを横に並べてできる \( 3 \times 2 \) の行列 \( A = (x_1 \ x_2) \) を作る。このとき、\( A^T A \) が正則であることを証明せよ。ここで、\( A^T \) は \( A \) の転置を表す。</p>
+                    <ul>
+                        <li>行列 \( A \) を次のように定義する：
+                            <div class="scroll">
+                                \begin{align}
+                                A = \begin{pmatrix} x_{11} & x_{12} \\ x_{21} & x_{22} \\ x_{31} & x_{32} \end{pmatrix}
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>グラム行列 \( A^T A \) は次のように求められる：
+                            <div class="scroll">
+                                \begin{align}
+                                A^T A = \begin{pmatrix} x_{11} & x_{21} & x_{31} \\ x_{12} & x_{22} & x_{32} \end{pmatrix} \begin{pmatrix} x_{11} & x_{12} \\ x_{21} & x_{22} \\ x_{31} & x_{32} \end{pmatrix} = \begin{pmatrix} x_{11}^2 + x_{21}^2 + x_{31}^2 & x_{11}x_{12} + x_{21}x_{22} + x_{31}x_{32} \\ x_{11}x_{12} + x_{21}x_{22} + x_{31}x_{32} & x_{12}^2 + x_{22}^2 + x_{32}^2 \end{pmatrix}
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>この行列が正則であることを示すためには、行列 \( A^T A \) の行列式がゼロでないことを確認する必要がある：
+                            <div class="scroll">
+                                \begin{align}
+                                \det(A^T A) = \left(x_{11}^2 + x_{21}^2 + x_{31}^2\right)\left(x_{12}^2 + x_{22}^2 + x_{32}^2\right) - \left(x_{11}x_{12} + x_{21}x_{22} + x_{31}x_{32}\right)^2
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>ここで、以下のように表すことができる：
+                            <div class="scroll">
+                                \begin{align}
+                                \|x_1\|^2 &= x_{11}^2 + x_{21}^2 + x_{31}^2 \\
+                                \|x_2\|^2 &= x_{12}^2 + x_{22}^2 + x_{32}^2 \\
+                                x_1 \cdot x_2 &= x_{11}x_{12} + x_{21}x_{22} + x_{31}x_{32} \\
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>すると、行列式は次のようになる：
+                            <div class="scroll">
+                                \begin{align}
+                                \det(A^T A) = \|x_1\|^2 \|x_2\|^2 - (x_1 \cdot x_2)^2
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>これは、コーシー・シュワルツの不等式より、0以上である。</li>
+                        <li>コーシー・シュワルツの不等式は、ベクトルの内積の定義を使って、以下のように導かれる：
+                            <div class="scroll">
+                                \begin{align}
+                                m \cdot n &= \|m\| \|n\| \cos \theta \\
+                                (m \cdot n)^2 &= \|m\|^2 \|n\|^2 \cos^2 \theta \\
+                                \|m\|^2 \|n\|^2 &\geq (m \cdot n)^2
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>したがって、\(\theta = 0, \pi\)のとき、つまり２本のベクトルが互いに他方の定数倍であるときに、コーシー・シュワルツの不等式における等号が成立する。</li>
+                        <li>今回は２本のベクトルが互いに他方の定数倍でないため、\( A^T A \)の行列式は必ず正となって、0になることはない。</li>
+                        <li>よって、\( A^T A \)は正則である。</li>
+                    </ul>
+                </div>
+            </ul>
+            <h3>直交射影行列</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/2486">射影行列のイメージと楽しい公式 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <b>直交射影行列の問題</b>
+                    <p>\( 3 \times 2 \) の行列 \( A = (x_1 \ x_2) \) において、\( 3 \times 3 \)行列\( P = A(A^T A)^{-1} A^T \) を作る。
+                        このとき、\(P\)は任意の3次元空間内の点を \( x_1 \) と \( x_2 \) で張られる平面へ垂直に射影（直交射影）することを示せ。</p>
+                    <ul>
+                        <li>
+                            <b>直交射影行列の定義</b>:<br>
+                            行列 \( P \) が直交射影行列であるためには、以下の2つの条件を満たす必要がある。<br>
+                            (1) \( P^2 = P \)（冪等性）<br>
+                            (2) \( P^T = P \)（対称性）
+                        </li>
+                        <li>
+                            (1)冪等性の証明:<br>
+                            <div class="scroll">
+                                    \begin{align}
+                                        P^2 &= (A(A^T A)^{-1} A^T)(A(A^T A)^{-1} A^T) \\
+                                         &= A(A^T A)^{-1} (A^T A) (A^T A)^{-1} A^T \\
+                                         &= A(A^T A)^{-1} A^T 
+                                    \end{align}
+                            </div>
+                            したがって、\( P^2 = P \)。
+                        </li>
+                        <li>
+                            (2)対称性の証明:<br>
+                            <div class="scroll">
+                                    \begin{align}
+                                        P^T &= (A(A^T A)^{-1} A^T)^T \\
+                                         &= (A^T)^T ((A^T A)^{-1})^T A^T \\
+                                         &= A (A^T A)^{-1} A^T 
+                                    \end{align}
+                            </div>
+                            したがって、\( P^T = P \)。
+                        </li>
+                        <li>
+                            以上より、行列 \( P = A(A^T A)^{-1} A^T \) は \( x_1 \) と \( x_2 \) で張られる平面への直交射影行列であることが証明された。
+                        </li>
+                    </ul>
+                </div>
+            </ul>
+            <h3>行列のべき乗</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-linear-algebra18">うさぎでもわかる線形代数　第18羽　対角化を用いた行列のn乗の求め方・行列の無限乗 _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <b>行列の\(n\)乗を求める問題</b>
+                    <p>次の行列 \( A \) の\(n\)乗を求めよ。</p>
+                    <div class="scroll">
+                        \begin{align}
+                        A = \begin{pmatrix} 2 & 4 \\ 1 & -1 \end{pmatrix} 
+                        \end{align}
+                    </div>
+                    <ul>
+                    <li>1. 固有値の計算<br>
+                    行列 \( A \) の固有値を求めるために、特性方程式の解を求める。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \det(A - \lambda I) = 0 
+                        \end{align}
+                    </div>
+                    行列式を計算すると、<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \det \begin{pmatrix} 2 - \lambda & 4 \\ 1 & -1 - \lambda \end{pmatrix} = 0 
+                        \end{align}
+                    </div>
+                    よって、<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \lambda^2 - \lambda - 6 = 0 
+                        \end{align}
+                    </div>
+                    この二次方程式の解は、<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \lambda_1 = 3, \quad \lambda_2 = -2 
+                        \end{align}
+                    </div>
+                    </li>
+                    
+                    <li>2. 固有ベクトルの計算<br>
+                    固有値 \( \lambda_1 = 3 \) の場合：<br>
+                    <div class="scroll">
+                        \begin{align}
+                        (A - 3I)v = 0 
+                        \end{align}
+                    </div>
+                    <div class="scroll">
+                        \begin{align}
+                        \begin{pmatrix} -1 & 4 \\ 1 & -4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = 0
+                        \end{align}
+                    </div>
+                    この方程式を解くと、<br>
+                    <div class="scroll">
+                        \begin{align}
+                        -1x + 4y = 0 \implies x = 4y 
+                        \end{align}
+                    </div>
+                    したがって、固有ベクトルは \( v_1 = \begin{pmatrix} 4 \\ 1 \end{pmatrix} \) である。<br>
+                
+                    固有値 \( \lambda_2 = -2 \) の場合：<br>
+                    <div class="scroll">
+                        \begin{align}
+                        (A + 2I)v = 0 
+                        \end{align}
+                    </div>
+                    <div class="scroll">
+                        \begin{align}
+                        \begin{pmatrix} 4 & 4 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = 0
+                        \end{align}
+                    </div>
+                    この方程式を解くと、<br>
+                    <div class="scroll">
+                        \begin{align}
+                        4x + 4y = 0 \implies x = -y
+                        \end{align}
+                    </div>
+                    したがって、固有ベクトルは \( v_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix} \)である。<br>
+                    </li>
+                
+                    <li>3. 行列の対角化<br>
+                    行列 \( A \) は次のように対角化できる。
+                    <div class="scroll">
+                        \begin{align}
+                        A = PDP^{-1}
+                        \end{align}
+                    </div>
+                    ここで、<br>
+                    <div class="scroll">
+                        \begin{align}
+                        P = \begin{pmatrix} 4 & 1 \\ 1 & -1 \end{pmatrix}, \quad D = \begin{pmatrix} 3 & 0 \\ 0 & -2 \end{pmatrix}
+                        \end{align}
+                    </div>
+                    </li>
+                        
+                    <li>4. 行列のべき乗<br>
+                    行列のべき乗 \( A^n \) は次のように計算できる。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        A^n = PD^nP^{-1}
+                        \end{align}
+                    </div>
+                    <div class="scroll">
+                        \begin{align}
+                        D^n = \begin{pmatrix} 3^n & 0 \\ 0 & (-2)^n \end{pmatrix}
+                        \end{align}
+                    </div>
+                    したがって、<br>
+                    <div class="scroll">
+                        \begin{align}
+                        A^n = \begin{pmatrix} 4 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} 3^n & 0 \\ 0 & (-2)^n \end{pmatrix} \begin{pmatrix} \frac{1}{5} & \frac{1}{5} \\ \frac{1}{5} & -\frac{4}{5} \end{pmatrix}
+                        \end{align}
+                    </div>
+                    </li>
+                
+                    <li>5. \( P^{-1} \) の計算<br>
+                    行列 \( P \) の逆行列を求める。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        P^{-1} = \frac{1}{\det P}\begin{pmatrix} -1 & -1 \\ -1 & 4 \end{pmatrix} 
+                        \end{align}
+                    </div>
+                    ここで、<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \det P = (4 \times (-1)) - (1 \times 1) = -5
+                        \end{align}
+                    </div>
+                    したがって、<br>
+                    <div class="scroll">
+                        \begin{align}
+                        P^{-1} = \frac{1}{-5}\begin{pmatrix} -1 & -1 \\ -1 & 4 \end{pmatrix} = \begin{pmatrix} \frac{1}{5} & \frac{1}{5} \\ \frac{1}{5} & -\frac{4}{5} \end{pmatrix}
+                        \end{align}
+                    </div>
+                    </li>
+                
+                    <li>6. 最終的な結果
+                    行列 \( A^n \) は次のように求められる。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        A^n = \begin{pmatrix} 4 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} 3^n & 0 \\ 0 & (-2)^n \end{pmatrix} \begin{pmatrix} \frac{1}{5} & \frac{1}{5} \\ \frac{1}{5} & -\frac{4}{5} \end{pmatrix}
+                        \end{align}
+                    </div>
+                    この結果を具体的に計算することで、行列 \( A^n \) を求めることができる。
+                </div>
+            </ul>
+            <h3>エルミート行列</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://ja.wikipedia.org/wiki/%E8%A1%8C%E5%88%97%E3%81%AE%E5%AE%9A%E5%80%A4%E6%80%A7">行列の定値性 - Wikipedia.html</a></p>
+            <p><a href="https://manabitimes.jp/math/2616#4">エルミート行列とその性質，ユニタリ対角化の証明 _ 高校数学の美しい物語.html</a></p>
+            <p><a href="https://manabitimes.jp/math/1096#1-3">対称行列の定義と性質～固有値と固有ベクトルの性質 _ 高校数学の美しい物語.html</a></p>
+            <p><a href="https://mathlandscape.com/positive-definite-matrix/">正定値行列・半正定値行列の定義・性質3つとその証明 _ 数学の景色.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題</b></p>
+                    <ol>
+                        <li>エルミート行列\( H \) の固有値が全て実数となることを証明せよ。</li>
+                        <li>\( H \) の相異なる固有値に対応する固有ベクトル同士が直交することを証明せよ。</li>
+                        <li>\( H \) の全ての固有値が相異なり、かつ、正であるとき、零ベクトルでない任意の \( n \) 項複素列ベクトル \( \mathbf{x} \) に対して、\( \mathbf{x}^* H \mathbf{x} > 0 \) が成立つことを証明せよ。</li>
+                        <li>\( H \) の全ての固有値が相異なり、かつ、正であるとき、零ベクトルでない任意の \( n \) 項複素列ベクトル \( \mathbf{x} \) に対して、\( \mathbf{x}^* H^{-1} \mathbf{x} > 0 \) が成立つことを証明せよ。ただし、\( H^{-1} \) は \( H \) の逆行列を表すものとする。</li>
+                    </ol>
+                    <p><b>(1)の解答</b></p>
+                    <ul>
+                        <li>固有値を\(\lambda\)、固有ベクトルを\(\mathbf{x}\)とすると、以下のようにかける。
+                            <div class="scroll">
+                                \begin{align}
+                                H\mathbf{x} = \lambda\mathbf{x}
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>両辺の複素共役転置\(^*\)をとると、以下のようになる。
+                            <div class="scroll">
+                                \begin{align}
+                                \mathbf{x}^*H = \overline{\lambda}\mathbf{x}^*
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>両辺に右から\(\mathbf{x}\)をかけると、
+                            <div class="scroll">
+                                \begin{align}
+                                \mathbf{x}^*H\mathbf{x} &= \overline{\lambda}\mathbf{x}^*\mathbf{x} \\
+                                \mathbf{x}^*\lambda\mathbf{x} &= \overline{\lambda}\mathbf{x}^*\mathbf{x} \\
+                                \lambda\|\mathbf{x}\|^2 &= \overline{\lambda}\|\mathbf{x}\|^2 \\
+                                \end{align}
+                            </div>
+                        となって、\(\|\mathbf{x}\|^2 \neq 0\)より、固有値は実数である。</li>
+                    </ul>
+                    <p><b>(2)の解答</b></p>
+                    <ul>
+                        <li>相異なる固有値 \( \lambda_1, \lambda_2 \) に対応する固有ベクトル \( \mathbf{x}_1, \mathbf{x}_2 \) に対して、次の関係が成り立つ：
+                            <div class="scroll">
+                                \begin{align}
+                                H \mathbf{x}_1 = \lambda_1 \mathbf{x}_1 \\
+                                H \mathbf{x}_2 = \lambda_2 \mathbf{x}_2
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>２つ目の式の共役転置をとると、以下のようになる。
+                            <div class="scroll">
+                                \begin{align}
+                                \mathbf{x}_2^* H = \lambda_2 \mathbf{x}_2^*
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>ここで、２次形式\(\mathbf{x}_2^* H \mathbf{x}_1\)に対して２通りの変形をする。</li>
+                        <li>\(\mathbf{x}_1\)についての式より、\(\mathbf{x}_2^* H \mathbf{x}_1 = \lambda_1 \mathbf{x}_2^* \mathbf{x}_1\)</li>
+                        <li>\(\mathbf{x}_2^*\)についての式より、\(\mathbf{x}_2^* H \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^* \mathbf{x}_1\)</li>
+                        <li>よって、\(\mathbf{x}_2^* \mathbf{x}_1 (\lambda_1 - \lambda_2) = 0\)となり、内積\(\mathbf{x}_2^* \mathbf{x}_1\)が0になる。</li>
+                    </ul>
+                    <p><b>(3)の解答</b></p>
+                    <ul>
+                        <li>エルミート行列\(H\)の固有値分解を、\(H = PDP^{-1}\)とする。</li>
+                        <li>\(P\)は\(H\)の固有ベクトルのなす正規直交基底をその列ベクトルとして並べて得られるユニタリー行列である。</li>
+                        <li>\(D\)は対応する固有値を主対角成分に並べた対角行列である。</li>
+                        <li>ここで、\(y = P^{-1}\)とすると、ユニタリー行列\(P\)は\(P^{-1} = P^*\)が成り立つため、以下のように変形できる。
+                            <div class="scroll">
+                                \begin{align}
+                                \mathbf{x}^*H\mathbf{x} = \mathbf{x}^*PDP^{-1}\mathbf{x} = \mathbf{y}^*D\mathbf{y}
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>したがって、\(\mathbf{y}^*D\mathbf{y} > 0\)を示せばよい。</li>
+                        <li>固有値すべて正であることを用いると、\(\mathbf{y}^*D\mathbf{y} = \sum \lambda \|\mathbf{y}\|^2 > 0\)であり、\(\mathbf{x}^*H\mathbf{x} > 0\)が成り立つ。</li>
+                    </ul>
+                    <p><b>(4)の解答</b></p>
+                    <ul>
+                        <li>(3)と同様に、\(H = PDP^{-1}\)とすると、
+                            <div class="scroll">
+                                \begin{align}
+                                H &= PDP^{-1} \\
+                                H^{-1} &= P^{-1} D^{-1} P
+                                \end{align}
+                            </div>
+                        である。</li>
+                        <li>また、\(y = P\mathbf{x}\)とすると、
+                            <div class="scroll">
+                                \begin{align}
+                                \mathbf{y}^* = \mathbf{x}^* P^* = \mathbf{x}^* P^{-1}
+                                \end{align}
+                            </div>
+                        である。</li>
+                        <li>これらを用いると、\(\mathbf{x}^* H^{-1} \mathbf{x}\)は以下のように変形できる。
+                            <div class="scroll">
+                                \begin{align}
+                                \mathbf{x}^* H^{-1} \mathbf{x} = \mathbf{x}^* P^{-1} D^{-1} P \mathbf{x} = \mathbf{y}^*D^{-1} \mathbf{y}
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>したがって、\(\mathbf{y}^*D^{-1} \mathbf{y} > 0\)を示せばよい。</li>
+                        <li>逆行列の固有値は、元の行列の固有値の逆数であるから、(3)と同様に固有値がすべて正であることを用いると、\(\mathbf{x}^* H^{-1} \mathbf{x}\)がいえる。</li>
+                    </ul>
+                </div>
+            </ul>
+            <h3>二変数間の停留点</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://pictblog.com/twoparadiffer">【微積分】二変数関数の停留点(極大点・極小点・鞍点).html</a></p>
+            <ul>
+                <li>二変数関数\(f(x, y)\)の停留点\((a_x, a_y)\)を求めることを考える。</li>
+                <li>関数の変化がなくなる点が停留点であるため、停留点では\(x\)方向、\(y\)方向ともにその変化量が0、すなわち
+                    <div class="scroll">
+                    \begin{align}
+                    \frac{\partial f(x,y)}{\partial x}=\frac{\partial f(x,y)}{\partial y}=0
+                    \end{align}
+                    </div>
+                を満たす点が停留点となる。</li>
+                <li>停留点\((a_x, a_y)\)を求めたら、次はその種類をヘッセ行列により判定する。</li>
+                <li>ヘッセ行列は次の式で表される。
+                    <div class="scroll">
+                    \begin{align}
+                    \mathsf{H}=
+                        \begin{pmatrix}\displaystyle{\frac{\partial^{2} f(x,y)}{\partial x^{2}}}&\displaystyle{\frac{\partial^{2} f(x,y)}{\partial x\partial y}} \\ \\ 
+                        \displaystyle{\frac{\partial^{2} f(x,y)}{\partial x\partial y}}&\displaystyle{\frac{\partial^{2} f(x,y)}{\partial y^{2}}}\end{pmatrix}
+                    \end{align}
+                    </div>
+                </li>
+                <li>ヘッセ行列に停留点の座標\((a_x, a_y)\)を代入する。
+                    <div class="scroll">
+                    \begin{align}
+                    \mathsf{H}=
+                        \mathsf{H}_{(a_{x},a_{y})}
+                        =\begin{pmatrix}\displaystyle{\left.\frac{\partial^{2} f(x,y)}{\partial x^{2}}\right|_{x=a_{x},y=a_{y}}}
+                        &\displaystyle{\left.\frac{\partial^{2} f(x,y)}{\partial x\partial y}\right|_{x=a_{x},y=a_{y}}} \\ \\ 
+                        \displaystyle{\left.\frac{\partial^{2} f(x,y)}{\partial x\partial y}\right|_{x=a_{x},y=a_{y}}}
+                        &\displaystyle{\left.\frac{\partial^{2} f(x,y)}{\partial y^{2}}\right|_{x=a_{x},y=a_{y}}}\end{pmatrix}
+                    \end{align}
+                    </div>
+                </li>
+                <li>この行列の固有値を\(\lambda_{1},\lambda_{2}\)とすると、次のように停留点の種類を判別できる。
+                    <div class="scroll">
+                    \begin{align}
+                    \begin{cases}
+                        \lambda_{1}>0,\lambda_{2}>0&\to\,\text{極小点}\\ 
+                        \lambda_{1}<0,\lambda_{2}<0&\to\,\text{極大点}\\ 
+                        \lambda_{1}\lambda_{2}<0&\to\,\text{鞍点} 
+                    \end{cases}
+                    \end{align}
+                    </div>
+                </li>
+                <li>具体例</li>
+                <div class="example">
+                    <b>問題：\( f(x, y) = -3x^2 + 2xy - 4y^3 \)の停留点を調べよ。</b>
+                    <p>一階偏微分を求める。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        f_x = \frac{\partial f}{\partial x} = -6x + 2y \\
+                        f_y = \frac{\partial f}{\partial y} = 2x - 12y^2
+                        \end{align}
+                        </div>
+                    <p>これらの一階偏微分を0に設定して連立方程式を解く。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        & -6x + 2y = 0 \quad \Rightarrow \quad y = 3x \\
+                        & 2x - 12(3x)^2 = 0 \quad \Rightarrow \quad 2x - 108x^2 = 0 \quad \Rightarrow \quad x(2 - 108x) = 0
+                        \end{align}
+                        </div>
+                    <p>よって、 \( x = 0 \) または \( x = \frac{1}{54} \) である。</p>
+                    <p>それぞれの場合に対応する \( y \) を求める。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        x = 0 \quad \Rightarrow \quad y = 0 \\
+                        x = \frac{1}{54} \quad \Rightarrow \quad y = \frac{1}{18}
+                        \end{align}
+                        </div>
+                    <p>停留点は \( (0, 0) \) と \( \left( \frac{1}{54}, \frac{1}{18} \right) \) である。</p>
+                    <p>次に、二階偏微分を求める。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        f_{xx} = \frac{\partial^2 f}{\partial x^2} = -6 \\
+                        f_{xy} = \frac{\partial^2 f}{\partial x \partial y} = 2 \\
+                        f_{yy} = \frac{\partial^2 f}{\partial y^2} = -24y
+                        \end{align}
+                        </div>
+                    <p>ヘッセ行列 \( H \) は以下の通りである：</p>
+                        <div class="scroll">
+                        \begin{align}
+                        H = \begin{bmatrix}
+                            f_{xx} & f_{xy} \\
+                            f_{xy} & f_{yy}
+                        \end{bmatrix}
+                        = \begin{bmatrix}
+                            -6 & 2 \\
+                            2 & -24y
+                        \end{bmatrix}
+                        \end{align}
+                        </div>
+                    <p>ヘッセ行列の判別式 \( D \) を求める。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        D = f_{xx} f_{yy} - (f_{xy})^2
+                        \end{align}
+                        </div>
+                    <p>停留点 \( (0, 0) \) の場合、</p>
+                        <div class="scroll">
+                        \begin{align}
+                        &f_{xx}(0, 0) = -6, \quad f_{yy}(0, 0) = 0, \quad f_{xy}(0, 0) = 2 \\
+                        &D(0, 0) = (-6)(0) - (2)^2 = -4
+                        \end{align}
+                        </div>
+                    <p>\( D < 0 \) なので、 \( (0, 0) \) は鞍点である。</p>
+                    <p>停留点 \( \left( \frac{1}{54}, \frac{1}{18} \right) \) の場合</p>
+                        <div class="scroll">
+                        \begin{align}
+                        &f_{xx}\left( \frac{1}{54}, \frac{1}{18} \right) = -6, \quad f_{yy}\left( \frac{1}{54}, \frac{1}{18} \right) = -\frac{4}{3}, \quad f_{xy}\left( \frac{1}{54}, \frac{1}{18} \right) = 2 \\
+                        &D\left( \frac{1}{54}, \frac{1}{18} \right) = (-6) \left( -\frac{4}{3} \right) - (2)^2 = 8 - 4 = 4
+                        \end{align}
+                        </div>
+                    <p>\( D > 0 \) かつ \( f_{xx} < 0 \) なので、 \( \left( \frac{1}{54}, \frac{1}{18} \right) \) は極大点である。</p>
+                </div>
+            </ul>
+            <h3>二次元極座標変換</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-analysis25">うさぎでもわかる解析　Part25　極座標変換を用いた2重積分の求め方 _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>\(x\)と\(y\)を次のようにおく。
+                    <div class="scroll">
+                    \begin{align}
+                    x = r \cos \theta , \ \ \ y = r \sin \theta \\ \left( r \geqq 0, \ \ 0 \leqq \theta \leqq 2 \pi \right)
+                    \end{align}
+                    </div>
+                </li>
+                <li>このとき、ヤコビアンを計算すると以下のようになる。
+                    <div class="scroll">
+                    \begin{align}
+                    J = & \left| \begin{array}{ccc} \frac{\partial x}{\partial r} & \frac{\partial x}{\partial \theta} \\ \frac{\partial y}{\partial r} & \frac{\partial y}{\partial \theta} \end{array} \right|
+                        \\ = & \left| \begin{array}{ccc} \cos \theta & - r \sin \theta \\ \sin \theta & r \cos \theta \end{array} \right|
+                        \\ = & \ r \left( \cos^2 \theta + \sin^2 \theta \right)
+                        \\ = & \ r
+                    \end{align}
+                    </div>
+                </li>
+                <li>よって、\(dxdy = r \ dr d \theta\)となる。</li>
+                <li>具体例</li>
+                <div class="example">
+                    <b>問題：\(\int _{-1}^1\int _{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}e^{\sqrt{x^2+y^2}}dydx\)を計算せよ。</b>
+                    <p>極座標変換を行う。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \int _{-1}^1\int _{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}e^{\sqrt{x^2+y^2}}dydx = \int _{0}^{2\pi}\int _{0}^{1}e^{r}rdrd\theta
+                        \end{align}
+                        </div>                  
+                    <p>内側の積分をまず計算する。</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \int _{0}^{1}re^{r}dr
+                        \end{align}
+                        </div>        
+                    <p>この積分は部分積分を用いて解く。<br>部分積分の公式： \(\int u dv = uv - \int v du\)</p>
+                    <ul>
+                        <li>\(u = r \Rightarrow du = dr\)</li>
+                        <li>\(dv = e^r dr \Rightarrow v = e^r\)</li>
+                    </ul>
+                        <div class="scroll">
+                        \begin{align}
+                        \int r e^r dr = r e^r - \int e^r dr = r e^r - e^r
+                        \end{align}
+                        </div> 
+                    <p>これを\(0\)から\(1\)の範囲で評価する：</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \left[ r e^r - e^r \right]_{0}^{1} = (1 e^1 - e^1) - (0 e^0 - e^0) = (e - e) - (0 - 1) = 1
+                        \end{align}
+                        </div> 
+                    <p>したがって、内側の積分の結果は \(1\) である。</p>
+                    <p>次に外側の積分を計算する：</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \int _{0}^{2\pi} 1 d\theta = \int _{0}^{2\pi} d\theta = 2\pi
+                        \end{align}
+                        </div> 
+                    <p>したがって、元の2重積分の結果は：</p>
+                        <div class="scroll">
+                        \begin{align}
+                        \int _{-1}^1\int _{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}e^{\sqrt{x^2+y^2}}dydx = 2\pi
+                        \end{align}
+                        </div> 
+                </div>
+            </ul>
+            <h3>三次元極座標変換</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/1209#4">ヤコビ行列，ヤコビアンの定義と極座標の例 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題</b></p>
+                    <ol>
+                        <li>原点を中心とする半径 \( r \) の球面上の点の座標 \((x, y, z)\) を、半径 \( r \)、\( z \) 軸回りの回転角 \(\varphi\)、\( x-y \) 平面からの仰角 \(\theta\) の組 \((r, \varphi, \theta)\) を用いた極座標で表せ。</li>
+                        <li>前問で求めた写像 \( M: (r, \varphi, \theta) \rightarrow (x, y, z) \) のヤコビアン（ヤコビ行列の行列式）を求めよ。</li>
+                        <li>\( xz \) 平面において、\(\frac{\pi}{6} \leq \theta \leq \frac{5\pi}{6}, 0 \leq r \leq 1\)で表される扇形の領域を考える。この領域を\(z\)軸周りに回転させてできる回転体の体積を求めよ。</li>
+                    </ol>
+                    <p><b>(1)の解答</b></p>
+                    <ul>
+                        <li>球面上の点 \((x, y, z)\) を極座標 \((r, \varphi, \theta)\) で表すと、次のようになる：
+                            <div class="scroll">
+                                \begin{align}
+                                x = r \cos \theta \cos \varphi, \quad y = r \cos \theta \sin \varphi, \quad z = r \sin \theta
+                                \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                    <p><b>(2)の解答</b></p>
+                    <ul>
+                        <li>この変換のヤコビアン行列 \( J \) は次のように表される：
+                            <div class="scroll">
+                                \begin{align}
+                                J = \frac{\partial(x, y, z)}{\partial(r, \varphi, \theta)} = 
+                                \begin{pmatrix}
+                                \cos \theta \cos \varphi & -r \cos \theta \sin \varphi & -r \sin \theta \cos \varphi \\
+                                \cos \theta \sin \varphi & r \cos \theta \cos \varphi & -r \sin \theta \sin \varphi \\
+                                \sin \theta & 0 & r \cos \theta
+                                \end{pmatrix}
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>ヤコビアン行列の行列式 \( \det(J) \) は次のように計算される：
+                            <div class="scroll">
+                                \begin{align}
+                                \det(J) = r^2 \cos \theta
+                                \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                    <p><b>(3)の解答</b></p>
+                    <p>２通りで求める。</p>
+                    <ol>
+                        <li>(2)で求めたヤコビアンを使って一気に極座標の３重積分によって求めると、以下のようになる。
+                            <div class="scroll">
+                                \begin{align}
+                                &\int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}}\int_{0}^{1}r^2\cos \theta \, dr \, d\theta \, d\varphi \\
+                                = &\int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}} \left[ \int_{0}^{1} r^2 \, dr \right] \cos \theta \, d\theta \, d\varphi \\
+                                = &\int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}} \left[ \frac{1}{3} \right] \cos \theta \, d\theta \, d\varphi \\
+                                = &\frac{1}{3} \int_{0}^{2\pi}\int_{0}^{\frac{\pi}{6}} \cos \theta \, d\theta \, d\varphi \\
+                                = &\frac{1}{3} \int_{0}^{2\pi} \left[ \int_{0}^{\frac{\pi}{6}} \cos \theta \, d\theta \right] d\varphi \\
+                                = &\frac{1}{3} \int_{0}^{2\pi} \left[ \sin \theta \right]_{0}^{\frac{\pi}{6}} d\varphi \\
+                                = &\frac{1}{3} \int_{0}^{2\pi} \left[ \frac{1}{2} \right] d\varphi \\
+                                = &\frac{1}{6} \int_{0}^{2\pi} d\varphi \\
+                                = &\frac{1}{6} \left[ \varphi \right]_{0}^{2\pi} \\
+                                = &\frac{\pi}{3}
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>回転体をドーム（上側）と円錐（下側）に分解して解くと、以下のようになる。
+                            <div class="scroll">
+                                \begin{align}
+                                &\pi \times (\frac{\sqrt{3}}{2})^2 \times \frac{1}{2} \times \frac{1}{2}
+                                + \int_{\frac{1}{2}}^{1} \pi \times (\sqrt{1-z^2})^2 \, dz 
+                                = \frac{\pi}{8} + \frac{5\pi}{24} 
+                                = \frac{\pi}{3}
+                                \end{align}
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </ul>
+            <h3>双曲線関数(cosh, sinh, tanh)</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/617">双曲線関数(sinh,cosh,tanh)の意味・性質・楽しい話題まとめ _ 高校数学の美しい物語.html</a></p>
+            <p><a href="https://math-note.xyz/linear-algebra/basics-of-linear-space/definition-of-linear-subspace/">線形部分空間の定義｜証明のテンプレートも例題に沿って紹介 – あーるえぬ.html</a></p>
+            <p><a href="https://linky-juku.com/linear-space-dimension/">部分空間の証明と基底_次元の求め方を分かりやすく解説!(線形空間).html</a></p>
+            <p><a href="https://university-note.com/basis-vector/">【入門線形代数】基底と次元-ベクトル空間-.html</a></p>
+            <ul>
+                <li>双曲線関数は、以下のように定義される。</li>
+                <ul>
+                    <li>\(\cosh x = \frac{e^x+e^{-x}}{2}\)</li>
+                    <li>\(\sinh x = \frac{e^x-e^{-x}}{2}\)</li>
+                    <li>\(\tanh x = \frac{\sinh x}{\cosh x} = \frac{e^x-e^{-x}}{e^x+e^{-x}}\)</li>
+                </ul>
+                <li>双曲線関数について、以下の関係式が成り立つ。</li>
+                <ul>
+                    <li>\(\cosh^2 x - \sinh^2 x = 1\)</li>
+                    <li>\(1 - \tanh^2 x = \frac{1}{\cosh^2 x}\)</li>
+                    <li>\(1 - \frac{1}{\tanh^2 x} = -\frac{1}{\sinh^2 x}\)</li>
+                </ul>
+                <li>双曲線関数を微分すると、以下のようになる。</li>
+                <ul>
+                    <li>\((\cosh x)'=\sinh x\)</li>
+                    <li>\((\sinh x)'=\cosh x\)</li>
+                    <li>\((\tanh x)'=\frac{1}{\cosh^2 x}\)</li>
+                </ul>
+                <li>双曲線関数を積分すると、以下のようになる。</li>
+                <ul>
+                    <li>\(\int \cosh x \, dx = \sinh x + C\)</li>
+                    <li>\(\int \sinh x \, dx = \cosh x + C\)</li>
+                    <li>\(\int \tanh x \, dx = \log( \cosh x) + C\)</li>
+                </ul>
+                <li>具体例</li>
+                <div class="example">
+                    <P><b>問題</b></p>
+                    <p>開区間 \(I := [-1, 1]\) で定義された、無限回微分可能な実数値関数全体からなる集合 \(C^∞(I)\) は、
+                    通常の関数の和と定数倍に関して線形空間（ベクトル空間）をなす。また、任意の \(f(x), g(x) ∈ C^∞(I)\) に対して</p>
+                    <p>
+                        <div class="scroll">
+                        \begin{align}
+                        \langle f(x), g(x) \rangle := \int_{-1}^{1} f(x) g(x) \, dx
+                        \end{align}
+                        </div>
+                        と定義すると、\(\langle f(x), g(x) \rangle\) は \(C^{\infty}(I)\) の内積となる。
+                        
+                        自然対数の底を \(e\) とし、
+                        <div class="scroll">
+                        \begin{align}
+                        \cosh x := \frac{e^x + e^{-x}}{2}, \quad \sinh x := \frac{e^x - e^{-x}}{2}
+                        \end{align}
+                        </div>
+                        という二つの関数を定義する。
+                        更に、上で定義された関数の集合 \(F(I)\) を
+                    </p>               
+                    <p>
+                        <div class="scroll">
+                        \begin{align}
+                        F(I) := \{a \cosh x + b \sinh x | a, b ∈ \mathbb{R}\}
+                        \end{align}
+                        </div><br>
+                        によって定義する。ここで、\(\mathbb{R}\) は実数全体からなる集合を表す。以下の設問に答えよ。
+                    </p>
+                
+                    <ol>
+                        <li><b>\(F(I)\) が \(C^∞(I)\) の部分集合となることを証明せよ。</b></li>
+                        <ul>
+                            <li>\(F(I)\) が \(C^∞(I)\) の部分集合であることを証明するには、すべての\(x\)について、\(x \in F(I)\)ならば\(x \in C^∞(I)\)であることを示せばよい。</li>
+                            <li>したがって、\( F(I) \) の任意の要素\(x\)が無限回微分可能であることを示す。具体的には、\( F(I) \) の任意の要素は次の形をしている：
+                            <div class="scroll">\[ f(x) = a \cosh x + b \sinh x \]</div></li>
+                            <li>ここで、\( a \) および \( b \) は実数定数である。この関数の導関数は、次のように計算される：
+                            <div class="scroll">\[ f'(x) = a \sinh x + b \cosh x \]</div></li>
+                            <li>さらに、二階導関数は：
+                            <div class="scroll">\[ f''(x) = a \cosh x + b \sinh x \]</div></li>
+                            <li>つまり、\( f(x) \) の任意の階の導関数は再び \( a \cosh x + b \sinh x \) の形になる。したがって、\( f(x) \) は無限回微分可能であり、\( C^\infty(I) \) に属する。</li>
+                            <li>よって、\( F(I) \subseteq C^\infty(I) \) が成り立つことが示された。</li>
+                        </ul>
+                        <li><b>\(F(I)\) が \(C^∞(I)\) の線形部分空間となることを証明せよ。</b></li>
+                        <ul>
+                            <li>線形部分空間であるためには、以下の条件を満たす必要がある：</li>
+                            <ol>
+                                <li>関数の加法が閉じていること。</li>
+                                <li>関数のスカラー倍が閉じていること。</li>
+                            </ol>
+                            <li>まず、任意の \( f_1(x), f_2(x) \in F(I) \) を取り、それぞれ次のように表す：
+                            <div class="scroll">\[ f_1(x) = a_1 \cosh x + b_1 \sinh x \]</div>
+                            <div class="scroll">\[ f_2(x) = a_2 \cosh x + b_2 \sinh x \]</div></li>
+                            <li>これらの和を計算する：
+                            <div class="scroll">\begin{align} f_1(x) + f_2(x) &= (a_1 \cosh x + b_1 \sinh x) + (a_2 \cosh x + b_2 \sinh x) \\
+                            &= (a_1 + a_2) \cosh x + (b_1 + b_2) \sinh x \end{align}</div></li>
+                            <li>ここで、\( a_1 + a_2 \) および \( b_1 + b_2 \) も実数であるため、\( f_1(x) + f_2(x) \in F(I) \) であることがわかる。したがって、加法は閉じている。</li>
+                            <li>次に、任意の \( f(x) \in F(I) \) とスカラー \( c \in \mathbb{R} \) を取り、それぞれ次のように表す：
+                            <div class="scroll">\[ f(x) = a \cosh x + b \sinh x \]</div></li>
+                            <li>これのスカラー倍を計算する：</li>
+                            <div class="scroll">\begin{align} c f(x) &= c (a \cosh x + b \sinh x)  \\
+                            &= (ca) \cosh x + (cb) \sinh x \end{align}</div></li>
+                            <li>ここで、\( ca \) および \( cb \) も実数であるため、\( c f(x) \in F(I) \) であることがわかる。したがって、スカラー倍も閉じている。</li>
+                            <li>これにより、\( F(I) \) が \( C^\infty(I) \) の線形部分空間であることが示された。</li>
+                        </ul>
+                        <li><b>\(\cosh x\)と\(\sinh x\)が、上で定義した内積に関して直交することを証明せよ。</b></li>
+                        <ul>
+                            <li>内積を計算する：
+                                <div class="scroll">\begin{align} \langle \cosh x, \sinh x \rangle = \int_{-1}^{1} \cosh(x) \sinh(x) \, dx \end{align}</div>
+                            </li>
+                            <li>定義により、\( \cosh(x) = \frac{e^x + e^{-x}}{2} \)、\( \sinh(x) = \frac{e^x - e^{-x}}{2} \) である。これを使って積を計算する。
+                                <div class="scroll">\begin{align} \cosh(x) \sinh(x) = \left(\frac{e^x + e^{-x}}{2}\right)\left(\frac{e^x - e^{-x}}{2}\right) = \frac{e^{2x} - e^{-2x}}{4} \end{align}</div>
+                            </li>
+                            <li>これを内積の定義に従って積分する。
+                                <div class="scroll">\begin{align} \langle \cosh x, \sinh x \rangle = \int_{-1}^{1} \frac{e^{2x} - e^{-2x}}{4} \, dx \end{align}</div>
+                            </li>
+                            <li>積分を計算する。
+                                <div class="scroll">\begin{align}
+                                \frac{1}{4} \int_{-1}^{1} e^{2x} \, dx - \frac{1}{4} \int_{-1}^{1} e^{-2x} \, dx 
+                                &= \frac{1}{4} \left[ \frac{e^{2x}}{2} \right]_{-1}^{1} - \frac{1}{4} \left[ -\frac{e^{-2x}}{2} \right]_{-1}^{1} \\
+                                &= \frac{1}{4} \left( \frac{e^2 - e^{-2}}{2} \right) - \frac{1}{4} \left( \frac{e^{-2} - e^2}{2} \right) \\
+                                &= \frac{1}{8} (e^2 - e^{-2}) - \frac{1}{8} (e^{-2} - e^2) \\
+                                &= \frac{1}{8} (e^2 - e^{-2} - e^{-2} + e^2) = \frac{1}{8} (2e^2 - 2e^{-2}) = 0 \end{align}</div>
+                            </li>
+                            <li>したがって、\( \cosh x \) と\( \sinh x \) は直交することが示された。</li>
+                        </ul>
+                        <li><b>関数の組\(\{\cosh x, \sinh x\}\)が\(F(I)\)の基底となることを証明せよ。</b></li>
+                        <ul>
+                            <li>関数の組 \( \{ \cosh x, \sinh x \} \) が基底であるための条件：
+                                <ol>
+                                    <li>一次独立であること。</li>
+                                    <li>\( F(I) \) を生成すること。</li>
+                                </ol>
+                            </li>
+                    
+                            <li>1. 一次独立性の証明
+                                <ul>
+                                    <li>関数 \( \cosh x \)と \( \sinh x \)が一次独立であることを示すには、任意の定数 \( a \)および\( b \)に対して次の関係式が成り立つ場合に\( a = 0 \) および\( b = 0 \) であることを証明する：
+                                        <div class="scroll">\begin{align} a \cosh x + b \sinh x = 0 \end{align}</div>
+                                    </li>
+                                    <li>この式は全ての \( x \) に対して成り立つと仮定する。特に、\( x = 0 \)のとき、
+                                        \( \cosh(0) = 1 \) および \( \sinh(0) = 0 \) なので、
+                                        <div class="scroll">\begin{align} a \cosh(0) + b \sinh(0) = a \cdot 1 + b \cdot 0 = a = 0 \end{align}</div>
+                                    </li>
+                                    <li>次に、\( x = 1 \) のとき、
+                                        \( \cosh(1) \) および \( \sinh(1) \) なので、
+                                        <div class="scroll">\begin{align} a \cosh(1) + b \sinh(1) = 0 \end{align}</div>
+                                    </li>
+                                    <li>既に \( a = 0 \) であることを示しているので、残りの式は次のようになる：
+                                        <div class="scroll">\begin{align} b \sinh(1) = 0 \end{align}</div>
+                                    </li>
+                                    <li>ここで、\( \sinh(1) \neq 0 \) であるため、
+                                        <div class="scroll">\begin{align} b = 0 \end{align}</div>
+                                    </li>
+                                    <li>したがって、\( \cosh x \) と \( \sinh x \) は一次独立である。</li>
+                                </ul>
+                            </li>
+                    
+                            <li>2. 生成性の証明
+                                <ul>
+                                    <li>\( F(I) \) が \( \{ \cosh x, \sinh x \} \) によって生成されることを示すには、任意の関数 \( f(x) \in F(I) \) が \( \cosh x \) および \( \sinh x \) の線形結合として表現できることを示す必要がある。</li>
+                                    <li>\( F(I) \) の定義によれば、任意の関数 \( f(x) \in F(I) \) は次の形式で表現できる：
+                                        <div class="scroll">\begin{align} f(x) = a \cosh x + b \sinh x \end{align}</div>
+                                        ここで、\( a \) および \( b \) は実数である。
+                                    </li>
+                                    <li>任意の \( f(x) \in F(I) \) を取ると、\( f(x) \) は常にこの形式で表現できる。これにより、\( \{ \cosh x, \sinh x \} \) が \( F(I) \) を生成することが示された。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <li><b>微分が、\(F(I)\)から\(F(I)\)への線形写像となることを証明せよ。</b></li>
+                        <ul>
+                            <li>微分が線形写像であるためには、次の2つの条件を満たす必要がある。</li>
+                            <ol>
+                                <li>線形性の保持：
+                                    <div class="scroll">\begin{align} D(af + bg) = aD(f) + bD(g)\end{align}</div>
+                                    ここで、\( f, g \in F(I) \) であり、\( a, b \in \mathbb{R} \) である。
+                                </li>
+                                <li>関数 <div class="scroll">\begin{align} f(x) = a \cosh x + b \sinh x \in F(I) \end{align}</div> に対する微分が再び \( F(I) \) に属すること。</li>
+                            </ol>
+                            <li>まず、線形性の保持を確認する。
+                                <br>
+                                <div class="scroll">\( D(af + bg) = D(a \cosh x + b \sinh x) = aD(\cosh x) + bD(\sinh x) \)</div>
+                            </li>
+                            <li>次に、微分を計算する。
+                                <div class="scroll">\begin{align}
+                                    D(\cosh x) = \sinh x \\
+                                    D(\sinh x) = \cosh x \end{align}</div>
+                            </li>
+                            <li>したがって、
+                                <div class="scroll">\begin{align} D(a \cosh x + b \sinh x) = a \sinh x + b \cosh x \in F(I) \end{align}</div>
+                            </li>
+                            <li>以上より、微分が \( F(I) \)から \( F(I) \) への線形写像であることが示された。</li>
+                        </ul>
+                    </ol>
+                </div>
+            </ul>
+            <h3>逆三角関数\(\cos^{-1}, \sin^{-1}, \tan^{-1}\)</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-analysis02#i-4">うさぎでもわかる解析　Part02　逆三角関数 _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題：関数 \( f(x, y) = \tan^{-1} \left( \frac{y}{x} \right) \) が調和関数であることを示せ。</b></p>
+                    <ul>
+                    <li>調和関数とは、ラプラス方程式<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} = 0
+                        \end{align}
+                    </div>
+                    を満たす関数のことである。<br></li>
+
+                    <li>\( x \) に関する1次偏微分<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial f}{\partial x} &= \frac{\partial}{\partial x} \tan^{-1} \left( \frac{y}{x} \right) \\
+                        &= \frac{1}{1 + \left( \frac{y}{x} \right)^2} \cdot \frac{\partial}{\partial x} \left( \frac{y}{x} \right) \\
+                        &= \frac{1}{1 + \left( \frac{y}{x} \right)^2} \cdot \left( -\frac{y}{x^2} \right) \\
+                        &= \frac{-y}{x^2 + y^2}
+                        \end{align}
+                    </div></li>
+                
+                    <li>\( y \) に関する1次偏微分<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial f}{\partial y} &= \frac{\partial}{\partial y} \tan^{-1} \left( \frac{y}{x} \right) \\
+                        &= \frac{1}{1 + \left( \frac{y}{x} \right)^2} \cdot \frac{\partial}{\partial y} \left( \frac{y}{x} \right) \\
+                        &= \frac{1}{1 + \left( \frac{y}{x} \right)^2} \cdot \left( \frac{1}{x} \right) \\
+                        &= \frac{x}{x^2 + y^2}
+                        \end{align}
+                    </div></li>
+                
+                    <li>\( x \) に関する2次偏微分<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial x^2} = \frac{\partial}{\partial x} \left( \frac{-y}{x^2 + y^2} \right)
+                        \end{align}
+                    </div>
+                    まず、以下の部分を計算する。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial}{\partial x} \left( \frac{1}{x^2 + y^2} \right) = -\frac{2x}{(x^2 + y^2)^2}
+                        \end{align}
+                    </div>
+                    これを使って、2次偏微分を求める。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial x^2} = -y \cdot \left( -\frac{2x}{(x^2 + y^2)^2} \right) = \frac{2xy}{(x^2 + y^2)^2}
+                        \end{align}
+                    </div></li>
+                
+                    <li>\( y \) に関する2次偏微分<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial y^2} = \frac{\partial}{\partial y} \left( \frac{x}{x^2 + y^2} \right)
+                        \end{align}
+                    </div>
+                    同様に、まずは以下の部分を計算する。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial}{\partial y} \left( \frac{1}{x^2 + y^2} \right) = -\frac{2y}{(x^2 + y^2)^2}
+                        \end{align}
+                    </div>
+                    これを使って、2次偏微分を求める。<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial y^2} = x \cdot \left( -\frac{2y}{(x^2 + y^2)^2} \right) = -\frac{2xy}{(x^2 + y^2)^2}
+                        \end{align}
+                    </div></li>
+                
+                    <li>調和関数の条件を確認<br>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} = \frac{2xy}{(x^2 + y^2)^2} - \frac{2xy}{(x^2 + y^2)^2} = 0
+                        \end{align}
+                    </div>
+                    よって、\( f(x, y) = \tan^{-1} \left( \frac{y}{x} \right) \) が調和関数であることが証明された。</li>
+                    </ul>
+                </div>
+            </ul>
+            <h3>マクローリン展開</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/570">マクローリン展開 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>定義</li>
+                <ul>
+                    <li>マクローリン展開（Maclaurin series）は、関数を原点（\( x = 0 \)）周りでテイラー展開する特別なケースである。これは、関数を無限級数として表現する方法であり、関数の各点での値や導関数の値を利用して関数を近似する。</li>
+                    <li>マクローリン展開は次のように定義される：</li>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f'''(0)}{3!}x^3 + \cdots + \frac{f^{(n)}(0)}{n!}x^n + \cdots
+                        \end{align}
+                    </div>
+                    <li>この定義を ∑（シグマ）記号を使って表現すると、以下のようになる：</li>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^n
+                        \end{align}
+                    </div>
+                </ul>
+                
+                <li>例</li>
+                <ul>
+                    <li>1. \(\sin x\) のマクローリン展開</li>
+                    <ul>
+                        <li><div class="scroll">
+                            \begin{align}
+                            \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots
+                            \end{align}
+                        </div></li>
+                        <li><div class="scroll">
+                            \begin{align}
+                            \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!}
+                            \end{align}
+                        </div></li>
+                    </ul>
+                    
+                    <li>2. \(\cos x\) のマクローリン展開</li>
+                    <ul>
+                        <li><div class="scroll">
+                            \begin{align}
+                            \cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots
+                            \end{align}
+                        </div></li>
+                        <li><div class="scroll">
+                            \begin{align}
+                            \cos x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!}
+                            \end{align}
+                        </div></li>
+                    </ul>
+                    
+                    <li>3. \( e^x \) のマクローリン展開</li>
+                    <ul>
+                        <li><div class="scroll">
+                            \begin{align}
+                            e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
+                            \end{align}
+                        </div></li>
+                        <li><div class="scroll">
+                            \begin{align}
+                            e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!}
+                            \end{align}
+                        </div></li>
+                    </ul>
+                    
+                    <li>4. \(\ln(1 + x)\) のマクローリン展開</li>
+                    <ul>
+                        <li><div class="scroll">
+                            \begin{align}
+                            \ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots
+                            \end{align}
+                        </div></li>
+                        <li><div class="scroll">
+                            \begin{align}
+                            \ln(1 + x) = \sum_{n=1}^{\infty} (-1)^{n+1} \frac{x^n}{n}
+                            \end{align}
+                        </div></li>
+                    </ul>
+                </ul>
+            </ul>
+            <h3>テイラー展開</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://mathlandscape.com/taylor-expansion/">テイラー展開・マクローリン展開とは【解析的な関数と具体例】 _ 数学の景色.html</a></p>
+            <ul>
+                <li>定義</li>
+                <ul>
+                    <li>テイラー展開（Taylor series）は、関数をある点 \( a \) の周りで無限級数として表現する方法である。この方法は、関数の各点での値や導関数の値を利用して関数を近似する。</li>
+                    <li>テイラー展開は次のように定義される：</li>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x) = f(a) + f'(a)(x - a) + \frac{f''(a)}{2!}(x - a)^2 + \frac{f'''(a)}{3!}(x - a)^3 + \cdots + \frac{f^{(n)}(a)}{n!}(x - a)^n + \cdots
+                        \end{align}
+                    </div>
+                    <li>この定義を ∑（シグマ）記号を使って表現すると、以下のようになる：</li>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x - a)^n
+                        \end{align}
+                    </div>
+                </ul>
+                
+                <li>例</li>
+                <ul>
+                    <li>代表的な関数のテイラー展開をいくつか紹介する。</li>
+                </ul>
+                
+                <b>1. \(\sin x\) のテイラー展開（\(a = 0\)）の場合）</b>
+                <ul>
+                    <div class="scroll">
+                        \begin{align}
+                        \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots
+                        \end{align}
+                    </div>
+                    <div class="scroll">
+                        \begin{align}
+                        \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!}
+                        \end{align}
+                    </div>
+                </ul>
+                
+                <b>2. \(\cos x\) のテイラー展開（\(a = 0\)）の場合）</b>
+                <ul>
+                    <div class="scroll">
+                        \begin{align}
+                        \cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots
+                        \end{align}
+                    </div>
+                    <div class="scroll">
+                        \begin{align}
+                        \cos x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!}
+                        \end{align}
+                    </div>
+                </ul>
+                
+                <b>3. \( e^x \) のテイラー展開（\(a = 0\)）の場合）</b>
+                <ul>
+                    <div class="scroll">
+                        <li>
+                        \begin{align}
+                        e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
+                        \end{align}
+                        </li>
+                    </div>
+                    <div class="scroll">
+                        <li>
+                        \begin{align}
+                        e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!}
+                        \end{align}
+                        </li>
+                    </div>
+                </ul>
+                
+                <b>4. \(\ln(1 + x)\) のテイラー展開（\(a = 0\)）の場合）</b>
+                <ul>
+                    <div class="scroll">
+                        <li>
+                        \begin{align}
+                        \ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots
+                        \end{align}
+                        </li>
+                    </div>
+                    <div class="scroll">
+                        <li>
+                        \begin{align}
+                        \ln(1 + x) = \sum_{n=1}^{\infty} (-1)^{n+1} \frac{x^n}{n}
+                        \end{align}
+                        </li>
+                    </div>
+                </ul>
+                </div>
+            </ul>
+            <h3>級数</h3>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                <b>問題</b>
+                    <p>数列 <div class="scroll">\begin{align} s_n = a_1 + a_2 + \cdots + a_n, n = 1, 2, \ldots \end{align}</div> に関する次の命題に関して、逆、裏、対偶を述べ、次の命題を含む4つの命題の真偽を述べよ。さらに、偽の場合は「反例」を挙げよ。</p>
+                    <p><div class="scroll">\begin{align} a_n \text{は0に収束する} ⟹ s_n \text{は有限確定値に収束する} \end{align}</div></p>
+                <ol>
+                    <li>
+                        <strong>元の命題：</strong> <div class="scroll">\( a_n は0に収束する ⟹ s_n は有限確定値に収束する \)</div>
+                        <p>偽。反例として、\( a_n = \frac{1}{n} \) を考える。\( a_n \) は0に収束するが、\( s_n = \sum_{k=1}^{n} \frac{1}{k} \) は発散する。</p>
+                    </li>
+                    <li>
+                        <strong>逆の命題：</strong> <div class="scroll">\( s_n は有限確定値に収束する ⟹ a_n は0に収束する \)</div>
+                        <p>真。数列 \( s_n \) が有限確定値に収束する場合、収束のための必要条件として \( a_n \) は0に収束しなければならない。</p>
+                    </li>
+                    <li>
+                        <strong>裏の命題：</strong> <div class="scroll">\( a_n は0に収束しない ⟹ s_n は有限確定値に収束しない \)</div>
+                        <p>真。もし \( a_n \) が0に収束しない場合、\( a_n \) が無限に大きくなる可能性があり、その結果 \( s_n \) は有限確定値に収束しない。</p>
+                    </li>
+                    <li>
+                        <strong>対偶の命題：</strong> <div class="scroll">\( s_n は有限確定値に収束しない ⟹ a_n は0に収束しない \)</div>
+                        <p>偽。この命題は元の命題と論理的に同値である。</p>
+                    </li>
+                </ol>
+            </ul>
+            <h3>述語論理</h3>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                <p><b>問題</b></p> 
+                <p><strong>人の集合 P と述語 LOVES(x, y)（意味は「x は y を好きである」）に対して、次の二つの述語論理式 A および B の関係を述べよ（等価、含意、など）。</strong></p>
+                <p>\(A: ∀x ∈ P ∃y ∈ P \ LOVES(x, y)\)</p>
+                <p>\(B: ∃y ∈ P ∀x ∈ P \ LOVES(x, y)\)</p>
+                <p><b>解答</b></p>
+                <p>各述語論理式の意味を説明する。</p>
+                <p>\(A: ∀x ∈ P ∃y ∈ P \ LOVES(x, y)\)</p>
+                <ul>
+                    <li>これは、「P のすべての x に対して、P のある y が存在し、x はその y を好きである」という意味である。</li>
+                    <li>言い換えると、「P のすべての人には、好きな人がいる」ということを表している。</li>
+                </ul>
+                <p>\(B: ∃y ∈ P ∀x ∈ P \ LOVES(x, y)\)</p>
+                <ul>
+                    <li>これは、「P のある y が存在し、P のすべての x がその y を好きである」という意味である。</li>
+                    <li>言い換えると、「P の中には、みんなから好かれている特定の人がいる」ということを表している。</li>
+                </ul>
+                <p>これら二つの述語論理式の関係について説明する。</p>
+                <p><strong>1. 等価 (Equivalence):</strong></p>
+                <ul>
+                    <li>A と B は等価ではない。A は「すべての人が誰かを好きである」という意味であり、B は「ある特定の人が全員から好かれている」という意味である。</li>
+                    <li>これらは異なる状況を表している。</li>
+                </ul>
+                <p><strong>2. 含意 (Implication):</strong></p>
+                <ul>
+                    <li>B は A を含意するが、A は B を含意しない。具体的には、もし P の中に全員から好かれている特定の人 y が存在すれば（B が真である場合）、P のすべての人 x はその y を好きであるため、P のすべての人には好きな人がいるということになる（A も真になる）。</li>
+                    <li>しかし、P のすべての人が好きな人を持っているというだけでは（A が真である場合）、それが全員から好かれている特定の一人だとは限らないため、B が必ずしも真であるとは限らない。</li>
+                </ul>
+                <p>以上のことから、<strong>B は A を含意するが、A は B を含意しない</strong>という関係がある。</p>          
+                </div>
+            </ul>
+            <h3>\(\sup, \inf\)</h3>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                <b>問題</b> 
+                <p><strong>連続実関数 \( f(x) \) において \(\max f(x)\) が存在せず \(\sup f(x)\) が存在するような \( f(x) \) と \( x \) の区間の例を示せ。</strong></p>
+                <ul>
+                    <li>まず、用語を確認する。</li>
+                    <ul>
+                        <li>\(\max f(x)\)：関数 \( f(x) \) の最大値である。これは \( f(x) \) の値の中で最も大きい値が存在する場合を指す。</li>
+                        <li>\(\sup f(x)\)：関数 \( f(x) \) の上限（最小の上界）である。これは \( f(x) \) の値がどんなに近づいてもそれ以上にはならない最大の値を指すが、その値を \( f(x) \) が実際に取る必要はない。</li>
+                    </ul>
+                    <li>ここで、関数 \( f(x) \) の最大値が存在せず、上限が存在する例を示す。</li>
+                    <li>関数 \( f(x) = 1 - \frac{1}{x} \) を考える。この関数の定義域を \( 0 < x < 1 \) とする。</li>
+                    <ol>
+                        <li><strong>関数の挙動を確認する：</strong>
+                            <ul>
+                                <li> \( x \) が \( 0 \) に近づくと、\( f(x) \) は非常に小さくなり、負の無限大に近づく。</li>
+                                <li> \( x \) が \( 1 \) に近づくと、\( f(x) \) は \( 0 \) に近づく。</li>
+                            </ul>
+                        </li>
+                        <li><strong>最大値が存在しないことを確認する：</strong>
+                            <p>関数 \( f(x) \) は定義域 \( 0 < x < 1 \) のどの点でも最大値を取らない。これは、\( x = 1 \) の点が定義域に含まれていないため、\( f(x) \) が \( x = 1 \) のときに取る値である \( 1 \) を取ることがないからである。</p>
+                        </li>
+                        <li><strong>上限が存在することを確認する：</strong>
+                            <p>関数 \( f(x) \) の上限は \( 1 \) である。なぜなら、\( f(x) \) の値は \( 1 \) 未満であり、どんなに \( x \) が \( 1 \) に近づいても \( 1 \) を超えないからである。しかし、関数 \( f(x) \) は \( 1 \) という値を実際には取らない（\( x \) が \( 1 \) のときの \( f(x) \) の値は定義域に含まれないため）。</p>
+                        </li>
+                    </ol>
+                    <li>したがって、連続実関数 \( f(x) = 1 - \frac{1}{x} \) を定義域 \( 0 < x < 1 \) において考えると、\(\max f(x)\) が存在せず \(\sup f(x)\) が存在する例となる。</li>
+                </ul>
+                </div>
+            </ul>
+            <h3>平均値の定理</h3>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                <b>問題</b> 
+                <p><strong>閉区間 \([a, b]\) で微分可能で \(f'(x) > 0\) である実数値関数 \(f(x)\) は \([a, b]\) で単調増加であることを示せ。</strong></p>
+                <ol>
+                    <li><strong>微分可能性と連続性:</strong>
+                        <p>関数 \( f(x) \) が閉区間 \([a, b]\) で微分可能であるということは、\( f(x) \) がこの区間で連続であることを意味する。</p>
+                    </li>
+                    <li><strong>導関数の符号:</strong>
+                        <p> \( f(x) \) の導関数 \( f'(x) \) が \( (a, b) \) の任意の点 \( x \) で \( f'(x) > 0 \) である。これは、\( f(x) \) が任意の点 \( x \) において増加していることを意味する。</p>
+                    </li>
+                    <li><strong>単調増加の定義:</strong>
+                        <p>関数 \( f(x) \) が単調増加であるとは、任意の \( a \leq x_1 < x_2 \leq b \) に対して、\( f(x_1) \leq f(x_2) \) であることを意味する。</p>
+                    </li>
+                    <li><strong>平均値の定理の適用:</strong>
+                        <p>平均値の定理によれば、閉区間 \([x_1, x_2] \subset [a, b]\) の任意の \( x_1 < x_2 \) に対して、ある \( c \in (x_1, x_2) \) が存在し、
+                        \( f'(c) = \frac{f(x_2) - f(x_1)}{x_2 - x_1} \)
+                        となる。</p>
+                    </li>
+                    <li><strong>導関数の正の値からの結論:</strong>
+                        <p>仮定より、\( f'(c) > 0 \) である。したがって、
+                        \( \frac{f(x_2) - f(x_1)}{x_2 - x_1} > 0 \)
+                        となり、これから
+                        \( f(x_2) - f(x_1) > 0 \)
+                        が導かれる。つまり、
+                        \( f(x_2) > f(x_1) \)
+                        である。</p>
+                    </li>
+                    <li><strong>結論:</strong>
+                        <p>任意の \( a \leq x_1 < x_2 \leq b \) に対して \( f(x_1) < f(x_2) \) であるため、\( f(x) \) は閉区間 \([a, b]\) で単調増加である。</p>
+                    </li>
+                </ol>
+                <p>以上により、閉区間 \([a, b]\) で微分可能で \( f'(x) > 0 \) である実数値関数 \( f(x) \) は \([a, b]\) で単調増加であることが示された。</p>
+                </div>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
