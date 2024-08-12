@@ -2692,321 +2692,337 @@ def GCD(a, b):
             </ul>
             <h3>Q学習</h3>
             <ul>
-                <li><b style="color:brown">状態遷移が有限マルコフ決定過程であるとはどういうことか。</b></li>
-                <ul>
-                    <li>マルコフ性を満たす環境においてエージェントが意思決定をして状態が確率的に遷移し、状態や行動が有限であるということ。</li>
-                    <li>環境がマルコフ性を持つとは、過去の環境の履歴すべてが、現在の環境情報に集約されていることを指す。</li>
-                </ul>
-                <li><b style="color:brown">式を用いて方策\(\pi(s, a)\)の例を示せ。</b></li>
-                <ul>
-                    <li>
-                        グリーディ方策
-                        <div class="scroll">
-                        \begin{align}
-                        \pi(s, a) = \arg\max\limits_a Q(s, a)
-                        \end{align}
-                        </div>
-                    </li>
-                    <li>
-                        ε-グリーディ方策
-                        <div class="scroll">
-                        \begin{align}
-                        \pi(s, a) = 
-                        \begin{cases} 
-                        \arg\max\limits_a Q(s, a) & \text{with probability } 1 - \epsilon \\
-                        \text{random action} & \text{with probability } \epsilon
-                        \end{cases}
-                        \end{align}
-                        </div>
-                    </li>
-                    <li>
-                        ソフトマックス方策
-                        <div class="scroll">
-                        \begin{align}
-                        \pi(s, a) = \frac{e^{Q(s, a) / \tau}}{\sum\limits_{b} e^{Q(s, b) / \tau}}
-                        \end{align}
-                        </div>
-                    </li>
-                </ul>
-                <li><b style="color:brown">エージェントが状態\(s_t\)において取った行動を\(a_t\)とするとき、行動価値\(Q(s_t, a_t)\)の更新を式で表せ。</b></li>
-                <ul>
-                    <li>
-                        <div class="scroll">
-                        \begin{align}
-                        Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \left( r_{t+1} + \gamma \max\limits_a Q(s_{t+1}, a) - Q(s_t, a_t) \right)
-                        \end{align}
-                        </div>
-                    </li>
-                </ul>
-                <li><b style="color:brown">すべての状態と行動の組が無限に繰り返されて行動価値が更新されるとき、最終的に行動価値はどのような値に収束するか。</b></li>
-                <ul>
-                    <li>真の最適行動価値関数に収束する。</li>
-                </ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>状態遷移が有限マルコフ決定過程であるとはどういうことか。</b></p>
+                    <ul>
+                        <li>マルコフ性を満たす環境においてエージェントが意思決定をして状態が確率的に遷移し、状態や行動が有限であるということ。</li>
+                        <li>環境がマルコフ性を持つとは、過去の環境の履歴すべてが、現在の環境情報に集約されていることを指す。</li>
+                    </ul>
+                    <p><b>式を用いて方策\(\pi(s, a)\)の例を示せ。</b></p>
+                    <ul>
+                        <li>
+                            グリーディ方策
+                            <div class="scroll">
+                            \begin{align}
+                            \pi(s, a) = \arg\max\limits_a Q(s, a)
+                            \end{align}
+                            </div>
+                        </li>
+                        <li>
+                            ε-グリーディ方策
+                            <div class="scroll">
+                            \begin{align}
+                            \pi(s, a) = 
+                            \begin{cases} 
+                            \arg\max\limits_a Q(s, a) & \text{with probability } 1 - \epsilon \\
+                            \text{random action} & \text{with probability } \epsilon
+                            \end{cases}
+                            \end{align}
+                            </div>
+                        </li>
+                        <li>
+                            ソフトマックス方策
+                            <div class="scroll">
+                            \begin{align}
+                            \pi(s, a) = \frac{e^{Q(s, a) / \tau}}{\sum\limits_{b} e^{Q(s, b) / \tau}}
+                            \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                    <p><b>エージェントが状態\(s_t\)において取った行動を\(a_t\)とするとき、行動価値\(Q(s_t, a_t)\)の更新を式で表せ。</b></p>
+                    <ul>
+                        <li>
+                            <div class="scroll">
+                            \begin{align}
+                            Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \left( r_{t+1} + \gamma \max\limits_a Q(s_{t+1}, a) - Q(s_t, a_t) \right)
+                            \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                    <p><b>すべての状態と行動の組が無限に繰り返されて行動価値が更新されるとき、最終的に行動価値はどのような値に収束するか。</b></p>
+                    <ul>
+                        <li>真の最適行動価値関数に収束する。</li>
+                    </ul>
+                </div>
             </ul>
             <h3>ニューラルネットワーク</h3>
             <ul>
-                <li><b style="color:brown">ニューラルネットワークの教師あり学習における学習プロセスを説明せよ。</b></li>
-                <ul>
-                    <li>入力層に入力信号を与えて順方向に中間層の出力を計算し、出力層からの出力を計算する。</li>
-                    <li>出力層からの出力と教師信号との誤差から<b>損失関数</b>の値を計算する。</li>
-                    <li><b>誤差逆伝播法</b>を用いて出力層から入力層に向かう逆方向に各ユニット間の<b>重み</b>に対する<b>勾配</b>を計算する。</li>
-                    <li><b>損失関数</b>の値を最小化するために、<b>最急降下法</b>を適用して各ユニット間の<b>重み</b>を更新する。</li>
-                    <li>終了条件を満たすまで以上を繰り返す。</li>
-                </ul>
-                <li><b style="color:brown">上記の学習プロセスにおいて更新する重みを\(w_i\)、学習率を\(\alpha\)、損失関数を\(L(\cdot)\)とするとき、偏微分を用いて最急降下法による重みの更新式を示せ。</b></li>
-                <ul>
-                    <li>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>ニューラルネットワークの教師あり学習における学習プロセスを説明せよ。</b></p>
+                    <ul>
+                        <li>入力層に入力信号を与えて順方向に中間層の出力を計算し、出力層からの出力を計算する。</li>
+                        <li>出力層からの出力と教師信号との誤差から<b>損失関数</b>の値を計算する。</li>
+                        <li><b>誤差逆伝播法</b>を用いて出力層から入力層に向かう逆方向に各ユニット間の<b>重み</b>に対する<b>勾配</b>を計算する。</li>
+                        <li><b>損失関数</b>の値を最小化するために、<b>最急降下法</b>を適用して各ユニット間の<b>重み</b>を更新する。</li>
+                        <li>終了条件を満たすまで以上を繰り返す。</li>
+                    </ul>
+                    <p><b>上記の学習プロセスにおいて更新する重みを\(w_i\)、学習率を\(\alpha\)、損失関数を\(L(\cdot)\)とするとき、偏微分を用いて最急降下法による重みの更新式を示せ。</b></p>
+                    <ul>
+                        <li>
+                            <div class="scroll">
+                            \begin{align}
+                            w_{i+1} &= w_i - \alpha \frac{\partial L}{\partial w_i}
+                            \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                    <p><b>活性化関数にシグモイド関数がよく使われるのはなぜか。</b></p>
+                    <ul>
+                        <li>シグモイド関数は非線形な関数であり、ニューラルネットワークに複雑なパターンや関係を学習する能力を持たせることができるから。</li>
+                    </ul>
+                    <p><b>最急降下法は使用するサンプルの数により、バッチ最急降下法と確率的最急降下法がある。その違い、およびそれぞれメリットとデメリットを簡単に説明せよ。</b></p>
+                    <ul>
+                        <li>バッチ最急降下法では、すべてのトレーニングデータを使用して勾配を計算するため、各ステップの勾配は安定していて、収束は滑らかだが、計算コストが高く、メモリの使用量も多い。</li>
+                        <li>一方、確率的最急降下法ではトレーニングデータからランダムに選んだ1つのサンプルを用いるため、計算コストが低いが、収束が不安定である。</li>
+                    </ul>
+                </div>
+                <div class="example">
+                    <p><b>
+                        \( K \) 次元入力で、1 次元出力の中間層のないニューラルネットワークによる回帰問題を考える。
+                        サンプル \(\mu \) において、 \( j \) 番目の入力を \( x_j^\mu \) (\( j = 1, ..., K \))、
+                        出力を \( z^\mu \)、出力と入力との間の結合重みを \( w_j \)、出力のバイアスを \( b \)、
+                        出力の目標値を \( t^\mu \) とする。
+                        出力の入力の総和 \( y^\mu \) は、式 (1.1) で計算され、最終的な出力は、
+                        活性化関数 \( f \) を用いて式 (1.2) で計算される。ここでは、活性化関数は恒等関数 \( f(s) = s \) とする。
                         <div class="scroll">
-                        \begin{align}
-                        w_{i+1} &= w_i - \alpha \frac{\partial L}{\partial w_i}
-                        \end{align}
+                            \begin{align}
+                            y^\mu &= \sum_{j=1}^K w_j x_j^\mu + b \tag{1.1} \\
+                            z^\mu &= f(y^\mu) \tag{1.2} \\
+                            E &= \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \tag{1.3}
+                            \end{align}
                         </div>
-                    </li>
-                </ul>
-                <li><b style="color:brown">活性化関数にシグモイド関数がよく使われるのはなぜか。</b></li>
-                <ul>
-                    <li>シグモイド関数は非線形な関数であり、ニューラルネットワークに複雑なパターンや関係を学習する能力を持たせることができるから。</li>
-                </ul>
-                <li><b style="color:brown">最急降下法は使用するサンプルの数により、バッチ最急降下法と確率的最急降下法がある。その違い、およびそれぞれメリットとデメリットを簡単に説明せよ。</b></li>
-                <ul>
-                    <li>バッチ最急降下法では、すべてのトレーニングデータを使用して勾配を計算するため、各ステップの勾配は安定していて、収束は滑らかだが、計算コストが高く、メモリの使用量も多い。</li>
-                    <li>一方、確率的最急降下法ではトレーニングデータからランダムに選んだ1つのサンプルを用いるため、計算コストが低いが、収束が不安定である。</li>
-                </ul>
-                <li><b style="color:brown">
-                    \( K \) 次元入力で、1 次元出力の中間層のないニューラルネットワークによる回帰問題を考える。
-                    サンプル \(\mu \) において、 \( j \) 番目の入力を \( x_j^\mu \) (\( j = 1, ..., K \))、
-                    出力を \( z^\mu \)、出力と入力との間の結合重みを \( w_j \)、出力のバイアスを \( b \)、
-                    出力の目標値を \( t^\mu \) とする。
-                    出力の入力の総和 \( y^\mu \) は、式 (1.1) で計算され、最終的な出力は、
-                    活性化関数 \( f \) を用いて式 (1.2) で計算される。ここでは、活性化関数は恒等関数 \( f(s) = s \) とする。
-                    <div class="scroll">
-                        \begin{align}
-                        y^\mu &= \sum_{j=1}^K w_j x_j^\mu + b \tag{1.1} \\
-                        z^\mu &= f(y^\mu) \tag{1.2} \\
-                        E &= \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \tag{1.3}
-                        \end{align}
-                    </div>
-                    【1】誤差関数を式(1.3)で示す２乗和誤差とし、勾配法によりバイアス\(b\)の最適化を行うために必要となる\(\frac{\partial E}{\partial b}\)を導出せよ。
-                </b></li>
-                <ul>     
-                    <li>活性化関数 \( f \) は恒等関数 \( f(s) = s \) であるため、 \( z^\mu = y^\mu \) となる。したがって、</li>
-                    <p style="text-align: center;">\( z^\mu = \sum_{j=1}^K w_j x_j^\mu + b \)</p>
-                    <li>次に、誤差関数 \( E \) を \( b \) で偏微分する。</li>
-                    <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \right) \)</p>
-                    <li>これをチェーンルールを用いて計算する。まず、 \( (t^\mu - z^\mu)^2 \) の \( b \) に関する偏微分を求める。</li>
-                    <div class="scroll">
-                    <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) \left( \frac{\partial}{\partial b} (t^\mu - z^\mu) \right) \)</p>
-                    </div>
-                    <li>次に、 \( \frac{\partial}{\partial b} (t^\mu - z^\mu) \) を求める。</li>
-                    <div class="scroll">
-                    <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu) = \frac{\partial}{\partial b} \left( t^\mu - \left( \sum_{j=1}^K w_j x_j^\mu + b \right) \right) = -1 \)</p>
-                    </div>
-                    <li>したがって、</li>
-                    <div class="scroll">
-                    <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) (-1) = -2 (t^\mu - z^\mu) \)</p>
-                    </div>
-                    <li>これを誤差関数 \( E \) の偏微分に戻す。</li>
-                    <div class="scroll">
-                    <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{1}{2} \sum_\mu \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = \frac{1}{2} \sum_\mu (-2) (t^\mu - z^\mu) = -\sum_\mu (t^\mu - z^\mu) \)</p>
-                    </div>
-                    <li>まとめると、誤差関数 \( E \) のバイアス \( b \) に関する偏微分は次のようになる。</li>
-                    <div class="scroll">
-                    <p style="text-align: center;">\( \frac{\partial E}{\partial b} = -\sum_\mu (t^\mu - z^\mu) \)</p>
-                    </div>
-                </ul>
-                <p><b style="color:brown">
-                    【2】【1】のモデルを使って、２クラス分類問題を考える。入力\(x^\mu\)に対する正解ラベルは\(t^\mu \in {0, 1}\)とする。
-                    活性化関数\(f\)を式(2.1)で示すシグモイド関数にして、誤差関数\(E\)に式(2.2)で示す交差エントロピーを用いた時の\(\frac{\partial E}{\partial b}\)を導出せよ。
-                    ただし、\(\ln\)はネイピア数\(e\)を底とする自然対数である。
-                    <div class="scroll">\begin{align}
-                        f(y^\mu) &= \frac{1}{1 + e^{-y^\mu}} \tag{2.1}  \\
-                        E &= -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2}
-                        \end{align}</div>
-                </b></p>
-                <ul>
-                    <li>シグモイド関数 \( f \) は以下のように定義される。</li>
-                    <p style="text-align: center;">\( f(y^\mu) = \frac{1}{1 + e^{-y^\mu}} \tag{2.1} \)</p>                    
-                    <li>交差エントロピー誤差関数 \( E \) は以下のように定義される。</li>
-                    <div class="scroll">
-                    <p style="text-align: center;">\( E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2} \)</p>
-                    </div>
-                    <li>ここで、\( z^\mu = f(y^\mu) \) である。次に、誤差関数 \( E \) を \( b \) で偏微分する。</li>
-                    <div class="scroll">
-                    <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \right) \)</p>                    
-                    </div>
-                    <li>チェーンルールを用いて計算する。まず、 
-                        <div class="scroll">\( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \)</div> の \( z^\mu \) に関する偏微分を求める。</li>
-                    <div class="scroll">
-                    <p style="text-align: center;">\( \frac{\partial}{\partial z^\mu} \left[ -t^\mu \ln z^\mu - (1 - t^\mu) \ln (1 - z^\mu) \right] = -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \)</p>
-                    </div>
-                    <li>次に、 \( z^\mu \) を \( y^\mu \) で偏微分する。</li>
-                    <p style="text-align: center;">\( \frac{\partial z^\mu}{\partial y^\mu} = z^\mu (1 - z^\mu) \)</p>
-                    <li>したがって、</li>
-                    <div class="scroll">
-                    <p style="text-align: center;">\( \frac{\partial E}{\partial y^\mu} = \left( -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \right) z^\mu (1 - z^\mu) = z^\mu - t^\mu \)</p>                    
-                    </div>
-                    <li>最後に、\( y^\mu \) を \( b \) で偏微分する。</li>
-                    <p style="text-align: center;">\( \frac{\partial y^\mu}{\partial b} = 1 \)</p>
-                    <li>まとめると、</li>
-                    <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \sum_\mu (z^\mu - t^\mu) \)</p>
-                </ul>
-                <p><b style="color:brown">
-                    【3】中間層を持つ多層のニューラルネットワークの学習において、訓練データにはよく適合するが、訓練データではない未知のデータ（テストデータ）には適合しない過学習の状態に陥ることがある。この過学習を抑制する方法を2つ挙げ、その方法について説明せよ。
-                </b></p>
-                <ul>
-                    <li>
-                        <strong>方法1: ドロップアウト（Dropout）</strong><br>
-                        ドロップアウトは、ニューラルネットワークの訓練中にランダムにいくつかのノード（ニューロン）を無効化する（ゼロにする）手法である。
-                        これは、ネットワークが特定のノードやその結合に過度に依存するのを防ぎ、より汎用的な特徴を学習するのを助ける。
-                        <ul>
-                            <li>説明:
-                                <ol>
-                                    <li>各訓練ステップで、指定された確率（例えば50%）でノードを無効化する。</li>
-                                    <li>テスト時には全てのノードを使用するが、訓練時に無効化した確率に応じてノードの出力をスケールする。</li>
-                                </ol>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                    <li>
-                        <strong>方法2: L2正則化（L2 Regularization）</strong><br>
-                        L2正則化は、重みパラメータに対してペナルティを加える手法である。具体的には、損失関数に重みの二乗和を加えることで、大きな重みが成長するのを防ぎ、過学習を抑制する。
-                        <ul>
-                            <li>説明:
-                                <ol>
-                                    <li>損失関数 \( L \) に対して、以下のようなペナルティ項 \( \lambda \sum w^2 \) を追加する。</li>
-                                    <li>ここで、\( \lambda \) は正則化の強さを制御するハイパーパラメータであり、\( w \) は重みパラメータを表す。</li>
-                                    <li>このペナルティにより、重みが大きくなることを抑制し、モデルの複雑さを制限する。</li>
-                                </ol>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <li><b style="color:brown">活性化関数として、シグモイド関数 \(\sigma(x)\) が用いられることがある。パラメータを \(a\) としたシグモイド関数 \(\sigma(x)\) の式を \(a\) を使って表し、\(a = 1\) の場合の概形を図示せよ。また、その導関数 \(\sigma'(x)\) を \(a\) と \(\sigma(x)\) を用いて表わせ（ただし、導出過程は省略しても良い）。</b></li>
-                <ul>
-                    <li>シグモイド関数は、次のように定義される活性化関数である：
-                    <div class="scroll">
-                        \begin{align}\sigma(x) = \frac{1}{1 + e^{-ax}}\end{align}
-                    </div></li>
-                    <li>この関数は、入力 \(x\) に対して、出力が \(0\) から \(1\) の範囲に収まる非線形関数である。パラメータ \(a\) を変化させると、関数の傾きが変わる。</li>
-                    <li>\(a = 1\) の場合のシグモイド関数のグラフは、典型的なS字形をしており、次のようになる：
-                    <div class="scroll">
-                        \begin{align}\sigma(x) = \frac{1}{1 + e^{-x}}\end{align}
-                    </div></li>
-                    <li>この場合の概形は、\(x = 0\) で 0.5 となり、\(x\) が正の無限大に近づくと1に、負の無限大に近づくと0に漸近する。</li>
-                    <li>シグモイド関数の導関数は、次のように表される：
-                    <div class="scroll">
-                        \begin{align}\sigma'(x) = a \sigma(x) (1 - \sigma(x))\end{align}
-                    </div></li>
-                    <li>この導関数は、シグモイド関数の特性上、活性化関数の出力に基づいて自己調整される形となっている。</li>
-                </ul>
-                <li><b style="color:brown">活性化関数として、ランプ関数 \(R(x)\) (Rectified Linear Unit: ReLU) が用いられることも多い。ランプ関数 \(R(x)\) の式を示しその概形を図示せよ。また、その導関数 \(R'(x)\) を求めよ。</b></li>
-                <ul>
-                    <li>ランプ関数 (ReLU) は、以下のように定義される活性化関数である：
-                    <div class="scroll">
-                        \begin{align}R(x) = \max(0, x)\end{align}
-                    </div></li>
-                    <li>この関数は、入力が正の場合はそのまま出力され、負の場合は0を出力する。ReLU関数のグラフは、原点を境にして右側が直線（傾き1）、左側がx軸に沿った直線（傾き0）となる。</li>
-                    <li>ReLUの導関数 \(R'(x)\) は次のように表される：
-                    <div class="scroll">
-                        \begin{align}
-                        R'(x) = \begin{cases} 
-                        1 & \text{if } x > 0 \\
-                        0 & \text{if } x \leq 0 
-                        \end{cases}
-                        \end{align}
-                    </div></li>
-                    <li>ReLUは、計算が簡単でありながら深層学習において高いパフォーマンスを発揮するため、広く使用されている。</li>
-                </ul>
-                <li><b style="color:brown">深層学習において、中間層が多くなるにつれ、活性化関数としてシグモイド関数よりもランプ関数の方が学習効率が良いことが知られている。その理由について300字程度で述べよ。</b></li>
-                <ul>
-                    <li>深層学習において、中間層が多くなるとシグモイド関数は「勾配消失問題」に直面しやすくなる。
-                        シグモイド関数の出力が0または1に近づくと、その導関数が0に近づき、逆伝播において勾配が極めて小さくなるため、層が深くなるほど勾配が消失してしまう。
-                        この結果、学習が進まなくなることがある。
-                        一方、ランプ関数 (ReLU) は、正の入力に対して勾配が1であるため、勾配が消失する問題が発生しにくい。
-                        また、ReLUは計算コストが低く、学習が高速に進む利点がある。
-                        これらの理由から、深層学習ではシグモイド関数よりもReLUが広く用いられている。</li>
-                </ul>
-                <li><b style="color:brown">深層学習における最適化手法の一つとして知られているSGD (Stochastic Gradient Descent) について説明し、その利点と欠点を合わせて300字程度で述べよ。</b></li>
-                <ul>
-                    <li>SGD (Stochastic Gradient Descent) は、確率的勾配降下法と呼ばれる最適化手法であり、大規模データセットを用いた深層学習において広く使用されている。
-                        SGDは、各イテレーションごとにデータセットからランダムに選ばれた一部のサンプル（ミニバッチ）に基づいて勾配を計算し、モデルのパラメータを更新する。
-                        利点としては、全データセットを使う必要がないため、メモリ効率が良く、計算が高速である点が挙げられる。また、局所解から抜け出しやすい。
-                        欠点としては、収束が不安定で、適切な学習率の設定が難しい場合があることが挙げられる。適切なハイパーパラメータの選定が求められる。</li>
-                </ul>
+                        【1】誤差関数を式(1.3)で示す２乗和誤差とし、勾配法によりバイアス\(b\)の最適化を行うために必要となる\(\frac{\partial E}{\partial b}\)を導出せよ。
+                    </b></p>
+                    <ul>     
+                        <li>活性化関数 \( f \) は恒等関数 \( f(s) = s \) であるため、 \( z^\mu = y^\mu \) となる。したがって、</li>
+                        <p style="text-align: center;">\( z^\mu = \sum_{j=1}^K w_j x_j^\mu + b \)</p>
+                        <li>次に、誤差関数 \( E \) を \( b \) で偏微分する。</li>
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( \frac{1}{2} \sum_\mu (t^\mu - z^\mu)^2 \right) \)</p>
+                        <li>これをチェーンルールを用いて計算する。まず、 \( (t^\mu - z^\mu)^2 \) の \( b \) に関する偏微分を求める。</li>
+                        <div class="scroll">
+                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) \left( \frac{\partial}{\partial b} (t^\mu - z^\mu) \right) \)</p>
+                        </div>
+                        <li>次に、 \( \frac{\partial}{\partial b} (t^\mu - z^\mu) \) を求める。</li>
+                        <div class="scroll">
+                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu) = \frac{\partial}{\partial b} \left( t^\mu - \left( \sum_{j=1}^K w_j x_j^\mu + b \right) \right) = -1 \)</p>
+                        </div>
+                        <li>したがって、</li>
+                        <div class="scroll">
+                        <p style="text-align: center;">\( \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = 2 (t^\mu - z^\mu) (-1) = -2 (t^\mu - z^\mu) \)</p>
+                        </div>
+                        <li>これを誤差関数 \( E \) の偏微分に戻す。</li>
+                        <div class="scroll">
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{1}{2} \sum_\mu \frac{\partial}{\partial b} (t^\mu - z^\mu)^2 = \frac{1}{2} \sum_\mu (-2) (t^\mu - z^\mu) = -\sum_\mu (t^\mu - z^\mu) \)</p>
+                        </div>
+                        <li>まとめると、誤差関数 \( E \) のバイアス \( b \) に関する偏微分は次のようになる。</li>
+                        <div class="scroll">
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = -\sum_\mu (t^\mu - z^\mu) \)</p>
+                        </div>
+                    </ul>
+                    <p><b>
+                        【2】【1】のモデルを使って、２クラス分類問題を考える。入力\(x^\mu\)に対する正解ラベルは\(t^\mu \in {0, 1}\)とする。
+                        活性化関数\(f\)を式(2.1)で示すシグモイド関数にして、誤差関数\(E\)に式(2.2)で示す交差エントロピーを用いた時の\(\frac{\partial E}{\partial b}\)を導出せよ。
+                        ただし、\(\ln\)はネイピア数\(e\)を底とする自然対数である。
+                        <div class="scroll">\begin{align}
+                            f(y^\mu) &= \frac{1}{1 + e^{-y^\mu}} \tag{2.1}  \\
+                            E &= -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2}
+                            \end{align}</div>
+                    </b></p>
+                    <ul>
+                        <li>シグモイド関数 \( f \) は以下のように定義される。</li>
+                        <p style="text-align: center;">\( f(y^\mu) = \frac{1}{1 + e^{-y^\mu}} \tag{2.1} \)</p>                    
+                        <li>交差エントロピー誤差関数 \( E \) は以下のように定義される。</li>
+                        <div class="scroll">
+                        <p style="text-align: center;">\( E = -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \tag{2.2} \)</p>
+                        </div>
+                        <li>ここで、\( z^\mu = f(y^\mu) \) である。次に、誤差関数 \( E \) を \( b \) で偏微分する。</li>
+                        <div class="scroll">
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \frac{\partial}{\partial b} \left( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \right) \)</p>                    
+                        </div>
+                        <li>チェーンルールを用いて計算する。まず、 
+                            <div class="scroll">\( -\sum_\mu \left[ t^\mu \ln z^\mu + (1 - t^\mu) \ln (1 - z^\mu) \right] \)</div> の \( z^\mu \) に関する偏微分を求める。</li>
+                        <div class="scroll">
+                        <p style="text-align: center;">\( \frac{\partial}{\partial z^\mu} \left[ -t^\mu \ln z^\mu - (1 - t^\mu) \ln (1 - z^\mu) \right] = -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \)</p>
+                        </div>
+                        <li>次に、 \( z^\mu \) を \( y^\mu \) で偏微分する。</li>
+                        <p style="text-align: center;">\( \frac{\partial z^\mu}{\partial y^\mu} = z^\mu (1 - z^\mu) \)</p>
+                        <li>したがって、</li>
+                        <div class="scroll">
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial y^\mu} = \left( -\frac{t^\mu}{z^\mu} + \frac{1 - t^\mu}{1 - z^\mu} \right) z^\mu (1 - z^\mu) = z^\mu - t^\mu \)</p>                    
+                        </div>
+                        <li>最後に、\( y^\mu \) を \( b \) で偏微分する。</li>
+                        <p style="text-align: center;">\( \frac{\partial y^\mu}{\partial b} = 1 \)</p>
+                        <li>まとめると、</li>
+                        <p style="text-align: center;">\( \frac{\partial E}{\partial b} = \sum_\mu (z^\mu - t^\mu) \)</p>
+                    </ul>
+                    <p><b>
+                        【3】中間層を持つ多層のニューラルネットワークの学習において、訓練データにはよく適合するが、訓練データではない未知のデータ（テストデータ）には適合しない過学習の状態に陥ることがある。この過学習を抑制する方法を2つ挙げ、その方法について説明せよ。
+                    </b></p>
+                    <ul>
+                        <li>
+                            <strong>方法1: ドロップアウト（Dropout）</strong><br>
+                            ドロップアウトは、ニューラルネットワークの訓練中にランダムにいくつかのノード（ニューロン）を無効化する（ゼロにする）手法である。
+                            これは、ネットワークが特定のノードやその結合に過度に依存するのを防ぎ、より汎用的な特徴を学習するのを助ける。
+                            <ul>
+                                <li>説明:
+                                    <ol>
+                                        <li>各訓練ステップで、指定された確率（例えば50%）でノードを無効化する。</li>
+                                        <li>テスト時には全てのノードを使用するが、訓練時に無効化した確率に応じてノードの出力をスケールする。</li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <li>
+                            <strong>方法2: L2正則化（L2 Regularization）</strong><br>
+                            L2正則化は、重みパラメータに対してペナルティを加える手法である。具体的には、損失関数に重みの二乗和を加えることで、大きな重みが成長するのを防ぎ、過学習を抑制する。
+                            <ul>
+                                <li>説明:
+                                    <ol>
+                                        <li>損失関数 \( L \) に対して、以下のようなペナルティ項 \( \lambda \sum w^2 \) を追加する。</li>
+                                        <li>ここで、\( \lambda \) は正則化の強さを制御するハイパーパラメータであり、\( w \) は重みパラメータを表す。</li>
+                                        <li>このペナルティにより、重みが大きくなることを抑制し、モデルの複雑さを制限する。</li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="example">
+                    <p><b>活性化関数として、シグモイド関数 \(\sigma(x)\) が用いられることがある。パラメータを \(a\) としたシグモイド関数 \(\sigma(x)\) の式を \(a\) を使って表し、\(a = 1\) の場合の概形を図示せよ。また、その導関数 \(\sigma'(x)\) を \(a\) と \(\sigma(x)\) を用いて表わせ（ただし、導出過程は省略しても良い）。</b></p>
+                    <ul>
+                        <li>シグモイド関数は、次のように定義される活性化関数である：
+                        <div class="scroll">
+                            \begin{align}\sigma(x) = \frac{1}{1 + e^{-ax}}\end{align}
+                        </div></li>
+                        <li>この関数は、入力 \(x\) に対して、出力が \(0\) から \(1\) の範囲に収まる非線形関数である。パラメータ \(a\) を変化させると、関数の傾きが変わる。</li>
+                        <li>\(a = 1\) の場合のシグモイド関数のグラフは、典型的なS字形をしており、次のようになる：
+                        <div class="scroll">
+                            \begin{align}\sigma(x) = \frac{1}{1 + e^{-x}}\end{align}
+                        </div></li>
+                        <li>この場合の概形は、\(x = 0\) で 0.5 となり、\(x\) が正の無限大に近づくと1に、負の無限大に近づくと0に漸近する。</li>
+                        <li>シグモイド関数の導関数は、次のように表される：
+                        <div class="scroll">
+                            \begin{align}\sigma'(x) = a \sigma(x) (1 - \sigma(x))\end{align}
+                        </div></li>
+                        <li>この導関数は、シグモイド関数の特性上、活性化関数の出力に基づいて自己調整される形となっている。</li>
+                    </ul>
+                    <p><b>活性化関数として、ランプ関数 \(R(x)\) (Rectified Linear Unit: ReLU) が用いられることも多い。ランプ関数 \(R(x)\) の式を示しその概形を図示せよ。また、その導関数 \(R'(x)\) を求めよ。</b></p>
+                    <ul>
+                        <li>ランプ関数 (ReLU) は、以下のように定義される活性化関数である：
+                        <div class="scroll">
+                            \begin{align}R(x) = \max(0, x)\end{align}
+                        </div></li>
+                        <li>この関数は、入力が正の場合はそのまま出力され、負の場合は0を出力する。ReLU関数のグラフは、原点を境にして右側が直線（傾き1）、左側がx軸に沿った直線（傾き0）となる。</li>
+                        <li>ReLUの導関数 \(R'(x)\) は次のように表される：
+                        <div class="scroll">
+                            \begin{align}
+                            R'(x) = \begin{cases} 
+                            1 & \text{if } x > 0 \\
+                            0 & \text{if } x \leq 0 
+                            \end{cases}
+                            \end{align}
+                        </div></li>
+                        <li>ReLUは、計算が簡単でありながら深層学習において高いパフォーマンスを発揮するため、広く使用されている。</li>
+                    </ul>
+                    <p><b>深層学習において、中間層が多くなるにつれ、活性化関数としてシグモイド関数よりもランプ関数の方が学習効率が良いことが知られている。その理由について300字程度で述べよ。</b></p>
+                    <ul>
+                        <li>深層学習において、中間層が多くなるとシグモイド関数は「勾配消失問題」に直面しやすくなる。
+                            シグモイド関数の出力が0または1に近づくと、その導関数が0に近づき、逆伝播において勾配が極めて小さくなるため、層が深くなるほど勾配が消失してしまう。
+                            この結果、学習が進まなくなることがある。
+                            一方、ランプ関数 (ReLU) は、正の入力に対して勾配が1であるため、勾配が消失する問題が発生しにくい。
+                            また、ReLUは計算コストが低く、学習が高速に進む利点がある。
+                            これらの理由から、深層学習ではシグモイド関数よりもReLUが広く用いられている。</li>
+                    </ul>
+                    <p><b>深層学習における最適化手法の一つとして知られているSGD (Stochastic Gradient Descent) について説明し、その利点と欠点を合わせて300字程度で述べよ。</b></p>
+                    <ul>
+                        <li>SGD (Stochastic Gradient Descent) は、確率的勾配降下法と呼ばれる最適化手法であり、大規模データセットを用いた深層学習において広く使用されている。
+                            SGDは、各イテレーションごとにデータセットからランダムに選ばれた一部のサンプル（ミニバッチ）に基づいて勾配を計算し、モデルのパラメータを更新する。
+                            利点としては、全データセットを使う必要がないため、メモリ効率が良く、計算が高速である点が挙げられる。また、局所解から抜け出しやすい。
+                            欠点としては、収束が不安定で、適切な学習率の設定が難しい場合があることが挙げられる。適切なハイパーパラメータの選定が求められる。</li>
+                    </ul>
+                </div>
             </ul>
             <h3>サポートベクターマシン</h3>
             <ul>
-                <li><b style="color:brown">サポートベクターマシン（SVM）は、パターン識別用の教師あり機械学習の方法であり、局所解収束の問題がないという長所がある。
-                特に、<b>マージン最大化</b>という手法で汎化能力も高め、現在知られている方法としては、優秀なパターン識別能力を持つとされている。
-                また、<b>カーネルトリック</b>という巧妙な方法を用いることにより、応用範囲が格段に広がっている。</b></li>
-                <li><b style="color:brown">マージン最大化について説明せよ。</b></li>
-                <ul>
-                    <li>SVMは、データポイントを識別するために<b>識別境界面</b>を見つける。
-                        この識別境界面は、データポイント間の<b>マージン</b>を最大化するように配置される。
-                        <b>マージン</b>とは、識別境界面から最も近いデータポイントまでの「距離」を指し、この距離を最大化することで、分類の信頼性が高まる。</li>
-                </ul>
-                <li><b style="color:brown">カーネルトリックについて説明せよ。</b></li>
-                <ul>
-                    <li>SVMは、データが<b>低次元</b>空間で<b>線形分離</b>できない場合、カーネルトリックを使用してデータを<b>高次元</b>空間にマッピングする。
-                        これにより、<b>高次元</b>空間ではデータが<b>線形分離</b>可能となり、SVMは効果的に分類を行うことができる。</li>
-                </ul>
-                <li><b style="color:brown">以下の式(a)と(b)は、SVMにおいて解を得る際の目的関数と制約条件を表している。
-                <div class="scroll">
-                        \begin{align}
-                        \text{(a) } & \min_{\mathbf{w}, w_0} \frac{1}{2} \|\mathbf{w}\|^2 \\
-                        \text{(b) } & y_i (\mathbf{w} \cdot \mathbf{x}_i + w_0) \geq 1 \quad i = 1, \ldots, N
-                        \end{align}
-                        </div>
-                ここで、太字の記号はベクトルを表し、\(N\)は訓練データ数、\(x_i\)は\(i\)番目の訓練データを表すベクトル、\(y_i\)は\(i\)番目の訓練データに与えられた正解情報（正例では1、不例では-1）、\(w\)は重みパラメータのベクトル、\(w_0\)はバイアスパラメータとする。    
-                </b></li>
-                <li><b style="color:brown">式(b)で等号が成り立つのはどのような場合かを\(x_i\)を用いて説明せよ。</b></li>
-                <ul>
-                    <li>式(b)で等号が成り立つのは、訓練データ \(\mathbf{x}_i\) がマージンの境界上にある場合である。</li>
-                    <li>つまり、\(\mathbf{x}_i\) がサポートベクターであるときに成り立つ。</li>
-                </ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>サポートベクターマシン（SVM）は、パターン識別用の教師あり機械学習の方法であり、局所解収束の問題がないという長所がある。
+                    特に、<b>マージン最大化</b>という手法で汎化能力も高め、現在知られている方法としては、優秀なパターン識別能力を持つとされている。
+                    また、<b>カーネルトリック</b>という巧妙な方法を用いることにより、応用範囲が格段に広がっている。</b></p>
+                    <p><b>マージン最大化について説明せよ。</b></p>
+                    <ul>
+                        <li>SVMは、データポイントを識別するために<b>識別境界面</b>を見つける。
+                            この識別境界面は、データポイント間の<b>マージン</b>を最大化するように配置される。
+                            <b>マージン</b>とは、識別境界面から最も近いデータポイントまでの「距離」を指し、この距離を最大化することで、分類の信頼性が高まる。</li>
+                    </ul>
+                    <p><b>カーネルトリックについて説明せよ。</b></p>
+                    <ul>
+                        <li>SVMは、データが<b>低次元</b>空間で<b>線形分離</b>できない場合、カーネルトリックを使用してデータを<b>高次元</b>空間にマッピングする。
+                            これにより、<b>高次元</b>空間ではデータが<b>線形分離</b>可能となり、SVMは効果的に分類を行うことができる。</li>
+                    </ul>
+                    <p><b>以下の式(a)と(b)は、SVMにおいて解を得る際の目的関数と制約条件を表している。
+                    <div class="scroll">
+                            \begin{align}
+                            \text{(a) } & \min_{\mathbf{w}, w_0} \frac{1}{2} \|\mathbf{w}\|^2 \\
+                            \text{(b) } & y_i (\mathbf{w} \cdot \mathbf{x}_i + w_0) \geq 1 \quad i = 1, \ldots, N
+                            \end{align}
+                    </div>
+                    ここで、太字の記号はベクトルを表し、\(N\)は訓練データ数、\(x_i\)は\(i\)番目の訓練データを表すベクトル、\(y_i\)は\(i\)番目の訓練データに与えられた正解情報（正例では1、不例では-1）、\(w\)は重みパラメータのベクトル、\(w_0\)はバイアスパラメータとする。    
+                    </b></p>
+                    <p><b>式(b)で等号が成り立つのはどのような場合かを\(x_i\)を用いて説明せよ。</b></p>
+                    <ul>
+                        <li>式(b)で等号が成り立つのは、訓練データ \(\mathbf{x}_i\) がマージンの境界上にある場合である。</li>
+                        <li>つまり、\(\mathbf{x}_i\) がサポートベクターであるときに成り立つ。</li>
+                    </ul>
+                </div>
             </ul>
             <h3>K近傍法</h3>
             <ul>
-                <li><b style="color:brown">２クラス分類におけるK近傍法は、分類したいデータ点\(\mathbf{x}\)が与えられたとき、訓練データ中で\(\mathbf{x}\)から最も近いK個のデータ点（K近傍と呼ぶ）を探し、それらの中の多数派が属するクラスを\(\mathbf{x}\)のクラスとする。
-                ２次元平面乗の５つのデータ点からなる訓練データ\(\mathbf{x}_1 = (1, 0)\), \(\mathbf{x}_2 = (1, 2)\), \(\mathbf{x}_3 = (3, 3)\), \(\mathbf{x}_4 = (4, 3)\), \(\mathbf{x}_5 = (4, 5)\)において、\(\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3\)はクラス1に、\(\mathbf{x}_4, \mathbf{x}_5\)はクラス2に属しているとする。
-                新しいデータ点\(\mathbf{x} = (2, 3)\)をどちらのクラスに分類するか、\(K=3\)としたK近傍法により決定せよ。
-                ただし、データ点間の距離はユークリッド距離で測ることとする。</b></li>
-                <ul>
-                    <li>まず、ユークリッド距離を使用して、\(\mathbf{x} = (2, 3)\) から各訓練データ点までの距離を計算する。</li>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>２クラス分類におけるK近傍法は、分類したいデータ点\(\mathbf{x}\)が与えられたとき、訓練データ中で\(\mathbf{x}\)から最も近いK個のデータ点（K近傍と呼ぶ）を探し、それらの中の多数派が属するクラスを\(\mathbf{x}\)のクラスとする。
+                    ２次元平面乗の５つのデータ点からなる訓練データ\(\mathbf{x}_1 = (1, 0)\), \(\mathbf{x}_2 = (1, 2)\), \(\mathbf{x}_3 = (3, 3)\), \(\mathbf{x}_4 = (4, 3)\), \(\mathbf{x}_5 = (4, 5)\)において、\(\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3\)はクラス1に、\(\mathbf{x}_4, \mathbf{x}_5\)はクラス2に属しているとする。
+                    新しいデータ点\(\mathbf{x} = (2, 3)\)をどちらのクラスに分類するか、\(K=3\)としたK近傍法により決定せよ。
+                    ただし、データ点間の距離はユークリッド距離で測ることとする。</b></p>
                     <ul>
-                        <div class="scroll">
-                        <li>\(\mathbf{x}_1 = (1, 0)\): \(\sqrt{(2-1)^2 + (3-0)^2} = \sqrt{1 + 9} = \sqrt{10}\)</li>
-                        <li>\(\mathbf{x}_2 = (1, 2)\): \(\sqrt{(2-1)^2 + (3-2)^2} = \sqrt{1 + 1} = \sqrt{2}\)</li>
-                        <li>\(\mathbf{x}_3 = (3, 3)\): \(\sqrt{(2-3)^2 + (3-3)^2} = \sqrt{1 + 0} = \sqrt{1}\)</li>
-                        <li>\(\mathbf{x}_4 = (4, 3)\): \(\sqrt{(2-4)^2 + (3-3)^2} = \sqrt{4 + 0} = \sqrt{4}\)</li>
-                        <li>\(\mathbf{x}_5 = (4, 5)\): \(\sqrt{(2-4)^2 + (3-5)^2} = \sqrt{4 + 4} = \sqrt{8}\)</li>
-                        </div>
+                        <li>まず、ユークリッド距離を使用して、\(\mathbf{x} = (2, 3)\) から各訓練データ点までの距離を計算する。</li>
+                        <ul>
+                            <div class="scroll">
+                            <li>\(\mathbf{x}_1 = (1, 0)\): \(\sqrt{(2-1)^2 + (3-0)^2} = \sqrt{1 + 9} = \sqrt{10}\)</li>
+                            <li>\(\mathbf{x}_2 = (1, 2)\): \(\sqrt{(2-1)^2 + (3-2)^2} = \sqrt{1 + 1} = \sqrt{2}\)</li>
+                            <li>\(\mathbf{x}_3 = (3, 3)\): \(\sqrt{(2-3)^2 + (3-3)^2} = \sqrt{1 + 0} = \sqrt{1}\)</li>
+                            <li>\(\mathbf{x}_4 = (4, 3)\): \(\sqrt{(2-4)^2 + (3-3)^2} = \sqrt{4 + 0} = \sqrt{4}\)</li>
+                            <li>\(\mathbf{x}_5 = (4, 5)\): \(\sqrt{(2-4)^2 + (3-5)^2} = \sqrt{4 + 4} = \sqrt{8}\)</li>
+                            </div>
+                        </ul>
+                        <li>次に、最も近いK個 (K=3) のデータ点を見つける。</li>
+                        <ul>
+                            <li>\(\sqrt{1}\) (最も近い) → \(\mathbf{x}_3\) (クラス1)</li>
+                            <li>\(\sqrt{2}\) (次に近い) → \(\mathbf{x}_2\) (クラス1)</li>
+                            <li>\(\sqrt{4}\) (3番目に近い) → \(\mathbf{x}_4\) (クラス2)</li>
+                        </ul>
+                        <li>多数決によって、新しいデータ点 \(\mathbf{x} = (2, 3)\) はクラス1に分類される。</li>
                     </ul>
-                    <li>次に、最も近いK個 (K=3) のデータ点を見つける。</li>
+                    <p><b>近傍のサイズKを大きくして訓練データと同数にした場合、任意の点はどのように分類されるかを考察せよ。</b></p>
                     <ul>
-                        <li>\(\sqrt{1}\) (最も近い) → \(\mathbf{x}_3\) (クラス1)</li>
-                        <li>\(\sqrt{2}\) (次に近い) → \(\mathbf{x}_2\) (クラス1)</li>
-                        <li>\(\sqrt{4}\) (3番目に近い) → \(\mathbf{x}_4\) (クラス2)</li>
+                        <li>近傍のサイズKを訓練データと同数の5にした場合、すべての訓練データ点が考慮される。
+                            この場合、クラス1のデータ点が3つ、クラス2のデータ点が2つ存在する。</li>
+                        <ul>
+                            <li>クラス1: \(\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3\)</li>
+                            <li>クラス2: \(\mathbf{x}_4, \mathbf{x}_5\)</li>
+                        </ul>
+                        <li>K=5では常にクラス1のデータ点が多数派となるため、任意の新しい点はクラス1に分類される。
+                            したがって、この方法では訓練データのクラス比率が分類に強く影響を与えることになる。</li>
                     </ul>
-                    <li>多数決によって、新しいデータ点 \(\mathbf{x} = (2, 3)\) はクラス1に分類される。</li>
-                </ul>
-                <li><b style="color:brown">近傍のサイズKを大きくして訓練データと同数にした場合、任意の点はどのように分類されるかを考察せよ。</b></li>
-                <ul>
-                    <li>近傍のサイズKを訓練データと同数の5にした場合、すべての訓練データ点が考慮される。
-                        この場合、クラス1のデータ点が3つ、クラス2のデータ点が2つ存在する。</li>
+                    <p><b>K近傍法に代表されるノンパラメトリック法を、線形識別モデルに代表されるパラメトリック法と比較した場合の問題点について、必要な計算量と記憶量の点から考察せよ。</b></p>
                     <ul>
-                        <li>クラス1: \(\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3\)</li>
-                        <li>クラス2: \(\mathbf{x}_4, \mathbf{x}_5\)</li>
+                        <li>ノンパラメトリック法は、訓練時の計算量は少ないが、予測時の計算量が大きくなる。</li>
+                        <li>また、ノンパラメトリック法はデータセット全体を保存する必要があるため、記憶量が大きくなる。</li>
                     </ul>
-                    <li>K=5では常にクラス1のデータ点が多数派となるため、任意の新しい点はクラス1に分類される。
-                        したがって、この方法では訓練データのクラス比率が分類に強く影響を与えることになる。</li>
-                </ul>
-                <li><b style="color:brown">K近傍法に代表されるノンパラメトリック法を、線形識別モデルに代表されるパラメトリック法と比較した場合の問題点について、必要な計算量と記憶量の点から考察せよ。</b></li>
-                <ul>
-                    <li>ノンパラメトリック法は、訓練時の計算量は少ないが、予測時の計算量が大きくなる。</li>
-                    <li>また、ノンパラメトリック法はデータセット全体を保存する必要があるため、記憶量が大きくなる。</li>
-                </ul>
+                </div>
             </ul>
         </section>
     </main>
