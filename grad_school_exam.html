@@ -1792,7 +1792,7 @@
                         <p>以上の条件が満たされるため、\( I \) は \( \mathbb{Z} \) のイデアルであることが示された。</p>
                     <p><b>(2)の解答</b></p>
                     <ul>
-                        <li>\(c_1, c_2, \cdots, c_k\)が任意の整数であることに注意すると、a_1, a_2, \cdots, a_k \in I\)である。</li>
+                        <li>\(c_1, c_2, \cdots, c_k\)が任意の整数であることに注意すると、\(a_1, a_2, \cdots, a_k \in I\)である。</li>
                         <li>したがって、
                             <div class="scroll">
                                 \begin{align}
@@ -1819,7 +1819,7 @@
                         とかけるから、
                             <div class="scroll">
                                 \begin{align}
-                                d = m(c_1 a_1' + c_2 a_2' + \cdots c_k a_k'
+                                d = m(c_1 a_1' + c_2 a_2' + \cdots c_k a_k')
                                 \end{align}
                             </div>
                         となる。</li>
@@ -1828,22 +1828,40 @@
                     </ul>
                     <p><b>(3)の解答</b></p>
                     <ul>
-                        <li>\(x\)を\(y\)で割ったあまりを\(z\)とすると、ユークリッドの互除法より、\(gcd(x, y) = gcd(y, z)\)である。</li>
-                        <li>ここで、\(z = 0\)のとき、すなわち、\(y\)が\(x\)を割り切るとき、\(gcd(x, y) = gcd(y, 0) = y\)となる。</li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        <li>ユークリッドの互除法より、\(gcd(a_j, a_1) = gcd(a_1, r_j)\)である。</li>
+                        <li>簡単に、\(k = 3\)の場合を考える。</li>
+                        <li>先の式から、以下が成り立つ。
+                            <div class="scroll">
+                                \begin{align}
+                                gcd(a_1, a_2) = gcd(a_1, r_2) \\
+                                gcd(a_1, a_3) = gcd(a_1, r_3)
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>\(a_1, a_2, a_3\)の最大公約数は「\(a_1, a_2\)の最大公約数」と「\(a_1, a_3\)の最大公約数」の最大公約数であることを用いると、上の２式から以下の式が得られる。
+                            <div class="scroll">
+                                \begin{align}
+                                gcd(a_1, a_2, a_3) = gcd(a_1, r_2, r_3)
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>一般の\(k\)に対して、同様に\(a_1, a_2, \cdots, a_k\)の最大公約数が「\(a_1, a_2\)の最大公約数」と「\(a_1, a_3\)の最大公約数」と\(\cdots\)「\(a_1, a_k\)の最大公約数」の最大公約数であることを用いれば、所望の式を得ることができる。</li>
                     </ul>
                     <p><b>(4)の解答</b></p>
                     <ul>
-                        <li></li>
+                        <li>
+                            <div class="scroll">
+                                \begin{align}
+                                &gcd(8413, 10561, 11993) \\
+                                = &gcd(8413, 2148, 3580) \\
+                                = &gcd(1969, 2148, 1432) \\
+                                = &gcd(537, 716, 1432) \\
+                                = &gcd(537, 179, 358) \\
+                                = &gcd(0, 179, 0) \\
+                                = 179 
+                                \end{align}
+                            </div>
+                        </li>
                         <li></li>
                         <li></li>
                         <li></li>
