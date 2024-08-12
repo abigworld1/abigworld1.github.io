@@ -188,28 +188,13 @@
                         このとき、\(P\)は任意の3次元空間内の点を \( x_1 \) と \( x_2 \) で張られる平面へ垂直に射影（直交射影）することを示せ。</p>
                     <ul>
                         <li>
-                            解答の流れ<br>
-                            1. 行列 \( P \) の性質を調べる。<br>
-                            2. \( P \) が直交射影行列であることを証明する。
-                        </li>
-                        <li>
-                            証明<br>
-                            1. 行列 \( P \) の性質:<br>
-                            行列 \( P \) は \( A \) と \( A^T \) を用いて定義されている。<br>
-                            <div class="scroll">
-                                    \begin{align}
-                                        P = A(A^T A)^{-1} A^T
-                                    \end{align}
-                            </div>
-                        </li>
-                        <li>
-                            2. 直交射影行列の定義:<br>
+                            <b>直交射影行列の定義</b>:<br>
                             行列 \( P \) が直交射影行列であるためには、以下の2つの条件を満たす必要がある。<br>
-                            ・ \( P^2 = P \)（冪等性）<br>
-                            ・ \( P^T = P \)（対称性）
+                            (1) \( P^2 = P \)（冪等性）<br>
+                            (2) \( P^T = P \)（対称性）
                         </li>
                         <li>
-                            3. 冪等性の証明:<br>
+                            (1)冪等性の証明:<br>
                             <div class="scroll">
                                     \begin{align}
                                         P^2 &= (A(A^T A)^{-1} A^T)(A(A^T A)^{-1} A^T) \\
@@ -220,7 +205,7 @@
                             したがって、\( P^2 = P \)。
                         </li>
                         <li>
-                            4. 対称性の証明:<br>
+                            (2)対称性の証明:<br>
                             <div class="scroll">
                                     \begin{align}
                                         P^T &= (A(A^T A)^{-1} A^T)^T \\
@@ -231,7 +216,7 @@
                             したがって、\( P^T = P \)。
                         </li>
                         <li>
-                            以上より、行列 \( P = A(A^T A)^{-1} A^T \) は \( x_1 \) と \( x_2 \) で張られる平面への垂直射影行列であることが証明された。
+                            以上より、行列 \( P = A(A^T A)^{-1} A^T \) は \( x_1 \) と \( x_2 \) で張られる平面への直交射影行列であることが証明された。
                         </li>
                     </ul>
                 </div>
@@ -467,8 +452,8 @@
                         <li>(3)と同様に、\(H = PDP^{-1}\)とすると、
                             <div class="scroll">
                                 \begin{align}
-                                H = PDP^{-1} \\
-                                H^{-1} = P^{-1} D^{-1} P
+                                H &= PDP^{-1} \\
+                                H^{-1} &= P^{-1} D^{-1} P
                                 \end{align}
                             </div>
                         である。</li>
@@ -538,7 +523,7 @@
                 </li>
                 <li>具体例</li>
                 <div class="example">
-                    <b>\( f(x, y) = -3x^2 + 2xy - 4y^3 \)の停留点を調べる。</b>
+                    <b>問題：\( f(x, y) = -3x^2 + 2xy - 4y^3 \)の停留点を調べよ。</b>
                     <p>一階偏微分を求める。</p>
                         <div class="scroll">
                         \begin{align}
@@ -549,8 +534,8 @@
                     <p>これらの一階偏微分を0に設定して連立方程式を解く。</p>
                         <div class="scroll">
                         \begin{align}
-                        -6x + 2y = 0 \quad \Rightarrow \quad y = 3x \\
-                        2x - 12(3x)^2 = 0 \quad \Rightarrow \quad 2x - 108x^2 = 0 \quad \Rightarrow \quad x(2 - 108x) = 0
+                        & -6x + 2y = 0 \quad \Rightarrow \quad y = 3x \\
+                        & 2x - 12(3x)^2 = 0 \quad \Rightarrow \quad 2x - 108x^2 = 0 \quad \Rightarrow \quad x(2 - 108x) = 0
                         \end{align}
                         </div>
                     <p>よって、 \( x = 0 \) または \( x = \frac{1}{54} \) である。</p>
@@ -592,16 +577,16 @@
                     <p>停留点 \( (0, 0) \) の場合、</p>
                         <div class="scroll">
                         \begin{align}
-                        f_{xx}(0, 0) = -6, \quad f_{yy}(0, 0) = 0, \quad f_{xy}(0, 0) = 2 \\
-                        D(0, 0) = (-6)(0) - (2)^2 = -4
+                        &f_{xx}(0, 0) = -6, \quad f_{yy}(0, 0) = 0, \quad f_{xy}(0, 0) = 2 \\
+                        &D(0, 0) = (-6)(0) - (2)^2 = -4
                         \end{align}
                         </div>
                     <p>\( D < 0 \) なので、 \( (0, 0) \) は鞍点である。</p>
                     <p>停留点 \( \left( \frac{1}{54}, \frac{1}{18} \right) \) の場合</p>
                         <div class="scroll">
                         \begin{align}
-                        f_{xx}\left( \frac{1}{54}, \frac{1}{18} \right) = -6, \quad f_{yy}\left( \frac{1}{54}, \frac{1}{18} \right) = -\frac{4}{3}, \quad f_{xy}\left( \frac{1}{54}, \frac{1}{18} \right) = 2 \\
-                        D\left( \frac{1}{54}, \frac{1}{18} \right) = (-6) \left( -\frac{4}{3} \right) - (2)^2 = 8 - 4 = 4
+                        &f_{xx}\left( \frac{1}{54}, \frac{1}{18} \right) = -6, \quad f_{yy}\left( \frac{1}{54}, \frac{1}{18} \right) = -\frac{4}{3}, \quad f_{xy}\left( \frac{1}{54}, \frac{1}{18} \right) = 2 \\
+                        &D\left( \frac{1}{54}, \frac{1}{18} \right) = (-6) \left( -\frac{4}{3} \right) - (2)^2 = 8 - 4 = 4
                         \end{align}
                         </div>
                     <p>\( D > 0 \) かつ \( f_{xx} < 0 \) なので、 \( \left( \frac{1}{54}, \frac{1}{18} \right) \) は極大点である。</p>
@@ -631,7 +616,7 @@
                 <li>よって、\(dxdy = r \ dr d \theta\)となる。</li>
                 <li>具体例</li>
                 <div class="example">
-                    <b>\(\int _{-1}^1\int _{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}e^{\sqrt{x^2+y^2}}dydx\)を計算する。</b>
+                    <b>問題：\(\int _{-1}^1\int _{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}e^{\sqrt{x^2+y^2}}dydx\)を計算せよ。</b>
                     <p>極座標変換を行う。</p>
                         <div class="scroll">
                         \begin{align}
@@ -685,7 +670,7 @@
                     <ol>
                         <li>原点を中心とする半径 \( r \) の球面上の点の座標 \((x, y, z)\) を、半径 \( r \)、\( z \) 軸回りの回転角 \(\varphi\)、\( x-y \) 平面からの仰角 \(\theta\) の組 \((r, \varphi, \theta)\) を用いた極座標で表せ。</li>
                         <li>前問で求めた写像 \( M: (r, \varphi, \theta) \rightarrow (x, y, z) \) のヤコビアン（ヤコビ行列の行列式）を求めよ。</li>
-                        <li>\( x-z \) 平面において、\(\frac{\pi}{6} \leq \theta \leq \frac{5\pi}{6}, 0 \leq r \leq 1\)で表される扇形の領域を考える。この領域を\(z\)軸周りに回転させてできる回転体の体積を求めよ。</li>
+                        <li>\( xz \) 平面において、\(\frac{\pi}{6} \leq \theta \leq \frac{5\pi}{6}, 0 \leq r \leq 1\)で表される扇形の領域を考える。この領域を\(z\)軸周りに回転させてできる回転体の体積を求めよ。</li>
                     </ol>
                     <p><b>(1)の解答</b></p>
                     <ul>
@@ -734,7 +719,7 @@
                                 = &\frac{1}{3} \int_{0}^{2\pi} \left[ \frac{1}{2} \right] d\varphi \\
                                 = &\frac{1}{6} \int_{0}^{2\pi} d\varphi \\
                                 = &\frac{1}{6} \left[ \varphi \right]_{0}^{2\pi} \\
-                                = &\frac{1}{6} \cdot 2\pi = \frac{\pi}{3}
+                                = &\frac{\pi}{3}
                                 \end{align}
                             </div>
                         </li>
@@ -742,9 +727,9 @@
                             <div class="scroll">
                                 \begin{align}
                                 &\pi \times (\frac{\sqrt{3}}{2})^2 \times \frac{1}{2} \times \frac{1}{2}
-                                + \int_{\frac{1}{2}}^{1} \pi \times (\sqrt{1-z^2})^2 \, dz \\
-                                = &\frac{\pi}{8} + \frac{5\pi}{24} \\
-                                = &\frac{\pi}{3}
+                                + \int_{\frac{1}{2}}^{1} \pi \times (\sqrt{1-z^2})^2 \, dz 
+                                = \frac{\pi}{8} + \frac{5\pi}{24} 
+                                = \frac{\pi}{3}
                                 \end{align}
                             </div>
                         </li>
@@ -754,6 +739,9 @@
             <h3>双曲線関数(cosh, sinh, tanh)</h3>
             <p>参考にしたサイトは以下のとおり。</p>
             <p><a href="https://manabitimes.jp/math/617">双曲線関数(sinh,cosh,tanh)の意味・性質・楽しい話題まとめ _ 高校数学の美しい物語.html</a></p>
+            <p><a href="https://math-note.xyz/linear-algebra/basics-of-linear-space/definition-of-linear-subspace/">線形部分空間の定義｜証明のテンプレートも例題に沿って紹介 – あーるえぬ.html</a></p>
+            <p><a href="https://linky-juku.com/linear-space-dimension/">部分空間の証明と基底_次元の求め方を分かりやすく解説!(線形空間).html</a></p>
+            <p><a href="https://university-note.com/basis-vector/">【入門線形代数】基底と次元-ベクトル空間-.html</a></p>
             <ul>
                 <li>双曲線関数は、以下のように定義される。</li>
                 <ul>
@@ -781,6 +769,7 @@
                 </ul>
                 <li>具体例</li>
                 <div class="example">
+                    <P><b>問題</b></p>
                     <p>開区間 \(I := [-1, 1]\) で定義された、無限回微分可能な実数値関数全体からなる集合 \(C^∞(I)\) は、
                     通常の関数の和と定数倍に関して線形空間（ベクトル空間）をなす。また、任意の \(f(x), g(x) ∈ C^∞(I)\) に対して</p>
                     <p>
@@ -941,9 +930,8 @@
             <ul>
                 <li>具体例</li>
                 <div class="example">
-                    <p>関数 \( f(x, y) = \tan^{-1} \left( \frac{y}{x} \right) \) が調和関数であることを示す。</p>
+                    <p><b>問題：関数 \( f(x, y) = \tan^{-1} \left( \frac{y}{x} \right) \) が調和関数であることを示せ。</b></p>
                     <ul>
-                
                     <li>調和関数とは、ラプラス方程式<br>
                     <div class="scroll">
                         \begin{align}
@@ -951,15 +939,7 @@
                         \end{align}
                     </div>
                     を満たす関数のことである。<br></li>
-                
-                    <li>\( f(x, y) = \tan^{-1} \left( \frac{y}{x} \right) \) の偏微分を計算<br>
-                    まず、関数 \( f(x, y) \) の偏微分を計算する。<br>
-                    <div class="scroll">
-                        \begin{align}
-                        f(x, y) = \tan^{-1} \left( \frac{y}{x} \right)
-                        \end{align}
-                    </div></li>
-                
+
                     <li>\( x \) に関する1次偏微分<br>
                     <div class="scroll">
                         \begin{align}
@@ -1005,7 +985,7 @@
                         \frac{\partial^2 f}{\partial y^2} = \frac{\partial}{\partial y} \left( \frac{x}{x^2 + y^2} \right)
                         \end{align}
                     </div>
-                    同様に、以下の部分を計算する。<br>
+                    同様に、まずは以下の部分を計算する。<br>
                     <div class="scroll">
                         \begin{align}
                         \frac{\partial}{\partial y} \left( \frac{1}{x^2 + y^2} \right) = -\frac{2y}{(x^2 + y^2)^2}
@@ -1032,9 +1012,7 @@
             <p>参考にしたサイトは以下のとおり。</p>
             <p><a href="https://manabitimes.jp/math/570">マクローリン展開 _ 高校数学の美しい物語.html</a></p>
             <ul>
-                <li>具体例</li>
-                <div class="example">
-                <b>定義</b>
+                <li>定義</li>
                 <ul>
                     <li>マクローリン展開（Maclaurin series）は、関数を原点（\( x = 0 \)）周りでテイラー展開する特別なケースである。これは、関数を無限級数として表現する方法であり、関数の各点での値や導関数の値を利用して関数を近似する。</li>
                     <li>マクローリン展開は次のように定義される：</li>
@@ -1051,10 +1029,7 @@
                     </div>
                 </ul>
                 
-                <b>例</b>
-                <ul>
-                    <li>代表的な関数のマクローリン展開をいくつか紹介する。</li>
-                </ul>
+                <li>例</li>
                 <ul>
                     <li>1. \(\sin x\) のマクローリン展開</li>
                     <ul>
@@ -1063,7 +1038,6 @@
                             \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots
                             \end{align}
                         </div></li>
-                        <li>一般形は、</li>
                         <li><div class="scroll">
                             \begin{align}
                             \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!}
@@ -1078,7 +1052,6 @@
                             \cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots
                             \end{align}
                         </div></li>
-                        <li>一般形は、</li>
                         <li><div class="scroll">
                             \begin{align}
                             \cos x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!}
@@ -1093,7 +1066,6 @@
                             e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
                             \end{align}
                         </div></li>
-                        <li>一般形は、</li>
                         <li><div class="scroll">
                             \begin{align}
                             e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!}
@@ -1108,7 +1080,6 @@
                             \ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots
                             \end{align}
                         </div></li>
-                        <li>一般形は、</li>
                         <li><div class="scroll">
                             \begin{align}
                             \ln(1 + x) = \sum_{n=1}^{\infty} (-1)^{n+1} \frac{x^n}{n}
@@ -1116,15 +1087,12 @@
                         </div></li>
                     </ul>
                 </ul>
-                </div>
             </ul>
             <h3>テイラー展開</h3>
             <p>参考にしたサイトは以下のとおり。</p>
             <p><a href="https://mathlandscape.com/taylor-expansion/">テイラー展開・マクローリン展開とは【解析的な関数と具体例】 _ 数学の景色.html</a></p>
             <ul>
-                <li>具体例</li>
-                <div class="example">
-                <b>定義</b>
+                <li>定義</li>
                 <ul>
                     <li>テイラー展開（Taylor series）は、関数をある点 \( a \) の周りで無限級数として表現する方法である。この方法は、関数の各点での値や導関数の値を利用して関数を近似する。</li>
                     <li>テイラー展開は次のように定義される：</li>
@@ -1141,7 +1109,7 @@
                     </div>
                 </ul>
                 
-                <b>例</b>
+                <li>例</li>
                 <ul>
                     <li>代表的な関数のテイラー展開をいくつか紹介する。</li>
                 </ul>
@@ -1153,7 +1121,6 @@
                         \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots
                         \end{align}
                     </div>
-                    <li>一般形は、</li>
                     <div class="scroll">
                         \begin{align}
                         \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!}
@@ -1168,7 +1135,6 @@
                         \cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots
                         \end{align}
                     </div>
-                    <li>一般形は、</li>
                     <div class="scroll">
                         \begin{align}
                         \cos x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!}
@@ -1185,7 +1151,6 @@
                         \end{align}
                         </li>
                     </div>
-                    <li>一般形は、</li>
                     <div class="scroll">
                         <li>
                         \begin{align}
@@ -1204,7 +1169,6 @@
                         \end{align}
                         </li>
                     </div>
-                    <li>一般形は、</li>
                     <div class="scroll">
                         <li>
                         \begin{align}
@@ -1215,13 +1179,13 @@
                 </ul>
                 </div>
             </ul>
-            <h3>級数に関する命題</h3>
+            <h3>級数</h3>
             <ul>
                 <li>具体例</li>
                 <div class="example">
                 <b>問題</b>
-                    <p>数列 <div class="scroll">\( s_n = a_1 + a_2 + \cdots + a_n, n = 1, 2, \ldots \)</div> に関する次の命題に関して、逆、裏、対偶を述べ、次の命題を含む4つの命題の真偽を述べよ。さらに、偽の場合は「反例」を挙げよ。</p>
-                    <p><div class="scroll">\( a_n は0に収束する ⟹ s_n は有限確定値に収束する \)</div></p>
+                    <p>数列 <div class="scroll">\begin{align} s_n = a_1 + a_2 + \cdots + a_n, n = 1, 2, \ldots \end{align}</div> に関する次の命題に関して、逆、裏、対偶を述べ、次の命題を含む4つの命題の真偽を述べよ。さらに、偽の場合は「反例」を挙げよ。</p>
+                    <p><div class="scroll">\begin{align} a_n \text{は0に収束する} ⟹ s_n \text{は有限確定値に収束する} \end{align}</div></p>
                 <ol>
                     <li>
                         <strong>元の命題：</strong> <div class="scroll">\( a_n は0に収束する ⟹ s_n は有限確定値に収束する \)</div>
@@ -1241,30 +1205,41 @@
                     </li>
                 </ol>
             </ul>
-            <h3>述語論理に関する命題</h3>
+            <h3>述語論理</h3>
             <ul>
                 <li>具体例</li>
                 <div class="example">
-                <b>問題</b> 
+                <p><b>問題</b></p> 
                 <p><strong>人の集合 P と述語 LOVES(x, y)（意味は「x は y を好きである」）に対して、次の二つの述語論理式 A および B の関係を述べよ（等価、含意、など）。</strong></p>
                 <p>\(A: ∀x ∈ P ∃y ∈ P \ LOVES(x, y)\)</p>
                 <p>\(B: ∃y ∈ P ∀x ∈ P \ LOVES(x, y)\)</p>
+                <p><b>解答</b></p>
+                <p>各述語論理式の意味を説明する。</p>
+                <p>\(A: ∀x ∈ P ∃y ∈ P \ LOVES(x, y)\)</p>
                 <ul>
-                    <li>各述語論理式の意味を説明する。</li>
-                    <li>\(A: ∀x ∈ P ∃y ∈ P \ LOVES(x, y)\)</li>
-                    <li>これは、「P のすべての x に対して、P のある y が存在し、x はその y を好きである」という意味である。言い換えると、「P のすべての人には、好きな人がいる」ということを表している。</li>
-                    <li>\(B: ∃y ∈ P ∀x ∈ P \ LOVES(x, y)\)</li>
-                    <li>これは、「P のある y が存在し、P のすべての x がその y を好きである」という意味である。言い換えると、「P の中には、みんなから好かれている特定の人がいる」ということを表している。</li>
-                    <li>これら二つの述語論理式の関係について説明する。</li>
-                    <li><strong>1. 等価 (Equivalence):</strong></li>
-                    <li>A と B は等価ではない。A は「すべての人が誰かを好きである」という意味であり、B は「ある特定の人が全員から好かれている」という意味である。これらは異なる状況を表している。</li>
-                    <li><strong>2. 含意 (Implication):</strong></li>
-                    <li>B は A を含意するが、A は B を含意しない。具体的には、もし P の中に全員から好かれている特定の人 y が存在すれば（B が真である場合）、P のすべての人 x はその y を好きであるため、P のすべての人には好きな人がいるということになる（A も真になる）。しかし、P のすべての人が好きな人を持っているというだけでは（A が真である場合）、それが全員から好かれている特定の一人だとは限らないため、B が必ずしも真であるとは限らない。</li>
-                    <li>以上のことから、<strong>B は A を含意するが、A は B を含意しない</strong>という関係がある。</li>          
+                    <li>これは、「P のすべての x に対して、P のある y が存在し、x はその y を好きである」という意味である。</li>
+                    <li>言い換えると、「P のすべての人には、好きな人がいる」ということを表している。</li>
                 </ul>
+                <p>\(B: ∃y ∈ P ∀x ∈ P \ LOVES(x, y)\)</p>
+                <ul>
+                    <li>これは、「P のある y が存在し、P のすべての x がその y を好きである」という意味である。</li>
+                    <li>言い換えると、「P の中には、みんなから好かれている特定の人がいる」ということを表している。</li>
+                </ul>
+                <p>これら二つの述語論理式の関係について説明する。</p>
+                <p><strong>1. 等価 (Equivalence):</strong></p>
+                <ul>
+                    <li>A と B は等価ではない。A は「すべての人が誰かを好きである」という意味であり、B は「ある特定の人が全員から好かれている」という意味である。</li>
+                    <li>これらは異なる状況を表している。</li>
+                </ul>
+                <p><strong>2. 含意 (Implication):</strong></p>
+                <ul>
+                    <li>B は A を含意するが、A は B を含意しない。具体的には、もし P の中に全員から好かれている特定の人 y が存在すれば（B が真である場合）、P のすべての人 x はその y を好きであるため、P のすべての人には好きな人がいるということになる（A も真になる）。</li>
+                    <li>しかし、P のすべての人が好きな人を持っているというだけでは（A が真である場合）、それが全員から好かれている特定の一人だとは限らないため、B が必ずしも真であるとは限らない。</li>
+                </ul>
+                <p>以上のことから、<strong>B は A を含意するが、A は B を含意しない</strong>という関係がある。</p>          
                 </div>
             </ul>
-            <h3>\(\sup, \inf\)に関する問題</h3>
+            <h3>\(\sup, \inf\)</h3>
             <ul>
                 <li>具体例</li>
                 <div class="example">
@@ -1293,11 +1268,10 @@
                         </li>
                     </ol>
                     <li>したがって、連続実関数 \( f(x) = 1 - \frac{1}{x} \) を定義域 \( 0 < x < 1 \) において考えると、\(\max f(x)\) が存在せず \(\sup f(x)\) が存在する例となる。</li>
-                    <li>この例は、最大値が存在せず、上限が存在する関数 \( f(x) \) の一例である。</li>
                 </ul>
                 </div>
             </ul>
-            <h3>平均値の定理に関する問題</h3>
+            <h3>平均値の定理</h3>
             <ul>
                 <li>具体例</li>
                 <div class="example">
@@ -1340,6 +1314,8 @@
             <h3>形式言語</h3>
             <p>参考にしたサイトは以下のとおり。</p>
             <p><a href="https://xtech.nikkei.com/it/article/COLUMN/20070618/275020/">第2回　形式言語とオートマトン---「文」のルールを知り，機械に解釈させる _ 日経クロステック（xTECH）.html</a></p>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/info-automaton02#i-3">うさぎでもわかるオートマトンと言語理論　第02羽　非決定性オートマトン(NFA)の書き方・決定性オートマトン(DFA)への変換 _ 工業大学生ももやまのうさぎ塾.html</a></p>
             <ul>
                 <li><b>正規言語 (Regular Language)</b></li>
                 <ul>
@@ -1403,7 +1379,7 @@
                     </li>
                     <li>具体例</li>
                     <div class="example">
-                        <b>言語 \(L = \{0^n 1^n \mid n \geq 0\}\) が正規言語でないことをポンピング定理を使って証明する。</b>
+                        <p><b>問題：言語 \(L = \{0^n 1^n \mid n \geq 0\}\) が正規言語でないことをポンピング定理を使って証明せよ。</b></p>
                         <p>仮に、言語 \(L = \{0^n 1^n \mid n \geq 0\}\) が正規言語であると仮定する。すると、ポンピング長 \(p\) が存在するはずである。</p>
                         <ol>
                             <li>\(L\) から \(s\) を選ぶ。ここで、\(s = 0^p 1^p\) とする。この文字列 \(s\) の長さは \(2p\) で、ポンピング補題の条件を満たす。</li>
@@ -1432,8 +1408,6 @@
                     </div>
                 </ul>
                 <li><b>正規表現</b></li>
-                <p>参考にしたサイトは以下のとおり。</p>
-                <p><a href="https://www.momoyama-usagi.com/entry/info-automaton02#i-3">うさぎでもわかるオートマトンと言語理論　第02羽　非決定性オートマトン(NFA)の書き方・決定性オートマトン(DFA)への変換 _ 工業大学生ももやまのうさぎ塾.html</a></p>
                 <ul>
                     <li>具体例</li>
                     <div class="example">
@@ -1510,7 +1484,6 @@
             <p><a href="https://art.ist.hokudai.ac.jp/~seto/lecture/lskp/lskp_02.pdf">大規模知識処理特論 第２回 脊戸和寿</a></p>
             <p><a href="https://yamin.cis.k.hosei.ac.jp/lectures/logic-quartus-modelsim-2022/04-sum-of-product.pdf">論理回路入門（４）李亜民</a></p>
             <p><a href="https://www.krrk0.com/karnaugh-map/">カルノー図って何？2,3,4変数の論理式の簡単化のやり方を丁寧に解説！ – 「なんとなくわかる」大学の数学・物理・情報.html</a></p>
-            <ul>
             <ul>
                 <li>具体例</li>
                 <div class="example">
@@ -2067,125 +2040,125 @@
                     </li>
                     <li>したがって、標本分散は不偏性を持たず、不偏分散は不偏性を持つ。</li>
                 </ul>
-                <h3>条件付き確率とベイズの定理</h3>
-                <p>参考にしたサイトは以下のとおり。</p>
-                <p><a href="https://mathphysnote.com/bayes-theorem/">条件付き確率とベイズの定理 〜検査結果の陽性が正しい確率を求める〜 - とある数物研究者の覚書.html</a></p>
-                <ul>
-                    <li>事象\(B\)が起こったときの事象\(A\)が起こる条件付き確率\(P(A|B)\)を以下のように定義する。
-                        <div class="scroll">
-                        \begin{align}
-                        P(A|B) = \frac{P(A \cap B)}{P(B)}
-                        \end{align}
-                        </div>
-                    </li>
-                    <li>次のベイズの定理は、\(P(B|A)\)が分かっている状態で\(P(A|B)\)を求めたいときに有効である。
-                        <div class="scroll">
-                        \begin{align}
-                        P(A|B) = \frac{P(A)P(B|A)}{P(B)}
-                        \end{align}
-                        </div>
-                    </li>
-                    <li>この式は、条件付き確率の定義を用いて、\(P(A \cap B)\)を二通りで表すことによって導くことができる。</li>
-                    <li>具体例</li>
-                    <div class="example">
-                        <b>検査結果の陽性が正しい確率</b>
-                        <p>ある病気の検査結果について、以下の事実が分かっている。</p>
-                        <ol>
-                            <li>この検査の真陽性率（感度; True positive）は90%である。</li>
-                            <li>この検査の真陰性率（特異度; True negative）は80%である。</li>
-                            <li>全体の人口の5%がこの病気に罹患している。</li>
-                        </ol>
-                        <p>検査で陽性と判定された場合、実際に病気に罹患している確率を求めたい。</p>
-                        
-                        <div class="scroll">
-                        <table>
-                            <tr>
-                                <th colspan="2"></th>
-                                <th colspan="2">検査結果</th>
-                            </tr>
-                            <tr>
-                                <th colspan="2"></th>
-                                <th>陽性（事象B）</th>
-                                <th>陰性</th>
-                            </tr>
-                            <tr>
-                                <th rowspan="2">病気に<br>罹っているか</th>
-                                <th>罹っている（事象A）</th>
-                                <td>a</td>
-                                <td>b</td>
-                            </tr>
-                            <tr>
-                                <th>罹っていない</th>
-                                <td>c</td>
-                                <td>d</td>
-                            </tr>
-                        </table>
-                        </div>
-                        <p>表のように事象\(A, B\)を定めると、求めたい確率は\(P(A|B)\)となる。</p>
-                        <p>１つ目の条件より、\(P(B|A) = 0.90\)である。</p>
-                        <p>２つ目の条件より、\(P(B^c|A^c) = 0.80\)、すなわち、\(P(B|A^c) = 1.00 - 0.80 = 0.20\)である。</p>
-                        <p>３つ目の条件より、\(P(A) = 0.05\)、すなわち、\(P(A^c) = 0.95\)である。</p>
-                        <p>また、\(P(B)\)は以下のように展開できる。</p>
-                        <div class="scroll">
-                        \begin{align}
-                        P(B) &= B \cap \Omega \\
-                            &= B \cap (A \cup A^c) \\
-                            &= (B \cap A) \cup (B \cap A^c)
-                        \end{align}
-                        </div>
-                        <p>この式に、条件付き確率の式\(P(B|A) = \frac{P(B \cap A)}{P(A)}\)を用いると、ベイズの式は以下のように変形できる。</p>
-                        <div class="scroll">
-                        \begin{align}
-                        P(A|B) &= \frac{P(A)P(B|A)}{P(B)} \\
-                            &= \frac{P(A)P(B|A)}{P(A)P(B|A) + P(A^c)P(B|A^c)}
-                        \end{align}
-                        </div>
-                        <p>したがって、</p>
-                        <div class="scroll">
-                        \begin{align}
-                        P(A|B) &= \frac{0.05 \times 0.90}{0.05 \times 0.90 + 0.95 \times 0.20} \simeq 0.19
-                        \end{align}
-                        </div>
-                        <p>となる。</p>
+            </ul>
+            <h3>条件付き確率とベイズの定理</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://mathphysnote.com/bayes-theorem/">条件付き確率とベイズの定理 〜検査結果の陽性が正しい確率を求める〜 - とある数物研究者の覚書.html</a></p>
+            <ul>
+                <li>事象\(B\)が起こったときの事象\(A\)が起こる条件付き確率\(P(A|B)\)を以下のように定義する。
+                    <div class="scroll">
+                    \begin{align}
+                    P(A|B) = \frac{P(A \cap B)}{P(B)}
+                    \end{align}
                     </div>
-                    <div class="example">
-                        <p><b>当選確率の問題</b></p>
-                        <p>ある懸賞に応募した3人の応募者A、B、Cの中から、主催者はそれぞれ確率 \( \frac{1}{4} \), \( \frac{1}{4} \), \( \frac{1}{2} \) で1人だけ当選者を決定するとする。
-                            応募者Aから主催者に、「応募者BかCのどちらか少なくとも1人は落選するはずなので、BとCのうちで落選した1人の名前を教えて欲しい」という質問があった。
-                            主催者は「Bは落選した」と答えた。この答えを聞いた後での、Aが当選する確率を求めよ。
-                            ただし、BとCの両方が落選している場合、主催者は確率 \( \frac{1}{2} \) でどちらかの名前を答えるとする。</p>
-                        <ul>
-                            <li>事象Aを「Aが当選する」、事象Bを「Bが落選したと言われる」、事象Cを「Cが当選する」とする。</li>
-                            <li>条件付き確率\(P(A|B)\)をベイズの定理によって求める。</li>
-                            <li>ベイズの定理は、次の式で表される。
-                                <div class="scroll">
-                                \begin{align}
-                                P(A|B) = \frac{P(A)P(B|A)}{P(B)}
-                                \end{align}
-                                </div>
-                            </li>
-                            <li>ここで、\(P(A) = \frac{1}{4}, P(B|A) = \frac{1}{2}\)である。</li>
-                            <li>また、P(B)は以下のように計算される。
-                                <div class="scroll">
-                                \begin{align}
-                                P(B) &= P(A) \times P(B|A) + P(C) \times P(B|C) \\
-                                    &= \frac{1}{4} \times \frac{1}{2} + \frac{1}{2} \times 1 \\
-                                    &= \frac{5}{8}
-                                \end{align}
-                                </div>
-                            </li>
-                            <li>以上より、
-                                <div class="scroll">
-                                \begin{align}
-                                P(A|B) &= \frac{P(A)P(B|A)}{P(B)} \\
-                                    &= \frac{\frac{1}{4} \times \frac{1}{2}}{\frac{5}{8}} \\
-                                    &= \frac{1}{5}
-                                \end{align}
-                                </div>
-                            </li>
-                        </ul>
+                </li>
+                <li>次のベイズの定理は、\(P(B|A)\)が分かっている状態で\(P(A|B)\)を求めたいときに有効である。
+                    <div class="scroll">
+                    \begin{align}
+                    P(A|B) = \frac{P(A)P(B|A)}{P(B)}
+                    \end{align}
                     </div>
-                </ul>
+                </li>
+                <li>この式は、条件付き確率の定義を用いて、\(P(A \cap B)\)を二通りで表すことによって導くことができる。</li>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題：「検査結果の陽性が正しい確率」</b></p>
+                    <p>ある病気の検査結果について、以下の事実が分かっている。</p>
+                    <ol>
+                        <li>この検査の真陽性率（感度; True positive）は90%である。</li>
+                        <li>この検査の真陰性率（特異度; True negative）は80%である。</li>
+                        <li>全体の人口の5%がこの病気に罹患している。</li>
+                    </ol>
+                    <p>検査で陽性と判定された場合、実際に病気に罹患している確率を求めたい。</p>
+                    
+                    <div class="scroll">
+                    <table>
+                        <tr>
+                            <th colspan="2"></th>
+                            <th colspan="2">検査結果</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"></th>
+                            <th>陽性（事象B）</th>
+                            <th>陰性</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">病気に<br>罹っているか</th>
+                            <th>罹っている（事象A）</th>
+                            <td>a</td>
+                            <td>b</td>
+                        </tr>
+                        <tr>
+                            <th>罹っていない</th>
+                            <td>c</td>
+                            <td>d</td>
+                        </tr>
+                    </table>
+                    </div>
+                    <p>表のように事象\(A, B\)を定めると、求めたい確率は\(P(A|B)\)となる。</p>
+                    <p>１つ目の条件より、\(P(B|A) = 0.90\)である。</p>
+                    <p>２つ目の条件より、\(P(B^c|A^c) = 0.80\)、すなわち、\(P(B|A^c) = 1.00 - 0.80 = 0.20\)である。</p>
+                    <p>３つ目の条件より、\(P(A) = 0.05\)、すなわち、\(P(A^c) = 0.95\)である。</p>
+                    <p>また、\(P(B)\)は以下のように展開できる。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    P(B) &= B \cap \Omega \\
+                        &= B \cap (A \cup A^c) \\
+                        &= (B \cap A) \cup (B \cap A^c)
+                    \end{align}
+                    </div>
+                    <p>この式に、条件付き確率の式\(P(B|A) = \frac{P(B \cap A)}{P(A)}\)を用いると、ベイズの式は以下のように変形できる。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    P(A|B) &= \frac{P(A)P(B|A)}{P(B)} \\
+                        &= \frac{P(A)P(B|A)}{P(A)P(B|A) + P(A^c)P(B|A^c)}
+                    \end{align}
+                    </div>
+                    <p>したがって、</p>
+                    <div class="scroll">
+                    \begin{align}
+                    P(A|B) &= \frac{0.05 \times 0.90}{0.05 \times 0.90 + 0.95 \times 0.20} \simeq 0.19
+                    \end{align}
+                    </div>
+                    <p>となる。</p>
+                </div>
+                <div class="example">
+                    <p><b>当選確率の問題</b></p>
+                    <p>ある懸賞に応募した3人の応募者A、B、Cの中から、主催者はそれぞれ確率 \( \frac{1}{4} \), \( \frac{1}{4} \), \( \frac{1}{2} \) で1人だけ当選者を決定するとする。
+                        応募者Aから主催者に、「応募者BかCのどちらか少なくとも1人は落選するはずなので、BとCのうちで落選した1人の名前を教えて欲しい」という質問があった。
+                        主催者は「Bは落選した」と答えた。この答えを聞いた後での、Aが当選する確率を求めよ。
+                        ただし、BとCの両方が落選している場合、主催者は確率 \( \frac{1}{2} \) でどちらかの名前を答えるとする。</p>
+                    <ul>
+                        <li>事象Aを「Aが当選する」、事象Bを「Bが落選したと言われる」、事象Cを「Cが当選する」とする。</li>
+                        <li>条件付き確率\(P(A|B)\)をベイズの定理によって求める。</li>
+                        <li>ベイズの定理は、次の式で表される。
+                            <div class="scroll">
+                            \begin{align}
+                            P(A|B) = \frac{P(A)P(B|A)}{P(B)}
+                            \end{align}
+                            </div>
+                        </li>
+                        <li>ここで、\(P(A) = \frac{1}{4}, P(B|A) = \frac{1}{2}\)である。</li>
+                        <li>また、P(B)は以下のように計算される。
+                            <div class="scroll">
+                            \begin{align}
+                            P(B) &= P(A) \times P(B|A) + P(C) \times P(B|C) \\
+                                &= \frac{1}{4} \times \frac{1}{2} + \frac{1}{2} \times 1 \\
+                                &= \frac{5}{8}
+                            \end{align}
+                            </div>
+                        </li>
+                        <li>以上より、
+                            <div class="scroll">
+                            \begin{align}
+                            P(A|B) &= \frac{P(A)P(B|A)}{P(B)} \\
+                                &= \frac{\frac{1}{4} \times \frac{1}{2}}{\frac{5}{8}} \\
+                                &= \frac{1}{5}
+                            \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </ul>
             <h3>累積分布関数、確率密度関数、期待値、分散</h3>
             <ul>
@@ -2365,8 +2338,6 @@
                     </div>
                     <div class="example">
                         <b>ベルヌーイ分布に関する問題</b>
-                
-                        <p><b>問題文</b></p>
                         <p>確率変数 \( X \) は 0 と 1 のいずれかの値をとり、その確率が \( P(X = 1) = p \), \( P(X = 0) = 1 - p \) であるとする。ただし、\( p \) は \( 0 \leq p \leq 1 \) を満たし、成功確率と呼ばれる。この確率変数 \( X \) がしたがう確率分布は成功確率 \( p \) のベルヌーイ分布と呼ばれ、\( \text{Ber}(p) \) と書かれる。</p>
                         <ol>
                             <li>ベルヌーイ分布 \( \text{Ber}(p) \) にしたがう確率変数 \( X \) の分散 \( \text{Var}(X) \) を求めよ。</li>
