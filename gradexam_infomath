@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【院試対策|北海道大学 情報科学院 - 基礎数学】走る作曲家のAIカフェ</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>走る作曲家のAIカフェ</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="study.html">勉強</a></li>
+                <li><a href="music.html">音楽</a></li>
+                <li><a href="sports.html">スポーツ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+          <h2>目次</h2>
+          <ul>
+            <li><a href="#overview">概要</a></li>
+            <li><a href="#strategy">戦略</a></li>
+            <li><a href="#basic-math">基礎数学</a></li>
+            <li><a href="#info-math">情報数学</a></li>
+            <li><a href="#probability-statistics">確率・統計</a></li>
+            <li><a href="#algorithms-data-structures">アルゴリズムとデータ構造</a></li>
+            <li><a href="#artificial-intelligence">人工知能</a></li>
+          </ul>
+        </section>
+        <section id="overview">
+          <h2>概要</h2>
+          このページでは、「北海道大学大学院情報科学院修士課程入学試験」（令和6年8月実施）の対策を行います。過去問から傾向を掴み、必要な知識や要点をまとめていきます。
+        </section>
+        <section id="strategy">
+          <h2>戦略</h2>
+          院試は以下の内容で構成されます。
+          <ul>
+            <li>専門科目1: 基礎数学、情報数学、【選択】確率・統計、【選択】情報理論（4問のうち基礎数学と情報数学を含む3問を解答）</li>
+            <li>専門科目2: アルゴリズムとデータ構造、人工知能、コンピュータシステム、応用数学（4問のうち2問を選択し解答）</li>
+          </ul>
+          俗に、専門科目1では「情報理論」が、専門科目2では「アルゴリズムとデータ構造」と「コンピュータシステム」が簡単だと言われています。
+          しかし、今後の自分の研究に役立てたいので、専門科目1では「確率・統計」を、専門科目2では「アルゴリズムとデータ構造」と「人工知能」を選択しようと思います。
+        </section>
+        <section id="info-math">
+          <h2>情報数学</h2>
+            <h3>形式言語</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://xtech.nikkei.com/it/article/COLUMN/20070618/275020/">第2回　形式言語とオートマトン---「文」のルールを知り，機械に解釈させる _ 日経クロステック（xTECH）.html</a></p>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/info-automaton02#i-3">うさぎでもわかるオートマトンと言語理論　第02羽　非決定性オートマトン(NFA)の書き方・決定性オートマトン(DFA)への変換 _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li><b>正規言語 (Regular Language)</b></li>
+                <ul>
+                    <li>正規言語は、有限オートマトン（有限状態機械）によって認識される言語である。</li>
+                    <li>正規文法によって生成される。</li>
+                    <li>決定性有限オートマトン（DFA）や非決定性有限オートマトン（NFA）で認識可能である。</li>
+                    <li>\(a \rightarrow b\)において、\(b\)が終端記号、または終端記号の後に非終端記号を付ける。</li>
+                    <li>例：\(L = { a^n | n ≥ 0 }\)(空文字列または任意の個数の \(a\) からなる言語。)</li>
+                    <li>例：\(L = (ab)^*\)(\(ab\) の繰り返しからなる言語。)</li>
+                </ul>
+                <li><b>文脈自由言語 (Context-Free Language, CFL)</b></li>
+                <ul>
+                    <li>文脈自由言語は、文脈自由文法（CFG）によって生成される言語である。</li>
+                    <li>文脈自由文法は、1つの非終端記号が文字列に置き換えられる生成規則を持つ。</li>
+                    <li>プッシュダウンオートマトン（PDA）で認識可能である。</li>
+                    <li>スタックを使用して構造を保持するため、より複雑な構造を認識できる。</li>
+                    <li>\(a \rightarrow b\)において、\(a\)が非終端記号１つだけから成る。</li>
+                    <li>例：\(L = { a^n b^n | n ≥ 0 }\)(同じ数の \(a\) と \(b\) からなる言語。)</li>
+                    <li>例：\(ww^R | w ∈ {a, b}^*\)(任意の文字列 \(w\) とその逆順 \(w^R\) からなる言語。)</li>
+                </ul>
+                <li><b>文脈依存言語 (Context-Sensitive Language, CSL)</b></li>
+                <ul>
+                    <li>文脈依存言語は、文脈依存文法（CSG）によって生成される言語である。</li>
+                    <li>文脈依存文法の生成規則は、形式 \(α A β → α γ β\) を持ち、ここで \(A\) は非終端記号、\(α\)、\(β\)、および \(γ\) は任意の文字列である。</li>
+                    <li>線形有界オートマトン（LBA）で認識可能である。</li>
+                    <li>メモリが有限で、入力の長さに比例して制約される。</li>
+                    <li>\(a \rightarrow b\)において、\(b\)の長さが\(a\)の長さ以上である。</li>
+                    <li>例：\(L = { a^n b^n c^n | n ≥ 1 }\)(同じ数の \(a, b, c\) からなる言語。)</li>
+                </ul>
+                <li><b>クリーネ閉包</b></li>
+                <ul>
+                    <li>アルファベット \(Σ = {a, b}\) に対して、そのクリーネ閉包（Kleene closure）、またはクリーネスター（Kleene star）とは、\(Σ\) から生成されるすべての有限長の文字列の集合を指す。</li>
+                    <li>記号としては \(Σ*\) と表現される。</li>
+                    <li>具体的には、\(Σ*\) は以下のようなすべての文字列を含む集合である：
+                        <ul>
+                            <li>空文字列\(ε\)</li>
+                            <li>\(a\) と \(b\) の任意の組み合わせ</li>
+                            <li>文字列の長さはゼロ以上</li>
+                        </ul>
+                    </li>
+                    <li>つまり、\(Σ*\) は次のような集合である：
+                        <ul>
+                            <li>\(ε\)（空文字列）</li>
+                            <li>長さ1の文字列： \(a, b\)</li>
+                            <li>長さ2の文字列： \(aa, ab, ba, bb\)</li>
+                            <li>長さ3の文字列： \(aaa, aab, aba, abb, baa, ...\)</li>
+                            <li>など、任意の有限長のすべての組み合わせ</li>
+                        </ul>
+                    </li>
+                </ul>
+                <li><b>ポンピング定理</b></li>
+                <ul>
+                    <li>任意の正規言語 \(L\) について、あるポンピング長 \(p\)（自然数）が存在して、\(L\) のすべての文字列 \(s\) が以下の条件を満たす場合に限り、\(s \in L\) である：
+                        <ul>
+                            <li>\(s\) の長さは \(p\) 以上である。</li>
+                            <li>\(s\) は \(s = xyz\) という形に分割できる。</li>
+                            <li>\(|xy| \leq p\)。</li>
+                            <li>\(y \neq \epsilon\)。</li>
+                            <li>任意の非負整数 \(i\) に対して、文字列 \(xy^iz \in L\) である。</li>
+                        </ul>
+                    </li>
+                    <li>具体例</li>
+                    <div class="example">
+                        <p><b>問題：言語 \(L = \{0^n 1^n \mid n \geq 0\}\) が正規言語でないことをポンピング定理を使って証明せよ。</b></p>
+                        <p>仮に、言語 \(L = \{0^n 1^n \mid n \geq 0\}\) が正規言語であると仮定する。すると、ポンピング長 \(p\) が存在するはずである。</p>
+                        <ol>
+                            <li>\(L\) から \(s\) を選ぶ。ここで、\(s = 0^p 1^p\) とする。この文字列 \(s\) の長さは \(2p\) で、ポンピング補題の条件を満たす。</li>
+                            <li>ポンピング補題に従い、\(s\) を \(s = xyz\) の形に分割する。ここで、\(|xy| \leq p\) であり、\(y \neq \epsilon\) である。</li>
+                        </ol>
+                        <p>\(|xy| \leq p\) なので、\(x\) と \(y\) はすべて \(0\) から構成される。具体的には、\(x = 0^a\)、\(y = 0^b\)、\(z = 0^{p-a-b} 1^p\) という形になる。ここで、\(a\) と \(b\) は非負整数であり、\(a + b \leq p\)、かつ \(b > 0\) である。</p>
+                    
+                        <ol start="3">
+                            <li>ポンピング補題により、任意の非負整数 \(i\) に対して、文字列 \(xy^iz\) が \(L\) に属するはずである。</li>
+                        </ol>
+                        <p>しかし、\(i \neq 1\) の場合を考える。</p>
+                        <ul>
+                            <li>\(i = 0\) のとき、
+                                <div class="scroll">
+                                \(xy^0z = xz = 0^a 0^{p-a-b} 1^p = 0^{p-b} 1^p\)
+                                </div>
+                            である。ここで、\(b > 0\) なので、この文字列は \(0\) の数と \(1\) の数が一致せず、\(L\) に属さない。</li>
+                            <li>\(i = 2\) のとき、
+                                <div class="scroll">
+                                \(xy^2z = xyyz = 0^a 0^{2b} 0^{p-a-b} 1^p = 0^{p+b} 1^p\)
+                                </div>
+                            である。ここでも、\(b > 0\) なので、この文字列も \(0\) の数と \(1\) の数が一致せず、\(L\) に属さない。</li>
+                        </ul>
+                        <p>これらの例から、\(xy^iz\) が \(L\) に属さない \(i\) が存在することが示される。したがって、ポンピング補題の条件を満たさないため、仮定に矛盾する。</p>
+                        <p>したがって、言語 \(L = \{0^n 1^n \mid n \geq 0\}\) は正規言語ではないことが証明された。</p>
+                    </div>
+                </ul>
+                <li><b>正規表現</b></li>
+                <ul>
+                    <li>具体例</li>
+                    <div class="example">
+                        <p><b>問題</b></p>
+                        <p>
+                            オートマトンと正規表現に関する以下の問いに答えよ。なお、アルファベット \(\Sigma = \{a_1, \dots, a_k\}\) 上の正規表現を、以下の (i), (ii) で定義する。
+                        </p>
+                        <p>
+                            (i) \( a_1, \dots, a_k, \epsilon \)（空列）, \(\emptyset\)（空集合）は正規表現であり、それぞれ集合 \(\{a_1\}, \dots, \{a_k\}, \{\epsilon\}, \emptyset\) を示す。
+                        </p>
+                        <p>
+                            (ii) \( r \) と \( s \) が正規表現のとき、\( r + s \), \( r \cdot s \), \( r^* \) は正規表現であり、集合演算として \( + \) はそれぞれ和集合、連接、クリーネ閉包に対応する。
+                        </p>
+                        <p>
+                            また、決定性有限オートマトンは \( (Q, \Sigma, \delta, q_0, F) \) で表される。ただし、\( Q \) は状態の有限集合、\( \Sigma \) は有限のアルファベット、\( \delta \) は遷移関数、\( q_0 \) は開始状態、\( F \) は最終状態の集合である。非決定性有限オートマトンも空列 \(\epsilon\) を用いて同様に \( (Q, \Sigma \cup \{\epsilon\}, \delta, q_0, F) \) で表される。
+                        </p>
+                        <ol>
+                            <li>アルファベット \(\Sigma = \{a, b\}\) とし、次の言語を表す正規表現を書け。なお、演算の優先順位（+ < · < *）を考慮して省略可能な場合には、括弧「()」を省略してもよい。</li>
+                            <ol>
+                                <li> \( ba \) で始まり、 \( ba \) で終わる系列からなる言語</li>
+                                <li> 最後から2番目の記号が \( b \) である系列からなる言語</li>
+                            </ol>
+                            <li> (1-2) の言語を受理する非決定性有限オートマトンを遷移図で示せ。なお、解答するオートマトンの状態を3つとし、開始状態は向きが斜めの矢印が指す状態とし、受理状態は2重丸とすること。</li>
+                            <li> (1-2) の言語を受理する決定性有限オートマトンを遷移図で示せ。なお、解答するオートマトンの状態を4つとし、開始状態は向きが斜めの矢印が指す状態とし、受理状態は2重丸とすること。</li>
+                            <li>任意の正規表現が表す言語を受理する非決定性有限オートマトンが存在することを数学的帰納法を用いて構成的に証明せよ。</li>
+                        </ol>
+                        <p><b>(1)の解答</b></p>
+                        <ul>
+                            <li>(1-1) \(ba\) で始まり、\(ba\) で終わる系列からなる言語</li>
+                            <ul>
+                                <li>\( ba(a + b)^*ba \)</li>
+                            </ul>
+                            <li>(1-2) 最後から2番目の記号が \(b\) である系列からなる言語</li>
+                            <ul>
+                                <li>\( (a + b)^* b (a + b) \)</li>
+                            </ul>
+                        </ul>
+                        <p><b>(2)の解答</b></p>
+                        <ul>
+                            <li>(1-2) の言語を受理する非決定性有限オートマトン (NFA) は、次のような状態遷移図で表すことができる。</li>
+                            <ul>
+                                <li>\( q_0 \)（開始状態）: 任意の文字 \( a \) または \( b \) を受け入れて \( q_0 \) へ遷移、\( b \) を受け入れて \( q_1 \) へ遷移。</li>
+                                <li>\( q_1 \): 任意の文字 \( a \) または \( b \) を受け入れて \( q_2 \) へ遷移。</li>
+                                <li>\( q_2 \)（受理状態）: 遷移なし。</li>
+                            </ul>
+                        </ul>
+                        <p><b>(3)の解答</b></p>
+                        <ul>
+                            <li>NFAをDFAに変換するには、NFAの状態遷移表を書けばよい。</li>
+                            <li>その上で、今回は
+                                <div class="scroll">
+                                    \begin{align}
+                                    q_0 : q_0, q_0 q_1 : q_1, q_0 q_2 : q_2, q_0 q_1 q_2 : q_3
+                                    \end{align}
+                                </div>
+                                という対応付けを行なえばよい。</li>
+                            <li>(1-2) の言語を受理する決定性有限オートマトン (DFA) は、次のような状態遷移図で表すことができる。</li>
+                            <ul>
+                                <li>\( q_0 \)（開始状態）: \( a \) を受け入れて \( q_0 \) へ遷移、\( b \) を受け入れて \( q_1 \) へ遷移。</li>
+                                <li>\( q_1 \): \( a \) を受け入れて \( q_2 \) へ遷移、\( b \) を受け入れて \( q_3 \) へ遷移。</li>
+                                <li>\( q_2 \)（受理状態）: \( a \) を受け入れて \( q_0 \) へ遷移、\( b \) を受け入れて \( q_1 \) へ遷移。</li>
+                                <li>\( q_3 \)（受理状態）: \( a \) を受け入れて \( q_2 \) へ遷移、\( b \) を受け入れて \( q_3 \) へ遷移。</li>
+                            </ul>
+                        </ul>
+                        <p><b>(4)の解答</b></p>
+                        <ul>
+                            <li><a href="https://www.isc.meiji.ac.jp/~mizutani/cs/automata/automatonbook.pdf" style="color: white;">オートマトンと言語理論 水谷正大 (p44-45)</a></li>
+                        </ul>
+                    </div>
+                </ul>
+            </ul>
+            <h3>論理式</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://art.ist.hokudai.ac.jp/~seto/lecture/lskp/lskp_02.pdf">大規模知識処理特論 第２回 脊戸和寿</a></p>
+            <p><a href="https://yamin.cis.k.hosei.ac.jp/lectures/logic-quartus-modelsim-2022/04-sum-of-product.pdf">論理回路入門（４）李亜民</a></p>
+            <p><a href="https://www.krrk0.com/karnaugh-map/">カルノー図って何？2,3,4変数の論理式の簡単化のやり方を丁寧に解説！ – 「なんとなくわかる」大学の数学・物理・情報.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                <b>問題</b> 
+                <p><b>以下の命題論理式それぞれについて、その積和標準形 (DNF; 選言標準形) および和積標準形 (CNF; 連言標準形) を求めよ。ただし、∨ は論理和、∧ は論理積、¬ は否定、→ は含意を表す。なお、どの論理式が求めた DNF や CNF であるかを明示すること。</b></p>
+                <p>1. \(\left((x \rightarrow \neg y) \rightarrow (\neg y \rightarrow z)\right) \land (x \lor \neg y)\)</p>
+                <p>2. \((x \rightarrow y \land z) \land (y \land z \rightarrow x)\)</p>
+                <ul>
+                    <li>１つ目の論理式について、真理値表は以下のようになる。
+                        <div class="scroll">
+                            <table>
+                            <tr>
+                                <th>x</th>
+                                <th>y</th>
+                                <th>z</th>
+                                <th>&not; y</th>
+                                <th>x &rarr; &not; y</th>
+                                <th>&not; y &rarr; z</th>
+                                <th>(x &rarr; &not; y) &rarr; (&not; y &rarr; z)</th>
+                                <th>x &or; &not; y</th>
+                                <th>((x &rarr; &not; y) &rarr; (&not; y &rarr; z)) &and; (x &or; &not; y)</th>
+                            </tr>
+                            <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                            <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+                            <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+                            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                            <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>                                
+                            </table>
+                        </div>
+                    </li>
+                    <li>２つ目の論理式について、真理値表は以下のようになる。
+                        <div class="scroll">
+                            <table>
+                            <tr>
+                                <th>x</th>
+                                <th>y</th>
+                                <th>z</th>
+                                <th>y &and; z</th>
+                                <th>x &rarr; (y &and; z)</th>
+                                <th>(y &and; z) &rarr; x</th>
+                                <th>(x &rarr; (y &and; z)) &and; ((y &and; z) &rarr; x)</th>
+                            </tr>
+                            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+                            <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                            <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                            <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                            <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>                            
+                            </table>
+                        </div>
+                    </li>
+                    <li>積和標準形を作るには、全体の真理値が１になる最小項をORでつなげばよい。
+                        よって、
+                        <ul>
+                            <li>１つ目の論理式の積和標準形は、
+                            <div class="scroll">
+                                \begin{align}
+                                &(\neg x \land \neg y \land z) \lor (x \land \neg y \land z) \lor (x \land y \land \neg z) \lor (x \land y \land z) \\
+                                = &(\neg y \land z) \lor (x \land y)
+                                \end{align}
+                            </div>
+                            </li>
+                            <li>２つ目の論理式の積和標準形は、
+                            <div class="scroll">
+                                \begin{align}
+                                &(\neg x \land \neg y \land \neg z) \lor (\neg x \land \neg y \land z) \lor (\neg x \land y \land \neg z) \lor (x \land y \land z) \\
+                                = &(\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z)
+                                \end{align}
+                            </div>
+                            </li>
+                        </ul>
+                        となる。
+                    </li>
+                    <li>和積標準形を作るには、全体の真理値が０になる最大項をANDでつなげばよいが、積和標準形を二重否定してド・モルガン即を使うだけでよい。
+                        よって、
+                        <ul>
+                            <li>１つ目の論理式の積和標準形は、
+                            <div class="scroll">
+                                \begin{align}
+                                &\neg(\neg((\neg y \land z) \lor (x \land y))) \\
+                                = &\neg(\neg(\neg y \land z) \land \neg(x \land y)) \\
+                                = &\neg((y \lor \neg z) \land (\neg x \lor \neg y)) \\
+                                = &\neg((y \land \neg x) \lor (y \land \neg y) \lor (\neg z \land \neg x) \lor (\neg z \land \neg y)) \\
+                                = &\neg((y \land \neg x) \lor (\neg z \land \neg x) \lor (\neg z \land \neg y)) \\
+                                = &\neg((y \land \neg x) \lor (\neg z \land \neg y)) \text{　∵下のカルノー図を用いた} \\
+                                = &(\neg y \lor x) \land (z \lor y)
+                                \end{align}
+                            </div>
+                            <div class="scroll">
+                                <table>
+                                    <tr>
+                                        <th colspan="2"></th>
+                                        <th colspan="4">yz</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2"></th>
+                                        <th>00</th>
+                                        <th>01</th>
+                                        <th>11</th>
+                                        <th>10</th>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2">x</th>
+                                        <th>0</th>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <th>1</th>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </li>
+                            <li>２つ目の論理式の積和標準形は、
+                            <div class="scroll">
+                                \begin{align}
+                                &(\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z) \\
+                                = &\neg(\neg((\neg x \land \neg y) \lor (\neg x \land \neg z) \lor (x \land y \land z))) \\
+                                = &\neg((x \lor y) \land (x \lor z) \land (\neg x \lor \neg y \lor \neg z)) \\
+                                = &\neg((\neg x \land z) \lor (\neg x \land y) \lor (\neg y \land x) \lor (\neg y \land z) \lor (\neg z \land x) \lor (\neg z \land y)) \\
+                                = &\neg((\neg x \land z) \lor (\neg y \land x) \lor (\neg z \land y)) \text{　∵下のカルノー図を用いた} \\
+                                = &(x \lor \neg z) \land (y \lor \neg x) \land (z \lor \neg y) \\
+                                \end{align}
+                            </div>
+                            <div class="scroll">
+                                <table>
+                                    <tr>
+                                        <th colspan="2"></th>
+                                        <th colspan="4">yz</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2"></th>
+                                        <th>00</th>
+                                        <th>01</th>
+                                        <th>11</th>
+                                        <th>10</th>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2">x</th>
+                                        <th>0</th>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <th>1</th>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </li>
+                        </ul>
+                        となる。
+                    </li>
+                </ul>
+                </div>
+            </ul>
+            <h3>二項関係・同値関係</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/1314">同値関係といろいろな例 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <b>問題</b>
+                    <p>整数全体の集合を \(\mathbb{Z}\) とし、\(\mathbb{Z}\) 上での二項関係 \( x \equiv y \) は、\( x = y + 3k \) を満たすような \( k \in \mathbb{Z} \) が存在することを表すとする。この二項関係 \(\equiv\) について、以下の問いに答えよ。</p>
+                    <ol>
+                        <li>二項関係 \( x \equiv y \) が同値関係であることを証明せよ。</li>
+                        <li>同値関係 \( x \equiv y \) に対して、\(\mathbb{Z}\) の \(\equiv\) による商集合（すなわち、すべての同値類の集合） \(\mathbb{Z}/\equiv\) を示せ。</li>
+                    </ol>
+
+                    <b>1. \( x \equiv y \) が同値関係であることの証明</b>
+                    <p>同値関係は、以下の3つの性質を満たす必要がある：</p>
+                    <ul>
+                        <li>反射律：任意の \( x \in \mathbb{Z} \) について、\( x \equiv x \)</li>
+                        <li>対称律：任意の \( x, y \in \mathbb{Z} \) について、\( x \equiv y \) ならば \( y \equiv x \)</li>
+                        <li>推移律：任意の \( x, y, z \in \mathbb{Z} \) について、\( x \equiv y \) かつ \( y \equiv z \) ならば \( x \equiv z \)</li>
+                    </ul>
+                    
+                    <p>これらの性質を順に確認する。</p>
+                    
+                    <b>反射律</b>
+                    <ul>
+                        <li>任意の \( x \in \mathbb{Z} \) について、\( x = x + 3 \cdot 0 \)が成り立つ。したがって、\( x \equiv x \) である。</li>
+                    </ul>
+                    
+                    <b>対称律</b>
+                    <ul>
+                        <li>任意の \( x, y \in \mathbb{Z} \) について、\( x \equiv y \) ならば、\( x = y + 3k \)を満たす \( k \in \mathbb{Z} \) が存在する。
+                            このとき、\( y = x - 3k \)であり、\( -k \in \mathbb{Z} \) なので、\( y \equiv x \) である。</li>
+                    </ul>
+                    
+                    <b>推移律</b>
+                    <ul>
+                        <li>任意の \( x, y, z \in \mathbb{Z} \) について、\( x \equiv y \) かつ \( y \equiv z \) ならば、\( x = y + 3k \)および\( y = z + 3m \)を満たす \( k, m \in \mathbb{Z} \) が存在する。
+                        このとき、\( x = (z + 3m) + 3k = z + 3(m + k) \)であり、\( m + k \in \mathbb{Z} \) なので、\( x \equiv z \) である。</li>
+                    </ul>
+                    
+                    <p>以上より、二項関係 \( x \equiv y \) は同値関係であることが示された。</p>
+                    
+                    <b>2. 同値関係 \( x \equiv y \) に対して、\(\mathbb{Z}\) の \(\equiv\) による商集合 \(\mathbb{Z}/\equiv\) を示せ</b>
+                    <p>同値関係 \( x \equiv y \) による同値類は、\( 3 \) の倍数の差を持つ整数の集合である。具体的には、任意の \( x \in \mathbb{Z} \) について、次のように同値類を表すことができる：</p>
+                    <div class="scroll">\begin{align}[x] = \{ y \in \mathbb{Z} \mid y \equiv x \}\end{align}</div>
+                    
+                    <p>整数全体の集合 \(\mathbb{Z}\) に対して、同値類は次の3つに分類される：</p>
+                    <ul>
+                        <li>\([0] = \{ \ldots, -6, -3, 0, 3, 6, \ldots \}\)</li>
+                        <li>\([1] = \{ \ldots, -5, -2, 1, 4, 7, \ldots \}\)</li>
+                        <li>\([2] = \{ \ldots, -4, -1, 2, 5, 8, \ldots \}\)</li>
+                    </ul>
+                    
+                    <p>したがって、\(\mathbb{Z}/\equiv\) は次のように表せる：</p>
+                    <p>\(\mathbb{Z}/\equiv = \{ [0], [1], [2] \}\)</p>                    
+                </div>
+            </ul>
+            <h3>完全二部グラフ</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.momoyama-usagi.com/entry/math-risan09">うさぎでもわかる離散数学（グラフ理論）　第9羽　グラフの基礎3 _ 工業大学生ももやまのうさぎ塾.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <b>問題</b>
+                    <p>無向グラフ \( G = (V, E) \) が \( V = V_1 \cup V_2 \), \( V_1 \cap V_2 = \emptyset \), \(|V_1| = m\), \(|V_2| = n\), \( E = V_1 \times V_2 \) を満たすときに、このグラフを完全二部グラフ \( K_{m,n} \) とよぶ。ここで、頂点集合を \( V = \{v_1, v_2, \dots, v_{m+n}\} \) とする。この完全二部グラフ \( K_{m,n} \) において、以下を満たす頂点の系列 \( v_{i_0}, v_{i_1}, \dots, v_{i_k} \) を長さ \( k \) の単純パスとよぶ。ここで、\( v_{ij} \in V \) である。</p>
+                    <p>任意の \( 0 \leq j < k \) に対して \( (v_{ij}, v_{i_{j+1}}) \in E \) が成立し、任意の \( 0 \leq j' \leq k \) に対して \( v_{ij} \neq v_{ij'} \) が成立する。</p>
+                    <p>なお、2つの系列 \( v_{i_0}, v_{i_1}, \dots, v_{i_k} \) と \( v_{i_k}, v_{i_{k-1}}, \dots, v_{i_0} \) は同じ単純パスとみなす。</p>
+                    <ol>
+                        <li>\( K_{3,2} \) での長さ最大の単純パスの個数を求めよ。</li>
+                        <li>\( K_{m,2} \)（\( m > 2 \)）での長さ最大の単純パスの個数を求めよ。</li>
+                        <li>\( K_{m,n} \)（\( m > n \)）での長さ最大の単純パスの個数を求めよ。</li>
+                        <li>\( K_{n,n} \) での長さ最大の単純パスの個数を求めよ。</li>
+                    </ol>  
+                    <p><b>問１</b></p>
+                    <ul>
+                        <li>\(K_{3, 2}\)においては、長さ最大の単純パスは必ず\(V_1 \rightarrow V_2 \rightarrow V_1 \rightarrow V_2 \rightarrow V1\)の順番で頂点をたどって形成される。</li>
+                        <li>したがって、\(\frac{1}{2} \times 3 \times 2 \times 2 \times 1 \times 1 = 6\)通りある。</li>
+                    </ul>
+                    <p><b>問２</b></p>
+                    <ul>
+                        <li>\(K_{m, 2} \text{ m > 2 }\)においても、長さ最大の単純パスは必ず\(V_1 \rightarrow V_2 \rightarrow V_1 \rightarrow V_2 \rightarrow V1\)の順番で頂点をたどって形成される。</li>
+                        <li>したがって、
+                            <div class="scroll">\begin{align}\frac{1}{2} \times m \times 2 \times (m-1) \times 1 \times (m-2) = m(m-1)(m-2)\end{align}</div>通りある。
+                        </li>
+                    </ul>
+                    <p><b>問３</b></p>
+                    <ul>
+                        <li>\(K_{m, n} \text{ m > n }\)においても、長さ最大の単純パスは必ず\(V_1 \rightarrow V_2 \rightarrow V_1 \rightarrow V_2 \cdots\)の順番で頂点をたどって形成される。</li>
+                        <li>したがって、
+                            <div class="scroll">
+                            \begin{align}
+                                &\frac{1}{2} \times m \times n \times (m-1) \times (n-1) \times (m-2) \times (n-2) \times \cdots \times (m-n-1) \times 1 \times (m-n) \\ 
+                                = &\frac{1}{2} \times m \times (m-1) \times (m-2) \times (m-n) \times \cdots \times n \times (n-1) \times (n-2) \times \cdots \times 1  \\
+                                = &\frac{m!n!}{(m-n-1)!}
+                            \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                    <p><b>問４</b></p>
+                    <ul>
+                        <li>\(V_1\)からスタートするとき、これまでの議論より、\(\frac{n!n!}{2}\)通り。</li>
+                        <li>\(V_2\)からスタートする場合も同数あるので、全部で\(n!n!\)通り。</li>
+                    </ul>
+                </div>
+            </ul>
+            <h3>イデアル</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://www.juen.ac.jp/math/nakagawa/quadnf.pdf">代数学演習 -代数的整数論-　中山仁</a></p>
+            <p><a href="https://for-spring.com/algebra/elemental_number_theory-4/#toc9">ユークリッドの互除法(大きい数の最大公約数) - 小野研究室.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題</b></p>
+                    <ol>
+                        <li>正の整数 \( a_1, a_2, \dots, a_k \) に対して、
+                            <div class="scroll">
+                                \begin{align}
+                                I = \{c_1a_1 + c_2a_2 + \dots + c_k a_k \mid c_1, c_2, \dots, c_k \in \mathbb{Z} \}
+                                \end{align}
+                            </div>
+                        とおく。このとき、\( I \) は \( \mathbb{Z} \) のイデアルであることを証明せよ。</li>
+                        <li>\( I = d\mathbb{Z} \) となる正の整数 \( d \) が存在するとき、この \( d \) は \( a_1, a_2, \dots, a_k \) の最大公約数になることを証明せよ。</li>
+                        <li>正の整数 \( a_1, a_2, \dots, a_k \) に対して、任意の \( j \) (2 ≤ j ≤ k) について、\( a_j \) を \( a_1 \) で割ったときの商を \( q_j \)、余りを \( r_j \) とするとき、次が成立つことを示せ。
+                            <div class="scroll">
+                                \begin{align}
+                                \text{gcd}(a_1, a_2, \dots, a_k) = \text{gcd}(a_1, r_2, \dots, r_k)
+                                \end{align}
+                            </div>
+                            </li>
+                        <li>(3) を利用することで gcd(8413, 10561, 11993) を求めよ。解答には (3) を利用した過程を示すこと。</li>
+                    </ol>
+                    <p><b>(1)の解答</b></p>
+                    <ul>
+                        <p>イデアルの定義に従って、以下の条件を満たすことを示す：</p>
+                        <ul>
+                            <li>\( 0 \in I \) であること：</li>
+                            <ul>
+                            <li>任意の整数 \( c_1, c_2, \dots, c_k \) に対して \( c_1 = c_2 = \dots = c_k = 0 \) を選べば、
+                                <div class="scroll">
+                                    \begin{align}
+                                    0 = 0 \times a_1 + 0 \times a_2 + \dots + 0 \times a_k \in I
+                                    \end{align}
+                                </div>
+                                であるため、\( 0 \in I \) が成立する。</li>
+                            <li>\( x, y \in I \) ならば、 \( x + y \in I \) であること：</li>
+                            </ul>
+                            <ul>
+                            <li>\( x, y \in I \) であれば、それぞれ
+                                <div class="scroll">
+                                    \begin{align}
+                                    x = c_1a_1 + c_2a_2 + \dots + c_ka_k \\
+                                    y = d_1a_1 + d_2a_2 + \dots + d_ka_k
+                                    \end{align}
+                                </div>
+                                で表される。したがって、
+                                <div class="scroll">
+                                    \begin{align}
+                                    x + y = (c_1 + d_1)a_1 + (c_2 + d_2)a_2 + \dots + (c_k + d_k)a_k \in I
+                                    \end{align}
+                                </div>
+                                であり、\( x + y \) も \( I \) に属する。</li>
+                            </ul>
+                            <li>任意の \( c \in \mathbb{Z} \) に対して、 \( cx \in I \) であること：</li>
+                            <ul>
+                            <li>\( x \in I \) であれば、
+                                <div class="scroll">
+                                    \begin{align}
+                                    x = c_1a_1 + c_2a_2 + \dots + c_ka_k
+                                    \end{align}
+                                </div>
+                                で表される。したがって、
+                                <div class="scroll">
+                                    \begin{align}
+                                    cx = (cc_1)a_1 + (cc_2)a_2 + \dots + (cc_k)a_k \in I
+                                    \end{align}
+                                </div>
+                                であり、\( cx \) も \( I \) に属する。</li>
+                            </ul>
+                        </ul>
+                        <p>以上の条件が満たされるため、\( I \) は \( \mathbb{Z} \) のイデアルであることが示された。</p>
+                    <p><b>(2)の解答</b></p>
+                    <ul>
+                        <li>\(c_1, c_2, \cdots, c_k\)が任意の整数であることに注意すると、\(a_1, a_2, \cdots, a_k \in I\)である。</li>
+                        <li>したがって、
+                            <div class="scroll">
+                                \begin{align}
+                                a_1 = d b_1, a_2 = d b_2, \cdots a_k = d b_k
+                                \end{align}
+                            </div>
+                        とかける。</li>
+                        <li>ここで、\(b_1, b_2, \cdots b_k \in \mathbb{Z}\)である。</li>
+                        <li>よって、\(d\)は\(a_1, a_2, \cdots, a_k\)の公約数である。</li>
+                        <li>\(m\)を正の整数\(a_1, a_2, \cdots, a_k\)の公約数とすると、
+                            <div class="scroll">
+                                \begin{align}
+                                a_1 = m a_1', a_2 = m a_2', \cdots a_k = m a_k'
+                                \end{align}
+                            </div>
+                        とかける。</li>
+                        <li>ここで、\(a_1', a_2', \cdots a_k' \in \mathbb{Z}\)である。</li>
+                        <li>一方、
+                            <div class="scroll">
+                                \begin{align}
+                                d = c_1 a_1 + c_2 a_2 + \cdots + c_k a_k
+                                \end{align}
+                            </div>
+                        とかけるから、
+                            <div class="scroll">
+                                \begin{align}
+                                d = m(c_1 a_1' + c_2 a_2' + \cdots c_k a_k')
+                                \end{align}
+                            </div>
+                        となる。</li>
+                        <li>すなわち、\(m\)は\(d\)の約数である。</li>
+                        <li>ゆえに、\(d\)は\(a_1, a_2, \cdots, a_k\)の最大公約数である。</li>
+                    </ul>
+                    <p><b>(3)の解答</b></p>
+                    <ul>
+                        <li>ユークリッドの互除法より、\(gcd(a_j, a_1) = gcd(a_1, r_j)\)である。</li>
+                        <li>簡単に、\(k = 3\)の場合を考える。</li>
+                        <li>先の式から、以下が成り立つ。
+                            <div class="scroll">
+                                \begin{align}
+                                gcd(a_1, a_2) = gcd(a_1, r_2) \\
+                                gcd(a_1, a_3) = gcd(a_1, r_3)
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>\(a_1, a_2, a_3\)の最大公約数は「\(a_1, a_2\)の最大公約数」と「\(a_1, a_3\)の最大公約数」の最大公約数であることを用いると、上の２式から以下の式が得られる。
+                            <div class="scroll">
+                                \begin{align}
+                                gcd(a_1, a_2, a_3) = gcd(a_1, r_2, r_3)
+                                \end{align}
+                            </div>
+                        </li>
+                        <li>一般の\(k\)に対して、同様に\(a_1, a_2, \cdots, a_k\)の最大公約数が「\(a_1, a_2\)の最大公約数」と「\(a_1, a_3\)の最大公約数」と\(\cdots\)と「\(a_1, a_k\)の最大公約数」の最大公約数であることを用いれば、所望の式を得ることができる。</li>
+                    </ul>
+                    <p><b>(4)の解答</b></p>
+                    <ul>
+                        <li>
+                            <div class="scroll">
+                                \begin{align}
+                                &gcd(8413, 10561, 11993) \\
+                                = &gcd(8413, 2148, 3580) \\
+                                = &gcd(1969, 2148, 1432) \\
+                                = &gcd(537, 716, 1432) \\
+                                = &gcd(537, 179, 358) \\
+                                = &gcd(0, 179, 0) \\
+                                = &179 
+                                \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
