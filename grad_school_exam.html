@@ -1494,7 +1494,7 @@
                         </ul>
                         <p><b>(3)の解答</b></p>
                         <ul>
-                            <li><a href="https://www.isc.meiji.ac.jp/~mizutani/cs/automata/automatonbook.pdf">オートマトンと言語理論 水谷正大 (p44-45)</a></li>
+                            <li><a href="https://www.isc.meiji.ac.jp/~mizutani/cs/automata/automatonbook.pdf" style="color: white;">オートマトンと言語理論 水谷正大 (p44-45)</a></li>
                         </ul>
                     </div>
                 </ul>
@@ -2141,7 +2141,44 @@
                         \end{align}
                         </div>
                         <p>となる。</p>
-                </div>
+                    </div>
+                    <div class="example">
+                        <p><b>当選確率の問題</b></p>
+                        <p>ある懸賞に応募した3人の応募者A、B、Cの中から、主催者はそれぞれ確率 \( \frac{1}{4} \), \( \frac{1}{4} \), \( \frac{1}{2} \) で1人だけ当選者を決定するとする。
+                            応募者Aから主催者に、「応募者BかCのどちらか少なくとも1人は落選するはずなので、BとCのうちで落選した1人の名前を教えて欲しい」という質問があった。
+                            主催者は「Bは落選した」と答えた。この答えを聞いた後での、Aが当選する確率を求めよ。
+                            ただし、BとCの両方が落選している場合、主催者は確率 \( \frac{1}{2} \) でどちらかの名前を答えるとする。</p>
+                        <ul>
+                            <li>事象Aを「Aが当選する」、事象Bを「Bが落選したと言われる」、事象Cを「Cが当選する」とする。</li>
+                            <li>条件付き確率\(P(A|B)\)をベイズの定理によって求める。</li>
+                            <li>ベイズの定理は、次の式で表される。
+                                <div class="scroll">
+                                \begin{align}
+                                P(A|B) = \frac{P(A)P(B|A)}{P(B)}
+                                \end{align}
+                                </div>
+                            </li>
+                            <li>ここで、\(P(A) = \frac{1}{4}, P(B|A) = \frac{1}{2}\)である。</li>
+                            <li>また、P(B)は以下のように計算される。
+                                <div class="scroll">
+                                \begin{align}
+                                P(B) &= P(A) \times P(B|A) + P(C) \times P(B|C) \\
+                                    &= \frac{1}{4} \times \frac{1}{2} + \frac{1}{2} \times 1 \\
+                                    &= \frac{5}{8}
+                                \end{align}
+                                </div>
+                            </li>
+                            <li>以上より、
+                                <div class="scroll">
+                                \begin{align}
+                                P(A|B) &= \frac{P(A)P(B|A)}{P(B)} \\
+                                    &= \frac{\frac{1}{4} \times \frac{1}{2}}{\frac{5}{8}}
+                                    &= \frac{1}{5}
+                                \end{align}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </ul>
             </ul>
             <h3>累積分布関数、確率密度関数、期待値、分散</h3>
