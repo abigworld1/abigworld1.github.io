@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【院試対策|北海道大学 情報科学院 - 基礎数学】走る作曲家のAIカフェ</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>走る作曲家のAIカフェ</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="study.html">勉強</a></li>
+                <li><a href="music.html">音楽</a></li>
+                <li><a href="sports.html">スポーツ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+          <h2>目次</h2>
+          <ul>
+            <li><a href="#overview">概要</a></li>
+            <li><a href="#strategy">戦略</a></li>
+            <li><a href="#basic-math">基礎数学</a></li>
+            <li><a href="#info-math">情報数学</a></li>
+            <li><a href="#probability-statistics">確率・統計</a></li>
+            <li><a href="#algorithms-data-structures">アルゴリズムとデータ構造</a></li>
+            <li><a href="#artificial-intelligence">人工知能</a></li>
+          </ul>
+        </section>
+        <section id="overview">
+          <h2>概要</h2>
+          このページでは、「北海道大学大学院情報科学院修士課程入学試験」（令和6年8月実施）の対策を行います。過去問から傾向を掴み、必要な知識や要点をまとめていきます。
+        </section>
+        <section id="strategy">
+          <h2>戦略</h2>
+          院試は以下の内容で構成されます。
+          <ul>
+            <li>専門科目1: 基礎数学、情報数学、【選択】確率・統計、【選択】情報理論（4問のうち基礎数学と情報数学を含む3問を解答）</li>
+            <li>専門科目2: アルゴリズムとデータ構造、人工知能、コンピュータシステム、応用数学（4問のうち2問を選択し解答）</li>
+          </ul>
+          俗に、専門科目1では「情報理論」が、専門科目2では「アルゴリズムとデータ構造」と「コンピュータシステム」が簡単だと言われています。
+          しかし、今後の自分の研究に役立てたいので、専門科目1では「確率・統計」を、専門科目2では「アルゴリズムとデータ構造」と「人工知能」を選択しようと思います。
+        </section>
+        <section id="probability-statistics">
+          <h2>確率・統計</h2>
+            <p>参考にした本は以下のとおり。</p>
+            <p><a href="https://www.amazon.co.jp/%E6%94%B9%E8%A8%82%E7%89%88-%E6%97%A5%E6%9C%AC%E7%B5%B1%E8%A8%88%E5%AD%A6%E4%BC%9A%E5%85%AC%E5%BC%8F%E8%AA%8D%E5%AE%9A-%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A2%E7%B4%9A%E5%AF%BE%E5%BF%9C-%E7%B5%B1%E8%A8%88%E5%AD%A6%E5%9F%BA%E7%A4%8E-%E7%94%B0%E4%B8%AD%E8%B1%8A/dp/4489022271/ref=sr_1_3?adgrpid=118645167349&dib=eyJ2IjoiMSJ9.tqheIVwzNsAlWRtDMXpk4NQuS-Y3KADO2zuJVrYBspygQ-wuTir-4Zh8ZccMsf6hif_83PZ9kySPkkoITDdWUa6ipD1MaPRi0Pvb8Fsxyoen0-IcBaseJIM5lZbG_2f-Bmy9i4NWn4GJlyD2nWgtvjYngUr26gaISrg2sSB7CBeIDGkgl9iHQpriMgPZCYevDn16ax_7dg_j2YfDOTEsEUUnGkaOOcuYJtUGSL1REs-viAjaz9CfdZaetJeMn8edfB5RF27GSp4DK5Im-q-9yKoe3FTymhvb6z2cCOblnC0.AYS8Y7i56awkZav04EPeM51WBXaA4QbTF7kHfUD_MQE&dib_tag=se&hvadid=666001842902&hvdev=c&hvqmt=b&hvtargid=kwd-536488505477&hydadcr=27299_14701689&jp-ad-ap=0&keywords=%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A2%E7%B4%9A&qid=1722681801&sr=8-3">改訂版　日本統計学会公式認定　統計検定２級対応　統計学基礎</a></p>
+            <h3>チェビシェフの不等式</h3>
+            <ul>
+                <li>期待値\(\mu\)、分散\(\sigma\)をもつ確率分布に従う確率変数\(X\)があるとする。</li>
+                <li>このとき、任意の\(k\)に対して次の不等式が成り立つ。
+                    <div class="scroll">
+                    \begin{align}
+                    P(|X-\mu| \geq k\sigma) \leq 1/k^2
+                    \end{align}
+                    </div>
+                </li>
+                <li>\(\epsilon = k\sigma\)とおくと、次の式に変形できる。
+                    <div class="scroll">
+                    \begin{align}
+                    P(|X-\mu|\geq\epsilon)\leq\frac{\sigma^2}{\epsilon^2} \\
+                    P(|X-\mu|<\epsilon)\geq\frac{1-\sigma^2}{\epsilon^2}
+                    \end{align}
+                    </div>
+                </li>
+            </ul>
+            <h3>大数の法則</h3>
+            <ul>
+                <li>大数の法則は多数回の試行の結果として得られたデータの平均（標本平均）や相対度数が、試行回数\(n\)を大きくするとき、確率分布の平均（母平均）や生起確率に近づくことを保証する理論的根拠となっている定理である。</li>
+                <li>\(X_1, X_2, ..., X_n\)が互いに独立に平均\(\mu\)、分散\(\sigma^2\)の同一の確率分布に従うとする。</li>
+                <li>このとき、平均\(\overline{X}=(X_1+X_2+...+X_n)/n\)の期待値と分散は\(E[\overline{X}]=\mu, V[\overline{X}]=\frac{\sigma^2}{n}\)となる。</li>
+                <li>\(\overline{X}\)の場合についてチェビシェフの不等式を求めると
+                    <div class="scroll">
+                    \begin{align}
+                    P(|\overline{X}-\mu|<\epsilon)\geq\frac{1-\sigma^2}{n\epsilon^2}
+                    \end{align}
+                    </div>
+                となり、\(n\)を大きくするとき次の性質を持つことがいえる。</li>
+                <li><b>定理（大数の弱法則）</b></li>
+                <ul>
+                    <li>\(X_1, X_2, ..., X_n\)が互いに独立に平均\(\mu\)、分散\(\sigma^2\)の同一の確率分布に従うとき、任意の\(\epsilon\)に対して
+                        <div class="scroll">
+                        \begin{align}
+                        \lim_{n \to \infty} P(|\overline{X}-\mu|<\epsilon)=1
+                        \end{align}
+                        </div>
+                    が成り立つ。</li>
+                    <li>これを標本平均\(\overline{X}\)は母平均\(\mu\)に確率収束するといい、\(\overline{X} \xrightarrow{P} \mu\)と表す。</li>
+                    <li>これより、標本平均\(\overline{X}\)は\(n\)を無限に大きくするとき期待値（母平均）\(\mu\)に近づくことがわかる。</li>
+                </ul>
+            </ul>
+            <h3>一致性</h3>
+            <ul>
+                <li>ある母数\(\theta\)の推定量\(\hat{\theta}\)が\(\hat{\theta} \xrightarrow{P} \theta\)を満たすことを<b>一致性</b>と呼び、\(\hat{\theta}\)を<b>一致推定量</b>と呼ぶ。</li>
+                <li><b>標本平均</b></li>
+                <ul>
+                    <li>大数の弱法則\(\overline{x} \xrightarrow{P} \mu\)から、平均\(\overline{x}\)は\(n\)が大きくなると母平均に近づく。</li>
+                </ul>
+                <li><b>標本分散</b></li>
+                <ul>
+                    <li>標本分散は以下の式で表される。
+                        <div class="scroll">
+                        \begin{align}
+                        s^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \overline{x})^2
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>この式は、以下のように変形できる。
+                        <div class="scroll">
+                        \begin{align}
+                        s^2 &= \frac{1}{n} \sum_{i=1}^n (x_i - \overline{x})^2 \\
+                            &= \frac{1}{n} \sum_{i=1}^n ((x_i - \mu) - (\overline{x} - \mu))^2 \\
+                            &= \frac{1}{n} \sum_{i=1}^n (x_i - \mu)^2 - (\overline{x} - \mu)^2 \\
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>この式の第２項は\((\overline{x} - \mu) \xrightarrow{P} 0\)であるため、\((\overline{x} - \mu)^2 \xrightarrow{P} 0\)となる。</li>
+                    <li>また、\(\nu_i = (x_i - \mu)^2\)とおくと、\(\nu_i\)は互いに独立で同じ分布に従う確率変数となり、大数の法則を適用できる。</li>
+                    <li>これから、第１項は\(\overline{\nu} \xrightarrow{P} \sigma^2\)となり、\(s^2 \xrightarrow{P} \sigma^2\)がいえる。</li>
+                </ul>
+                <li><b>不偏分散</b></li>
+                <ul>
+                    <li>不偏分散は以下の式で表される。
+                        <div class="scroll">
+                        \begin{align}
+                        u^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \overline{x})^2
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>\(n \rightarrow \infty\)のとき、無限大に発散する分母について、\(s^2\)と高々１しか差がない\(u^2\)も一致性を持つ。</li>
+                </ul>
+            </ul>
+            <h3>不偏性</h3>
+            <ul>
+                <li>推定量\(\hat{\theta}\)の分布は母数\(\theta\)によって定められるが、その期待値が\(E[\hat{\theta}] = \theta\)と、常に母数に等しくなる性質を<b>不偏性</b>と呼び、その性質を持つ推定量を<b>不偏推定量</b>と呼ぶ。</li>
+                <li>これは一致性と異なり、標本の大きさ\(n\)に依存しない基準である。</li>
+                <li>不偏推定量でなければ、推定には<b>偏り</b>があるといい、偏りを\(E[\hat{\theta}] - \theta\)で定義する。</li>
+                <li><b>標本平均</b></li>
+                <ul>
+                    <li>
+                        <div class="scroll">
+                        \begin{align}
+                        E[\overline{x}] = \frac{1}{n} \sum_{i=1}^{n} E[x_i] = \frac{1}{n} \sum_{i=1}^{n} \mu = \mu
+                        \end{align}
+                        </div>
+                    </li>
+                </ul>
+                <li><b>分散</b></li>
+                <ul>
+                    <li>偏差平方和を\(T_{xx} = \sum (x_i - \overline{x})^2\)とおくと、
+                        <div class="scroll">
+                        \begin{align}
+                        T_{xx} &= \sum (x_i - \overline{x})^2 \\
+                            &= \sum [(x_i - \mu) - (\overline{x} - \mu)]^2 \\
+                            &= \sum (x_i - \mu)^2 - n(\overline{x} - \mu)^2 
+                        \end{align}
+                        </div>
+                    となる。</li>
+                    <li>ここで期待値を計算すると次の結果が得られる。
+                        <div class="scroll">
+                        \begin{align}
+                        E[T_{xx}] &= \sum E[(x_i - \mu)^2] - n E[(\overline{x} - \mu)^2] \\
+                            &= \sum V[x_i] - nV[\overline{x}] \\
+                            &= n \sigma^2 - n \frac{\sigma^2}{n} \\
+                            &= (n-1) \sigma^2
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>したがって、標本分散は不偏性を持たず、不偏分散は不偏性を持つ。</li>
+                </ul>
+            </ul>
+            <h3>条件付き確率とベイズの定理</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://mathphysnote.com/bayes-theorem/">条件付き確率とベイズの定理 〜検査結果の陽性が正しい確率を求める〜 - とある数物研究者の覚書.html</a></p>
+            <ul>
+                <li>事象\(B\)が起こったときの事象\(A\)が起こる条件付き確率\(P(A|B)\)を以下のように定義する。
+                    <div class="scroll">
+                    \begin{align}
+                    P(A|B) = \frac{P(A \cap B)}{P(B)}
+                    \end{align}
+                    </div>
+                </li>
+                <li>次のベイズの定理は、\(P(B|A)\)が分かっている状態で\(P(A|B)\)を求めたいときに有効である。
+                    <div class="scroll">
+                    \begin{align}
+                    P(A|B) = \frac{P(A)P(B|A)}{P(B)}
+                    \end{align}
+                    </div>
+                </li>
+                <li>この式は、条件付き確率の定義を用いて、\(P(A \cap B)\)を二通りで表すことによって導くことができる。</li>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題：「検査結果の陽性が正しい確率」</b></p>
+                    <p>ある病気の検査結果について、以下の事実が分かっている。</p>
+                    <ol>
+                        <li>この検査の真陽性率（感度; True positive）は90%である。</li>
+                        <li>この検査の真陰性率（特異度; True negative）は80%である。</li>
+                        <li>全体の人口の5%がこの病気に罹患している。</li>
+                    </ol>
+                    <p>検査で陽性と判定された場合、実際に病気に罹患している確率を求めたい。</p>
+                    
+                    <div class="scroll">
+                    <table>
+                        <tr>
+                            <th colspan="2"></th>
+                            <th colspan="2">検査結果</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"></th>
+                            <th>陽性（事象B）</th>
+                            <th>陰性</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">病気に<br>罹っているか</th>
+                            <th>罹っている（事象A）</th>
+                            <td>a</td>
+                            <td>b</td>
+                        </tr>
+                        <tr>
+                            <th>罹っていない</th>
+                            <td>c</td>
+                            <td>d</td>
+                        </tr>
+                    </table>
+                    </div>
+                    <p>表のように事象\(A, B\)を定めると、求めたい確率は\(P(A|B)\)となる。</p>
+                    <p>１つ目の条件より、\(P(B|A) = 0.90\)である。</p>
+                    <p>２つ目の条件より、\(P(B^c|A^c) = 0.80\)、すなわち、\(P(B|A^c) = 1.00 - 0.80 = 0.20\)である。</p>
+                    <p>３つ目の条件より、\(P(A) = 0.05\)、すなわち、\(P(A^c) = 0.95\)である。</p>
+                    <p>また、\(P(B)\)は以下のように展開できる。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    P(B) &= B \cap \Omega \\
+                        &= B \cap (A \cup A^c) \\
+                        &= (B \cap A) \cup (B \cap A^c)
+                    \end{align}
+                    </div>
+                    <p>この式に、条件付き確率の式\(P(B|A) = \frac{P(B \cap A)}{P(A)}\)を用いると、ベイズの式は以下のように変形できる。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    P(A|B) &= \frac{P(A)P(B|A)}{P(B)} \\
+                        &= \frac{P(A)P(B|A)}{P(A)P(B|A) + P(A^c)P(B|A^c)}
+                    \end{align}
+                    </div>
+                    <p>したがって、</p>
+                    <div class="scroll">
+                    \begin{align}
+                    P(A|B) &= \frac{0.05 \times 0.90}{0.05 \times 0.90 + 0.95 \times 0.20} \simeq 0.19
+                    \end{align}
+                    </div>
+                    <p>となる。</p>
+                </div>
+                <div class="example">
+                    <p><b>当選確率の問題</b></p>
+                    <p>ある懸賞に応募した3人の応募者A、B、Cの中から、主催者はそれぞれ確率 \( \frac{1}{4} \), \( \frac{1}{4} \), \( \frac{1}{2} \) で1人だけ当選者を決定するとする。
+                        応募者Aから主催者に、「応募者BかCのどちらか少なくとも1人は落選するはずなので、BとCのうちで落選した1人の名前を教えて欲しい」という質問があった。
+                        主催者は「Bは落選した」と答えた。この答えを聞いた後での、Aが当選する確率を求めよ。
+                        ただし、BとCの両方が落選している場合、主催者は確率 \( \frac{1}{2} \) でどちらかの名前を答えるとする。</p>
+                    <ul>
+                        <li>事象Aを「Aが当選する」、事象Bを「Bが落選したと言われる」、事象Cを「Cが当選する」とする。</li>
+                        <li>条件付き確率\(P(A|B)\)をベイズの定理によって求める。</li>
+                        <li>ベイズの定理は、次の式で表される。
+                            <div class="scroll">
+                            \begin{align}
+                            P(A|B) = \frac{P(A)P(B|A)}{P(B)}
+                            \end{align}
+                            </div>
+                        </li>
+                        <li>ここで、\(P(A) = \frac{1}{4}, P(B|A) = \frac{1}{2}\)である。</li>
+                        <li>また、P(B)は以下のように計算される。
+                            <div class="scroll">
+                            \begin{align}
+                            P(B) &= P(A) \times P(B|A) + P(C) \times P(B|C) \\
+                                &= \frac{1}{4} \times \frac{1}{2} + \frac{1}{2} \times 1 \\
+                                &= \frac{5}{8}
+                            \end{align}
+                            </div>
+                        </li>
+                        <li>以上より、
+                            <div class="scroll">
+                            \begin{align}
+                            P(A|B) &= \frac{P(A)P(B|A)}{P(B)} \\
+                                &= \frac{\frac{1}{4} \times \frac{1}{2}}{\frac{5}{8}} \\
+                                &= \frac{1}{5}
+                            \end{align}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
+            <h3>累積分布関数、確率密度関数、期待値、分散</h3>
+            <ul>
+                <li>具体例</li>
+                    <div class="example">
+                        <b>連続一様分布の問題</b>
+                        <p>確率変数 <strong>X</strong> が区間 <strong>(0, 1)</strong> での連続一様分布に従うとき、以下の小問に答えよ。</p>
+                        <ol>
+                            <li>
+                                <p><strong>X</strong> の累積分布関数、確率密度関数、期待値、分散をそれぞれ答えよ。</p>
+                                <ol>
+                                    <li><strong>累積分布関数 (CDF)</strong>:</li>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        F_X(x) = \begin{cases} 
+                                        0 & \text{if } x < 0 \\
+                                        x & \text{if } 0 \le x \le 1 \\
+                                        1 & \text{if } x > 1 
+                                        \end{cases}
+                                        \end{align}
+                                    </div>
+                                    <li><strong>確率密度関数 (PDF)</strong>:</li>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        f_X(x) = \begin{cases} 
+                                        1 & \text{if } 0 \le x \le 1 \\
+                                        0 & \text{otherwise}
+                                        \end{cases}
+                                        \end{align}
+                                    </div>
+                                    <li><strong>期待値</strong>:</li>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        E[X] = \int_0^1 x \cdot f_X(x) \, dx = \int_0^1 x \, dx = \left[ \frac{x^2}{2} \right]_0^1 = \frac{1}{2}
+                                        \end{align}
+                                    </div>
+                                    <li><strong>分散</strong>:</li>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        \mathrm{Var}(X) = E[X^2] - (E[X])^2
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        E[X^2] = \int_0^1 x^2 \cdot f_X(x) \, dx = \int_0^1 x^2 \, dx = \left[ \frac{x^3}{3} \right]_0^1 = \frac{1}{3}
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        \mathrm{Var}(X) = \frac{1}{3} - \left( \frac{1}{2} \right)^2 = \frac{1}{3} - \frac{1}{4} = \frac{1}{12}
+                                        \end{align}
+                                    </div>
+                                </ol>
+                            </li>
+                            <li>
+                                <p>\(Y = -2 \ln(1 - X)\) とおく。</p>
+                                <ol>
+                                    <li><strong>累積分布関数 (CDF)</strong>:</li>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        F_Y(y) = P(Y \le y) = P(-2 \ln(1 - X) \le y)
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        -2 \ln(1 - X) \le y \implies \ln(1 - X) \ge -\frac{y}{2} \implies 1 - X \ge e^{-\frac{y}{2}} \implies X \le 1 - e^{-\frac{y}{2}}
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        F_Y(y) = P(X \le 1 - e^{-\frac{y}{2}}) = F_X(1 - e^{-\frac{y}{2}}) = 1 - e^{-\frac{y}{2}}
+                                        \end{align}
+                                    </div>
+                                    <li><strong>確率密度関数 (PDF)</strong>:</li>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        f_Y(y) = \frac{d}{dy} F_Y(y) = \frac{d}{dy} (1 - e^{-\frac{y}{2}}) = \frac{1}{2} e^{-\frac{y}{2}}
+                                        \end{align}
+                                    </div>
+                                    <li><strong>期待値</strong>:</li>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        E[Y] = \int_0^\infty y \cdot f_Y(y) \, dy = \int_0^\infty y \cdot \frac{1}{2} e^{-\frac{y}{2}} \, dy
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        \text{置換 } u = \frac{y}{2} \text{ を行うと、}
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        E[Y] = \int_0^\infty 2u \cdot e^{-u} \, du = 2 \int_0^\infty u e^{-u} \, du
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        \int_0^\infty u e^{-u} \, du \text{ はガンマ関数の結果から } 1 \text{ であるため、}
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        E[Y] = 2 \cdot 1 = 2
+                                        \end{align}
+                                    </div>
+                                    <li><strong>分散</strong>:</li>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        \mathrm{Var}(Y) = E[Y^2] - (E[Y])^2
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        E[Y^2] = \int_0^\infty y^2 \cdot f_Y(y) \, dy = \int_0^\infty y^2 \cdot \frac{1}{2} e^{-\frac{y}{2}} \, dy
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        \text{置換 } u = \frac{y}{2} \text{ を行うと、}
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        E[Y^2] = \int_0^\infty 4u^2 \cdot e^{-u} \, du = 4 \int_0^\infty u^2 e^{-u} \, du
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        \int_0^\infty u^2 e^{-u} \, du \text{ はガンマ関数の結果から } 2 \text{ であるため、}
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        E[Y^2] = 4 \cdot 2 = 8
+                                        \end{align}
+                                    </div>
+                                    <div class="scroll">
+                                        \begin{align}
+                                        \mathrm{Var}(Y) = 8 - (2)^2 = 8 - 4 = 4
+                                        \end{align}
+                                    </div>
+                                </ol>
+                            </li>
+                        </ol> 
+                    </div>
+                    <div class="example">
+                        <p><b>確率変数の分散に関する問題</b></p>
+                        <p>独立同分布な確率変数 \( X_1, X_2, \dots, X_n \) について、それぞれの分散が \( \sigma^2 \) であるとする。</p>
+                        <ol>
+                            <li>確率変数 \( S = \sum_{i=1}^n X_i \) の分散 \( \text{Var}(S) \) を求めよ。</li>
+                            <li>確率変数 \( T = X_1/n \) の分散 \( \text{Var}(T) \) を求めよ。</li>
+                        </ol>
+                
+                        <p><b>1. 確率変数 \( S = \sum_{i=1}^n X_i \) の分散 \( \text{Var}(S) \) を求める</b></p>
+                        <p>確率変数 \( S \) は \( X_1, X_2, \dots, X_n \) の和で表される。</p>
+                        <p>分散の性質を利用すると、独立な確率変数 \( X_i \) の和の分散は次のように計算される：</p>
+                        <div class="scroll">
+                            \begin{align}\text{Var}(S) = \text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i)\end{align}
+                        </div>
+                        <p>各 \( X_i \) の分散は \( \sigma^2 \) であるので、</p>
+                        <div class="scroll">
+                            \begin{align}\text{Var}(S) = \sum_{i=1}^n \sigma^2 = n\sigma^2\end{align}
+                        </div>
+                        <p>したがって、確率変数 \( S = \sum_{i=1}^n X_i \) の分散 \( \text{Var}(S) \) は \( n\sigma^2 \) である。</p>
+                
+                        <p><b>2. 確率変数 \( T = X_1/n \) の分散 \( \text{Var}(T) \) を求める</b></p>
+                        <p>確率変数 \( T \) は \( X_1 \) を \( n \) で割ったものである。</p>
+                        <p>分散の性質を利用すると、定数倍された確率変数の分散は次のように計算される：</p>
+                        <div class="scroll">
+                            \begin{align}\text{Var}(T) = \text{Var}\left(\frac{X_1}{n}\right) = \frac{1}{n^2} \text{Var}(X_1)\end{align}
+                        </div>
+                        <p>\( X_1 \) の分散は \( \sigma^2 \) であるので、</p>
+                        <div class="scroll">
+                            \begin{align}\text{Var}(T) = \frac{1}{n^2} \sigma^2 = \frac{\sigma^2}{n^2}\end{align}
+                        </div>
+                        <p>したがって、確率変数 \( T = X_1 / n \) の分散 \( \text{Var}(T) \) は \( \frac{\sigma^2}{n^2} \) である。</p>
+                    </div>
+                    <div class="example">
+                        <b>ベルヌーイ分布に関する問題</b>
+                        <p>確率変数 \( X \) は 0 と 1 のいずれかの値をとり、その確率が \( P(X = 1) = p \), \( P(X = 0) = 1 - p \) であるとする。ただし、\( p \) は \( 0 \leq p \leq 1 \) を満たし、成功確率と呼ばれる。この確率変数 \( X \) がしたがう確率分布は成功確率 \( p \) のベルヌーイ分布と呼ばれ、\( \text{Ber}(p) \) と書かれる。</p>
+                        <ol>
+                            <li>ベルヌーイ分布 \( \text{Ber}(p) \) にしたがう確率変数 \( X \) の分散 \( \text{Var}(X) \) を求めよ。</li>
+                            <li>確率変数 \( X_1, X_2, \dots, X_n \) が独立にベルヌーイ分布 \( \text{Ber}(p) \) にしたがうとするとき、確率変数 \( Y = \sum_{i=1}^n X_i \) の分散 \( \text{Var}(Y) \) を求めよ。</li>
+                            <li>確率変数 \( Y \) の確率関数 \( P(Y = k) \) を求めよ。ただし、\( \mathbb{Z} \) は整数全体の集合である。</li>
+                            <li>ベルヌーイ分布 \( \text{Ber}(p) \) にしたがう独立な確率変数 \( X_1, X_2, \dots, X_n \) について、これを観測値とみなし成功確率 \( p \) の推定を行う。成功確率 \( p \) の最尤推定量 \( \hat{p} \) を求めよ。</li>
+                            <li>最尤推定量 \( \hat{p} \) の分散 \( \text{Var}(\hat{p}) \) を求めよ。</li>
+                        </ol>
+                
+                        <p><b>解答</b></p>
+                
+                        <p><b>1. ベルヌーイ分布 \( \text{Ber}(p) \) にしたがう確率変数 \( X \) の分散 \( \text{Var}(X) \) を求める</b></p>
+                        <p>ベルヌーイ分布にしたがう確率変数 \( X \) は、次のように定義される：</p>
+                        <div class="scroll">
+                            \begin{align}
+                            P(X = 1) &= p \\
+                            P(X = 0) &= 1 - p 
+                            \end{align}
+                        </div>
+                        <p>期待値 \( \mathbb{E}[X] \) は：</p>
+                        <div class="scroll">
+                            \begin{align}\mathbb{E}[X] = 1 \times p + 0 \times (1 - p) = p\end{align}
+                        </div>
+                        <p>分散 \( \text{Var}(X) \) は次のように計算される：</p>
+                        <div class="scroll">
+                            \begin{align}
+                            \text{Var}(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2
+                            \end{align}
+                        </div>
+                        <p>ベルヌーイ分布の場合、\( X^2 = X \) なので、</p>
+                        <div class="scroll">
+                            \begin{align}\mathbb{E}[X^2] = \mathbb{E}[X] = p\end{align}
+                        </div>
+                        <p>したがって、</p>
+                        <div class="scroll">
+                            \begin{align}
+                            \text{Var}(X) = p - p^2 = p(1 - p)
+                            \end{align}
+                        </div>
+                
+                        <p><b>2. 確率変数 \( X_1, X_2, \dots, X_n \) が独立にベルヌーイ分布 \( \text{Ber}(p) \) にしたがうとき、確率変数 \( Y = \sum_{i=1}^n X_i \) の分散 \( \text{Var}(Y) \) を求める</b></p>
+                        <p> \( Y \) は \( n \) 回の独立なベルヌーイ試行の和であるので、これは二項分布 \( \text{Bin}(n, p) \) に従う。</p>
+                        <p>分散の性質より、和の分散は次のように計算される：</p>
+                        <div class="scroll">
+                            \begin{align}
+                            \text{Var}(Y) = \sum_{i=1}^n \text{Var}(X_i) = n \cdot p(1 - p)
+                            \end{align}
+                        </div>
+                        <p>したがって、\( \text{Var}(Y) = np(1 - p) \) である。</p>
+                
+                        <p><b>3. 確率変数 \( Y \) の確率関数 \( P(Y = k) \) を求める</b></p>
+                        <p>\( Y \) は \( n \) 回のベルヌーイ試行の和であり、これは二項分布 \( \text{Bin}(n, p) \) に従う。したがって、確率関数は次の通りである：</p>
+                        <div class="scroll">
+                            \begin{align}
+                            P(Y = k) = \binom{n}{k} p^k (1 - p)^{n - k}
+                            \end{align}
+                        </div>
+                
+                        <p><b>4. 成功確率 \( p \) の最尤推定量 \( \hat{p} \) を求める</b></p>
+                        <p>最尤推定量 \( \hat{p} \) は、観測値の平均として表される：</p>
+                        <div class="scroll">
+                            \begin{align}
+                            \hat{p} = \frac{1}{n} \sum_{i=1}^n X_i
+                            \end{align}
+                        </div>
+                        <p>つまり、</p>
+                        <div class="scroll">
+                            \begin{align}
+                            \hat{p} = \frac{Y}{n}
+                            \end{align}
+                        </div>
+                
+                        <p><b>5. 最尤推定量 \( \hat{p} \) の分散 \( \text{Var}(\hat{p}) \) を求める</b></p>
+                        <p> \( \hat{p} = \frac{Y}{n} \) なので、次のように分散を求める：</p>
+                        <div class="scroll">
+                            \begin{align}
+                            \text{Var}(\hat{p}) = \text{Var}\left(\frac{Y}{n}\right) = \frac{1}{n^2} \text{Var}(Y)
+                            \end{align}
+                        </div>
+                        <p> \( \text{Var}(Y) = np(1 - p) \) なので、</p>
+                        <div class="scroll">
+                            \begin{align}
+                            \text{Var}(\hat{p}) = \frac{1}{n^2} \times np(1 - p) = \frac{p(1 - p)}{n}
+                            \end{align}
+                        </div>
+                    </div>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
