@@ -344,6 +344,65 @@
                 これにより、CPUの負荷を軽減し、入出力処理を高速化することができる。</p>
           </div>
         </ul>
+        <h3>C言語</h3>
+        <p>参考にしたサイトは以下のとおり。</p>
+        <p><a href="https://temp-soft.com/blog/2020/11/19/c-introductionextra-swap/">【独学Ｃ言語入門 番外編】swap関数を作成しよう【ポインタ応用①】 _ Temp Soft ブログ.html</a></p>
+        <ul>
+          <li>具体例</li>
+          <div class="example">
+            <p><b>問題</b></p>
+            <p>図1に示すC言語のプログラムがある。関数 <code>koukan</code> を呼び出すことにより、
+                <code>int</code> 型変数 <code>a</code> と <code>b</code> の値を入れ替えたい。
+                図1のプログラム内の(A)～(D)の空欄に入る内容について、解答用紙に記述せよ。</p>
+            <pre>
+            #include &lt;stdio.h&gt;
+        
+            void koukan( (A) );
+        
+            int main()
+            {
+                int a, b;
+                a = 0; b = 1;
+        
+                koukan( (B) );
+        
+                printf("%d %d\n", a, b);
+                return 0;
+            }
+        
+            void koukan( (C) )
+            {
+                (D)
+            }
+            </pre>
+
+            <p><b>解答</b></p>
+            <pre>
+            #include &lt;stdio.h&gt;
+        
+            void koukan(int *x, int *y);
+        
+            int main()
+            {
+                int a, b;
+                a = 0; b = 1;
+        
+                koukan(&a, &b);
+        
+                printf("%d %d\n", a, b);
+                return 0;
+            }
+        
+            void koukan(int *x, int *y)
+            {
+                int temp;
+                temp = *x;
+                *x = *y;
+                *y = temp;
+            }
+            </pre>
+          </div>
+        </ul>
       </section>
     </main>
 </body>
