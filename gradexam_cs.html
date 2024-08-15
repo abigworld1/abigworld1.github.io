@@ -447,6 +447,74 @@
             }
             </pre>
           </div>
+          <div class="example">
+            <p><b>問題</b></p>
+            <p>以下のソースコードは、2つの複素数の積を計算して標準出力に表示するC言語プログラムである。
+            空欄を適切に埋めてプログラムを完成させよ。</p>
+            <pre>
+            #include <stdio.h>
+
+            （ア）;
+            
+            struct COMPLEX MultiComplex(struct COMPLEX a, struct COMPLEX b);
+            void PrintComplex(struct COMPLEX a);
+            
+            int main(void)
+            {
+                struct COMPLEX a = { 1.0, 2.0 }, b = { 3.0, 5.0 }, c;
+            
+                c = MultiComplex(a, b);
+                PrintComplex(c);
+                return 0;
+            }
+            
+            struct COMPLEX MultiComplex(struct COMPLEX a, struct COMPLEX b) {
+                struct COMPLEX c;
+                c.re = a.re * b.re - a.im * b.im;
+                c.im = （イ）;
+                return c;
+            }
+            
+            void PrintComplex(struct COMPLEX a) {
+                printf("%f%s%fi", a.re, (a.im >= 0.0) ? "+" : "", a.im);
+            }
+            </pre>
+
+            <p><b>解答</b></p>
+            <p>（ア）には、複素数を表す構造体の宣言が必要である。</p>
+            <p>（イ）には、複素数の虚部の計算式が入る。</p>
+            <pre>
+            #include <stdio.h>
+
+            struct COMPLEX {
+                double re;
+                double im;
+            };
+            
+            struct COMPLEX MultiComplex(struct COMPLEX a, struct COMPLEX b);
+            void PrintComplex(struct COMPLEX a);
+            
+            int main(void)
+            {
+                struct COMPLEX a = { 1.0, 2.0 }, b = { 3.0, 5.0 }, c;
+            
+                c = MultiComplex(a, b);
+                PrintComplex(c);
+                return 0;
+            }
+            
+            struct COMPLEX MultiComplex(struct COMPLEX a, struct COMPLEX b) {
+                struct COMPLEX c;
+                c.re = a.re * b.re - a.im * b.im;
+                c.im = a.re * b.im + a.im * b.re;
+                return c;
+            }
+            
+            void PrintComplex(struct COMPLEX a) {
+                printf("%f%s%fi", a.re, (a.im >= 0.0) ? "+" : "", a.im);
+            }
+            </pre>
+          </div>
         </ul>
         <h3>コンピュータネットワーク</h3>
         <p>参考にしたサイトは以下のとおり。</p>
@@ -477,7 +545,7 @@
         <ul>
             <li>CPUが直接実行する機械語プログラムはデータとともに<b>主記憶</b>に格納される。</li>
             <li>CPUは<b>プログラムカウンタ</b>が示す番地に格納されている命令語を<b>主記憶</b>から読み出し、その意味を解釈し、逐次実行する。</li>
-            <li>一般に個々の命令語あｈ命令の種類を示す<b>オペコード</b>と命令の対象を示す<b>オペランド</b>から構成される。</li>
+            <li>一般に個々の命令語は命令の種類を示す<b>オペコード</b>と命令の対象を示す<b>オペランド</b>から構成される。</li>
             <li><b>オペランド</b>が対象のデータの格納番地である場合には、これを<b>間接</b>アドレッシングと呼ぶ。</li>
           
         </ul>
