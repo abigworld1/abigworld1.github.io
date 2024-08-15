@@ -452,7 +452,7 @@
             <p>以下のソースコードは、2つの複素数の積を計算して標準出力に表示するC言語プログラムである。
             空欄を適切に埋めてプログラムを完成させよ。</p>
             <pre>
-            #include <stdio.h>
+            #include &lt;stdio.h&gt;
 
             （ア）;
             
@@ -476,7 +476,7 @@
             }
             
             void PrintComplex(struct COMPLEX a) {
-                printf("%f%s%fi", a.re, (a.im >= 0.0) ? "+" : "", a.im);
+                printf("%f%s%fi", a.re, (a.im &gt= 0.0) ? "+" : "", a.im);
             }
             </pre>
 
@@ -484,7 +484,7 @@
             <p>（ア）には、複素数を表す構造体の宣言が必要である。</p>
             <p>（イ）には、複素数の虚部の計算式が入る。</p>
             <pre>
-            #include <stdio.h>
+            #include &lt;stdio.h&gt;
 
             struct COMPLEX {
                 double re;
@@ -511,7 +511,260 @@
             }
             
             void PrintComplex(struct COMPLEX a) {
-                printf("%f%s%fi", a.re, (a.im >= 0.0) ? "+" : "", a.im);
+                printf("%f%s%fi", a.re, (a.im &gt= 0.0) ? "+" : "", a.im);
+            }
+            </pre>
+          </div>
+          <div class="example">
+            <p><b>問題</b></p>
+            <p>以下のソースコードは、標準入力から読み込んだ自然数に対してその階乗を計算して標準出力に表示するC言語プログラムである。
+            空欄を適切に埋めてプログラムを完成させよ。</p>
+            <pre>
+            #include &lt;stdio.h&gt;
+
+            int main(void)
+            {
+                int a, b;
+                scanf("%d", &a);
+                if (a &lt 1) {
+                    printf("自然数を入力してください\n");
+                } else {
+                    b = factorial(a);
+                    printf("%d\n", b);
+                }
+                return 0;
+            }
+            
+            int factorial(int n) {
+                if (n == 1) {
+                    return （ウ）;  
+                } else {
+                    return （エ）;
+                }
+            }
+            </pre>
+
+            <p><b>解答</b></p>
+            <pre>
+            #include &lt;stdio.h&gt;
+
+            int main(void)
+            {
+                int a, b;
+                scanf("%d", &a);
+                if (a &lt 1) {
+                    printf("自然数を入力してください\n");
+                } else {
+                    b = factorial(a);
+                    printf("%d\n", b);
+                }
+                return 0;
+            }
+            
+            int factorial(int n) {
+                if (n == 1) {
+                    return 1;  
+                } else {
+                    return n * factorial(n - 1);  
+                }
+            }
+            </pre>
+          </div>
+          <div class="example">
+            <p><b>問題</b></p>
+            <p>以下のソースコードは、乱数を用いて近似的に求めた半径1の四分位円の面積から、円周率を計算して標準出力に表示するC言語プログラムである。
+            空欄を適切に埋めてプログラムを完成させよ。
+            ここで<code>rand()</code>は0以上<code>RAND_MAX</code>以下の一様整数乱数を返す関数である。</p>
+            <pre>
+            #include &lt;stdio.h&gt;
+            #include &lt;stdlib.h&gt;
+
+            int main(void)
+            {
+                int i, count;
+                int max_iter = 1000000;
+                double x, y, pi;
+            
+                （オ）;  
+                for (i = 0; i &lt max_iter; i++) {
+                    x = (double)rand() / (RAND_MAX + 1.0);
+                    y = (double)rand() / (RAND_MAX + 1.0);
+            
+                    if (x * x + y * y &lt 1) {
+                        count++;
+                    }
+                }
+            
+                pi = 4.0 * （カ）;
+                printf("%f\n", pi);
+                return 0;
+            }
+            </pre>
+
+            <p><b>解答</b></p>
+            <p>空欄 (オ) には、乱数によって四分円の内部に入った点のカウントを初期化するために <code>count = 0;</code>を記述する。
+                これは、四分円内にランダムに生成された点の数を計算するための変数である。</p>
+            <p>空欄 (カ) には、四分円内に入った点の割合を基にして\(\pi\)を計算する式が入る。
+                四分円の面積は\(\frac{\pi}{4}\)で表されるため、次のように計算する：<code>count / (double)max_iter</code></p>
+            <pre>
+            #include &lt;stdio.h&gt;
+            #include &lt;stdlib.h&gt;
+
+            int main(void)
+            {
+                int i, count;
+                int max_iter = 1000000;
+                double x, y, pi;
+            
+                count = 0;
+                for (i = 0; i &lt max_iter; i++) {
+                    x = (double)rand() / (RAND_MAX + 1.0);
+                    y = (double)rand() / (RAND_MAX + 1.0);
+            
+                    if (x * x + y * y &lt 1) {
+                        count++;
+                    }
+                }
+            
+                pi = 4.0 * count / (double)max_iter;
+                printf("%f\n", pi);
+                return 0;
+            }
+            </pre>
+          </div>
+          <div class="example">
+            <p><b>問題</b></p>
+            <p>以下のソースコードは、与えた関数<code>func</code>の定積分を長方形近似で計算して標準出力に表示するC言語プログラムである。
+            空欄を適切に埋めてプログラムを完成させよ。</p>
+            <pre>
+            #include &lt;stdio.h&gt;
+
+            double func(double x);
+            double integral(（キ）, double min, double max, int steps);  // 空欄 (キ)
+            
+            int main(void)
+            {
+                double min = 0.0;
+                double max = 1.0;
+                int steps = 1000;
+                double s;
+            
+                s = integral(（ク）, min, max, steps);
+                printf("%f\n", s);
+                return 0;
+            }
+            
+            double func(double x) {
+                return x * x * x;
+            }
+            
+            double integral(（キ）, double min, double max, int steps) {
+                int i;
+                double x = min;
+                double h = (max - min) / steps;
+                double sum = 0.0;
+            
+                for (i = 0; i &lt steps; i++) {
+                    sum += fp(x);
+                    x += h;
+                }
+            
+                return (h * sum);
+            }
+            </pre>
+
+            <p><b>解答</b></p>
+            <p>空欄 (キ) には、関数ポインタ double (*fp)(double) が入る。これは、func のポインタを受け取るための引数である。</p>
+            <p>空欄 (ク) には、func 関数のポインタを渡す。この関数ポインタは、定積分を計算するために使用される。</p>
+            <pre>
+            #include &lt;stdio.h&gt;
+
+            double func(double x);
+            double integral(double (*fp)(double), double min, double max, int steps);  
+            
+            int main(void)
+            {
+                double min = 0.0;
+                double max = 1.0;
+                int steps = 1000;
+                double s;
+            
+                s = integral(func, min, max, steps);  
+                printf("%f\n", s);
+                return 0;
+            }
+            
+            double func(double x) {
+                return x * x * x;
+            }
+            
+            double integral(double (*fp)(double), double min, double max, int steps) {
+                int i;
+                double x = min;
+                double h = (max - min) / steps;
+                double sum = 0.0;
+            
+                for (i = 0; i &lt steps; i++) {
+                    sum += fp(x);
+                    x += h;
+                }
+            
+                return (h * sum);
+            }
+            </pre>
+          </div>
+          <div class="example">
+            <p><b>問題</b></p>
+            <p>2001年1月1日は月曜日であった。以下のソースコードは、2001年の日付を標準入力から読み込み、曜日を標準出力に表示するC言語プログラムである。
+            日付は、例えば5月3日は5/3、10月11日は10/11という形式で与える。ただし、存在しない日付に対するエラーチェックは省略している。
+            曜日は英語で出力する。なお、2001年は｢うるう年｣ではなく、2月は28日間である。
+            空欄を適切に埋めてプログラムを完成させよ。</p>
+            <pre>
+            #include &lt;stdio.h&gt;
+
+            int main(void)
+            {
+                int i, month, day;
+                int total_days = 0;
+                int days_of_month[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+                （ケ） day_of_week[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };  
+            
+                scanf("%d/%d", &month, &day);
+            
+                for (i = 0; i &lt month-1; i++) {
+                    total_days += days_of_month[i];
+                }
+            
+                total_days += day;
+            
+                printf("%s\n", day_of_week[（コ）); 
+                return 0;
+            }
+            </pre>
+
+            <p><b>解答</b></p>
+            <p>空欄 (ケ) には、曜日を格納するための配列 day_of_week の定義が必要である。</p>
+            <p>空欄 (コ) には、計算された日数 total_days に対応する曜日を配列 day_of_week から取得するために、total_days % 7 というインデックスを使用する。この操作により、日付が何曜日に当たるかを求めることができる。</p>
+            <pre>
+            #include &lt;stdio.h&gt;
+
+            int main(void)
+            {
+                int i, month, day;
+                int total_days = 0;
+                int days_of_month[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+                char* day_of_week[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+            
+                scanf("%d/%d", &month, &day);
+            
+                for (i = 0; i &lt month-1; i++) {
+                    total_days += days_of_month[i];
+                }
+            
+                total_days += day;
+            
+                printf("%s\n", day_of_week[total_days % 7]);
+                return 0;
             }
             </pre>
           </div>
