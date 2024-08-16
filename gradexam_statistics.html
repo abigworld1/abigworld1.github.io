@@ -548,6 +548,80 @@
                             \end{align}
                         </div>
                     </div>
+                <div class="scroll">
+                    <p><b>期待値の問題</b></p>
+                    <p>離散型の確率変数 \( X \) が以下の確率分布にしたがう場合の期待値 \( \mathbb{E}[X] \) を求めよ。</p>
+            
+                    <p><strong>(1) 成功確率 \( p \) （\( 0 < p < 1 \)）、試行回数 \( n \) の二項分布:</strong></p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        p(x) = \binom{n}{x} p^x (1 - p)^{n - x} \quad (x = 0, 1, 2, \dots, n)
+                        \end{align}
+                    </div>
+            
+                    <p>ただし、\( \binom{n}{x} \) は \( \frac{n!}{x!(n-x)!} \) である。</p>
+            
+                    <p><strong>(2) パラメータ \( \lambda \) （\( \lambda > 0 \)）のポアソン分布:</strong></p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        p(x) = \frac{\lambda^x e^{-\lambda}}{x!} \quad (x = 0, 1, 2, \dots)
+                        \end{align}
+                    </div>
+                    <p><b>(1)の解答</b></p>
+                    <p>二項分布 \( X \) の確率質量関数は次のように与えられている：</p>
+
+                    <div class="scroll">
+                        \[
+                        p(x) = \binom{n}{x} p^x (1 - p)^{n - x} \quad (x = 0, 1, 2, \dots, n)
+                        \]
+                    </div>
+            
+                    <p>二項分布の期待値は、一般に以下の公式で表される：</p>
+            
+                    <div class="scroll">
+                        \[
+                        \mathbb{E}[X] = n \cdot p
+                        \]
+                    </div>
+            
+                    <p>この結果は、二項分布の性質から直接導かれるものである。各試行における成功確率が \( p \) であり、\( n \) 回の独立試行の総和としての期待値は \( n \) 回の試行それぞれで期待される成功回数 \( p \) を合計したものである。</p>
+            
+                    <p>したがって、期待値 \( \mathbb{E}[X] \) は次のようになる：</p>
+            
+                    <div class="scroll">
+                        \[
+                        \mathbb{E}[X] = n \cdot p
+                        \]
+                    </div>
+                    <p><b>(2)の解答</b></p>
+                    <p>ポアソン分布 \( X \) の確率質量関数は次のように与えられている：</p>
+
+                    <div class="scroll">
+                        \[
+                        p(x) = \frac{\lambda^x e^{-\lambda}}{x!} \quad (x = 0, 1, 2, \dots)
+                        \]
+                    </div>
+            
+                    <p>ポアソン分布の期待値もまた、次のように既知の公式で表される：</p>
+            
+                    <div class="scroll">
+                        \[
+                        \mathbb{E}[X] = \lambda
+                        \]
+                    </div>
+            
+                    <p>これは、ポアソン分布の性質から直接導かれるものである。ポアソン分布は、単位時間あたりに発生する事象の平均回数を表す分布であり、その平均がそのまま期待値になる。</p>
+            
+                    <p>したがって、期待値 \( \mathbb{E}[X] \) は次のようになる：</p>
+            
+                    <div class="scroll">
+                        \[
+                        \mathbb{E}[X] = \lambda
+                        \]
+                    </div>
+                </div>
             </ul>
         </section>
     </main>
