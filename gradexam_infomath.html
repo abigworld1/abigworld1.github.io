@@ -425,6 +425,109 @@
                     </ul>
                 </div>
             </ul>
+            <h3>距離</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/1314">同値関係といろいろな例 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題</b></p>
+                    <p>実数の組の全体 \( \mathbb{R}^2 \) において、\( \mathbb{R}^2 \) の2点、\( A = (a_1, a_2) \), \( B = (b_1, b_2) \) に対して関数 \( d: \mathbb{R}^2 \times \mathbb{R}^2 \rightarrow \mathbb{R} \) を以下のように定義する。</p>
+        
+                    <p><div class="scroll">\begin{align}
+                        d(A, B) = \max\{|a_1 - b_1|, |a_2 - b_2|\} 
+                    \end{align}</div></p>
+            
+                    <p>このとき以下の問いに答えよ。</p>
+            
+                    <ol>
+                        <li>\( \mathbb{R}^2 \) の任意の3点、\( A = (a_1, a_2) \), \( B = (b_1, b_2) \), \( C = (c_1, c_2) \) に対して、\( d(A, C) \leq d(A, B) + d(B, C) \) が成り立つことを示せ。</li>
+            
+                        <li>関数 \( d \) が距離関数であることを示せ。ただし、距離関数とは任意の3点 \( A, B, C \) に対して以下の i)～iii) を満たす関数である。</li>
+            
+                        <ul>
+                            <li>i) \( d(A, B) \geq 0 \) であり、\( d(A, B) = 0 \) ならば \( A = B \)</li>
+                            <li>ii) \( d(A, B) = d(B, A) \)</li>
+                            <li>iii) \( d(A, C) \leq d(A, B) + d(B, C) \) （三角不等式）</li>
+                        </ul>
+            
+                        <li>新たに関数 \( \hat{d} : \mathbb{R}^2 \times \mathbb{R}^2 \rightarrow \mathbb{R} \) を以下のように定義する。</li>
+            
+                        <p><div class="scroll">\begin{align}
+                            \hat{d}(A, B) = \min\{|a_1 - b_1|, |a_2 - b_2|\}
+                        \end{align}</div></p>
+            
+                        <p>この \( \hat{d} \) は距離関数であるか、距離関数である場合にはそれを示し、距離関数でない場合にはその理由を述べよ。</p>
+                    </ol>
+                    <p><b>(1)の解答</b></p>
+                    <p>関数 \( d: \mathbb{R}^2 \times \mathbb{R}^2 \rightarrow \mathbb{R} \) は次のように定義される：</p>
+
+                    <div class="scroll">
+                        \begin{align}
+                        d(A, B) = \max\{|a_1 - b_1|, |a_2 - b_2|\}
+                        \end{align}
+                    </div>
+            
+                    <p>この関数が三角不等式 \( d(A, C) \leq d(A, B) + d(B, C) \) を満たすことを示すために、以下の成分ごとの不等式を確認する：</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        |a_1 - c_1| \leq |a_1 - b_1| + |b_1 - c_1|
+                        \end{align}
+                    </div>
+                    <div class="scroll">
+                        \begin{align}
+                        |a_2 - c_2| \leq |a_2 - b_2| + |b_2 - c_2|
+                        \end{align}
+                    </div>
+            
+                    <p>これは三角不等式の性質によって常に成り立つ。したがって、</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        \max\{|a_1 - c_1|, |a_2 - c_2|\} \leq \max\{|a_1 - b_1| + |b_1 - c_1|, |a_2 - b_2| + |b_2 - c_2|\}
+                        \end{align}
+                    </div>
+            
+                    <p>が成り立ち、</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        d(A, C) \leq d(A, B) + d(B, C)
+                        \end{align}
+                    </div>
+            
+                    <p>が示される。</p>
+                    <p><b>(2)の解答</b></p>
+                    <p>距離関数であるためには、以下の3条件を満たす必要がある：</p>
+
+                    <ul>
+                        <li><strong>i) 非負性および同一性:</strong> \( d(A, B) \geq 0 \) であり、\( d(A, B) = 0 \) ならば \( A = B \)。</li>
+                        <li><strong>ii) 対称性:</strong> \( d(A, B) = d(B, A) \)。</li>
+                        <li><strong>iii) 三角不等式:</strong> \( d(A, C) \leq d(A, B) + d(B, C) \) が成り立つこと。</li>
+                    </ul>
+            
+                    <p>これらの条件を確認する：</p>
+            
+                    <ul>
+                        <li><strong>i) 非負性および同一性:</strong> \( d(A, B) = \max\{|a_1 - b_1|, |a_2 - b_2|\} \geq 0 \) であり、\( d(A, B) = 0 \) のとき、\( A = B \) である。</li>
+                        <li><strong>ii) 対称性:</strong> \( d(A, B) = d(B, A) \) は明らかに成り立つ。</li>
+                        <li><strong>iii) 三角不等式:</strong> (1) で証明したように、三角不等式が成り立つ。</li>
+                    </ul>
+            
+                    <p>したがって、関数 \( d \) は距離関数である。</p>
+                    <p><b>(3)の解答</b></p>
+                    <p>新しい関数 \( \hat{d}(A, B) = \min\{|a_1 - b_1|, |a_2 - b_2|\} \) について、距離関数であるかを以下の条件で確認する：</p>
+            
+                    <ul>
+                        <li><strong>i) 非負性および同一性:</strong> \( \hat{d}(A, B) \geq 0 \) であるが、\( \hat{d}(A, B) = 0 \) のとき、\( A = B \) であるとは限らない。したがって、この条件は満たされない。</li>
+                        <li><strong>ii) 対称性:</strong> \( \hat{d}(A, B) = \hat{d}(B, A) \) である。</li>
+                        <li><strong>iii) 三角不等式:</strong> \( \hat{d}(A, C) \leq \hat{d}(A, B) + \hat{d}(B, C) \) が成り立つ場合があるが、同一性が満たされないため、距離関数ではない。</li>
+                    </ul>
+            
+                    <p>したがって、関数 \( \hat{d} \) は距離関数ではない。</p>
+                </div>
+            </ul>
             <h3>二項関係・同値関係</h3>
             <p>参考にしたサイトは以下のとおり。</p>
             <p><a href="https://manabitimes.jp/math/1314">同値関係といろいろな例 _ 高校数学の美しい物語.html</a></p>
