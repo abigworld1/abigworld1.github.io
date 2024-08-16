@@ -944,6 +944,26 @@
             <p>UDPはTCPと比較して接続の確立や状態管理が不要であり、オーバーヘッドが少なく、リアルタイム性が求められる通信に適している。これにより、遅延が少なく高速な通信が可能であり、VoIP、ストリーミング、オンラインゲームなどのアプリケーションで広く利用されている。</p>
           </div>
         </ul>
+        <h3>ARP</h3>
+        <p>参考にしたサイトは以下のとおり。</p>
+        <p><a href="https://e-words.jp/w/ARP.html">ARP（アドレス解決プロトコル）とは - 意味をわかりやすく - IT用語辞典 e-Words.html</a></p>
+        <ul>
+          <li>具体例</li>
+          <div class="example">
+            <p><b>問題</b></p>
+            <p>EthernetなどのL2ネットワークでInternet Protocolによる通信を行う際は、宛先ホストのIPアドレスから物理アドレス（またはMACアドレス）を取得する仕組み(Address Resolution Protocol, ARP)が必要となる。ARPの動作概要を250字程度で説明せよ。</p>
+            <p><b>解答</b></p>
+            <p>
+                EthernetなどのL2ネットワークでInternet Protocolによる通信を行う際は、宛先ホストのIPアドレスから物理アドレス（またはMACアドレス）を取得する仕組みが必要となる。この仕組みがAddress Resolution Protocol（ARP）である。
+            </p>
+            <p>
+                ARPの基本的な動作は次の通りである。まず、送信側ホストが宛先ホストのIPアドレスに対応するMACアドレスを持っていない場合、ネットワーク上にARPリクエストをブロードキャストする。このARPリクエストには、送信元のIPアドレスとMACアドレス、および宛先のIPアドレスが含まれている。
+            </p>
+            <p>
+                ネットワーク内の全てのホストがこのARPリクエストを受信するが、宛先IPアドレスと自分のIPアドレスが一致するホストのみが、ARPリプライを送信する。このARPリプライには、宛先ホストのMACアドレスが含まれている。送信側ホストはこのARPリプライを受信し、対応するMACアドレスを取得してARPキャッシュに保存する。このプロセスにより、IPアドレスから物理アドレスへの変換が完了し、データの送信が可能となる。
+            </p>
+          </div>
+        </ul>
         <h3>ノイマン型計算機</h3>
         <p>参考にしたサイトは以下のとおり。</p>
         <p><a href="https://nw.tsuda.ac.jp/lec/risc/risc.html">Chapter 1. The Foundation of Computer System.html</a></p>
