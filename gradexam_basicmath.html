@@ -105,6 +105,168 @@
                         </div>                      
                     <p>という関係があり、非自明な解 \(c_{1} = 2, c_{2} = -1\) が存在するからである。</p>
                 </div>
+                <div class="example">
+                    <p><b>問題</b></p>
+                    <p>\[
+                    a = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}, \quad 
+                    b = \begin{pmatrix} 2 \\ 8 \\ 10 \end{pmatrix}, \quad 
+                    c = \begin{pmatrix} 3 \\ 10 \\ 13 \end{pmatrix}, \quad 
+                    d = \begin{pmatrix} -2 \\ 0 \\ 1 \end{pmatrix}, \quad 
+                    x = \begin{pmatrix} x \\ y \\ z \end{pmatrix}
+                    \]</p>
+                    
+                    <ol>
+                        <li>
+                            3次元ベクトル \( a, b, c, d \) の中から重複を許して3つ選んで横に並べ、階数（ランク）が1, 2, 3となる正方行列 \( A_1, A_2, A_3 \) をそれぞれ作れ。
+                        </li>
+                        <li>
+                            それら3つの行列 \( A_1, A_2, A_3 \) のうちどれかが方程式 \( A_i x = 0 \) (\( i = 1, 2, 3 \)) において非自明な解 \( x \neq 0 \) を持つか、理由とともに述べよ。
+                        </li>
+                        <li>
+                            3つのベクトル \( a, b, c \) を横に並べてできる正方行列 \( B = (abc) \) に対して \( B \) の零空間 \( \text{Ker}(B) = \{ x \in \mathbb{R}^3 \mid Bx = 0 \} \) の非零要素を一つ挙げよ。さらに、\( \alpha, \beta \in \mathbb{R} \) に対して、\( x, y \in \text{Ker}(B) \) ならば \( \alpha x + \beta y \in \text{Ker}(B) \) を示せ。
+                        </li>
+                        <li>
+                            前問と同じ正方行列 \( B \) に対して、方程式 \( Bx = \begin{pmatrix} -1 \\ -2 \\ -3 \end{pmatrix} \) を解け（一般解を求めよ）。
+                        </li>
+                    </ol>
+                    <p><b>(1)の解答</b></p>
+                    <p><strong>ランク1</strong> の行列:</p>
+                    <div class="scroll">
+                        \begin{align}
+                        A_1 = \begin{pmatrix} a & a & a \end{pmatrix} = \begin{pmatrix} 1 & 1 & 1 \\ 2 & 2 & 2 \\ 3 & 3 & 3 \end{pmatrix}
+                        \end{align}
+                    </div>
+                    <p>すべての行が同じベクトルに比例しているため、ランク1である。</p>
+                    <p><strong>ランク2</strong> の行列:</p>
+                    <div class="scroll">
+                        \begin{align}
+                        A_2 = \begin{pmatrix} a & b & b \end{pmatrix} = \begin{pmatrix} 1 & 2 & 2 \\ 2 & 8 & 8 \\ 3 & 10 & 10 \end{pmatrix}
+                        \end{align}
+                    </div>
+                    <p>2列目と3列目が同一であり、ランク2である。</p>
+        
+                    <p><strong>ランク3</strong> の行列:</p>
+                    <div class="scroll">
+                        \begin{align}
+                        A_3 = \begin{pmatrix} a & b & d \end{pmatrix} = \begin{pmatrix} 1 & 2 & -2 \\ 2 & 8 & 0 \\ 3 & 10 & 1 \end{pmatrix}
+                        \end{align}
+                    </div>
+                    <p>互いに線形独立な3つのベクトルで構成されているため、ランク3である。</p>
+                    <p><b>(2)の解答</b></p>
+                    <p>行列のランクが \( n \) より小さい場合、方程式 \( A_i x = 0 \) は非自明な解を持つ。</p>
+                    <p><strong>ランク1:</strong> \( A_1 x = 0 \) は自由度が2あり、非自明な解を持つ。</p>
+                    <p><strong>ランク2:</strong> \( A_2 x = 0 \) は自由度が1あり、非自明な解を持つ。</p>
+                    <p><strong>ランク3:</strong> \( A_3 x = 0 \) は自由度が0で、非自明な解を持たない。</p>
+                    <p><b>(3)の解答</b></p>
+                    <p>行列 \( B = \begin{pmatrix} a & b & c \end{pmatrix} = \begin{pmatrix} 1 & 2 & 3 \\ 2 & 8 & 10 \\ 3 & 10 & 13 \end{pmatrix} \) のランクは2です。したがって、零空間 \( \text{Ker}(B) \) は次の非自明な解を持つ：</p>
+
+                    <div class="scroll">
+                        \begin{align}
+                        x = \begin{pmatrix} 1 \\ 1 \\ -1 \end{pmatrix}
+                        \end{align}
+                    </div>
+            
+                    <p>この解は、\( Bx = 0 \) を満たす。</p>
+            
+                    <p>次に、任意のスカラー \( \alpha, \beta \in \mathbb{R} \) に対して、\( x, y \in \text{Ker}(B) \) ならば \( \alpha x + \beta y \in \text{Ker}(B) \) であることを示す：</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        B(\alpha x + \beta y) = \alpha Bx + \beta By = \alpha \cdot 0 + \beta \cdot 0 = 0
+                        \end{align}
+                    </div>
+                    
+                    <p>これにより、線形結合の性質が示された。</p>
+                    <p><b>(4)の解答</b></p>
+                    <p>まず、行列 \( B \) と定数ベクトルを組み合わせた拡大係数行列を構築する：</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        \left[\begin{array}{ccc|c}
+                        1 & 2 & 3 & -1 \\
+                        2 & 8 & 10 & -2 \\
+                        3 & 10 & 13 & -3
+                        \end{array}\right]
+                        \end{align}
+                    </div>
+            
+                    <p>次に、この行列を行基本変形を用いて簡約化する。まず、1行目をそのまま維持し、2行目と3行目から1行目の2倍、3倍を引く：</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        \left[\begin{array}{ccc|c}
+                        1 & 2 & 3 & -1 \\
+                        0 & 4 & 4 & 0 \\
+                        0 & 4 & 4 & 0
+                        \end{array}\right]
+                        \end{align}
+                    </div>
+            
+                    <p>次に、2行目から3行目を引く：</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        \left[\begin{array}{ccc|c}
+                        1 & 2 & 3 & -1 \\
+                        0 & 4 & 4 & 0 \\
+                        0 & 0 & 0 & 0
+                        \end{array}\right]
+                        \end{align}
+                    </div>
+            
+                    <p>ここで、この行列のランクは2であり、自由度が1つあることが分かる。</p>
+            
+                    <p>次に、2行目を4で割る：</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        \left[\begin{array}{ccc|c}
+                        1 & 2 & 3 & -1 \\
+                        0 & 1 & 1 & 0 \\
+                        0 & 0 & 0 & 0
+                        \end{array}\right]
+                        \end{align}
+                    </div>
+            
+                    <p>1行目から2行目の2倍を引く：</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        \left[\begin{array}{ccc|c}
+                        1 & 0 & 1 & -1 \\
+                        0 & 1 & 1 & 0 \\
+                        0 & 0 & 0 & 0
+                        \end{array}\right]
+                        \end{align}
+                    </div>
+            
+                    <p>この簡約形から、解を次のように読み取ることができる：</p>
+            
+                    <p>変数 \( z \) を自由変数とし、\( z = t \) と置くと、</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        \begin{cases}
+                        x + z = -1 \\
+                        y + z = 0
+                        \end{cases}
+                        \Rightarrow
+                        \begin{cases}
+                        x = -1 - t \\
+                        y = -t \\
+                        z = t
+                        \end{cases}
+                        \end{align}
+                    </div>
+            
+                    <p>したがって、一般解は次のように表せる：</p>
+            
+                    <div class="scroll">
+                        \begin{align}
+                        x = \begin{pmatrix} -1 \\ 0 \\ 0 \end{pmatrix} + t \begin{pmatrix} -1 \\ -1 \\ 1 \end{pmatrix}, \quad t \in \mathbb{R}
+                        \end{align}
+                    </div>
+                </div>
             </ul>
             <h3>グラム行列\(A^T A\)</h3>
             <ul>
