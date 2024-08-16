@@ -470,6 +470,7 @@
             <p><a href="https://pictblog.com/twoparadiffer">【微積分】二変数関数の停留点(極大点・極小点・鞍点).html</a></p>
             <p><a href="https://manabitimes.jp/math/1185">極大値・極小値の意味と求め方 _ 高校数学の美しい物語.html</a></p>
             <p><a href="https://manabitimes.jp/math/1210">一次近似の意味とよく使う近似公式一覧 _ 高校数学の美しい物語.html</a></p>
+            <p><a href="https://for-spring.com/analysis/partialdifferentiation-10/#toc8">「ヘッセ行列による極値判定②〜ヘッセ行列の符号による極値判定定理、実際に計算してみる〜」【解析学の基礎シリーズ】偏微分編 その10 - 小野研究室.html</a></p>
             <ul>
                 <li>二変数関数\(f(x, y)\)の停留点\((a_x, a_y)\)を求めることを考える。</li>
                 <li>関数の変化がなくなる点が停留点であるため、停留点では\(x\)方向、\(y\)方向ともにその変化量が0、すなわち
@@ -586,7 +587,7 @@
                     <p><b>問題</b></p>
                      <p>
                         集合 \( D \) を \( \mathbb{R}^2 \) の開集合とし、関数 \( f : D \rightarrow \mathbb{R} \) が 2 回連続微分可能であるとする。
-                        さらに、点 \( x_0 = (x_0, y_0)^T \) （\( \text{T} \) は転置）で、勾配は零、つまり、
+                        さらに、点 \( \mathbf{x_0} = (x_0, y_0)^T \) （\( \text{T} \) は転置）で、勾配は零、つまり、
                     </p>
             
                     <div class="scroll">
@@ -595,11 +596,11 @@
                         \end{align}
                     </div>
             
-                    <p>であるとする。また、点 \( x_0 \) でのヘッセ行列を</p>
+                    <p>であるとする。また、点 \( \mathbf{x_0} \) でのヘッセ行列を</p>
             
                     <div class="scroll">
                         \begin{align}
-                        H(x_0) =
+                        H(\mathbf{x_0}) =
                         \begin{pmatrix}
                             \frac{\partial^2 f}{\partial x^2} & \frac{\partial^2 f}{\partial x \partial y} \\
                             \frac{\partial^2 f}{\partial y \partial x} & \frac{\partial^2 f}{\partial y^2}
@@ -614,13 +615,13 @@
                             関数 \( f \) がある点で極値（極大値あるいは極小値）を取るならばその点での勾配が零となること、しかし、逆は成り立たないことを示せ。
                         </li>
                         <li>
-                            点 \( x_0 \) でのヘッセ行列 \( H(x_0) \) が正定値であれば、\( f \) はその点で（狭義）極小値を取ることを証明せよ。
-                            ここで、行列 \( A \) が「正定値」であるというのは、任意の非零ベクトル \( x \) に対して、\( x^\text{T}Ax > 0 \) となることである。
+                            点 \( \mathbf{x_0} \) でのヘッセ行列 \( H(\mathbf{x_0}) \) が正定値であれば、\( f \) はその点で（狭義）極小値を取ることを証明せよ。
+                            ここで、行列 \( A \) が「正定値」であるというのは、任意の非零ベクトル \( \mathbf{x} \) に対して、\( \mathbf{x}^\text{T}A\mathbf{x} > 0 \) となることである。
                         </li>
                     </ol>
                     <p><b>(1)の解答</b></p>
-                    <p>「関数\(f(x, y)\)がある点\((a, b)\)で極大または極小ならば、\(grad f = (\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}) = (0, 0) \)」であることを示す。</p>
-                    <p>まず、極大の場合を考える。\(x\)軸方向も\(y\)軸方向も\((a, b)\)において極大であり、\(x\)軸方向だけに注目して考える。</p>
+                    <p>先に、「関数\(f(x, y)\)がある点\((a, b)\)で極大または極小ならば、\(\mathrm{grad} f = (\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y})|_{x=a, y=b} = (0, 0) \)」であることを示す。</p>
+                    <p>極大の場合を考えると、\(x\)軸方向も\(y\)軸方向も\((a, b)\)において極大であり、ここで、\(x\)軸方向だけに注目して考える。</p>
                     <p>\(x = a\)の十分近くでは、\(f(x) \simeq f(a) + (x-a) f'(a)\)と一次近似できる（\(f' = \frac{\partial f}{\partial x}\)）。</p>
                     <p>また、\(x = a\)で極大なら十分小さい\(\epsilon > 0\)に対して
                     <div class="scroll">
@@ -631,7 +632,24 @@
                     つまり\(\epsilon f'(a) \leq 0\)かつ\(- \epsilon f'(a) \leq 0\)が成り立つ。</p>
                     <p>よって、\(f'(a) \leq 0\)かつ\(f'(a) \geq 0\)つまり\(f'(a) = 0\)である。</p>
                     <p>\(y\)軸方向についても同様の議論が可能であり、極小の場合も同じように示すことができる。</p>
+                    <p>以上より、極値では勾配が0になることを示せた。</p>
+                    <p>次に、逆が成り立たないことを、反例\(f(x, y) = x^3 - 3xy^2\)によって示す。</p>
+                    <p>この関数の一階偏微分を計算すると、
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial f}{\partial x} = 3x^2 - 3y^2, \quad \frac{\partial f}{\partial y} = -6xy
+                        \end{align}
+                    </div>
+                    となる。</p>
+                    <p>これらをゼロに設定して解くと、勾配がゼロとなる点は \( (0, 0) \) と \( (y^2 = x^2, y = \pm x) \) である。</p>
+                    <p>しかし、点 \( (0, 0) \) では、二階偏微分の計算から、ヘッセ行列の判別式 \( D = f_{xx} f_{yy} - (f_{xy})^2 \) が \( 0 \) であり、この点は鞍点であることがわかる。</p>
+                    <p>したがって、勾配がゼロであっても必ずしも極値が存在するわけではない。</p>
                     <p><b>(2)の解答</b></p>
+                    <p>点\(\mathbf{x_0}\)でのヘッセ行列\(H(\mathbf{x_0})\)が正定値であれば、任意の非零ベクトル\(x\)に対して\(x^T H(\mathbf{x_0}) x > 0\)が成り立つ。</p>
+                    <p>ここで、\(\mathbf{x} = (1, 0)^T\)とすると、\(\mathbf{x}^T H(\mathbf{x_0}) \mathbf{x} = \frac{\partial^2 f}{\partial x^2} > 0\)を得る。</p>
+                    <p>また、\(\mathbf{x} = (0, 1)^T\)とすると、\(\mathbf{x}^T H(\mathbf{x_0}) \mathbf{x} = \frac{\partial^2 f}{\partial y^2} > 0\)を得る。</p>
+                    <p>したがって、関数\(f\)は点\(\mathbf{x_0}\)において\(x\)軸方向、\(y\)軸方向ともに、下に凸である。</p>
+                    <p>よって、\(f'(\mathbf{x_0}) = 0\)であるから、\(f\)は\(\mathbf{x_0}\)で極小値を取る。</p>
                 </div>
             </ul>
             <h3>二次元極座標変換</h3>
