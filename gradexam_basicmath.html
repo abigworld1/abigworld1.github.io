@@ -469,6 +469,7 @@
             <p>参考にしたサイトは以下のとおり。</p>
             <p><a href="https://pictblog.com/twoparadiffer">【微積分】二変数関数の停留点(極大点・極小点・鞍点).html</a></p>
             <p><a href="https://manabitimes.jp/math/1185">極大値・極小値の意味と求め方 _ 高校数学の美しい物語.html</a></p>
+            <p><a href="https://manabitimes.jp/math/1210">一次近似の意味とよく使う近似公式一覧 _ 高校数学の美しい物語.html</a></p>
             <ul>
                 <li>二変数関数\(f(x, y)\)の停留点\((a_x, a_y)\)を求めることを考える。</li>
                 <li>関数の変化がなくなる点が停留点であるため、停留点では\(x\)方向、\(y\)方向ともにその変化量が0、すなわち
@@ -585,7 +586,7 @@
                     <p><b>問題</b></p>
                      <p>
                         集合 \( D \) を \( \mathbb{R}^2 \) の開集合とし、関数 \( f : D \rightarrow \mathbb{R} \) が 2 回連続微分可能であるとする。
-                        さらに、点 \( x_0 = (x_0, y_0) \) （\( \text{T} \) は転置）で、勾配は零、つまり、
+                        さらに、点 \( x_0 = (x_0, y_0)^T \) （\( \text{T} \) は転置）で、勾配は零、つまり、
                     </p>
             
                     <div class="scroll">
@@ -618,13 +619,19 @@
                         </li>
                     </ol>
                     <p><b>(1)の解答</b></p>
-                    <p>「関数\(f(x, y)\)がある点\((a, b)\)で極大または極小ならば、\(\grad f = (\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}) = (0, 0) \)」であることを示す。</p>
-                    <p>極大の場合を考える。</p>
-                    <p>\(x = x_0\)</p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
+                    <p>「関数\(f(x, y)\)がある点\((a, b)\)で極大または極小ならば、\(grad f = (\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}) = (0, 0) \)」であることを示す。</p>
+                    <p>まず、極大の場合を考える。\(x\)軸方向も\(y\)軸方向も\((a, b)\)において極大であり、\(x\)軸方向だけに注目して考える。</p>
+                    <p>\(x = a\)の十分近くでは、\(f(x) \simeq f(a) + (x-a) f'(a)\)と一次近似できる（\(f' = \frac{\partial f}{\partial x}\)）。</p>
+                    <p>また、\(x = a\)で極大なら十分小さい\(\epsilon > 0\)に対して
+                    <div class="scroll">
+                        \begin{align}
+                        f(a + \epsilon) \leq f(a), f(a - \epsilon) \leq f(a)
+                        \end{align}
+                    </div>
+                    つまり\(\epsilon f'(a) \leq 0\)かつ\(- \epsilon f'(a) \leq 0\)が成り立つ。</p>
+                    <p>よって、\(f'(a) \leq 0\)かつ\(f'(a) \geq 0\)つまり\(f'(a) = 0\)である。</p>
+                    <p>\(y\)軸方向についても同様の議論が可能であり、極小の場合も同じように示すことができる。</p>
+                    <p><b>(2)の解答</b></p>
                 </div>
             </ul>
             <h3>二次元極座標変換</h3>
