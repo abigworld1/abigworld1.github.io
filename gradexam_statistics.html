@@ -548,7 +548,7 @@
                             \end{align}
                         </div>
                     </div>
-                <div class="scroll">
+                <div class="example">
                     <p><b>期待値の問題</b></p>
                     <p>離散型の確率変数 \( X \) が以下の確率分布にしたがう場合の期待値 \( \mathbb{E}[X] \) を求めよ。</p>
             
@@ -573,17 +573,17 @@
                     <p>二項分布 \( X \) の確率質量関数は次のように与えられている：</p>
 
                     <div class="scroll">
-                        \[
+                        \begin{align}
                         p(x) = \binom{n}{x} p^x (1 - p)^{n - x} \quad (x = 0, 1, 2, \dots, n)
-                        \]
+                        \end{align}
                     </div>
             
                     <p>二項分布の期待値は、一般に以下の公式で表される：</p>
             
                     <div class="scroll">
-                        \[
+                        \begin{align}
                         \mathbb{E}[X] = n \cdot p
-                        \]
+                        \end{align}
                     </div>
             
                     <p>この結果は、二項分布の性質から直接導かれるものである。各試行における成功確率が \( p \) であり、\( n \) 回の独立試行の総和としての期待値は \( n \) 回の試行それぞれで期待される成功回数 \( p \) を合計したものである。</p>
@@ -591,25 +591,25 @@
                     <p>したがって、期待値 \( \mathbb{E}[X] \) は次のようになる：</p>
             
                     <div class="scroll">
-                        \[
+                        \begin{align}
                         \mathbb{E}[X] = n \cdot p
-                        \]
+                        \end{align}
                     </div>
                     <p><b>(2)の解答</b></p>
                     <p>ポアソン分布 \( X \) の確率質量関数は次のように与えられている：</p>
 
                     <div class="scroll">
-                        \[
+                        \begin{align}
                         p(x) = \frac{\lambda^x e^{-\lambda}}{x!} \quad (x = 0, 1, 2, \dots)
-                        \]
+                        \end{align}
                     </div>
             
                     <p>ポアソン分布の期待値もまた、次のように既知の公式で表される：</p>
             
                     <div class="scroll">
-                        \[
+                        \begin{align}
                         \mathbb{E}[X] = \lambda
-                        \]
+                        \end{align}
                     </div>
             
                     <p>これは、ポアソン分布の性質から直接導かれるものである。ポアソン分布は、単位時間あたりに発生する事象の平均回数を表す分布であり、その平均がそのまま期待値になる。</p>
@@ -617,10 +617,140 @@
                     <p>したがって、期待値 \( \mathbb{E}[X] \) は次のようになる：</p>
             
                     <div class="scroll">
-                        \[
+                        \begin{align}
                         \mathbb{E}[X] = \lambda
-                        \]
+                        \end{align}
                     </div>
+                </div>
+                <div class="example">
+                    <p><b>同時確率関数の問題</b></p>
+                    <p>
+                        \( X \) と \( N \) はそれぞれ離散型の確率変数であり、0以上の整数全体 \( \{0, 1, 2, \dots\} \) に値をとるものとする。また、\( X, N \) の同時確率関数を \( p(x, n) := P(X = x, N = n) \)、\( X \) の周辺確率関数を \( p_X(x) := P(X = x) \)、\( N \) の周辺確率関数を \( p_N(n) := P(N = n) \)、\( N = n \) という条件が与えられた下での \( X \) の条件付き確率関数を \( p_{X|N}(x|n) := P(X = x|N = n) \) と表すこととする。
+                    </p>
+            
+                    <ol>
+                        <li>
+                            以下の式が成り立つことを示せ：
+                            <div class="scroll">
+                                \begin{align}
+                                p_X(x) = \sum_{n=0}^{\infty} p_N(n) p_{X|N}(x|n)
+                                \end{align}
+                            </div>
+                        </li>
+            
+                        <li>
+                            以下の式が成り立つことを示せ：
+                            <div class="scroll">
+                                \begin{align}
+                                \mathbb{E}[X] = \mathbb{E}[\mathbb{E}[X|N]]
+                                \end{align}
+                            </div>
+                            ただし、\( \mathbb{E}[X] \) は \( X \) の期待値、\( \mathbb{E}[\mathbb{E}[X|N]] \) の外側の期待値記号 \( \mathbb{E} \) は \( N \) に関する期待値である。また、\( \mathbb{E}[X|N] \) は \( N \) で条件付けられた \( X \) の条件付き期待値であり、
+                            <div class="scroll">
+                                \begin{align}
+                                \mathbb{E}[X|N] := \sum_{x=0}^{\infty} x p_{X|N}(x|N)
+                                \end{align}
+                            </div>
+                            と定義される。
+                        </li>
+            
+                        <li>
+                            確率変数 \( N \) がパラメータ \( \lambda > 0 \) のポアソン分布にしたがい、\( N = n \) で条件付けられた確率変数 \( X \) の条件付き分布が、成功確率 \( p \) （\( 0 < p < 1 \)）、試行回数 \( n \) の二項分布であるとする。つまり、\( N \) の周辺確率関数と、\( N \) が与えられた下での \( X \) の条件付き確率関数が以下のように与えられるとする：
+                            <div class="scroll">
+                                \begin{align}
+                                p_N(n) = \frac{e^{-\lambda} \lambda^n}{n!} \quad (n = 0, 1, 2, \dots)
+                                \end{align}
+                            </div>
+                            <div class="scroll">
+                                \begin{align}
+                                p_{X|N}(x|n) = \binom{n}{x} p^x (1 - p)^{n-x} \quad (x = 0, 1, 2, \dots, n)
+                                \end{align}
+                            </div>
+                            このとき、\( X \) の期待値 \( \mathbb{E}[X] \) を求めよ。
+                        </li>
+                    </ol>
+                <p><b>(1)の解答</b></p>
+                <div class="scroll">
+                    \begin{align}
+                    p_X(x) = \sum_{n=0}^{\infty} p_N(n) p_{X|N}(x|n)
+                    \end{align}
+                </div>
+        
+                <p>この式は、全確率の法則を表している。全確率の法則は、確率変数 \( X \) の周辺確率を条件付き確率と周辺確率の積の総和として表すことができることを示す。したがって、</p>
+        
+                <div class="scroll">
+                    \begin{align}
+                    p_X(x) = \sum_{n=0}^{\infty} p_N(n) p_{X|N}(x|n)
+                    \end{align}
+                </div>
+        
+                <p>という式が成り立つ。</p>
+                <p><b>(2)の解答</b></p>
+                <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}[X] = \mathbb{E}[\mathbb{E}[X|N]]
+                    \end{align}
+                </div>
+        
+                <p>この式は期待値の塔則（条件付き期待値の法則）を表している。この法則によれば、全体の期待値 \( \mathbb{E}[X] \) は、条件付き期待値 \( \mathbb{E}[X|N] \) の期待値を求めることと等価である。したがって、</p>
+        
+                <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}[X] = \sum_{x=0}^{\infty} x \cdot \sum_{n=0}^{\infty} p_N(n) p_{X|N}(x|n)
+                    \end{align}
+                </div>
+        
+                <p>和の順序を入れ替えて計算すると、</p>
+        
+                <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}[X] = \sum_{n=0}^{\infty} p_N(n) \cdot \mathbb{E}[X|N=n]
+                    \end{align}
+                </div>
+        
+                <p>これは、期待値の塔則 \( \mathbb{E}[X] = \mathbb{E}[\mathbb{E}[X|N]] \) を示している。</p>
+                <p><b>(3)の解答</b></p>
+                <p>まず、\( N \) がポアソン分布に従うとき、その周辺確率は次のように表される：</p>
+        
+                <div class="scroll">
+                    \begin{align}
+                    p_N(n) = \frac{e^{-\lambda} \lambda^n}{n!} \quad (n = 0, 1, 2, \dots)
+                    \end{align}
+                </div>
+        
+                <p>また、条件付き確率 \( p_{X|N}(x|n) \) は二項分布に従い、次のように表される：</p>
+        
+                <div class="scroll">
+                    \begin{align}
+                    p_{X|N}(x|n) = \binom{n}{x} p^x (1 - p)^{n-x} \quad (x = 0, 1, 2, \dots, n)
+                    \end{align}
+                </div>
+        
+                <p>期待値 \( \mathbb{E}[X] \) は、前問で示した \( \mathbb{E}[X] = \mathbb{E}[\mathbb{E}[X|N]] \) を利用して次のように計算できる：</p>
+        
+                <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}[X] = \sum_{n=0}^{\infty} p_N(n) \cdot n \cdot p
+                    \end{align}
+                </div>
+        
+                <p>ここで、\( p_N(n) \) を代入して計算を進めると、</p>
+        
+                <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}[X] = p \sum_{n=0}^{\infty} n \cdot \frac{e^{-\lambda} \lambda^n}{n!}
+                    \end{align}
+                </div>
+        
+                <p>この和は、ポアソン分布の期待値 \( \mathbb{E}[N] = \lambda \) であることを考慮すると、</p>
+        
+                <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}[X] = p \cdot \lambda
+                    \end{align}
+                </div>
+        
+                <p>と求まる。</p>
                 </div>
             </ul>
         </section>
