@@ -61,7 +61,7 @@
             <p><b>乗法定理</b></p>
             <div class="scroll">
                 \begin{align}
-                P(A \cap B} = P(A|B) P(B)
+                P(A \cap B) = P(A|B) P(B)
                 \end{align}
             </div>
         <h3>情報量とエントロピー(1)</h3>
@@ -102,7 +102,7 @@
             <ol>
                 <li>\(0 \leq H(X) \leq \log_2 M\)</li>
                 <li>\(H(X)\)が最小値0となるのは、ある値を取る確率が1で、他のM-1個の値を取る確率がすべて0の時に限る。すなわち、\(X\)の取る値がはじめから確定している場合のみである。</li>
-                <li>\(H(X)\)が最大値\(log_2 M\)となるのは、\(M\)個の値がすべて\(\frac{1}{M}\)で等しい場合に限る。</li>
+                <li>\(H(X)\)が最大値\(\log_2 M\)となるのは、\(M\)個の値がすべて\(\frac{1}{M}\)で等しい場合に限る。</li>
             </ol>
             <p>エントロピーは「答えのあてにくさ」を表す数値ともいえる。</p>
             <p><b>2つ以上の確率変数を扱う場合</b></p>
@@ -130,6 +130,72 @@
                 P(B|A) = \frac{P(B)P(A|B)}{P(B)P(A|B)+P(\overline{B})P(A|\overline{B})}
                 \end{align}
             </div>
+        <h3>情報量とエントロピー(2)</h3>
+            <p><b>条件付きエントロピー</b></p>
+            <p>確率変数\(Y\)で条件を付けた\(X\)の<b>条件付きエントロピー</b>\(H(X|Y)\)は、</p>
+            <div class="scroll">
+                \begin{align}
+                H(X|Y) = - \sum_{j = 1}^{M_Y} P(y_j) \sum_{i = 1}^{M_X} P(x_i|y_j) \log_2 P(x_i|y_j)
+                \end{align}
+            </div>
+            <p>により定義される。ただし、\({x_1, x_2, \cdots, x_{M_X}}\)および\({y_1, y_2, \cdots, y_{M_Y}}\)は、それぞれ\(X\)と\(Y\)が取り得る値の集合とする。</p>
+            <p><b>条件付きエントロピーの性質</b></p>
+            <p>\({x_1, x_2, \cdots, x_{M_X}}\)および\({y_1, y_2, \cdots, y_{M_Y}}\)を取り得る値の集合とする確率変数\(X\)と\(Y\)に関し、以下が成り立つ。</p>
+            <ol>
+                <li>
+                    <div class="scroll">
+                        \begin{align}
+                        H(X|Y) = - \sum_{j = 1}^{M_Y} \sum_{i = 1}^{M_X} P(x_i, y_j) \log_2 P(x_i|y_j)
+                        \end{align}
+                    </div>
+                </li>
+                <li>
+                    <div class="scroll">
+                        \begin{align}
+                        H(X, Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)
+                        \end{align}
+                    </div>
+                （この式は、\(H(X)\)と\(H(Y)\)に関するベン図を描くと分かりやすい。）</li>
+                <li>\(0 \leq H(X|Y) \leq H(X)\)（\(H(X|Y) = H(X)\)は、\(X\)と\(Y\)が独立の時のみ成立。）</li>
+                <li>\(0 \leq H(Y|X) \leq H(Y)\)（\(H(Y|X) = H(Y)\)は、\(X\)と\(Y\)が独立の時のみ成立。）</li>
+            </ol>
+            <p><b>相互情報量と、その性質</b></p>
+            <p>確率変数\(X\)と\(Y\)の<b>相互情報量</b>\(I(X;Y)\)は、</p>
+            <div class="scroll">
+                \begin{align}
+                I(X;Y) = H(X) - H(X|Y)
+                \end{align}
+            </div>
+            <p>によって定義される。</p>
+            <p>確率変数\(X\)と\(Y\)と相互情報量\(I(X;Y)\)に関して以下が成り立つ。</p>
+            <ol>
+                <li>
+                    <div class="scroll">
+                        \begin{align}
+                        I(X;Y) &= H(X) - H(X|Y)
+                        &= H(Y) - H(Y|X)
+                        &= H(X) + H(Y) - H(X, Y)
+                        \end{align}
+                    </div>
+                </li>
+                <li>\(0 \leq I(X;Y) \leq \min {H(X), H(Y)}\)（\I(X;Y)=0\)は、\(X\)と\(Y\)が独立の時のみ成立。）</li>
+            </ol>
+            <p><b>シャノンの補助定理</b></p>
+            <p>\(p_1, p_2, \cdots, p_M\)および\(q_1, q_2, \cdots, q_M\)を</p>
+            <div class="scroll">
+                \begin{align}
+                p_1 + p_2 + \cdots + p_M = 1 \\
+                q_1 + q_2 + \cdots + q_M \leq 1
+                \end{align}
+            </div>
+            <p>を満たす任意の非負の数とする（ただし、\(p_i \neq 0\)のときは\(q_i \neq 0\)とする）。このとき、</p>
+            <div class="scroll">
+                \begin{align}
+                - \sum_{i = 1}^{M} p_i \log_2 q_i \geq - \sum_{i = 1}^{M} p_i \log_2 p_i
+                \end{align}
+            </div>
+            <p>が成立する。等号は\(q_i = p_i (i = 1, 2, \cdots, M)\)のとき、またそのときに限って成立する。</p>
+            <p>つまり、確率分布\(P = {p_i}_{i = 1}^{M}\)とちょっと違う分布\(q_i\)（ただし総和が1以下）を持ってきて、\(\log_2\)の内側の\(p_i\)と置き換えると、<b>元より少し大きくなる</b>。</p>
         </section>
     </main>
 </body>
