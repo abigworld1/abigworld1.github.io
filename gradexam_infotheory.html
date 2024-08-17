@@ -296,7 +296,100 @@
                 \end{align}
             </div>
             <p>という\(N\)次元ベクトルを定義する。</p>
-            <p>時点\(t-1\)で状態\(s_i\)にいる確率が\(w_{i}^{t-1}\)で、状態</p>
+            <p>時点\(t-1\)で状態\(s_i\)にいる確率が\(w_{i}^{t-1}\)で、状態\(s_i\)にいるときに次の時点で状態\(s_j\)へと遷移する確率が\(p_{i, j}\)であるから、</p>
+            <div class="scroll">
+                \begin{align}
+                w_{j}^{(t)} &= \sum_{i = 0}^{N-1} w_{i}^{t-1} p_{i, j} \\
+                \mathbf{w}_t &= \mathbf{w}_{t-1} \Pi
+                \end{align}
+            </div>
+            <p>これを繰り返せば\(\mathbf{w}_{t} = \mathbf{w}_{0} \Pi^{t}\)を得る。ここで、\(\mathbf{w}_0\)は時点0における状態分布（<b>初期分布</b>）である。</p>
+            <p>\(mathbf{w}_t\)の\(t \rightarrow \infty\)とした極限を<b>極限分布</b>と呼ぶ。</p>
+            <p>正規マルコフ情報源では、次式が成り立つ。</p>
+            <div class="scroll">
+                \begin{align}
+                \lim_{t \rightarrow \infty} \mathbf{w}_t = \mathbf{w}_0 \lim_{t \rightarrow \infty} \Pi^t = \mathbf{w}_0 U = \mathbf{u}
+                \end{align}
+            </div>
+            <p>十分時間が経過すれば、初期分布がどうであれ、状態分布は定常的な確率分布（定常分布）に落ち着く</p>
+            <p>正規マルコフ情報源が落ち着く定常分布を</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{w} = (w_0, w_1, \cdots, w_{N-1})とする。
+                \end{align}
+            </div>
+            <p>とする。\(w_i\)は確率なので、当然ながら</p>
+            <div class="scroll">
+                \begin{align}
+                w_0 + w_1 + \cdots + w_{N-1} = 1
+                \end{align}
+            </div>
+            <p>が成り立つ。</p>
+            <p>ある時点の状態分布が定常的で\(\mathbf{w}\)であるとすれば、次の時点の状態分布も\(\mathbf{w}\)でなければならないので、\(\mathbf{w}\)は</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{w} \Pi = \mathbf{w}
+                \end{align}
+            </div>
+            <p>を満たさなければならない。</p>
+            <p>正規マルコフ情報源の遷移確率行列\(\Pi\)に対しては、この式を満たす\(\mathbf{w}\)が唯一存在し、極限分布と一致する。</p>
+            <p><b>情報源の1次エントロピー</b></p>
+            <p>次のような\(M\)元定常情報源\(S\)を考える。</p>
+            <ul>
+                <li>情報源アルファベット\(A = {a_1, a_2, \cdots, a_M}\)</li>
+                <li>記号\(a_k\)の生起確率\(p_k\)</li>
+            </ul>
+            <p>このとき、</p>
+            <div class="scroll">
+                \begin{align}
+                H_1 (S) = - \sum_{k = 1}^{M} p_k \log_2 p_k
+                \end{align}
+            </div>
+            <p>を情報源\(S\)の<b>1次エントロピー</b>と呼ぶ。</p>
+            <p>記憶のない定常情報源の場合、その1次エントロピーは、情報源からの出力を1個受け取ったときに得られる平均的な情報量と考えることができる。</p>
+            <p><b>情報源の\(n\)次エントロピー</b></p>
+            <p>長さ\(n\)の系列を考え、その系列全体のエントロピーから1記号あたりのエントロピーを算出することを考える。</p>
+            <p>\(M\)元情報源の\(n\)個の出力をまとめて1個の記号とみなすと、\(M^n\)元の情報源とみなせる。</p>
+            <p>これを<b>\(n\)次拡大情報源</b>といい、\(S^n\)で表す。</p>
+            <p>このとき、</p>
+            <div class="scroll">
+                \begin{align}
+                H_n (S) = \frac{H_1 (S^n)}{n}
+                \end{align}
+            </div>
+            <p>を情報源\(S\)の<b>\(n\)次エントロピー</b>と呼ぶ。</p>
+            <p>記憶のない定常情報源の場合、その\(n\)次エントロピーは、1次エントロピーと一致する。</p>
+            <p><b>情報源のエントロピー</b></p>
+            <p>情報源\(S\)の\(n\)次エントロピーの極限</p>
+            <div class="scroll">
+                \begin{align}
+                H(s) = \lim_{n \rightarrow \infty} H_n (s) = \lim_{n \rightarrow \infty} \frac{H_1 (S^n)}{n}
+                \end{align}
+            </div>
+            <p>を情報源\(S\)の<b>エントロピー</b>と呼ぶ。</p>
+            <p>これは、十分長い時間をかけて系列を観測した時の1記号当たりの平均情報量と考えることができる。</p>
+            <p>記憶のない定常情報源の場合、そのエントロピーは1次エントロピーと一致する。</p>
+            <p><b>正規マルコフ情報源のエントロピー</b></p>
+            <p>次のような正規マルコフ情報源\(S\)を考える。</p>
+            <ul>
+                <li>情報源アルファベット \(a_1, a_2, \cdots, a_M\)</li>
+                <li>\(N\)個の状態\(s_0, s_1, \cdots, s_{N-1}\)</li>
+                <li>定常分布\((w_0, w_1, \cdots, w_{N-1})\)</li>
+                <li>状態\(s_i\)にあるときに記号\(a_k\)を発生する確率\(P(a_k | s_i)\)</li>
+            </ul>
+            <p>この情報源\(S\)に対するエントロピー\(H(S)\)は</p>
+            <div class="scroll">
+                \begin{align}
+                H(s) = - \sum_{i = 0}^{N-1} w_i (\sum_{k = 1}^{M} P(a_k | s_i) \log_2 P(a_k | s_i))
+                \end{align}
+            </div>
+            <p>である。</p>
+            <p>結局、正規マルコフ情報源\(S\)のエントロピー\(H(S)\)の求め方は以下の通りである。</p>
+            <ol>
+                <li>定常分布を求める</li>
+                <li>各状態\(s_i\)において、記憶のない情報源とみなし、その場合のエントロピー\(H_{s_i} (S)\)を求める</li>
+                <li>上で求めたエントロピー\(H_{s_i} (S)\)を、定常分布にしたがった割合で合算する</li>
+            </ol>
         </section>
     </main>
 </body>
