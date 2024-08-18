@@ -708,7 +708,7 @@
             <p>正しく復号される確率を最大にする復号領域の求め方は、（符号語の発生確率が等確率の場合は）<b>最尤復号法</b></p>
             <p>\(P(\mathbf{y}|\mathbf{w_i})\): \(\mathbf{w_i}\)を送ったとき\(\mathbf{y}\)が受信される確率</p>
             <p>最尤復号法：\(\mathbf{y}\)が受信されたとき、\(P(\mathbf{y}|\mathbf{w_i})\)が最大の\(\mathbf{w_i}\)に復号</p>
-            <p>最尤復号法の復号領域：\(\mathbf{\Omega_i} = {\mathbf{y} | i = \max_j P(\mathbf{y} | \mathbf{w_j})}\)</p>
+            <p>最尤復号法の復号領域：\(\mathbf{\Omega_i} = \{\mathbf{y} \quad | i = \max_j P(\mathbf{y} | \mathbf{w_j})\}\)</p>
             <p>\(P_C(\mathbf{w_i}) = \sum_{\mathbf{y} \in \mathbf{\Omega_i}}\):符号語\(\mathbf{w_i}\)を送った場合に正しく復号される確率</p>
             <p>どの符号語が送られてくる確率も等しく\(\frac{1}{M}\)であると仮定すると、正しく復号される確率\(P_C\)は</p>
             <div class="scroll">
@@ -716,7 +716,7 @@
                 P_C = \sum_{i = 1}^{M} \frac{1}{M} \times P_C (\mathbf{w_i}) = \frac{1}{M} \sum_{i = 1}^{M} \sum_{\mathbf{y} \in \mathbf{\Omega_i}} P(\mathbf{y} | \mathbf{w_i})
                 \end{align}
             </div>
-            <p>とかける。\(\mathbf{\Omega_i} = {\mathbf{y} | i = \max_j P(\mathbf{y} | \mathbf{w_i})}\)とすれば\(P_C\)が最大になる。</p>
+            <p>とかける。\(\mathbf{\Omega_i} = \{\mathbf{y} \quad | i = \max_j P(\mathbf{y} | \mathbf{w_i})\}\)とすれば\(P_C\)が最大になる。</p>
             <p>\(\mathbf{w_i}\)を\(\mathbf{y}\)のパラメータだとみなせば、\(P(\mathbf{y} | \mathbf{w_i})\)は\(\mathbf{w_i}\)の<b>尤度</b>である。</p>
             <p>尤度を最大化する復号法　→　最尤復号法</p>
             <p>最尤復号法は、各符号語が等確率で送られるとき、正しく復号される確率\(P_C\)を最大とするという意味で、最良の復号法である。しかし、すべての符号語\(\mathbf{w_i}\)に対し、\(P(\mathbf{y} | \mathbf{w_i})\)を計算し比較しなければならず、符号語数\(M\)が大きい場合には実用的ではない。</p>
@@ -760,6 +760,8 @@
             <p>で定義される\(C\)を<b>通信路容量</b>と呼ぶ。</p>
             <p>通信路容量の単位：<b>ビット</b>あるいは<b>ビット/通信路記号</b></p>
             <p>入力記号\(X\)に対し記号\(Y\)が出力される記憶のない通信路の通信路容量は\(C=\max_{P_X} I(X;Y)\)で計算できる。</p>
+        <h3>通信路符号化の限界(2)</h3>
+            <p><b></b></p>
         </section>
     </main>
 </body>
