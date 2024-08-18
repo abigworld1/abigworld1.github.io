@@ -960,6 +960,92 @@
             <p>誤り（検出）訂正符号</p>
             <p>訂正をする場合：1個の誤り訂正ができ、同時に2個の誤りまで検出可能。</p>
             <p>訂正しない場合：3個の誤りまで検出可能</p>
+        <h3>通信路符号化法</h3>
+            <p><b>ハミング符号(1)</b></p>
+            <p>水平垂直パリティ検査符号の問題点：(9,4)符号であり、情報ビットよりも検査ビットが多く、効率がよくない。</p>
+            <p><b>(7,4)ハミング符号</b>：4個の情報ビット\(x_1, x_2, x_3, x_4\)に対し、</p>
+            <div class="scroll">
+                \begin{align}
+                c_1 = x_1 + x_2 + x_3 \\
+                c_2 = x_2 + x_3 + x_4 \\
+                c_3 = x_1 + x_2 + x_4
+                \end{align}
+            </div>
+            <p>により、検査ビット\(c_1, c_2, c_3\)を作り、\(w = (x_1, x_2, x_3, x_4, c_1, c_2, c_3)\)という符号語に符号化する符号。</p>
+            <p>情報ビットが4個であるから、符号語は\(2^4 = 16個\)</p>
+            <p>符号を\(\mathbf{w} = (w_1, w_2, \cdots, w_7)\)とする。</p>
+            <p>(7,4)ハミング符号のパリティ検査方程式</p>
+            <div class="scroll">
+                \begin{align}
+                w_1 + w_2 + w_3 + w_5 &= 0 \\
+                w_2 + w_3 + w_4 + w_6 &= 0 \\
+                w_1 + w_2 + w_4 + w_7 &= 0
+                \end{align}
+            </div>
+            <p>受信語\(\mathbf{y} = (y_1, y_2, \cdots, y_7)\)に対するシンドローム</p>
+            <div class="scroll">
+                \begin{align}
+                s_1 &= y_1 + y_2 + y_3 + y_5 \\
+                s_2 &= y_2 + y_3 + y_4 + y_6 \\
+                s_3 &= y_1 + y_2 + y_4 + y_7
+                \end{align}
+            </div>
+            <p>誤りパターンを\(e = (e_1, e_2, \cdots, e_7)\)とすると、</p>
+            <div class="scroll">
+                \begin{align}
+                s_1 &= e_1 + e_2 + e_3 + e_5 \\
+                s_2 &= e_2 + e_3 + e_4 + e_6 \\
+                s_3 &= e_1 + e_2 + e_4 + e_7
+                \end{align}
+            </div>
+            <p><b>生成行列</b></p>
+            <p>(7,4)のハミング符号の符号語\(\mathbf{w}\)は情報記号のみで表すと</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{w} = (x_1, x_2, x_3, x_4, x_1 + x_2 + x_3, x_2 + x_3 + x_4, x_1 + x_2 + x_4)
+                \end{align}
+            </div>
+            <p>という形でかける。ここで、</p>
+            <div class="scroll">
+                \begin{align}
+                G = \begin{bmatrix}
+                1 & 0 & 0 & 0 & 1 & 0 & 1 \\
+                0 & 1 & 0 & 0 & 1 & 1 & 1 \\
+                0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+                0 & 0 & 0 & 1 & 0 & 1 & 1
+                \end{bmatrix}
+                \end{align}
+            </div>
+            <p>という行列を考えれば、符号語\(w\)を\(\mathbf{w} = \mathbf{x} G\)と書くことができる。ただし、\(\mathbf{x} = (x_1, x_2, x_3, x_4)\)である。</p>
+            <p><b>生成行列</b>：\(k\)個の情報記号からなるベクトル\(\mathbf{x}\)をかけたとき、対応する符号語が生成されるような行列。</p>
+            <p>\((n, k)\)線形符号の生成行列は\(k \times n\)行列となる。</p>
+            <p><b>検査行列</b></p>
+            <p>(7,4)ハミング符号のパリティ検査方程式の係数行列\(\mathbf{H}\)</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{H} = \begin{bmatrix}
+                1 & 1 & 1 & 0 & 1 & 0 & 0 & 0 \\
+                0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+                1 & 1 & 1 & 0 & 1 & 0 & 0 & 1
+                \end{bmatrix}
+                \end{align}
+            </div>
+            <p>これを用いれば、パリティ検査方程式は\(\mathbf{w} \mathbf{H}^T = 0\)とかける。</p>
+            <p>\((n, k)\)線形符号のパリティ検査行列は\((n-k) \times n\)行列</p>
+            <p>検査行列\(\mathbf{H}\)を用いれば、(7,4)ハミング符号のシンドロームの計算式は\(\mathbf{s} = \mathbf{y} \mathbf{H}^T\)とかける。</p>
+            <p>ここで、\(\mathbf{s} = (s_1, s_2, s_3)\)であり、<b>シンドロームパターン</b>または単に<b>シンドローム</b>と呼ばれる。</p>
+            <div class="scroll">
+                \begin{align}
+                s = (w+e)H^T = w H^T + e H^T = e H^T
+                \end{align}
+            </div>
+            <p><b>ハミング距離とハミング重み</b></p>
+            <p>2つの\(n\)次元ベクトル\(\mathbf{u} = (u_1, u_2, \cdots, u_n), \mathbf{v} = (v_1, v_2, \cdots, v_n)\)間の<b>ハミング距離</b>\(d_H (\mathbf{u} \mathbf{v})\)</p>
+            <div class="scroll">
+                \begin{align}
+                \overset{\mathrm{def}}{\iff} d_H (u, v) = \sum_{i = 1}^{n} \delta (u_i, v_i) \quad \text{ただし、} \delta (u_i, v_i) = \begin{cases} 0 \quad \text{if \(u = v\) \\ 1 \quad \text{if \(u \neq v\)} \end{cases}} 
+                \end{align}
+            </div>
             <p></p>
         </section>
     </main>
