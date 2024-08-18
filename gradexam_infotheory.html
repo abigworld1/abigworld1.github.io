@@ -855,7 +855,87 @@
             <p>線形符号の最も基本的な性質：「任意の2つの符号語について、その成分ごとの和をとると、それがまた符号語になる。」（線形符号となるための必要十分条件）</p>
             <p><b>パリティ検査方程式</b></p>
             <p> = 0 という形で線形符号の符号語となるための必要十分条件を与える式（または式の組）</p>
-            <p>単一</p>
+            <p>単一パリティ検査符号のパリティ検査方程式：長さ\(n\)の系列\(\mathbf{w} = (w_1, w_2, \cdots, w_n)\)が単一パリティ検査符号の符号語となるための必要十分条件は以下のパリティ検査方程式を満たすことである。</p>
+            <div class="scroll">
+                \begin{align}
+                w_1 + w_2 + \cdots + w_n = 0
+                \end{align}
+            </div>
+            <p>（符号語に含まれる1の個数が偶数）</p>
+            <p><b>シンドローム</b></p>
+            <p>誤りパターン：送信した符号語\(\mathbf{w} = (w_1, w_2, \cdots, w_n)\)と受信語\(\mathbf{y} = (y_1, y_2, \cdots, y_n)\)との差\(\mathbf{e} = \mathbf{w} + \mathbf{y} = (w_1 + y_1, w_2 + y_2, \cdots, w_n + y_n)\)</p>
+            <p>誤りパターン\(\mathbf{e} = (e_1, e_2, \cdots, e_n)\)の各ビットは以下のような値になる。</p>
+            <div class="scroll">
+                \begin{align}
+                e_i = 
+                \begin{cases}
+                1 \quad \text{（第\(i\)成分に誤りが生じたとき）}
+                0 \quad \text{（そうでないとき）}
+                \end{cases}
+                \end{align}
+            </div>
+            <p>誤りパターン\(\mathbf{e}\)を用いると\(\mathbf{y} = \mathbf{w} + \mathbf{e}\)と表現できる。</p>
+            <p>シンドローム：受信語\(\mathbf{y}\)をパリティ検査方程式の左辺に代入した結果\(\mathbf{s} = y_1 + y_2 + \cdots + y_n\)</p>
+            <p>符号語\(\mathbf{w}\)はパリティ検査方程式を満たすので、</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{s} = w_1 + e_1 + w_2 + e_2 + \cdots + w_n + e_n = e_1 + e_2 + \cdots + e_n
+                \end{align}
+            </div>
+            <p>\(2 \times 2\)水平垂直パリティ検査符号</p>
+            <p>与えられた長さ4の系列\(x_1 x_2 x_3 x_4\)に対し、長さ9の符号語\((x_1, x_2, x_3, x_4, c_1, c_2, c_3, c_4, c_5)\)を、以下のように生成する符号。</p>
+            <p>下の表のように4個の情報ビットを\(2 \times 2\)の配列に並べ、各行各列に一つずつ検査ビットを付け加える。</p>
+            <table>
+                <tr>
+                    <td>x1</td>
+                    <td>x2</td>
+                    <td>c1</td>
+                </tr>
+                <tr>
+                    <td>x3</td>
+                    <td>x4</td>
+                    <td>c2</td>
+                </tr>
+                <tr>
+                    <td>c3</td>
+                    <td>c4</td>
+                    <td>c5</td>
+                </tr>
+            </table>
+            <p>すなわち、</p>
+            <div class="scroll">
+                \begin{align}
+                c_1 = x_1 + x_2 \\
+                c_2 = x_3 + x_4 \\
+                c_3 = x_1 + x_3 \\
+                c_4 = x_2 + x_4
+                \end{align}
+            </div>
+            <p>さらに、検査ビットの行の1の数が偶数になるように、検査ビットの検査ビットを右隅におく。</p>
+            <div class="scroll">
+                \begin{align}
+                c_5 = c_1 + c_2 = x_1 + x_2 + x_3 + x_4 = c_3 + c_4
+                \end{align}
+            </div>
+            <p><b>\(2 \times 2\)水平垂直パリティ検査符号の性質</b></p>
+            <p>符号長\(n = 9\)、情報記号長4の\((9, 4)\)組織符号である。</p>
+            <p>符号語数\(M = 2^4\)であるから、情報速度\(R = \frac{\log_2 M}{n} = \frac{4}{9}\)、効率\(\eta = \frac{4}{9}\)</p>
+            <p>検査符号が情報記号の線形式で計算できるので線形符号である。</p>
+            <p>パリティ検査方程式：長さ9の系列\(\mathbf{w} = (w_1, w_2, \cdots, w_9)\)に対し</p>
+            <div class="scroll">
+                \begin{align}
+                \left\{
+                \begin{array}{l}
+                w_1 + w_2 \hspace{30pt} + w_5 \hspace{70pt} = 0 \\
+                \hspace{30pt} w_3 + w_4 \hspace{30pt} + w_6 \hspace{70pt} = 0 \\
+                w_1 \hspace{30pt} + w_3 \hspace{70pt} + w_7 \hspace{70pt} = 0 \\
+                w_2 \hspace{30pt} + w_4 \hspace{100pt} + w_8 \hspace{30pt} = 0 \\
+                w_1 + w_2 + w_3 + w_4 \hspace{30pt} + w_9 = 0
+                \end{array}
+                \right.
+                \end{align}
+            </div>
+                
         </section>
     </main>
 </body>
