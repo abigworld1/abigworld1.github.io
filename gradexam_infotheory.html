@@ -708,7 +708,7 @@
             <p>正しく復号される確率を最大にする復号領域の求め方は、（符号語の発生確率が等確率の場合は）<b>最尤復号法</b></p>
             <p>\(P(\mathbf{y}|\mathbf{w_i})\): \(\mathbf{w_i}\)を送ったとき\(\mathbf{y}\)が受信される確率</p>
             <p>最尤復号法：\(\mathbf{y}\)が受信されたとき、\(P(\mathbf{y}|\mathbf{w_i})\)が最大の\(\mathbf{w_i}\)に復号</p>
-            <p>最尤復号法の復号領域：\(\mathbf{\Omega_i} = \{\mathbf{y} \quad | i = \max_j P(\mathbf{y} | \mathbf{w_j})\}\)</p>
+            <p>最尤復号法の復号領域：\(\mathbf{\Omega_i} = \{\mathbf{y} | i = \max_j P(\mathbf{y} | \mathbf{w_j})\}\)</p>
             <p>\(P_C(\mathbf{w_i}) = \sum_{\mathbf{y} \in \mathbf{\Omega_i}}\):符号語\(\mathbf{w_i}\)を送った場合に正しく復号される確率</p>
             <p>どの符号語が送られてくる確率も等しく\(\frac{1}{M}\)であると仮定すると、正しく復号される確率\(P_C\)は</p>
             <div class="scroll">
@@ -716,7 +716,7 @@
                 P_C = \sum_{i = 1}^{M} \frac{1}{M} \times P_C (\mathbf{w_i}) = \frac{1}{M} \sum_{i = 1}^{M} \sum_{\mathbf{y} \in \mathbf{\Omega_i}} P(\mathbf{y} | \mathbf{w_i})
                 \end{align}
             </div>
-            <p>とかける。\(\mathbf{\Omega_i} = \{\mathbf{y} \quad | i = \max_j P(\mathbf{y} | \mathbf{w_i})\}\)とすれば\(P_C\)が最大になる。</p>
+            <p>とかける。\(\mathbf{\Omega_i} = \{\mathbf{y} | i = \max_j P(\mathbf{y} | \mathbf{w_i})\}\)とすれば\(P_C\)が最大になる。</p>
             <p>\(\mathbf{w_i}\)を\(\mathbf{y}\)のパラメータだとみなせば、\(P(\mathbf{y} | \mathbf{w_i})\)は\(\mathbf{w_i}\)の<b>尤度</b>である。</p>
             <p>尤度を最大化する復号法　→　最尤復号法</p>
             <p>最尤復号法は、各符号語が等確率で送られるとき、正しく復号される確率\(P_C\)を最大とするという意味で、最良の復号法である。しかし、すべての符号語\(\mathbf{w_i}\)に対し、\(P(\mathbf{y} | \mathbf{w_i})\)を計算し比較しなければならず、符号語数\(M\)が大きい場合には実用的ではない。</p>
@@ -761,7 +761,59 @@
             <p>入力記号\(X\)に対し記号\(Y\)が出力される記憶のない通信路の通信路容量は\(C=\max_{P_X} I(X;Y)\)で計算できる。</p>
         <h3>通信路符号化の限界(2)</h3>
             <p><b>記憶のない一様通信路の通信路容量</b></p>
-            <p>各時刻に</p>
+            <p>各時刻に\(r\)元アルファベットに属する記号\(X\)を入力し、\(s\)元アルファベットに属する記号\(Y\)を出力する、入力について一様な記憶のない定常通信路容量を\(C\)とする。</p>
+            <p>この通信路の通信路行列の各行の要素の集合を{\(p_1, p_2, \cdots, p_s\)}とすれば、</p>
+            <div class="scroll">
+                \begin{align}
+                C = \max_{P_X} H(Y) + \sum_{i = 1}^{s} p_i \log_2 p_i
+                \end{align}
+            </div>
+            <p>が成り立つ。通信路が2重に一様であれば、</p>
+            <div class="scroll">
+                \begin{align}
+                C = \log_2 s + \sum_{i = 1}^{s} p_i \log_2 p_i
+                \end{align}
+            </div>
+            <p>が成り立つ。</p>
+            <p>記憶のない定常通信路が入力（出力）について一様 \(\xleftrightarrow{def}\) 通信と行列のどの行（列）も同じ要素を並び替えたものになっている。</p>
+            <p>記憶のない定常通信路が2重に一様 \(\xleftrightarrow{def}\) 通信路が入力について一様かつ出力について一様。</p>
+            <p>例：2元対称通信路</p>
+            <p><b>加法的2元通信路の通信路容量</b></p>
+            <p>誤り源\(S_E\)により定義される加法的2元通信路の通信路容量\(C\)は</p>
+            <div class="scroll">
+                \begin{align}
+                C = 1 - H(S_E)
+                \end{align}
+            </div>
+            <p>である。</p>
+            <p>誤り源\(S_E\)により定義される加法的2元通信路</p>
+            <ul>
+                <li>通信路内の誤り源\(S_E\)が各時刻に\(E \in {0,1}\)を発生。</li>
+                <li>通信路の各時刻の入力\(X \in {0,1}\)に対し出力\(Y \in {0,1}\)は\(Y = X \oplus E\)により定まる。</li>
+                <li>\(X\)と\(E\)は独立</li>
+                <li>誤り源\(S_E\)が記憶のある定常情報源のとき加法的2元通信路は記憶のある定常通信路となる。</li>
+            </ul>
+            <p><b>誤り源が無記憶定常情報源の場合</b></p>
+            <p>このとき、加法的2元通信路は<b>2元対称通信路</b>になる。</p>
+            <p>\(P(E = 1) = p, P(E = 0) = 1-p\)とすれば、</p>
+            <div class="scroll">
+                \begin{align}
+                H(S_E) = -p \log_2 p - (1-p \log_2 (1-p) = \mathcal{H}(p))
+                \end{align}
+            </div>
+            <p>よって、\(C = 1 - H(S_E)\)を用いて、</p>
+             <div class="scroll">
+                \begin{align}
+                C = 1 - H(S_E) = 1 - \mathcal{H}(p)
+                \end{align}
+            </div>
+            <p><b>通信路容量と情報速度の関係についての考察</b></p>
+            <p>情報速度\(R \xleftrightarrow{def}\)通信路符号系列に埋め込まれた1通信路記号あたりの平均情報量（ビット/記号）</p>
+            <p>通信路容量\(R \xleftrightarrow{def}\)通信路を介して伝送できる1通信路記号あたり平均情報量（ビット/記号）</p>
+            <p>情報速度\(R\) \(<\) 通信路容量\(C\)であれば情報をすべて送ることができるのでは？　→　復号誤り率を0にできるということ？</p>]
+            <p><b>通信路符号化定理</b></p>
+            <p>通信路容量は\(C\)である通信路に対し、\(R < C\)であれば、情報速度\(R\)の符号で復号誤り率がいくらでも小さいものが存在する。\(R>C\)であれば、そのような符号は存在しない。</p>
+            <p></p>
         </section>
     </main>
 </body>
