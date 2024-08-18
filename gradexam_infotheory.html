@@ -834,11 +834,13 @@
             <p>符号語\(\mathbf{w} = x_1 x_2 \cdots x_k c\)について、\(x_1 x_2 \cdots x_k\)の部分は<b>情報記号</b>、\(c\)は<b>（パリティ）検査記号</b>という。</p>
             <p>符号語は\(\mathbf{w} = (x_1, x_2, \cdots, x_k, c)\)とベクトルの形で表すこともある。</p>
             <p><b>単一パリティ検査符号の性質</b></p>
-            <p>長さ\(k\)の系列を入力とする単一パリティ検査符号</p>
-            <p>符号長\(n = k + 1\)、符号語数\(M = 2^k\)→情報速度\(R = \frac{k}{k+1}\)</p>
-            <p>一つの誤りの検出が可能な<b>誤り検出符号</b></p>
-            <p>\((k+1, k)\)組織符号</p>
-            <p>線形符号</p>
+            <ul>
+                <li>長さ\(k\)の系列を入力とする単一パリティ検査符号</li>
+                <li>符号長\(n = k + 1\)、符号語数\(M = 2^k\)→情報速度\(R = \frac{k}{k+1}\)</li>
+                <li>一つの誤りの検出が可能な<b>誤り検出符号</b></li>
+                <li>\((k+1, k)\)組織符号</li>
+                <li>線形符号</li>
+            </ul>
             <p><b>組織符号</b></p>
             <p><b>組織符号</b>：\(k\)個の情報記号から、\(n - k\)個の検査記号を一定の方法で求め、付加することにより符号化される符号長\(n\)の符号</p>
             <p><b>\(n, k\)符号</b>：符号長\(n\)、情報記号数\(k\)の組織符号</p>
@@ -869,7 +871,7 @@
                 \begin{align}
                 e_i = 
                 \begin{cases}
-                1 \quad \text{（第\(i\)成分に誤りが生じたとき）}
+                1 \quad \text{（第\(i\)成分に誤りが生じたとき）} \\
                 0 \quad \text{（そうでないとき）}
                 \end{cases}
                 \end{align}
@@ -882,7 +884,7 @@
                 \mathbf{s} = w_1 + e_1 + w_2 + e_2 + \cdots + w_n + e_n = e_1 + e_2 + \cdots + e_n
                 \end{align}
             </div>
-            <p>\(2 \times 2\)水平垂直パリティ検査符号</p>
+            <p><b>\(2 \times 2\)水平垂直パリティ検査符号</b></p>
             <p>与えられた長さ4の系列\(x_1 x_2 x_3 x_4\)に対し、長さ9の符号語\((x_1, x_2, x_3, x_4, c_1, c_2, c_3, c_4, c_5)\)を、以下のように生成する符号。</p>
             <p>下の表のように4個の情報ビットを\(2 \times 2\)の配列に並べ、各行各列に一つずつ検査ビットを付け加える。</p>
             <table>
@@ -926,16 +928,29 @@
                 \begin{align}
                 \left\{
                 \begin{array}{l}
-                w_1 + w_2 \hspace{30pt} + w_5 \hspace{70pt} = 0 \\
-                \hspace{30pt} w_3 + w_4 \hspace{30pt} + w_6 \hspace{70pt} = 0 \\
-                w_1 \hspace{30pt} + w_3 \hspace{70pt} + w_7 \hspace{70pt} = 0 \\
-                w_2 \hspace{30pt} + w_4 \hspace{100pt} + w_8 \hspace{30pt} = 0 \\
-                w_1 + w_2 + w_3 + w_4 \hspace{30pt} + w_9 = 0
+                w_1 + w_2 + w_5 &= 0 \\
+                w_3 + w_4 + w_6 &= 0 \\
+                w_1 + w_3 + w_7 &= 0 \\
+                w_2 + w_4 + w_8 &= 0 \\
+                w_1 + w_2 + w_3 + w_4 + w_9 &= 0
                 \end{array}
                 \right.
                 \end{align}
             </div>
-                
+            <p>シンドローム：受信語\(\mathbf{y} = (y_1, y_2, \cdots, y_9)\)に対するシンドローム\(\mathbf{s} = (s_1, s_2, \cdots, s_5)\)</p>
+            <div class="scroll">
+                \begin{align}
+                \left\{
+                \begin{array}{l}
+                s_1 &= y_1 + y_2 + y_5 \\
+                s_2 &= y_3 + y_4 + y_6 \\
+                s_3 &= y_1 + y_3 + y_7 \\
+                s_4 &= y_2 + y_4 + y_8 \\
+                s_5 &= y_1 + y_2 + y_3 + y_4 + y_9
+                \end{array}
+                \right.
+                \end{align}
+            </div>
         </section>
     </main>
 </body>
