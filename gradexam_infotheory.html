@@ -1414,17 +1414,29 @@
                 </div>
                 <p>\(H(X)\)が大きい：\(X\)が各値を取る確率の偏りが小さく、不確実性が大きい。</p>
                 <p><b>(2)の解答</b></p>
-                <p>\(I(X;Y) = H(X) - H(X|Y)\)であるから、\(H(X|Y)\)を求めればよい。</p>
-                <p>そして、\(H(X|Y)\)を求めるには、\(P(Y)\)を求める必要がある。</p>
+                <p>\(I(X;Y) = H(Y) - H(Y|X)\)である。</p>
+                <p>\(H(Y|X)\)は以下の式によって求められる。</p>
+                <div class="scroll">
+                    \begin{align}
+                    H(Y|X) = - \sum_{j = 1}^{M_X} P(x_j) \sum_{i = 1}^{M_Y} P(y_i|x_j) \log_2 P(y_i|x_j)
+                    \end{align}
+                </div>
+                <p>よって、</p>
+                <div class="scroll">
+                    \begin{align}
+                    H(Y|X) = \frac{1}{4} \times (- \frac{1}{2} \log_2 \frac{1}{2} - \frac{1}{2} \log_2 \frac{1}{2}) + \frac{1}{4} \times (- \frac{1}{2} \log_2 \frac{1}{2} - \frac{1}{2} \log_2 \frac{1}{2}) + \frac{1}{2} \times (- \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{2} \log_2 \frac{1}{2}) = 1.25
+                    \end{align}
+                </div>
+                <p>次に、\(H(Y)\)を求めるために\(P(Y)\)を求める。</p>
                 <p>\(P(Y)\)は以下のように求めることができる。</p>
                 <div class="scroll">
                     \begin{align}
                     P(Y=A) &= P(X=A) \times \frac{1}{2} + P(X=B) \times 0 + P(X=C) \times \frac{1}{4} = \frac{1}{4} \times \frac{1}{2} + \frac{1}{4} \times 0 + \frac{1}{2} \times \frac{1}{4} = \frac{1}{4} \\
                     P(Y=B) &= P(X=A) \times 0 + P(X=B) \times \frac{1}{2} + P(X=C) \times \frac{1}{4} = \frac{1}{4} \times 0 + \frac{1}{4} \times \frac{1}{2} + \frac{1}{2} \times \frac{1}{4} = \frac{1}{4} \\
-                    P(Y=A) &= P(X=A) \times \frac{1}{2} + P(X=B) \times \frac{1}{2} + P(X=C) \times \frac{1}{2} = \frac{1}{2} \times \frac{1}{2} + \frac{1}{2} \times \frac{1}{2} + \frac{1}{2} \times \frac{1}{2} = \frac{1}{2} 
+                    P(Y=C) &= P(X=A) \times \frac{1}{2} + P(X=B) \times \frac{1}{2} + P(X=C) \times \frac{1}{2} = \frac{1}{4} \times \frac{1}{2} + \frac{1}{4} \times \frac{1}{2} + \frac{1}{2} \times \frac{1}{2} = \frac{1}{2} 
                     \end{align}
                 </div>
-                <p>したがって、表2に\(P(X), P(Y)\)を加えると、以下の表が得られる。</p>
+                <p>表2に\(P(X), P(Y)\)を加えると、以下の表が得られる。</p>
                 <table>
                     <tr>
                         <td rowspan="2" colspan="2"></td>
@@ -1465,6 +1477,13 @@
                         <td>\(\frac{1}{2}\)</td>
                     </tr>
                 </table>
+                <p>したがって、\(H(Y) = H(X) = 1.5\)であり、</p>
+                <div class="scroll">
+                    \begin{align}
+                    I(X;Y) = H(Y) - H(Y|X) = 1.5 - 1.25 = 0.25 \quad \text{[ビット]}
+                    \end{align}
+                </div>
+                <p>となる。</p>
             </div>
             <div class="example">
                 <p><b>問題</b></p>
