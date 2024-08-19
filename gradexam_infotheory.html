@@ -1570,20 +1570,22 @@
                     \begin{align}
                     P(Y=A) &= P(X=A) \times \frac{1}{2} + P(X=B) \times 0 + P(X=C) \times \frac{1}{4} \\
                     &= p_a \times \frac{1}{2} + p_b \times 0 + p_c \times \frac{1}{4} \\
-                    &= p_a \times \frac{1}{2} + p_c \times \frac{1}{4} \\
+                    &= \frac{p_a}{2} + \frac{p_c}{4} \\
                     P(Y=B) &= P(X=A) \times 0 + P(X=B) \times \frac{1}{2} + P(X=C) \times \frac{1}{4} \\
                     &= p_a \times 0 + p_b \times \frac{1}{2} + p_c \times \frac{1}{4} \\
-                    &= p_b \times \frac{1}{2} + p_c \times \frac{1}{4} \\
+                    &= \frac{p_b}{2} + \frac{p_c}{4} \\
                     P(Y=C) &= P(X=A) \times \frac{1}{2} + P(X=B) \times \frac{1}{2} + P(X=C) \times \frac{1}{2} \\
-                    &= p_a \times \frac{1}{2} + p_b \times \frac{1}{2} + p_c \times \frac{1}{2} 
+                    &= p_a \times \frac{1}{2} + p_b \times \frac{1}{2} + p_c \times \frac{1}{2} \\
+                    &= \frac{p_a}{2} + \frac{p_b}{2} + \times \frac{p_c}{2} 
                     \end{align}
                 </div>
-                <p>したがって、</p>
+                <p>したがって、\(H(Y)\)は</p>
                 <div class="scroll">
                     \begin{align}
-                    H(Y) = - ()
+                    H(Y) = - (\frac{p_a}{2} + \frac{p_c}{4}) \log_2 (\frac{p_a}{2} + \frac{p_c}{4}) - (\frac{p_b}{2} + \frac{p_c}{4}) \log_2 (\frac{p_b}{2} + \frac{p_c}{4}) - (\frac{p_a}{2} + \frac{p_b}{2} + \times \frac{p_c}{2}) \log_2 (\frac{p_a}{2} + \frac{p_b}{2} + \times \frac{p_c}{2})
                     \end{align}
                 </div>
+                <p>となる。</p>
             </div>
             <div class="example">
                 <p><b>問題</b></p>
