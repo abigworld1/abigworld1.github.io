@@ -1127,7 +1127,7 @@
             <table>
                 <tr>
                     <th>A(x)</th>
-                    <th>W<sub>I</sub>(x) = A<sub>1</sub>(x)G(x)</th>
+                    <th>W<sub>1</sub>(x) = A<sub>1</sub>(x)G(x)</th>
                     <th>w</th>
                 </tr>
                 <tr>
@@ -1157,12 +1157,12 @@
                 </tr>
                 <tr>
                     <td>x<sup>2</sup> + 1</td>
-                    <td>x<sup>6</sup> + x<sup>3</sup> + x + 1</td>
+                    <td>x<sup>6</sup> + x<sup>5</sup> x<sup>3</sup> + 1</td>
                     <td>1101001</td>
                 </tr>
                 <tr>
                     <td>x<sup>2</sup> + x</td>
-                    <td>x<sup>6</sup> + x</td>
+                    <td>x<sup>6</sup> + x<sup>3</sup> + x<sup>2</sup> + x</td>
                     <td>1001110</td>
                 </tr>
                 <tr>
@@ -1173,7 +1173,66 @@
             </table>
             <p>\(A(x)\)と\(G(x)\)の乗算：ひっ算して足し算するときに、項が偶数個だと消える（繰り上がらない）ことに注意。</p>
             <p>巡回符号\(C\)は\(G(x)\)によって生成される　→　\(G(x)\)：\(C\)の<b>生成多項式</b></p>
-            <p></p>
+            <p><b>巡回符号は線形符号</b></p>
+            <p>線形符号となるための必要十分条件：任意の二つの符号語の和が符号語</p>
+            <p>巡回符号\(C\)が線形符号かどうか</p>
+            <ol>
+                <li>\(W_1 (x)\)と\(W_2 (x)\)は\(C\)の符号多項式</li>
+                <li>\(W_1 (x) = A_1 (x) G(x), \quad W_2 (x) = A_2 (x) G(x)\)とかける</li>
+                <li>\(W_1 (x) + W_2 (x) = [A_1 (x) + A_2 (x)] G(x)\)</li>
+                <li>\(W_1 (x) + W_2 (x)\)は\(C\)の符号多項式</li>
+            </ol>
+            <p>線形符号である　→　検査符号が情報記号の線形式でかける　→　組織符号の形で符号語を作ることができる</p>
+            <p><b>巡回符号の組織符号化法</b></p>
+            <p>\(n-m\)個の情報ビット列\(x_{n-m-1}, \cdots, x_1, x_0\)を\(C\)の符号語に組織符号化する方法</p>
+            <ol>
+                <li>
+                    情報ビット列を係数とする多項式
+                    <div class="scroll">
+                        \begin{align}
+                        X(x) = x_{n-m-1} x^{n-m-1} + \cdots + x_1 x + x_0
+                        \end{align}
+                    </div>
+                    に\(x^m\)をかけ、それを\(m\)次の\(G(x)\)で割った剰余多項式
+                    <div class="scroll">
+                        \begin{align}
+                        C(x) = c_{m-1} x^{m-1} + \cdots + c_1 x + c_0
+                        \end{align}
+                    </div>
+                    を計算。\(C(x)\)は
+                    <div class="scroll">
+                        \begin{align}
+                        X(x) x^m = A(x) G(x) + C(x) \quad \text{(1)}
+                        \end{align}
+                    </div>
+                    となる\(m-1\)次以下の多項式。
+                </li>
+                <li>
+                    <div class="scroll">
+                        \begin{align}
+                        W(x) = X(x) x^m - C(x) = X(x) x^m + C(x)
+                        \end{align}
+                    </div>
+                    により\(W(x)\)を計算。
+                    式(1)から\(W(x) = A(x) G(x) \Rightarrow W(x)\)は\(C\)の符号多項式 <br>
+                    \(W(x)\)のベクトル表現：
+                    <div class="scroll">
+                        \begin{align}
+                        \mathbf{w} = (x_{n-m-1}, \cdots, x_1, x_0, c_{m-1}, \cdots, c_1, c_0)
+                        \end{align}
+                    </div>
+                </li>
+            </ol>
+            <p><b>符号化の例</b></p>
+            <p>生成多項式：\(G(x) = x^4 + x^3 + x^2 + 1\)、符号長：\(n = 7\)、情報ビット数：\(k = 3\)（生成多項式は4次なので、7-4 =3）</p>
+            <p>情報ビット101の符号化</p>
+            <ol>
+                <li>情報ビットを係数とする多項式：\(X(x) = x^2 + 1\)</li>
+                <li>\(x^{n-k} = x^4\)をかける：\(X(x) x^4 = x^6 + x^4\)</li>
+                <li>\(G(x)\)で割った剰余：\(C(x) = x + 1\)</li>
+                <li>符号多項式：\(W(x) &= X(x) x^4 + C(x) \\ &= x^6 + x^4 + x + 1\)</li>
+                <li>符号語：1010011</li>
+            </ol>
         </section>
     </main>
 </body>
