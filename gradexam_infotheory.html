@@ -1358,7 +1358,7 @@
                         任意の入力 \( X \) に対し、表 2 で与えられた条件付き確率 \( P(Y|X) \) で、\( Y \) を出力する無記憶定常通信路の通信路容量を求めよ。
                     </li>
                 </ol>
-                <h3>表 1: \( P(X) \)</h3>
+                <p>表 1: \( P(X) \)</p>
                 <table>
                     <tr>
                         <th>\( X \)</th>
@@ -1373,34 +1373,46 @@
                         <td>\( \frac{1}{2} \)</td>
                     </tr>
                 </table>
-                <h3>表 2: \( P(Y|X) \)</h3>
+                <p>表 2: \( P(Y|X) \)</p>
                 <table>
                     <tr>
-                        <th>\( Y \) \ \( X \)</th>
-                        <th>\( A \)</th>
-                        <th>\( B \)</th>
-                        <th>\( C \)</th>
+                        <td rowspan="2"></td>
+                        <th colspan="3">X</th>
                     </tr>
                     <tr>
-                        <td>\( A \)</td>
-                        <td>\( \frac{1}{2} \)</td>
-                        <td>0</td>
-                        <td>\( \frac{1}{4} \)</td>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
                     </tr>
                     <tr>
-                        <td>\( B \)</td>
-                        <td>0</td>
-                        <td>\( \frac{1}{2} \)</td>
-                        <td>\( \frac{1}{4} \)</td>
+                        <th rowspan="3">Y</th>
+                        <td>A</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td>\( C \)</td>
-                        <td>\( \frac{1}{2} \)</td>
-                        <td>\( \frac{1}{2} \)</td>
-                        <td>\( \frac{1}{2} \)</td>
+                        <td>B</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </table>
-                <p><b>解答</b></p>
+                <p><b>(1)の解答</b></p>
+                <div class="scroll">
+                    \begin{align}
+                    H(X) &= - \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{2} \log_2 \frac{1}{2} \\
+                    &= \frac{1}{2} + \frac{1}{2} + \frac{1}{2} \\
+                    &= 1.5
+                    \end{align}
+                </div>
+                <p>\(H(X)\)が大きい：\(X\)が各値を取る確率の偏りが小さく、不確実性が大きい。</p>
+                <p><b>(2)の解答</b></p>
+                <p>\(I(X;Y) = H(X) - H(X|Y)\)であるから、まずは\(H(X|Y)\)をもとめる。</p>
+                <p></p>
             </div>
             <div class="example">
                 <p><b>問題</b></p>
@@ -1453,6 +1465,7 @@
                         2元体上の生成多項式が \(G(x) = x^4 + x^2 + 1\) である符号長7の巡回符号において、情報ビット 110 を符号化した後の2元系列を答えよ。
                     </li>
                 </ol>
+                <p><b>解答</b></p>
             </div>
         </section>
     </main>
