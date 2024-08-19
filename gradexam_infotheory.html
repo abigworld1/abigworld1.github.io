@@ -1540,6 +1540,42 @@
                     \end{align}
                 </div>
                 <p>となる。</p>
+                <p><b>(5)の解答</b></p>
+                <p>入力は任意であるから、\(P(X)\)を以下のように再定義する。</p>
+                <table>
+                    <tr>
+                        <th>\( X \)</th>
+                        <th>\( A \)</th>
+                        <th>\( B \)</th>
+                        <th>\( C \)</th>
+                    </tr>
+                    <tr>
+                        <td>\( P(X) \)</td>
+                        <td>\( p_a \)</td>
+                        <td>\( p_b \)</td>
+                        <td>\( p_c \)</td>
+                    </tr>
+                </table>
+                <p>（\(p_a + p_b + p_c = 1\)）</p>
+                <p>無記憶定常通信路の通信路容量\(C\)は、</p>
+                <div class="scroll">
+                    \begin{align}
+                    C = \max_{P_X} I(X;Y)
+                    \end{align}
+                </div>
+                <p>によって計算できる。\(I(X;Y) = H(Y) - H(Y|X)\)より、まずは\(H(Y)\)と\(H(Y|X)\)を求める。</p>
+                <p>次に、\(H(Y)\)を求めるために\(P(Y)\)を求める。</p>
+                <p>\(P(Y)\)は以下のように求めることができる。</p>
+                <div class="scroll">
+                    \begin{align}
+                    P(Y=A) &= P(X=A) \times \frac{1}{2} + P(X=B) \times 0 + P(X=C) \times \frac{1}{4} \\
+                    &= p_a \times \frac{1}{2} + p_b \times 0 + p_c \times \frac{1}{4} 
+                    P(Y=B) &= P(X=A) \times 0 + P(X=B) \times \frac{1}{2} + P(X=C) \times \frac{1}{4} \\
+                    &= p_a \times 0 + p_b \times \frac{1}{2} + p_c \times \frac{1}{4} 
+                    P(Y=C) &= P(X=A) \times \frac{1}{2} + P(X=B) \times \frac{1}{2} + P(X=C) \times \frac{1}{2} \\
+                    &= p_a \times \frac{1}{2} + p_b \times \frac{1}{2} + p_c \times \frac{1}{2} 
+                    \end{align}
+                </div>
             </div>
             <div class="example">
                 <p><b>問題</b></p>
