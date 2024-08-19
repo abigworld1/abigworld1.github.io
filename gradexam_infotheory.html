@@ -1426,8 +1426,8 @@
                     \begin{align}
                     H(Y|X) &= \frac{1}{4} \times (- \frac{1}{2} \log_2 \frac{1}{2} - \frac{1}{2} \log_2 \frac{1}{2}) \\ 
                     &+ \frac{1}{4} \times (- \frac{1}{2} \log_2 \frac{1}{2} - \frac{1}{2} \log_2 \frac{1}{2}) \\
-                    &+ \frac{1}{2} \times (- \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{2} \log_2 \frac{1}{2}) &
-                    = 1.25
+                    &+ \frac{1}{2} \times (- \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{2} \log_2 \frac{1}{2}) \\
+                    &= 1.25
                     \end{align}
                 </div>
                 <p>次に、\(H(Y)\)を求めるために\(P(Y)\)を求める。</p>
@@ -1494,6 +1494,52 @@
                 </div>
                 <p>となる。</p>
                 <p>\(I(X;Y)\)が大きい：\(X\)と\(Y\)の片方が分かったときに他方について得られる情報が多く、不確実性が大きく減少する。</p>
+                <p><b>(3)の解答</b></p>
+                <p>まず、ハフマン木を描くことによって、以下のように符号語を割り当てることができる。</p>
+                <ul>
+                    <li>A：11（確率\(\frac{1}{4}\)）</li>
+                    <li>B：10（確率\(\frac{1}{4}\)）</li>
+                    <li>A：0（確率\(\frac{1}{2}\)）</li>
+                </ul>
+                <p>このとき、平均符号長は</p>
+                <div class="scroll">
+                    \begin{align}
+                    \frac{1}{4} \times 2 + \frac{1}{4} \times 2 + \frac{1}{2} \times 1 = 1.5
+                    \end{align}
+                </div>
+                <p>となる。</p>
+                <p><b>(4)の解答</b></p>
+                <p>結合確率\(P(X, Y)\)は以下の通りである。</p>
+                <div class="scroll">
+                    \begin{align}
+                    P(A, A) = P(A) \times P(A | A) = \frac{1}{4} \times \frac{1}{2} = \frac{1}{8} \\
+                    P(A, B) = P(A) \times P(B | A) = \frac{1}{4} \times 0 = 0 \\
+                    P(A, C) = P(A) \times P(C | A) = \frac{1}{4} \times \frac{1}{2} = \frac{1}{8} \\
+                    P(B, A) = P(B) \times P(A | B) = \frac{1}{4} \times 0 = 0 \\
+                    P(B, B) = P(B) \times P(B | B) = \frac{1}{4} \times \frac{1}{2} = \frac{1}{8} \\
+                    P(B, C) = P(B) \times P(C | B) = \frac{1}{4} \times \frac{1}{2} = \frac{1}{8} \\
+                    P(C, A) = P(C) \times P(A | C) = \frac{1}{2} \times \frac{1}{4} = \frac{1}{8} \\
+                    P(C, B) = P(C) \times P(B | C) = \frac{1}{2} \times \frac{1}{4} = \frac{1}{8} \\
+                    P(C, C) = P(C) \times P(C | C) = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4} \\
+                    \end{align}
+                </div>
+                <p>これに基づいてハフマン木を描くと、以下のように符号化できる。</p>
+                <ul>
+                    <li>AA：111（確率\(\frac{1}{8}\)）</li>
+                    <li>AC：110（確率\(\frac{1}{8}\)）</li>
+                    <li>BB：101（確率\(\frac{1}{8}\)）</li>
+                    <li>BC：100（確率\(\frac{1}{8}\)）</li>
+                    <li>CA：011（確率\(\frac{1}{8}\)）</li>
+                    <li>CB：010（確率\(\frac{1}{8}\)）</li>
+                    <li>CC：00（確率\(\frac{1}{4}\)）</li>
+                </ul>
+                <p>このとき、平均符号長は</p>
+                <div class="scroll">
+                    \begin{align}
+                    (\frac{1}{8} \times 3) \times 6 + \frac{1}{4} \times 2 = \frac{11}{4} = 2.75
+                    \end{align}
+                </div>
+                <p>となる。</p>
             </div>
             <div class="example">
                 <p><b>問題</b></p>
