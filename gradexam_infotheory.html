@@ -1418,13 +1418,16 @@
                 <p>\(H(Y|X)\)は以下の式によって求められる。</p>
                 <div class="scroll">
                     \begin{align}
-                    H(Y|X) = - \sum_{j = 1}^{M_X} P(x_j) \sum_{i = 1}^{M_Y} P(y_i|x_j) \log_2 P(y_i|x_j)
+                    H(Y|X) = - \sum P(X) \sum P(Y|X) \log_2 P(Y|X)
                     \end{align}
                 </div>
                 <p>よって、</p>
                 <div class="scroll">
                     \begin{align}
-                    H(Y|X) = \frac{1}{4} \times (- \frac{1}{2} \log_2 \frac{1}{2} - \frac{1}{2} \log_2 \frac{1}{2}) + \frac{1}{4} \times (- \frac{1}{2} \log_2 \frac{1}{2} - \frac{1}{2} \log_2 \frac{1}{2}) + \frac{1}{2} \times (- \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{2} \log_2 \frac{1}{2}) = 1.25
+                    H(Y|X) &= \frac{1}{4} \times (- \frac{1}{2} \log_2 \frac{1}{2} - \frac{1}{2} \log_2 \frac{1}{2}) \\ 
+                    &+ \frac{1}{4} \times (- \frac{1}{2} \log_2 \frac{1}{2} - \frac{1}{2} \log_2 \frac{1}{2}) \\
+                    &+ \frac{1}{2} \times (- \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{2} \log_2 \frac{1}{2}) &
+                    = 1.25
                     \end{align}
                 </div>
                 <p>次に、\(H(Y)\)を求めるために\(P(Y)\)を求める。</p>
@@ -1484,10 +1487,11 @@
                     \end{align}
                 </div>
                 <p>となる。</p>
+                <p>\(I(X;Y)\)が大きい：\(X\)と\(Y\)の片方が分かったときに他方について得られる情報が多く、不確実性が大きく減少する。</p>
             </div>
             <div class="example">
                 <p><b>問題</b></p>
-                <h2>確率変数 \( X \) と \( Y \) の結合確率分布 \( P(X, Y) \) が次の表で与えられるとき、以下の問いに答えよ。 ただし、\( \log_2 3 = 1.585 \) とし、小数点第3位を四捨五入して答えよ。</h2>
+                <p>確率変数 \( X \) と \( Y \) の結合確率分布 \( P(X, Y) \) が次の表で与えられるとき、以下の問いに答えよ。 ただし、\( \log_2 3 = 1.585 \) とし、小数点第3位を四捨五入して答えよ。</p>
                 <table>
                     <tr>
                         <th>\( P(X, Y) \)</th>
