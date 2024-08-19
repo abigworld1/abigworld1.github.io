@@ -1655,7 +1655,31 @@
                         \( X \) と \( Y \) の相互情報量 \( I(X; Y) \) は何ビットか求めよ。
                     </li>
                 </ol>
-                <p><b>解答</b></p>
+                <p><b>(1)の解答</b></p>
+                <div class="scroll">
+                    \begin{align}
+                    H(X, Y) = - \frac{1}{2} \log_2 \frac{1}{2} - \frac{1}{4} \log_2 \frac{1}{4} - \frac{1}{4} \log_2 \frac{1}{4} = 1.5
+                    \end{align}
+                </div>
+                <p><b>(2)の解答</b></p>
+                <div class="scroll">
+                    \begin{align}
+                    H(X) = - \frac{3}{4} \log_2 \frac{3}{4} - \frac{1}{4} \log_2 \frac{1}{4} = 0.81125 \simeq 0.81
+                    \end{align}
+                </div>
+                <p><b>(3)の解答</b></p>
+                <div class="scroll">
+                    \begin{align}
+                    H(Y|X) = H(X, Y) - H(X) = 1.5 - 0.81125 = 0.68875 \simeq 0.69
+                    \end{align}
+                </div>
+                <p><b>(4)の解答</b></p>
+                <p>\(H(Y) = H(X) = 1.5\)、\(I(X;Y) = H(Y) - H(Y|X)\)を用いて、</p>
+                <div class="scroll">
+                    \begin{align}
+                    I(X;Y) = 1.5 - 0.68875 = 0.81125 \simeq 0.81
+                    \end{align}
+                </div>
             </div>
             <div class="example">
                 <p><b>問題</b></p>
