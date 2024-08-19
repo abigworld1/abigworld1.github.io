@@ -1095,6 +1095,85 @@
             </table>
             <p>線形符号の最小距離 = 最小ハミング重み（0でない符号語のハミング重みの最小値）</p>
             <p>例）(7,4)ハミング符号の場合：最小距離\(d_{min} =\)最小ハミング重み\(= 3\)</p>
+        <h3>通信路符号化法(3)</h3>
+            <p><b>巡回符号の特徴</b></p>
+            <ul>
+                <li>組織符号・線形符号</li>
+                <li>符号化・シンドローム計算の装置化が容易</li>
+                <li>誤り検出能力に優れる</li>
+            </ul>
+            <p>最も実用的な線形符号</p>
+            <p><b>巡回符号の定義</b></p>
+            <p>符号多項式：符号語の多項式表現</p>
+            <p>0,1からなる長さ\(n\)の符号語\(\mathbf{v} = (v_{n-1}, v_{n-2}, \cdots, v_1, v_0)\)を</p>
+            <div class="scroll">
+                \begin{align}
+                V(x) = v_{n-1} x^{n-1} + v_{n-2} x^{n-2} + \cdots + v_1 x + v_0
+                \end{align}
+            </div>
+            <p>で表す（係数は0か1しか取らない）。</p>
+            <p>符号長\(n\)の符号は、\(n-1\)次以下の多項式の集合として表せる。</p>
+            <p>巡回符号：定数項が1の\(m\)次の多項式</p>
+            <div class="scroll">
+                \begin{align}
+                G(x) = x^m + g_{m-1} x^{m-1} + \cdots + g_1 x + 1
+                \end{align}
+            </div>
+            <p>の\(n-1\)次以下の倍多項式（\(W(x) = A(x) G(x)\)という形の符号多項式）すべての集合\(C\)</p>
+            <p><b>巡回符号の例</b></p>
+            <p>\(G(x) = x^4 + x^3 + x^2 + 1\)によって作られる長さ7の符号\(C\)</p>
+            <p>符号多項式\(W(x) = w_6 x^6 + \cdots + w_1 x + w_0\)</p>
+            <p>および符号語\(\mathbf{w} = (w_6, \cdots, w_1, w_0)\)</p>
+            <table>
+                <tr>
+                    <th>A(x)</th>
+                    <th>W<sub>I</sub>(x) = A<sub>1</sub>(x)G(x)</th>
+                    <th>w</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0000000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>x<sup>4</sup> + x<sup>3</sup> + x<sup>2</sup> + 1</td>
+                    <td>0011101</td>
+                </tr>
+                <tr>
+                    <td>x</td>
+                    <td>x<sup>5</sup> + x<sup>4</sup> + x<sup>3</sup> + x</td>
+                    <td>0111010</td>
+                </tr>
+                <tr>
+                    <td>x + 1</td>
+                    <td>x<sup>5</sup> + x<sup>2</sup> + x + 1</td>
+                    <td>0100111</td>
+                </tr>
+                <tr>
+                    <td>x<sup>2</sup></td>
+                    <td>x<sup>6</sup> + x<sup>5</sup> + x<sup>4</sup> + x<sup>2</sup></td>
+                    <td>1110100</td>
+                </tr>
+                <tr>
+                    <td>x<sup>2</sup> + 1</td>
+                    <td>x<sup>6</sup> + x<sup>3</sup> + x + 1</td>
+                    <td>1101001</td>
+                </tr>
+                <tr>
+                    <td>x<sup>2</sup> + x</td>
+                    <td>x<sup>6</sup> + x</td>
+                    <td>1001110</td>
+                </tr>
+                <tr>
+                    <td>x<sup>2</sup> + x + 1</td>
+                    <td>x<sup>6</sup> + x<sup>4</sup> + x + 1</td>
+                    <td>1010011</td>
+                </tr>
+            </table>
+            <p>\(A(x)\)と\(G(x)\)の乗算：ひっ算して足し算するときに、項が偶数個だと消える（繰り上がらない）ことに注意。</p>
+            <p>巡回符号\(C\)は\(G(x)\)によって生成される　→　\(G(x)\)：\(C\)の<b>生成多項式</b></p>
+            <p></p>
         </section>
     </main>
 </body>
