@@ -1556,7 +1556,7 @@
                         <td>\( p_c \)</td>
                     </tr>
                 </table>
-                <p>（\(p_a + p_b + p_c = 1\)）</p>
+                <p>ただし、\(p_a + p_b + p_c = 1\)である。</p>
                 <p>無記憶定常通信路の通信路容量\(C\)は、</p>
                 <div class="scroll">
                     \begin{align}
@@ -1595,8 +1595,25 @@
                     &= p_a + p_b + \frac{3}{2} p_c
                     \end{align}
                 </div>
-                <p>となる。したがって、通信路容量\(C\)は、</p>
-                
+                <p>となる。ここで、\(H(Y), H(Y|X)\)に対して\(p_a + p_b + p_c = 1\)を用いると、以下のようになる。</p>
+                <div class="scroll">
+                    \begin{align}
+                    H(Y) = - \frac{p_a - p_b + 1}{4} \log_2 \frac{p_a - p_b + 1}{4} - \frac{p_b - p_a + 1}{4} \log_2 \frac{p_b - p_a + 1}{4} + \frac{1}{2}
+                    \end{align}
+                </div>
+                <div class="scroll">
+                    \begin{align}
+                    H(Y|X) &= p_a + p_b + \frac{3}{2} p_c \\
+                    &= \frac{3}{2} - \frac{p_a + p_b}{2}
+                    \end{align}
+                </div>
+                <p>したがって、\(I(X;Y)\)は以下のようになる。</p>
+                <div class="scroll">
+                    \begin{align}
+                    I(X;Y) &= H(Y) - H(Y|X) \\
+                    &= - \frac{p_a - p_b + 1}{4} \log_2 \frac{p_a - p_b + 1}{4} - \frac{p_b - p_a + 1}{4} \log_2 \frac{p_b - p_a + 1}{4} + \frac{p_a + p_b}{2} - 1 
+                    \end{align}
+                </div>
             </div>
             <div class="example">
                 <p><b>問題</b></p>
