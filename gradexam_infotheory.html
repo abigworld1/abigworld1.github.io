@@ -1415,7 +1415,56 @@
                 <p>\(H(X)\)が大きい：\(X\)が各値を取る確率の偏りが小さく、不確実性が大きい。</p>
                 <p><b>(2)の解答</b></p>
                 <p>\(I(X;Y) = H(X) - H(X|Y)\)であるから、\(H(X|Y)\)を求めればよい。</p>
-                <p></p>
+                <p>そして、\(H(X|Y)\)を求めるには、\(P(Y)\)を求める必要がある。</p>
+                <p>\(P(Y)\)は以下のように求めることができる。</p>
+                <div class="scroll">
+                    \begin{align}
+                    P(Y=A) &= P(X=A) \times \frac{1}{2} + P(X=B) \times 0 + P(X=C) \times \frac{1}{4} = \frac{1}{4} \times \frac{1}{2} + \frac{1}{4} \times 0 + \frac{1}{2} \times \frac{1}{4} = \frac{1}{4} \\
+                    P(Y=B) &= P(X=A) \times 0 + P(X=B) \times \frac{1}{2} + P(X=C) \times \frac{1}{4} = \frac{1}{4} \times 0 + \frac{1}{4} \times \frac{1}{2} + \frac{1}{2} \times \frac{1}{4} = \frac{1}{4} \\
+                    P(Y=A) &= P(X=A) \times \frac{1}{2} + P(X=B) \times \frac{1}{2} + P(X=C) \times \frac{1}{2} = \frac{1}{2} \times \frac{1}{2} + \frac{1}{2} \times \frac{1}{2} + \frac{1}{2} \times \frac{1}{2} = \frac{1}{2} 
+                    \end{align}
+                </div>
+                <p>したがって、表2に\(P(X), P(Y)\)を加えると、以下の表が得られる。</p>
+                <table>
+                    <tr>
+                        <td rowspan="2" colspan="2"></td>
+                        <th colspan="3">\(X\)</th>
+                        <th rowspan="2">\(P(Y)\)</th>
+                    </tr>
+                    <tr>
+                        <th>\(A\)</th>
+                        <th>\(B\)</th>
+                        <th>\(C\)</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="3">\(Y\)</th>
+                        <td>\(A\)</td>
+                        <td>\(\frac{1}{2}\)</td>
+                        <td>\(0\)</td>
+                        <td>\(\frac{1}{4}\)</td>
+                        <td>\(\frac{1}{4}\)</td>
+                    </tr>
+                    <tr>
+                        <td>\(B\)</td>
+                        <td>\(0\)</td>
+                        <td>\(\frac{1}{2}\)</td>
+                        <td>\(\frac{1}{4}\)</td>
+                        <td>\(\frac{1}{4}\)</td>
+                    </tr>
+                    <tr>
+                        <td>\(C\)</td>
+                        <td>\(\frac{1}{2}\)</td>
+                        <td>\(\frac{1}{2}\)</td>
+                        <td>\(\frac{1}{2}\)</td>
+                        <td>\(\frac{1}{2}\)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">\(P(X)\)</td>
+                        <td>\(\frac{1}{4}\)</td>
+                        <td>\(\frac{1}{4}\)</td>
+                        <td>\(\frac{1}{2}\)</td>
+                    </tr>
+                </table>
             </div>
             <div class="example">
                 <p><b>問題</b></p>
