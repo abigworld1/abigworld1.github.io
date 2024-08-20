@@ -1710,33 +1710,65 @@
                 <p>よって、2情報源記号ごとに符号化したときの平均符号長は\(2.67\)である。</p>
                 <p>したがって、1情報源記号あたりの平均符号長は\(\frac{2.67}{2} = 1.335\)である。</p>
                 <p><b>(2)の解答</b></p>
-                <p>(7,4)ハミング符号のパリティ検査方程式の係数行列（検査行列）\(\mathbf{H}\)は以下のとおり。</p>
+                <p>(7,4)ハミング符号のパリティ検査方程式の係数行列（検査行列）\(\mathbf{H}\)は、与えられた符号語\(\mathbf{w}\)より、以下のとおりである。</p>
                 <div class="scroll">
                     \begin{align}
                     \mathbf{H} = \begin{bmatrix}
                     1 & 0 & 1 & 1 & 1 & 0 & 0 \\
-                    1 & 1 & 0 & 1 & 0 & 1 & 0 \\
-                    1 & 1 & 1 & 0 & 0 & 0 & 1
+                    1 & 1 & 1 & 0 & 0 & 1 & 0 \\
+                    0 & 1 & 1 & 1 & 0 & 0 & 1
                     \end{bmatrix}
                     \end{align}
                 </div>
-                <p>\(\mathbf{w} \mathbf{H}^T\)を計算すると、</p>
+                <p>\(\mathbf{w} \mathbf{H}^T\)を計算し、シンドロームを求めると、</p>
                 <div class="scroll">
                     \begin{align}
-                    \mathbf{w} \times \mathbf{H}^T = 
+                    \mathbf{w} \mathbf{H}^T = 
                     \begin{bmatrix}
-                    1 & 0 & 1 & 1 & 1 & 0 & 0 \\
-                    1 & 1 & 0 & 1 & 0 & 1 & 0 \\
-                    1 & 1 & 1 & 0 & 0 & 0 & 1
+                    1 & 0 & 1 & 1 & 0 & 1 & 1 
                     \end{bmatrix}
-                    \times
                     \begin{bmatrix}
-                    1 & 0 & 1 & 1 & 1 & 0 & 0 \\
-                    1 & 1 & 0 & 1 & 0 & 1 & 0 \\
-                    1 & 1 & 1 & 0 & 0 & 0 & 1
+                    1 & 1 & 0 \\
+                    0 & 1 & 1 \\
+                    1 & 1 & 1 \\
+                    1 & 0 & 1 \\
+                    1 & 0 & 0 \\
+                    0 & 1 & 0 \\
+                    0 & 0 & 1
+                    \end{bmatrix} = 
+                    \begin{bmatrix}
+                    1 & 1 & 1
                     \end{bmatrix}
                     \end{align}
                 </div>
+                <p>となる。これは、\(\mathbf{H}^T\)の3行目と一致するので、\(w_3\)を訂正すればよい。</p>
+                <p>したがって、送信された情報源記号は\(1001011\)</p>である。
+                <p><b>(3)の解答</b></p>
+                <p>情報ビット110を係数とする多項式は</p>
+                <div class="scroll">
+                    \begin{align}
+                    X(x) = x^2 + x
+                    \end{align}
+                </div>
+                <p>である。これに\(x^{7-3} = x^4\)を掛けると、</p>
+                <div class="scroll">
+                    \begin{align}
+                    X(x) x^4 = x^6 + x^5
+                    \end{align}
+                </div>
+                <p>となる。これを生成多項式\(G(x) = x^4 + x^2 + 1\)で割った剰余は、</p>
+                <div class="scroll">
+                    \begin{align}
+                    C(x) = x^3 + x + 1
+                    \end{align}
+                </div>
+                <p>であり、符号多項式は以下のように求められる。</p>
+                <div class="scroll">
+                    \begin{align}
+                    W(x) = X(x) x^4 + C(x) = x^6 + x^5 + x^3 + x + 1
+                    \end{align}
+                </div>
+                <p>したがって、求める2元系列は、\(1101011\)である。</p>
             </div>
         </section>
     </main>
