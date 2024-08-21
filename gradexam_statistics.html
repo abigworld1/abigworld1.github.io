@@ -726,6 +726,64 @@
                 <p>と求まる。</p>
                 </div>
             </ul>
+            <h3>歪度、尖度</h3>
+            <div class="example">
+                <p><b>問題</b></p>
+                <p>累積分布関数が以下に示す \( F(x) \) で与えられる連続一様分布の歪度と尖度を求めよ。ただし、正規分布の尖度は3とする。</p>
+                <div class="scroll">
+                    \begin{align}
+                    F(x) = \begin{cases} 
+                        0 & (x < -0.5) \\
+                        x + 0.5 & (|x| \leq 0.5) \\
+                        1 & (x > 0.5) 
+                    \end{cases}
+                    \end{align}
+                </div>
+                <p><b>解答</b></p>
+                <p>歪度\(\frac{\mathbb{E}[(X-\mu)^3]}{\sigma^3}\)は、分布がどれだけ歪んでいるかを表す。</p>
+                <p>尖度\(\frac{\mathbb{E}[(X-\mu)^4]}{\sigma^4}\)は、正規分布と比べてどれだけとがっているかを表す（正規分布の尖度を0とするときは、さらに-3）。</p>
+                <p>まず、確率密度関数\(f(x)\)を求める。確率密度関数は、以下のように累積分布関数の微分によって求められる。</p>
+                <div class="scroll">
+                    \begin{align}
+                    f(x) = F'(x) = \begin{cases} 
+                        0 & (x < -0.5) \\
+                        1 & (|x| \leq 0.5) \\
+                        0 & (x > 0.5) 
+                    \end{cases}
+                    \end{align}
+                </div>
+                <p>したがって、平均\(\mu\)は、</p>
+                <div class="scroll">
+                    \begin{align}
+                    \mu &= \int_{- \infty}^{\infty} x f(x) \, dx \\
+                    &= \int_{- 0.5}^{0.5} x \, dx \\
+                    &= 0
+                    \end{align}
+                </div>
+                <p>となる。よって、\(\mathbb{E}[(X-\mu)^3]\)は</p>
+                <div class="scroll">
+                    \begin{align}
+                    \mathbb{E}[(X-\mu)^3] = \mathbb{E}[X^3] = \int_{- \infty}^{\infty} x^3 f(x) \, dx = 0
+                    \end{align}
+                </div>
+                <p>となるので、歪度は0である。</p>
+                <p>同様に\(\mathbb{E}[(X-\mu)^4]\)を計算すると、\frac{1}{80}を得る。</p>
+                <p>次に、\(\mathbb{V}(X) = \mathbb{E}(X^2) - (\mathbb{E}(X))^2\)を用いて\(\sigma^2\)を求める。</p>
+                <div class="scroll">
+                    \begin{align}
+                    \mathbb{V}(X) &= \mathbb{E}(X^2) - (\mathbb{E}(X))^2 \\
+                    &= \int_{- \infty}^{\infty} x^2 f(x) \, dx - \mu^2 \\
+                    &= \int_{- 0.5}^{0.5} x^2 \\
+                    &= \frac{1}{12}
+                    \end{align}
+                </div>
+                <p>したがって、尖度は以下の通りである。</p>
+                <div class="scroll">
+                    \begin{align}
+                    \frac{\mathbb{E}[(X-\mu)^4]}{\sigma^4} = \frac{\frac{1}{80}}{(\frac{1}{12})^2} = \frac{9}{5} = 1.8
+                    \end{align}
+                </div>
+            </div>
             <h3>単純な確率の問題</h3>
             <p>参考にしたサイトは以下のとおり。</p>
             <p><a href="https://manabitimes.jp/math/996">同じ誕生日の二人組がいる確率について _ 高校数学の美しい物語.html</a></p>
