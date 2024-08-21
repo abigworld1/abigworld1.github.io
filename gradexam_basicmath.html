@@ -1533,6 +1533,8 @@
                 </div>
             </ul>
             <h3>ウォリス積分（\(\sin^n, \cos^n\)の積分）</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/663">ウォリス積分～sinのn乗，cosのn乗の積分公式 _ 高校数学の美しい物語.html</a></p>
             <ul>
                 <li>具体例</li>
                 <div class="example">
@@ -1544,6 +1546,18 @@
                         <li>\( I_n \) を求めよ。</li>
                         <li>\( J_k = \frac{1}{I_{k-1}} - I_k \)（ただし、\( k \geq 1 \)）とする。\( \lim_{n \to \infty} \sum_{k=1}^{n} \frac{n}{n^2 + J_k^2} \) を求めよ。</li>
                     </ol>
+                    <p><b>(1)の解答</b></p>
+                    <p>\(I_0 = \frac{\pi}{2}, I_1 = 1\)</p>
+                    <p><b>(2)の解答</b></p>
+                    <p>\(I_n\)を、部分積分により計算すると、以下のようになる。</p>
+                    <div class="scroll">
+                        \begin{align}
+                            I_n &= \int_0^{\pi/2} \sin{x} \sin^{n-1}{x} \, dx \\
+                            &= \left[ -\cos{x} \sin^{n-1}{x} \right]_0^{\pi/2} + (n-1) \int_0^{\pi/2} \sin^{n-2}{x} \cos^2{x} \, dx \\
+                            &= (n-1) \int_0^{\pi/2} \sin^{n-2}{x} \left( 1 - \sin^2{x} \right) dx \\
+                            &= -(n-1) I_n + (n-1) I_{n-2}
+                        \end{align}
+                    </div>
                 </div>
             </ul>
         </section>
