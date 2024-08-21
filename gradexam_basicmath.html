@@ -1558,6 +1558,35 @@
                             &= -(n-1) I_n + (n-1) I_{n-2}
                         \end{align}
                     </div>
+                    <p>よって、以下の漸化式が成立する。</p>
+                    <div class="scroll">
+                        \begin{align}
+                            I_n = \frac{n-1}{n} i_{n-2}
+                        \end{align}
+                    </div>
+                    <p><b>(3)の解答</b></p>
+                    <p>\( n \) が奇数のとき,</p>
+                    <div class="scroll">
+                        \begin{align}
+                        I_n &= \frac{n-1}{n} I_{n-2} \\
+                            &= \frac{n-1}{n} \cdot \frac{n-3}{n-2} I_{n-4} \\
+                            &= \cdots \\
+                            &= \frac{(n-1)!!}{n!!} I_1 \\
+                            &= \frac{(n-1)!!}{n!!}
+                        \end{align}
+                    </div>
+                    <p>\( n \) が偶数のとき,</p>
+                    <div class="scroll">
+                        \begin{align}
+                        I_n &= \frac{n-1}{n} I_{n-2} \\
+                            &= \frac{n-1}{n} \cdot \frac{n-3}{n-2} I_{n-4} \\
+                            &= \cdots \\
+                            &= \frac{(n-1)!!}{n!!} I_0 \\
+                            &= \frac{\pi}{2} \cdot \frac{(n-1)!!}{n!!}
+                        \end{align}
+                    </div>
+                    <p><b>(4)の解答</b></p>
+                    
                 </div>
             </ul>
         </section>
