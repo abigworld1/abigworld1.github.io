@@ -492,6 +492,8 @@
         </ul>
         <h3>ページング方式</h3>
         <p>参考にしたサイトは以下のとおり。</p>
+          <p><a href="https://e-words.jp/w/%E3%83%9A%E3%83%BC%E3%82%B8%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%83%88.html">ページフォールトとは - 意味をわかりやすく - IT用語辞典 e-Words.html</a></p>
+          <p><a href="https://www.momoyama-usagi.com/entry/info-arc-paging">ページング（ページフォルト・LRUアルゴリズム）について（基本情報・応用情報） _ 工業大学生ももやまのうさぎ塾.html</a></p>
         <p><a href="https://www.momoyama-usagi.com/entry/info-calc-sys19">うさぎでもわかる計算機システム（基本情報対応）　Part19　仮想記憶とページング（4GBの壁の正体は？） _ 工業大学生ももやまのうさぎ塾.html</a></p>
         <ul>
           <li>具体例</li>
@@ -503,7 +505,8 @@
                 <li>ページサイズを拡大することにより生ずる利点と欠点について簡潔に述べよ。</li>
             </ol>
             <p><b>(1)の解答</b></p>
-            <p>ページフォールトとは、プログラムがアクセスしようとしたメモリページが物理メモリ上に存在しないため、オペレーティングシステムがディスクからそのページを読み込む必要がある状況、または、その割込みを指す。</p>
+            <p>ページフォールトとは、プログラムがアクセスしようとしたメモリページが物理メモリ上に存在しないため、オペレーティングシステムがディスクからそのページを読み込む必要がある状況、または、その割込みを指す。
+            ページフォールトが発生した場合、オペレーティングシステムは直ちに、物理メモリ上のページから一定の基準（最後にアクセスされてからの経過時間など）で一つを選び、ストレージ上に退避している要求ページと入れ替える処理（スワップ）を行って、プロセスがそのページにアクセスできるようにする。</p>
             <p><b>(2)の解答</b></p>
             <p>大きなサイズのページを管理できるため、ページ数を少なくでき、管理情報に使うメモリサイズを削減できる。
             また、管理情報の検索にかかる時間の削減が可能である。
@@ -541,6 +544,159 @@
                 スラッシングとは、主記憶のページング領域が頻繁に入れ替わることで、ページフォールトが頻発し、システムのパフォーマンスが著しく低下する現象のことである。
             </p>
           </div>
+            <div class="example">
+                <p><b>問題</b></p>
+                <p>プログラム実行過程で、実行に必要なページが主記憶にないとき、ページフォールトが発生し、ページアウトやページインという割込みが発生する。いま物理ページの個数が3しか使えないと仮定し、以下の順で仮想ページを照らし合わせ、ページ置換えアルゴリズムがFIFO (First-In First-Out) の場合とLRU (Least Recently Used) の場合で発生するページフォールトの回数を比較せよ。</p>
+                <p>【仮想ページの参照順 (仮想ページ番号の並び)】 2→4→3→1→3→4→5→4→3→1→4</p>
+                <p><b>解答</b></p>
+                <p>FIFOの場合</p>
+                <div class="scroll">
+                <table>
+                    <tr>
+                        <th>参照列</th>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="3">ページ枠</th>
+                        <td><b>2</b></td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td><b>1</b></td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td><b>3</b></td>
+                        <td>3</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><b>4</b></td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td><b>5</b></td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td><b>1</b></td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>3</b></td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td><b>4</b></td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <th>ページフォールト</th>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                </table>
+                </div>
+                <p>LRUの場合</p>
+                <div class="scroll">
+                <table>
+                    <tr>
+                        <th>参照列</th>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="3">ページ枠</th>
+                        <td><b>2</b></td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td><b>1</b></td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td><b>5</b></td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td><b>1</b></td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><b>4</b></td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>3</b></td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <th>ページフォールト</th>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                </table>
+                </div>
+                <p>したがって、FIFOの場合はページフォールトは8回発生し、LRUの場合は6回発生する。</p>
+            </div>
         </ul>
         <h3>OSの入出力</h3>
         <p>参考にしたサイトは以下のとおり。</p>
@@ -1060,165 +1216,6 @@
                     これが、1個の命令をパイプラインで実行するのに要する時間である。
                 </p>
             </div>
-            <h3>ページング</h3>
-        <p>参考にしたサイトは以下のとおり。</p>
-        <p><a href="https://www.momoyama-usagi.com/entry/info-arc-paging">ページング（ページフォルト・LRUアルゴリズム）について（基本情報・応用情報） _ 工業大学生ももやまのうさぎ塾.html</a></p>
-        <ul>
-            <li>具体例</li>
-            <div class="example">
-                <p><b>問題</b></p>
-                <p>プログラム実行過程で、実行に必要なページが主記憶にないとき、ページフォールトが発生し、ページアウトやページインという割込みが発生する。いま物理ページの個数が3しか使えないと仮定し、以下の順で仮想ページを照らし合わせ、ページ置換えアルゴリズムがFIFO (First-In First-Out) の場合とLRU (Least Recently Used) の場合で発生するページフォールトの回数を比較せよ。</p>
-                <p>【仮想ページの参照順 (仮想ページ番号の並び)】 2→4→3→1→3→4→5→4→3→1→4</p>
-                <p><b>解答</b></p>
-                <p>FIFOの場合</p>
-                <div class="scroll">
-                <table>
-                    <tr>
-                        <th>参照列</th>
-                        <td>2</td>
-                        <td>4</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>4</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="3">ページ枠</th>
-                        <td><b>2</b></td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td><b>1</b></td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td><b>3</b></td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><b>4</b></td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td><b>5</b></td>
-                        <td>5</td>
-                        <td>5</td>
-                        <td><b>1</b></td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><b>3</b></td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td><b>4</b></td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <th>ページフォールト</th>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>0</td>
-                    </tr>
-                </table>
-                </div>
-                <p>LRUの場合</p>
-                <div class="scroll">
-                <table>
-                    <tr>
-                        <th>参照列</th>
-                        <td>2</td>
-                        <td>4</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>4</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="3">ページ枠</th>
-                        <td><b>2</b></td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td><b>1</b></td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td><b>5</b></td>
-                        <td>5</td>
-                        <td>5</td>
-                        <td><b>1</b></td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><b>4</b></td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><b>3</b></td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <th>ページフォールト</th>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                        <td>0</td>
-                    </tr>
-                </table>
-                </div>
-                <p>したがって、FIFOの場合はページフォールトは8回発生し、LRUの場合は6回発生する。</p>
-            </div>
-        </ul>
         <h3>プログラムカウンタ</h3>
             <div class="example">
                 <p><b>問題</b></p>
