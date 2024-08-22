@@ -435,6 +435,28 @@
                         \end{align}
                     </div>
                     <p>を得る。よって、\(A^{-1}\)の固有値は\(\frac{1}{\lambda}\)である。</p>
+                    <p><b>(4)の解答</b></p>
+                    <p>実対称行列 \(A\) の固有値が全て正であるとき、\(B^2 = A\) を満たす行列 \(B\) が存在することを証明する。</p> 
+                    <p>実対称行列 \(A\) の固有値が全て正であるとき、行列 \(A\) は正定値行列と呼ばれる。正定値行列は必ず一意な正の平方根行列 \(B\) を持つ。具体的には、固有値分解により、</p>
+                    <div class="scroll">
+                        \begin{align}
+                        A = Q \Lambda Q^T
+                        \end{align}
+                    </div>
+                    <p>と表すことができる。ここで、\(Q\) は直交行列で、\(\Lambda\) は対角行列であり、その対角成分が \(A\) の固有値である。</p>
+                    <p>各固有値が正であるため、\(\Lambda\) の平方根行列 \(\Lambda^{1/2}\) を考えることができ、</p>
+                    <div class="scroll">
+                        \begin{align}
+                        B = Q \Lambda^{1/2} Q^T
+                        \end{align}
+                    </div>
+                    <p>と定義すれば、</p>
+                    <div class="scroll">
+                        \begin{align}
+                        B^2 = (Q \Lambda^{1/2} Q^T)(Q \Lambda^{1/2} Q^T) = Q \Lambda Q^T = A
+                        \end{align}
+                    </div>
+                    <p>が成り立つ。したがって、\(B^2 = A\) を満たす行列 \(B\) が存在することが示された。</p>
                 </div>
             </ul>
             <h3>対角化</h3>
