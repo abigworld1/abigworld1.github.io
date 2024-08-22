@@ -725,6 +725,90 @@
         
                 <p>と求まる。</p>
                 </div>
+                <div class="example">
+                    <p><b>同時確率密度関数に関する問題</b></p>
+                    <p>次に示す式が(同時)確率密度関数となる確率変数 \((X,Y)\) に関して以下の問いに答えよ。</p>
+                    <div class="scroll">
+                    \begin{align}
+                        f(x, y) = \begin{cases}
+                        c & x^2 + y^2 < 1 \text{のとき} \\
+                        0 & \text{その他の場合}
+                        \end{cases}
+                        \end{align}
+                    </div>
+                    <ol>
+                        <li>\(f(x, y)\) が確率密度関数であることから定数 \(c\) を求めよ。</li>
+                        <li>\(X\) の期待値 \(\mathrm{E}(X)\) を求めよ。</li>
+                        <li>\(X\) と \(Y\) の共分散 \(\mathrm{Cov}(X, Y)\) を求めよ。</li>
+                        <li>\(X\) と \(Y\) は独立でないことを証明せよ。</li>
+                    </ol>
+                    <p><b>(1)の解答</b></p>
+                    <p>確率密度関数の条件として、全空間での積分が1である必要がある。したがって、以下のように \( f(x, y) \) の積分を行う。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y) \, dx \, dy = 1
+                    \end{align}
+                    </div>
+                    <p>問題の条件から \( f(x, y) = c \) は円の内部（半径1、中心(0,0)）で定義されており、それ以外では0である。このため、円の内部のみ積分すれば良い。極座標に変換して積分する。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    \int_{0}^{2\pi} \int_{0}^{1} c \cdot r \, dr \, d\theta = 1
+                    \end{align}
+                    </div>
+                    <p>ここで \( r \) は半径、\( \theta \) は角度である。</p>
+                    <p>積分を計算すると、</p>
+                    <div class="scroll">
+                    \begin{align}
+                    c \cdot \int_{0}^{2\pi} d\theta \int_{0}^{1} r^2 \, dr = c \cdot 2\pi \cdot \left[ \frac{r^2}{2} \right]_{0}^{1} = c \cdot 2\pi \cdot \frac{1}{2} = c \cdot \pi
+                    \end{align}
+                    </div>
+                    <p>これが1に等しいので、</p>
+                    <div class="scroll">
+                    \begin{align}
+                    c \cdot \pi = 1 \quad \Rightarrow \quad c = \frac{1}{\pi}
+                    \end{align}
+                    </div>
+                    <p><b>(2)の解答</b></p>
+                    <p>期待値は次の式で求める。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    \mathrm{E}(X) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x f(x, y) \, dx \, dy
+                    \end{align}
+                    </div>
+                    <p>これを極座標に変換して計算する。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    \mathrm{E}(X) &= \int_{0}^{2\pi} \int_{0}^{1} \left( r\cos\theta \right) \frac{1}{\pi} r \, dr \, d\theta \\
+                        &= \frac{1}{\pi} \int_{0}^{2\pi} \cos\theta \, d\theta \int_{0}^{1} r^2 \, dr \\
+                        &= \frac{1}{\pi} \cdot \left[ \sin\theta \right]_{0}^{2\pi} \cdot \frac{1}{3} = \frac{1}{\pi} \cdot 0 \cdot \frac{1}{3} = 0
+                    \end{align}
+                    </div>
+                    <p>したがって、\( \mathrm{E}(X) = 0 \) である。</p>
+                    <p><b>(3)の解答</b></p>
+                    <p>共分散は次の式で求める。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    \mathrm{Cov}(X, Y) = \mathrm{E}(XY) - \mathrm{E}(X)\mathrm{E}(Y)
+                    \end{align}
+                    </div>
+                    <p>すでに \( \mathrm{E}(X) = 0 \)、\( \mathrm{E}(Y) = 0 \) であるため、共分散は次のように求められる。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    \mathrm{E}(XY) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} xy f(x, y) \, dx \, dy
+                    \end{align}
+                    </div>
+                    <p>これも極座標に変換する。</p>
+                    <div class="scroll">
+                    \begin{align}
+                    \mathrm{E}(XY) &= \int_{0}^{2\pi} \int_{0}^{1} \left( r^2 \cos\theta \sin\theta \right) \frac{1}{\pi} r \, dr \, d\theta \\
+                        &= \frac{1}{\pi} \int_{0}^{2\pi} \cos\theta \sin\theta \, d\theta \int_{0}^{1} r^3 \, dr \\
+                        &= \frac{1}{\pi} \cdot \left[ \frac{\sin^2\theta}{2} \right]_{0}^{2\pi} \cdot \frac{1}{4} = 0
+                    \end{align}
+                    </div>
+                    <p>したがって、\( \mathrm{Cov}(X, Y) = 0 \) である。</p>
+                    <p><b>(4)の解答</b></p>
+                    <p> \( X \) と \( Y \) が独立であるならば、結合確率密度関数は各変数の確率密度関数の積として表せる。しかし、円の中で \( x^2 + y^2 < 1 \) という制約があるため、 \( X \) と \( Y \) は独立ではない。具体的には、 \( X \) の値が大きくなると、\( Y \) の値が小さくなる必要がある。よって、独立ではないことが示される。</p>
+                </div>
             </ul>
             <h3>歪度、尖度</h3>
             <div class="example">
