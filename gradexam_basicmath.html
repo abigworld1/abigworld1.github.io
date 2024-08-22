@@ -403,6 +403,38 @@
                     <p><b>(1)の解答</b></p>
                     <p>\(A\)の列数（\(=B\)の行数）を\(n\)とおく。\((AB)^T\)の\(ij\)成分は\(AB\)の\(ji\)成分であるから、\(\sum_{k=1}^{n} a_{jk}b_{ki}\)。
                     一方、\(B^T A^T\)の\(ij\)成分は\(\sum_{k=1}^{n} b_{ki}a_{jk}\) となり一致する。</p>
+                    <p><b>(2)の解答</b></p>
+                    <p>\(A\)と\(B\)が対称行列であれば、\(A^T = A, B^T = B\)が成り立つ。これを(1)で示した\((AB)^T = B^T A^T\)に用いると、</p>
+                    <div class="scroll">
+                        \begin{align}
+                        (AB)^T = B^T A^T = BA
+                        \end{align}
+                    </div>
+                    <p>となるため、\(AB\)が対称行列になる、つまり、\((AB)^T = AB\)を満たすには、\(AB = BA\)が成り立つ必要がある。</p>
+                    <p>よって、\(A\)と\(B\)が積に関して可換である場合のみ、\(AB\)は対称行列になる。</p>
+                    <p><b>(3)の解答</b></p>
+                    <p>まず、行列\(A\)が逆行列を持つ、つまり、正則行列であるとき、固有値が0でないことを証明する。</p>
+                    <p>\(A\)の固有値\(\lambda\)に対応する固有ベクトルを\(\mathbf{x}\)とすると、定義より\(\mathbf{x} \neq 0\)であり、</p>
+                    <div class="scroll">
+                        \begin{align}
+                        A \mathbf{x} = \lambda \mathbf{x}
+                        \end{align}
+                    </div>
+                    <p>とかける。両辺に左から\(A^{-1}\)を掛けると、次のようになる。</p>
+                    <div class="scroll">
+                        \begin{align}
+                        \mathbf{x} = \lambda A^{-1} \mathbf{x}
+                        \end{align}
+                    </div>
+                    <p>ここで、\(\lambda = 0\)と仮定すると、\(\mathbf{x} = 0\)となって、固有ベクトルの定義\(\mathbf{x} \neq 0\)に矛盾する。</p>
+                    <p>よって、\(\lambda \neq 0\)である。</p>
+                    <p>次に、両辺を\(\lambda\)で割って左右を入れ替えると、</p>
+                    <div class="scroll">
+                        \begin{align}
+                        A^{-1} \mathbf{x} = \frac{1}{\lambda} \mathbf{x}
+                        \end{align}
+                    </div>
+                    <p>を得る。よって、\(A^{-1}\)の固有値は\(\frac{1}{\lambda}\)である。</p>
                 </div>
             </ul>
             <h3>対角化</h3>
