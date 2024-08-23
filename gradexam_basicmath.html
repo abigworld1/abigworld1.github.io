@@ -1739,6 +1739,64 @@
                     </div>
                 </div>
             </ul>
+            <h3>微分方程式</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/663">ウォリス積分～sinのn乗，cosのn乗の積分公式 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題</b></p>
+                    <p>以下の微分方程式の一般解を求めよ。ただし、\(a, b\)は相異なる非零の実数とする。</p>
+                    <ol>
+                        <li>
+                            <div class="scroll">
+                                \begin{align}
+                                \frac{d^3}{dx^3} y + 27 y = x
+                                \end{align}
+                            </div>
+                        </li>
+                    </ol>
+                    <ol>
+                        <li>
+                            <div class="scroll">
+                                \begin{align}
+                                \frac{d^2}{dx^2} f(x) - (a + b) \frac{d}{dx} f(x) + ab f(x) = 0 
+                                \end{align}
+                            </div>
+                        </li>
+                    </ol>
+                    <p><b>(1)の解答</b></p>
+                    <p>同次形\(\frac{d^3}{dx^3} y + 27 y = 0\)の特性方程式</p>
+                    <div class="scroll">
+                        \begin{align}
+                        k^3 + 27 &= 0 \\
+                        (k + 3)(k^2 - 3k + 9) &= 0
+                        \end{align}
+                    </div>
+                    <p>より、\(k = -3, \frac{3 \pm 3 \sqrt{3} i}{2}\)。</p>
+                    <p>よって、同次方程式の一般解は、</p>
+                    <div class="scroll">
+                        \begin{align}
+                        y = C_1 e^{-3x} + C_2 e^{\frac{3 + 3 \sqrt{3} i}{2} x} + C_3 e^{\frac{3 - 3 \sqrt{3} i}{2} x} \quad \text{\(C_1, C_2, C_3\)は任意定数}
+                        \end{align}
+                    </div>
+                    <p>さらに、与式の右辺の形から特解の形を推測して、\(y = mx + n\)を与式に代入すると、</p>
+                    <div class="scroll">
+                        \begin{align}
+                        27mx + 27n = x
+                        \end{align}
+                    </div>
+                    <p>となるので、\(m = \frac{1}{27}, n = 0\)。</p>
+                    <p>よって、非同次方程式の特解は、\(y = \frac{1}{27} x\)。</p>
+                    <p>非同次方程式の一般解は、非同次方程式の特解と同次方程式の一般解の和として表されるから、</p>
+                    <div class="scroll">
+                        \begin{align}
+                        y &= C_1 e^{-3x} + C_2 e^{\frac{3 + 3 \sqrt{3} i}{2} x} + C_3 e^{\frac{3 - 3 \sqrt{3} i}{2} x} + \frac{1}{27} x \\
+                        y &= C_1 e^{-3x} + C_2 e^{\frac{3}{2} x} {\cos(\frac{3 \sqrt{3}}{2} x) + i \sin(\frac{3 \sqrt{3}}{2} x)} + C_3 e^{\frac{3}{2} x} {\cos(- \frac{3 \sqrt{3}}{2} x) + i \sin(- \frac{3 \sqrt{3}}{2} x)} + \frac{1}{27} x \quad \text{∵オイラー\(e^{\alpha + i \beta} = e^{\alpha} (\cos \beta + i \sin \beta)\)}\\
+                        y &= C_1 e^{-3x} + (C_2 + C_3) e^{\frac{3}{2} x} \cos(\frac{3 \sqrt{3}}{2} x) + (C2 - C_3) e^{\frac{3}{2} x} i \sin(\frac{3 \sqrt{3}}{2} x)} + \frac{1}{27} x \\
+                        y &= C_1 e^{-3x} + C_2 e^{\frac{3}{2} x} \cos(\frac{3 \sqrt{3}}{2} x) + C_3 e^{\frac{3}{2} x} i \sin(\frac{3 \sqrt{3}}{2} x)} + \frac{1}{27} x 
+                        \end{align}
+                    </div>
         </section>
     </main>
 </body>
