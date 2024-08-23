@@ -809,6 +809,46 @@
                     <p><b>(4)の解答</b></p>
                     <p> \( X \) と \( Y \) が独立であるならば、結合確率密度関数は各変数の確率密度関数の積として表せる。しかし、円の中で \( x^2 + y^2 < 1 \) という制約があるため、 \( X \) と \( Y \) は独立ではない。具体的には、 \( X \) の値が大きくなると、\( Y \) の値が小さくなる必要がある。よって、独立ではないことが示される。</p>
                 </div>
+                <div class="example">
+                    <p><b>一様分布の累積分布関数に関する問題</b></p>
+                    <p>分布 \( d \) が区間 \([a, b]\) における一様分布である場合、以下の各問に答えよ。</p>
+                    <ol>
+                        <li> \( d \) の確率密度関数 \( f(x) \) と累積分布関数 \( F(x) \) をそれぞれ示せ。</li>
+                        <li> \( X_i (i = 1, 2, \dots, n) \) の最大値 \( X_{\max} \) の累積分布関数 \( F_{\max}(x) \) を求めよ。</li>
+                        <li> \( a \leq x \leq b \) である任意の実数 \( x \) について、確率 \( P(X_{\max} = x) \) の値を答えよ。</li>
+                    </ol>
+                    <p><b>(1)の解答</b></p>
+                    <p>確率密度関数 <em>f(x)</em> は次のように定義される：</p>
+                    <div class="scroll">
+                        \begin{align}
+                        f(x) = \frac{1}{b-a} \quad \text{for} \quad a \leq x \leq b
+                        \end{align}
+                    </div>
+                    <p>累積分布関数 <em>F(x)</em> は次のように表される：</p>
+                    <div class="scroll">
+                        \begin{align}
+                        F(x) = \begin{cases}
+                        0 & \text{for } x < a \\
+                        \frac{x-a}{b-a} & \text{for } a \leq x \leq b \\
+                        1 & \text{for } x > b
+                        \end{cases}
+                        \end{align}
+                    </div>
+                    <p><b>(2)の解答</b></p>
+                    <p>最大値 <em>X<sub>max</sub></em> の累積分布関数 <em>F<sub>max</sub>(x)</em> は次のように求められる：</p>
+                    <div class="scroll">
+                        \begin{align}
+                        F_{\text{max}}(x) = \left( \frac{x-a}{b-a} \right)^n \quad \text{for} \quad a \leq x \leq b
+                        \end{align}
+                    </div>
+                    <p><b>(3)の解答</b></p>
+                    <p>\( a \leq x \leq b \) である任意の実数 <em>x</em> について、確率 <em>P(X<sub>max</sub> = x)</em> は次のように表される：</p>
+                    <div class="scroll">
+                        \begin{align}
+                        P(X_{\text{max}} = x) = n \cdot \frac{1}{b-a} \cdot \left( \frac{x-a}{b-a} \right)^{n-1} \quad \text{for} \quad a \leq x \leq b
+                        \end{align}
+                    </div>
+                </div>
             </ul>
             <h3>歪度、尖度</h3>
             <div class="example">
