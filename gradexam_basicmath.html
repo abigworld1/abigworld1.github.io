@@ -1792,13 +1792,15 @@
                     <div class="scroll">
                         \begin{align}
                         y &= C_1 e^{-3x} + C_2 e^{\frac{3 + 3 \sqrt{3} i}{2} x} + C_3 e^{\frac{3 - 3 \sqrt{3} i}{2} x} + \frac{1}{27} x \\
-                        y &= C_1 e^{-3x} + C_2 e^{\frac{3}{2} x} {\cos(\frac{3 \sqrt{3}}{2} x) + i \sin(\frac{3 \sqrt{3}}{2} x)} + C_3 e^{\frac{3}{2} x} {\cos(- \frac{3 \sqrt{3}}{2} x) + i \sin(- \frac{3 \sqrt{3}}{2} x)} + \frac{1}{27} x \quad \text{∵オイラー\(e^{\alpha + i \beta} = e^{\alpha} (\cos \beta + i \sin \beta)\)} \\
+                        y &= C_1 e^{-3x} + C_2 e^{\frac{3}{2} x} {\cos(\frac{3 \sqrt{3}}{2} x) + i \sin(\frac{3 \sqrt{3}}{2} x)} + C_3 e^{\frac{3}{2} x} {\cos(- \frac{3 \sqrt{3}}{2} x) + i \sin(- \frac{3 \sqrt{3}}{2} x)} + \frac{1}{27} x \\
                         y &= C_1 e^{-3x} + (C_2 + C_3) e^{\frac{3}{2} x} \cos(\frac{3 \sqrt{3}}{2} x) + (C2 - C_3) e^{\frac{3}{2} x} i \sin(\frac{3 \sqrt{3}}{2} x) + \frac{1}{27} x \\
                         y &= C_1 e^{-3x} + C_2 e^{\frac{3}{2} x} \cos(\frac{3 \sqrt{3}}{2} x) + C_3 e^{\frac{3}{2} x} i \sin(\frac{3 \sqrt{3}}{2} x) + \frac{1}{27} x 
                         \end{align}
                     </div>
+                    <p>となる（途中、オイラーの公式\(e^{\alpha + i \beta} = e^{\alpha} (\cos \beta + i \sin \beta)\)を用いた）。</p>
                     <p><b>(2)の解答</b></p>
-                    <p></p>
+                    <p>特性方程式は\(k^2 - (a+b)k + ab\)であり、\(k = a, b\)となる。</p>
+                    <p>よって、一般解は\(y = C_1 e^{ax} + C_2 e^{bx}\)である（\(C_1, C_2\)は任意定数）。</p>
         </section>
     </main>
 </body>
