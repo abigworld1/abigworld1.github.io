@@ -1916,6 +1916,53 @@
                     <p><b>(2)の解答</b></p>
                     <p>特性方程式は\(k^2 - (a+b)k + ab\)であり、\(k = a, b\)となる。</p>
                     <p>よって、一般解は\(y = C_1 e^{ax} + C_2 e^{bx}\)である（\(C_1, C_2\)は任意定数）。</p>
+                </div>
+            </ul>
+            <h3>ラグランジュの未定乗数法</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="https://manabitimes.jp/math/879">ラグランジュの未定乗数法と例題 _ 高校数学の美しい物語.html</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題</b></p>
+                    <p>関数 \( f(x, y, z) = \frac{x^2}{2} + xy + \frac{y^2}{2} + 2z^2 \) の最大値と最小値を、制約条件 \( g(x, y, z) = x^2 + y^2 + z^2 - 4 = 0 \) のもとで求めよ。</p>
+                    <p><b>解答</b></p>
+                    <p>ラグランジュ関数 \( \mathcal{L}(x, y, z, \lambda) \) を次のように定義する。</p>
+                    <div class="scroll">
+                        \begin{align}
+                        \mathcal{L}(x, y, z, \lambda) = \frac{x^2}{2} + xy + \frac{y^2}{2} + 2z^2 - \lambda (x^2 + y^2 + z^2 - 4)
+                        \end{align}
+                    </div>
+                    <p>ラグランジュ関数を \( x, y, z, \lambda \) で偏微分し、それぞれがゼロとなる条件を導く。</p>
+                    <div class="scroll">
+                        \begin{align}
+                        \frac{\partial \mathcal{L}}{\partial x} = x + y - 2\lambda x = 0 \\
+                        \frac{\partial \mathcal{L}}{\partial y} = y + x - 2\lambda y = 0 \\
+                        \frac{\partial \mathcal{L}}{\partial z} = 4z - 2\lambda z = 0 \\
+                        \frac{\partial \mathcal{L}}{\partial \lambda} = - (x^2 + y^2 + z^2 - 4) = 0 \\
+                        \end{align}
+                    </div>
+                    <p>まず \( z \) についての方程式 \( (4 - 2\lambda)z = 0 \) から、\( z = 0 \) もしくは \( \lambda = 2 \) となる。</p>
+                    <p>1. <strong> \( z = 0 \) の場合:</strong><br> このとき、残りの方程式は次のようになる。</p>
+                    <div class="scroll">
+                        \begin{align}
+                        x(1 - 2\lambda) + y = 0 \\
+                        y(1 - 2\lambda) + x = 0
+                        \end{align}
+                    </div>
+                    <p>これを解くと、\( x = \pm y \) を得る。</p>
+                    <ul>
+                        <li>\( x = y \) の場合: \( 2x^2 = 4 \) より \( x = y = \pm \sqrt{2} \) となる。</li>
+                        <li>\( x = -y \) の場合: \( 2x^2 = 4 \) より \( x = \pm \sqrt{2}, y = \mp \sqrt{2} \) となる。</li>
+                    </ul>
+                    <p>2. <strong> \( \lambda = 2 \) の場合:</strong><br> このとき、制約条件 \( x^2 + y^2 + z^2 = 4 \) から \( z = 2 \) が導かれる。このとき \( x = y = 0 \) である。</p>
+                    <p>これらの解を関数 \( f(x, y, z) \) に代入して、それぞれの値を計算する。</p>
+                    <ul>
+                        <li>\( x = \sqrt{2}, y = \sqrt{2}, z = 0 \) のとき: \( f(x, y, z) = 4 \)</li>
+                        <li>\( x = \sqrt{2}, y = -\sqrt{2}, z = 0 \) のとき: \( f(x, y, z) = 0 \)</li>
+                        <li>\( x = 0, y = 0, z = \pm \sqrt{2} \) のとき: \( f(x, y, z) = 8 \)</li>
+                    </ul>
+                    <p>以上より、最大値は 8、最小値は 0 となる。</p>
         </section>
     </main>
 </body>
