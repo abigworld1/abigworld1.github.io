@@ -52,7 +52,7 @@
             </div>
             <p>となる点を求めればよい。</p>
             <p>つまり、\(x\)と\(y\)の偏微分を求めて、それらをイコール0にした2式を連立して解けばよい。</p>
-            <p>このように停留点は簡単に求まるのだが、次に、その停留点が極大値なのか、極小値なのか、鞍点なのかを判定せよ、と問われることが多い。</p>
+            <p>このように停留点は簡単に求まるが、次に、その停留点が極大値なのか、極小値なのか、鞍点なのかを判定せよ、と問われることが多い。</p>
             <p>停留点を判定するには、以下で定義されるヘッセ行列を使う。</p>
             <div class="scroll">
                 \begin{align}
@@ -78,7 +78,7 @@
             <p>2次元の極座標変換では、\(x\)と\(y\)を次のようにおく。</p>
             <div class="scroll">
                 \begin{align}
-                x = r \cos \theta , \ \ \ y = r \sin \theta \quad \left( r \geqq 0, \ \ 0 \leqq \theta \leqq 2 \pi \right)
+                x = r \cos \theta , \ \ \ y = r \sin \theta 
                 \end{align}
             </div>
             <p>このとき、ヤコビアンを計算すると以下のようになる。</p>
@@ -90,7 +90,32 @@
                     \\ = & \ r
                 \end{align}
             </div>
-            <p></p>
+            <p>したがって、\(dxdy = r \ dr d \theta\)となる。</p>
+            <p>次に、3次元の極座標変換を説明する。</p>
+            <p>3次元の極座標変換では、\(x\)と\(y\)を次のようにおく。</p>
+            <div class="scroll">
+                \begin{align}
+                x = r \cos \theta \cos \varphi, \quad y = r \cos \theta \sin \varphi, \quad z = r \sin \theta \quad \left( r \geqq 0, \ \ 0 \leqq \theta \leqq 2 \pi \right)
+                \end{align}
+            </div>
+            <p>このとき、ヤコビアン行列\(J\)は以下のようになる。</p>
+            <div class="scroll">
+                \begin{align}
+                J = \frac{\partial(x, y, z)}{\partial(r, \varphi, \theta)} = 
+                \begin{pmatrix}
+                \cos \theta \cos \varphi & -r \cos \theta \sin \varphi & -r \sin \theta \cos \varphi \\
+                \cos \theta \sin \varphi & r \cos \theta \cos \varphi & -r \sin \theta \sin \varphi \\
+                \sin \theta & 0 & r \cos \theta
+                \end{pmatrix}
+                \end{align}
+            </div>
+            <p>したがって、ヤコビアン行列の行列式 \( \det(J) \) は次のように計算される：</p>
+            <div class="scroll">
+                \begin{align}
+                \det(J) = r^2 \cos \theta
+                \end{align}
+            </div>
+            <p>以上のことは、\(\cos \theta\)と\(\sin \theta\)を入れ替えても成り立つ。</p>
         </section>
     </main>
 </body>
