@@ -157,6 +157,55 @@
             <ul>
                 <li>\(L = { a^n b^n c^n | n ≥ 1 }\)(同じ数の \(a, b, c\) からなる言語。)</li>
             </ul>
+        </section>
+        <section>
+            <h2>確率・統計</h2>
+            <h3>一致性、不偏性</h3>
+            <p>一致性と不偏性に関する問題は近年多く出題されている。特に不偏性は2022,2023年で連続して問われているため、これらの用語の定義は確実に覚えておいた方が良いだろう。</p>
+            <p>一致性とは、ある母数\(\theta\)の推定量\(\hat{\theta}\)が\(\hat{\theta} \xrightarrow{P} \theta\)を満たすことをいう。</p>
+            <p>また、\(\hat{\theta}\)を<b>一致推定量</b>と呼ぶ。</p>
+            <p>ここで、\(\xrightarrow{P}\)は「確率収束」を表す。</p>
+            <p>標本平均、標本分散、不偏分散の一致性は以下のとおりである。</p>
+            <ul>
+                <li><b>標本平均</b></li>
+                <ul>
+                    <li>大数の弱法則\(\overline{x} \xrightarrow{P} \mu\)から、平均\(\overline{x}\)は\(n\)が大きくなると母平均に近づく。</li>
+                </ul>
+                <li><b>標本分散</b></li>
+                <ul>
+                    <li>標本分散は以下の式で表される。
+                        <div class="scroll">
+                        \begin{align}
+                        s^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \overline{x})^2
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>この式は、以下のように変形できる。
+                        <div class="scroll">
+                        \begin{align}
+                        s^2 &= \frac{1}{n} \sum_{i=1}^n (x_i - \overline{x})^2 \\
+                            &= \frac{1}{n} \sum_{i=1}^n ((x_i - \mu) - (\overline{x} - \mu))^2 \\
+                            &= \frac{1}{n} \sum_{i=1}^n (x_i - \mu)^2 - (\overline{x} - \mu)^2 \\
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>この式の第２項は\((\overline{x} - \mu) \xrightarrow{P} 0\)であるため、\((\overline{x} - \mu)^2 \xrightarrow{P} 0\)となる。</li>
+                    <li>また、\(\nu_i = (x_i - \mu)^2\)とおくと、\(\nu_i\)は互いに独立で同じ分布に従う確率変数となり、大数の法則を適用できる。</li>
+                    <li>これから、第１項は\(\overline{\nu} \xrightarrow{P} \sigma^2\)となり、\(s^2 \xrightarrow{P} \sigma^2\)がいえる。</li>
+                </ul>
+                <li><b>不偏分散</b></li>
+                <ul>
+                    <li>不偏分散は以下の式で表される。
+                        <div class="scroll">
+                        \begin{align}
+                        u^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \overline{x})^2
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>\(n \rightarrow \infty\)のとき、無限大に発散する分母について、\(s^2\)と高々１しか差がない\(u^2\)も一致性を持つ。</li>
+                </ul>
+            </ul>
+        </section>
     </main>
 </body>
 </html>
