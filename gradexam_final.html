@@ -161,11 +161,11 @@
         <section>
             <h2>確率・統計</h2>
             <h3>一致性、不偏性</h3>
-            <p>一致性と不偏性に関する問題は近年多く出題されている。特に不偏性は2022,2023年で連続して問われているため、これらの用語の定義は確実に覚えておいた方が良いだろう。</p>
-            <p>一致性とは、ある母数\(\theta\)の推定量\(\hat{\theta}\)が\(\hat{\theta} \xrightarrow{P} \theta\)を満たすことをいう。</p>
-            <p>また、\(\hat{\theta}\)を<b>一致推定量</b>と呼ぶ。</p>
-            <p>ここで、\(\xrightarrow{P}\)は「確率収束」を表す。</p>
-            <p>標本平均、標本分散、不偏分散の一致性は以下のとおりである。</p>
+            <p>一致性と不偏性に関する問題は近年多く出題されている。</p>
+            <p>特に不偏性は2022,2023年で連続して問われているため、これらの用語の定義は確実に覚えておいた方が良いだろう。</p>
+            <p>一致性とは、ある母数\(\theta\)の推定量\(\hat{\theta}\)が\(\hat{\theta} \xrightarrow{P} \theta\)を満たすことをいい、\(\hat{\theta}\)を<b>一致推定量</b>と呼ぶ。</p>
+            <p>ここで、\(\xrightarrow{P}\)は「確率収束する」という意味である。</p>
+            <p>標本平均、標本分散、不偏分散の一致性は以下のとおり。</p>
             <ul>
                 <li><b>標本平均</b></li>
                 <ul>
@@ -203,6 +203,47 @@
                         </div>
                     </li>
                     <li>\(n \rightarrow \infty\)のとき、無限大に発散する分母について、\(s^2\)と高々１しか差がない\(u^2\)も一致性を持つ。</li>
+                </ul>
+            </ul>
+            <p>不偏性とは、推定量\(\hat{\theta}\)の期待値が\(E[\hat{\theta}] = \theta\)と、常に母数に等しくなる性質をいい、その性質を持つ推定量を<b>不偏推定量</b>と呼ぶ。</p>
+            <p>これは一致性と異なり、標本の大きさ\(n\)に依存しない基準である。</p>
+            <p>不偏推定量でなければ、推定には<b>偏り</b>があるといい、偏りを\(E[\hat{\theta}] - \theta\)で定義する。</p>
+            <p>標本平均、標本分散、不偏分散の不偏性は以下のとおり。</p>
+            <ul>
+                <li><b>標本平均</b></li>
+                <ul>
+                    <div class="scroll">
+                    \begin{align}
+                    E[\overline{x}] = \frac{1}{n} \sum_{i=1}^{n} E[x_i] = \frac{1}{n} \sum_{i=1}^{n} \mu = \mu
+                    \end{align}
+                    </div>
+                </ul>
+                <li><b>分散</b></li>
+                <ul>
+                    <li>偏差平方和を\(T_{xx} = \sum (x_i - \overline{x})^2\)とおくと、
+                        <div class="scroll">
+                        \begin{align}
+                        T_{xx} &= \sum (x_i - \overline{x})^2 \\
+                            &= \sum [(x_i - \mu) - (\overline{x} - \mu)]^2 \\
+                            &= \sum [(x_i - \mu)^2 - 2 (x_i - \mu)(\overline{x} - \mu) + (\overline{x} - \mu)^2] \\
+                            &= \sum (x_i - \mu)^2 - 2 (\overline{x} - \mu) \sum (x_i - \mu) + \sum (\overline{x} - \mu)^2 \\
+                            &= \sum (x_i - \mu)^2 - 2 (\overline{x} - \mu) n \overline{x} - n \mu + n (\overline{x} - \mu)^2 \\
+                            &= \sum (x_i - \mu)^2 - 2 (\overline{x} - \mu) n (\overline{x} - \mu) + n (\overline{x} - \mu)^2 \\
+                            &= \sum (x_i - \mu)^2 - n(\overline{x} - \mu)^2 
+                        \end{align}
+                        </div>
+                    となる。</li>
+                    <li>ここで期待値を計算すると次の結果が得られる。
+                        <div class="scroll">
+                        \begin{align}
+                        E[T_{xx}] &= \sum E[(x_i - \mu)^2] - n E[(\overline{x} - \mu)^2] \\
+                            &= \sum V[x_i] - nV[\overline{x}] \\
+                            &= n \sigma^2 - n \frac{\sigma^2}{n} \\
+                            &= (n-1) \sigma^2
+                        \end{align}
+                        </div>
+                    </li>
+                    <li>したがって、標本分散は不偏性を持たず、不偏分散は不偏性を持つ。</li>
                 </ul>
             </ul>
         </section>
