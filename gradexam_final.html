@@ -56,7 +56,7 @@
             <p>停留点を判定するには、以下で定義されるヘッセ行列を使う。</p>
             <div class="scroll">
                 \begin{align}
-                \mathsf{H}=
+                H=
                     \begin{pmatrix}\displaystyle{\frac{\partial^{2} f(x,y)}{\partial x^{2}}}&\displaystyle{\frac{\partial^{2} f(x,y)}{\partial x\partial y}} \\ \\ 
                     \displaystyle{\frac{\partial^{2} f(x,y)}{\partial x\partial y}}&\displaystyle{\frac{\partial^{2} f(x,y)}{\partial y^{2}}}\end{pmatrix}
                 \end{align}
@@ -95,7 +95,7 @@
             <p>3次元の極座標変換では、\(x\)と\(y\)を次のようにおく。</p>
             <div class="scroll">
                 \begin{align}
-                x = r \cos \theta \cos \varphi, \quad y = r \cos \theta \sin \varphi, \quad z = r \sin \theta \quad \left( r \geqq 0, \ \ 0 \leqq \theta \leqq 2 \pi \right)
+                x = r \cos \theta \cos \varphi, \quad y = r \cos \theta \sin \varphi, \quad z = r \sin \theta
                 \end{align}
             </div>
             <p>このとき、ヤコビアン行列\(J\)は以下のようになる。</p>
@@ -117,6 +117,39 @@
             </div>
             <p>以上のことは、\(\cos \theta\)と\(\sin \theta\)を入れ替えても成り立つ。</p>
         </section>
+        <section>
+            <h2>情報数学</h2>
+            <h3>言語</h3>
+            <p>言語の中でも、特に正規言語と文脈自由言語について問われることが多い。それぞれの代表例や特徴は必ず覚えておいた方が良い。</p>
+            <p>まずは、正規言語を説明する。</p>
+            <p>正規言語は、有限オートマトンによって認識される言語であり、正規文法によって生成される。</p>
+            <p>正規文法の例を以下に示す。</p>
+            <ul>
+                <li>\( S \rightarrow aS \)</li>
+                <li>\( S \rightarrow bS \)</li>
+                <li>\( S \rightarrow \epsilon \) （\(\epsilon\)は空文字を表す）</li>
+            </ul>
+            <p>この文法は、\(\{a, b\}\)からなる任意の文字列（例えば、\(\epsilon\), \(a\), \(b\), \(aa\), \(ab\), \(ba\), \(bb\) など）を生成する。</p>
+            <p>他にも、正規言語の例として、以下があげられる。</p>
+            <ul>
+                <li>\(L = { a^n \mid n ≥ 0 }\)(空文字列または任意の個数の \(a\) からなる言語。)</li>
+                <li>\(L = (ab)^*\)(\(ab\) の繰り返しからなる言語。)</li>
+            </ul>
+            <p>次に、文脈自由言語を説明する。</p>
+            <p>文脈自由言語は、プッシュダウンオートマトンによって認識される言語であり、文脈自由文法によって生成される。</p>
+            <p>文脈自由文法は、生成規則が左辺に1つの非終端記号を持ち、右辺が任意の文字列であるような形をしている文法である。</p>
+            <p>文脈自由文法の例を以下に示す。</p>
+            <ul>
+                <li>\( S \rightarrow aSb \)</li>
+                <li>\( S \rightarrow \epsilon \)</li>
+            </ul>
+            <p>この文法は、同数の \(a\) と \(b\) を持つ文字列（例えば、\(\epsilon\), \(ab\), \(aabb\), \(aaabbb\) など）を生成する。</p>
+            <p>この言語は、正規文法では表現できないが、文脈自由文法によって生成可能である。</p>
+            <p>他にも、文脈自由文法の例として、以下があげられる。</p>
+            <ul>
+                <li>\(L = { a^n b^n | n ≥ 0 }\)(同じ数の \(a\) と \(b\) からなる言語。)</li>
+                <li>\(ww^R | w ∈ {a, b}^*\)(任意の文字列 \(w\) とその逆順 \(w^R\) からなる言語。)</li>
+            </ul>
     </main>
 </body>
 </html>
