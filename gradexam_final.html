@@ -160,18 +160,16 @@
         </section>
         <section>
             <h2>確率・統計</h2>
-            <h3>一致性、不偏性</h3>
-            <p>一致性と不偏性に関する問題は近年多く出題されている。</p>
-            <p>特に不偏性は2022,2023年で連続して問われているため、これらの用語の定義は確実に覚えておいた方が良いだろう。</p>
-            <p>一致性とは、ある母数\(\theta\)の推定量\(\hat{\theta}\)が\(\hat{\theta} \xrightarrow{P} \theta\)を満たすことをいい、\(\hat{\theta}\)を<b>一致推定量</b>と呼ぶ。</p>
+            <h3>一致性</h3>
+            <p>一致性とは、ある母数\(\theta\)の推定量\(\hat{\theta}\)が\(\hat{\theta} \xrightarrow{P} \theta\)を満たすことをいい、\(\hat{\theta}\)を一致推定量と呼ぶ。</p>
             <p>ここで、\(\xrightarrow{P}\)は「確率収束する」という意味である。</p>
             <p>標本平均、標本分散、不偏分散の一致性は以下のとおり。</p>
             <ul>
-                <li><b>標本平均</b></li>
+                <li>標本平均</li>
                 <ul>
                     <li>大数の弱法則\(\overline{x} \xrightarrow{P} \mu\)から、平均\(\overline{x}\)は\(n\)が大きくなると母平均に近づく。</li>
                 </ul>
-                <li><b>標本分散</b></li>
+                <li>標本分散</li>
                 <ul>
                     <li>標本分散は以下の式で表される。
                         <div class="scroll">
@@ -193,7 +191,7 @@
                     <li>また、\(\nu_i = (x_i - \mu)^2\)とおくと、\(\nu_i\)は互いに独立で同じ分布に従う確率変数となり、大数の法則を適用できる。</li>
                     <li>これから、第１項は\(\overline{\nu} \xrightarrow{P} \sigma^2\)となり、\(s^2 \xrightarrow{P} \sigma^2\)がいえる。</li>
                 </ul>
-                <li><b>不偏分散</b></li>
+                <li>不偏分散</li>
                 <ul>
                     <li>不偏分散は以下の式で表される。
                         <div class="scroll">
@@ -205,12 +203,13 @@
                     <li>\(n \rightarrow \infty\)のとき、無限大に発散する分母について、\(s^2\)と高々１しか差がない\(u^2\)も一致性を持つ。</li>
                 </ul>
             </ul>
-            <p>不偏性とは、推定量\(\hat{\theta}\)の期待値が\(E[\hat{\theta}] = \theta\)と、常に母数に等しくなる性質をいい、その性質を持つ推定量を<b>不偏推定量</b>と呼ぶ。</p>
+            <h3>不偏性</h3>
+            <p>不偏性とは、推定量\(\hat{\theta}\)の期待値が\(E[\hat{\theta}] = \theta\)と、常に母数に等しくなる性質をいい、その性質を持つ推定量を不偏推定量と呼ぶ。</p>
             <p>これは一致性と異なり、標本の大きさ\(n\)に依存しない基準である。</p>
-            <p>不偏推定量でなければ、推定には<b>偏り</b>があるといい、偏りを\(E[\hat{\theta}] - \theta\)で定義する。</p>
+            <p>不偏推定量でなければ、推定には偏りがあるといい、偏りを\(E[\hat{\theta}] - \theta\)で定義する。</p>
             <p>標本平均、標本分散、不偏分散の不偏性は以下のとおり。</p>
             <ul>
-                <li><b>標本平均</b></li>
+                <li>標本平均</li>
                 <ul>
                     <div class="scroll">
                     \begin{align}
@@ -218,7 +217,7 @@
                     \end{align}
                     </div>
                 </ul>
-                <li><b>分散</b></li>
+                <li>標本分散、不偏分散</li>
                 <ul>
                     <li>偏差平方和を\(T_{xx} = \sum (x_i - \overline{x})^2\)とおくと、
                         <div class="scroll">
@@ -227,7 +226,7 @@
                             &= \sum [(x_i - \mu) - (\overline{x} - \mu)]^2 \\
                             &= \sum [(x_i - \mu)^2 - 2 (x_i - \mu)(\overline{x} - \mu) + (\overline{x} - \mu)^2] \\
                             &= \sum (x_i - \mu)^2 - 2 (\overline{x} - \mu) \sum (x_i - \mu) + \sum (\overline{x} - \mu)^2 \\
-                            &= \sum (x_i - \mu)^2 - 2 (\overline{x} - \mu) n \overline{x} - n \mu + n (\overline{x} - \mu)^2 \\
+                            &= \sum (x_i - \mu)^2 - 2 (\overline{x} - \mu) (n \overline{x} - n \mu) + n (\overline{x} - \mu)^2 \\
                             &= \sum (x_i - \mu)^2 - 2 (\overline{x} - \mu) n (\overline{x} - \mu) + n (\overline{x} - \mu)^2 \\
                             &= \sum (x_i - \mu)^2 - n(\overline{x} - \mu)^2 
                         \end{align}
