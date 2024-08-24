@@ -42,7 +42,39 @@
         </section>
         <section>
             <h2>基礎数学</h2>
-            <h3></h3>
+            <h3>停留点</h3>
+            <p>停留点を求める問題は、ここ10年で複数回出題されている。</p>
+            <p>停留点は関数の変化がなくなる点であるため、\(x\)方向、\(y\)方向ともにその変化量が0、すなわち</p>
+            <div class="scroll">
+                \begin{align}
+                \frac{\partial f(x,y)}{\partial x}=\frac{\partial f(x,y)}{\partial y}=0
+                \end{align}
+            </div>
+            <p>となる点を求めればよい。</p>
+            <p>つまり、\(x\)と\(y\)の偏微分を求めて、それらをイコール0にした2式を連立して解けばよい。</p>
+            <p>このように停留点は簡単に求まるのだが、次に、その停留点が極大値なのか、極小値なのか、鞍点なのかを判定せよ、と問われることが多い。</p>
+            <p>停留点を判定するには、以下で定義されるヘッセ行列を使う。</p>
+            <div class="scroll">
+                \begin{align}
+                \mathsf{H}=
+                    \begin{pmatrix}\displaystyle{\frac{\partial^{2} f(x,y)}{\partial x^{2}}}&\displaystyle{\frac{\partial^{2} f(x,y)}{\partial x\partial y}} \\ \\ 
+                    \displaystyle{\frac{\partial^{2} f(x,y)}{\partial x\partial y}}&\displaystyle{\frac{\partial^{2} f(x,y)}{\partial y^{2}}}\end{pmatrix}
+                \end{align}
+            </div>
+            <p>したがって、二階偏微分を求める必要がある。</p>
+            <p>二階偏微分を求めたら、ヘッセ行列の固有値\(\lambda_{1},\lambda_{2}\)を求めることによって、以下のように判別できる。</p>
+            <div class="scroll">
+                \begin{align}
+                \begin{cases}
+                    \lambda_{1}>0,\lambda_{2}>0&\to\,\text{極小点}\\ 
+                    \lambda_{1}<0,\lambda_{2}<0&\to\,\text{極大点}\\ 
+                    \lambda_{1}\lambda_{2}<0&\to\,\text{鞍点} 
+                \end{cases}
+                \end{align}
+            </div>
+            <h3>極座標変換</h3>
+            <p>極座標変換ができないと解くのが難しい問題はここ10年で何度も出題されている。</p>
+            
         </section>
     </main>
 </body>
