@@ -358,6 +358,31 @@ def GCD(a, b):
                     </p>
                 </div>
             </ul>
+            <h3>到達可能性行列</h3>
+            <p>参考にしたサイトは以下のとおり。</p>
+            <p><a href="http://bin.t.u-tokyo.ac.jp/startup17/file/2-1.pdf">ネットワーク分析-東京大学</a></p>
+            <ul>
+                <li>具体例</li>
+                <div class="example">
+                    <p><b>問題</b></p>
+                    <p>\(n\)個のノードからなる有向グラフにおける2ノード間の到達可能性を判定する方法について説明せよ。</p>
+                    <p><b>解答</b></p>
+                    <p>到達可能性行列を求めればよい。</p>
+                    <p>到達可能性行列は、対角成分が1で、他の要素\(r_{ij}\)は点\(i\)から点\(j\)へ到達可能である場合に1、そうでない場合に0である行列。</p>
+                    <p>以下の手順によって求めることができる。</p>
+                    <ol>
+                        <li>隣接行列\(A\)を求める。</li>
+                        <li>\(A\)に単位行列\(I\)を加える。</li>
+                        <li>この行列\(A+I\)をブール代数演算のもと、次の状態が得られるまで\(r\)回数分の乗算を繰り返す。</li>
+                        <div class="scroll">
+                            \begin{align}
+                            (A+I)^{r-1} \neq (A+I)^r = (A+I)^{r+1}
+                            \end{align}
+                        </div>
+                        <li>このとき\((A+I)^r = (A+I)^{r+1} = T\)とおくと、この\(T\)が到達可能性行列。</li>
+                    </ol>
+                </div>
+            </ul>
             <h3>ソート</h3>
             <p>参考にしたサイトは以下のとおり。</p>
             <p><a href="https://avinton.com/blog/2020/04/engineering-basics-sorting-algorithm/">基本情報技術者　ソートのアルゴリズムとは？ - Avinton Japan.html</a></p>
