@@ -78,9 +78,19 @@
             <p>2次元の極座標変換では、\(x\)と\(y\)を次のようにおく。</p>
             <div class="scroll">
                 \begin{align}
-                x = r \cos \theta , \ \ \ y = r \sin \theta & \left( r \geqq 0, \ \ 0 \leqq \theta \leqq 2 \pi \right)
+                x = r \cos \theta , \ \ \ y = r \sin \theta \quad \left( r \geqq 0, \ \ 0 \leqq \theta \leqq 2 \pi \right)
                 \end{align}
             </div>
+            <p>このとき、ヤコビアンを計算すると以下のようになる。</p>
+            <div class="scroll">
+                \begin{align}
+                J = & \left| \begin{array}{ccc} \frac{\partial x}{\partial r} & \frac{\partial x}{\partial \theta} \\ \frac{\partial y}{\partial r} & \frac{\partial y}{\partial \theta} \end{array} \right|
+                    \\ = & \left| \begin{array}{ccc} \cos \theta & - r \sin \theta \\ \sin \theta & r \cos \theta \end{array} \right|
+                    \\ = & \ r \left( \cos^2 \theta + \sin^2 \theta \right)
+                    \\ = & \ r
+                \end{align}
+            </div>
+            <p></p>
         </section>
     </main>
 </body>
