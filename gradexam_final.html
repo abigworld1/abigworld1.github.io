@@ -421,6 +421,81 @@
             \end{align}
             </div>
             <p>によって計算できる。</p>
+            <h3>(7, 4)ハミング符号、巡回符号</h3>
+            <p>過去（2022年）に、(7, 4)ハミング符号、巡回符号に関する問題も出題されている。</p>
+            <p>情報理論は問題のパターンが限られているので、これもしっかり解けるようにしておきたい。</p>
+            <p>具体例を以下に示す。</p>
+            <div class="example">
+                <p><b>問題</b></p>
+                <ol>
+                    <li>
+                        符号語 <div class="scroll">\(w = (x_1, x_2, x_3, x_4, x_1 + x_3 + x_4, x_1 + x_2 + x_3, x_2 + x_3 + x_4)\) </div>となる \((7,4)\) ハミング符号において、系列 1011011 を受信した。単一誤りまでを想定した場合、送信された情報源記号は何であったと推定されるか答えよ。+は2元体上の加算を表す。
+                    </li>
+                    <li>
+                        2元体上の生成多項式が \(G(x) = x^4 + x^2 + 1\) である符号長7の巡回符号において、情報ビット 110 を符号化した後の2元系列を答えよ。
+                    </li>
+                </ol>
+                <p><b>(1)の解答</b></p>
+                <p>(7,4)ハミング符号のパリティ検査方程式の係数行列（検査行列）\(\mathbf{H}\)は、与えられた符号語\(\mathbf{w}\)より、以下のとおりである。</p>
+                <div class="scroll">
+                    \begin{align}
+                    \mathbf{H} = \begin{bmatrix}
+                    1 & 0 & 1 & 1 & 1 & 0 & 0 \\
+                    1 & 1 & 1 & 0 & 0 & 1 & 0 \\
+                    0 & 1 & 1 & 1 & 0 & 0 & 1
+                    \end{bmatrix}
+                    \end{align}
+                </div>
+                <p>\(\mathbf{w} \mathbf{H}^T\)を計算し、シンドロームを求めると、</p>
+                <div class="scroll">
+                    \begin{align}
+                    \mathbf{w} \mathbf{H}^T = 
+                    \begin{bmatrix}
+                    1 & 0 & 1 & 1 & 0 & 1 & 1 
+                    \end{bmatrix}
+                    \begin{bmatrix}
+                    1 & 1 & 0 \\
+                    0 & 1 & 1 \\
+                    1 & 1 & 1 \\
+                    1 & 0 & 1 \\
+                    1 & 0 & 0 \\
+                    0 & 1 & 0 \\
+                    0 & 0 & 1
+                    \end{bmatrix} = 
+                    \begin{bmatrix}
+                    1 & 1 & 1
+                    \end{bmatrix}
+                    \end{align}
+                </div>
+                <p>となる。これは、\(\mathbf{H}^T\)の3行目と一致するので、\(w_3\)を訂正すればよい。</p>
+                <p>したがって、送信された情報源記号は\(1001011\)である。</p>
+                <p><b>(2)の解答</b></p>
+                <p>情報ビット110を係数とする多項式は</p>
+                <div class="scroll">
+                    \begin{align}
+                    X(x) = x^2 + x
+                    \end{align}
+                </div>
+                <p>である。これに\(x^{7-3} = x^4\)を掛けると、</p>
+                <div class="scroll">
+                    \begin{align}
+                    X(x) x^4 = x^6 + x^5
+                    \end{align}
+                </div>
+                <p>となる。これを生成多項式\(G(x) = x^4 + x^2 + 1\)で割った剰余は、</p>
+                <div class="scroll">
+                    \begin{align}
+                    C(x) = x^3 + x + 1
+                    \end{align}
+                </div>
+                <p>であり、符号多項式は以下のように求められる。</p>
+                <div class="scroll">
+                    \begin{align}
+                    W(x) = X(x) x^4 + C(x) = x^6 + x^5 + x^3 + x + 1
+                    \end{align}
+                </div>
+                <p>したがって、求める2元系列は、\(1101011\)である。</p>
+            </div>
         </section>
         <section>
             <h2>アルゴリズムとデータ構造</h2>
