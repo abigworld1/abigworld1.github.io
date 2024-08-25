@@ -255,10 +255,26 @@
             <p>以下に関係式を列挙する。</p>
             <div class="scroll">
             \begin{align}
-            H(X,Y) \leq H(X) + H(Y) \\
-            I(X;Y) = H(X) + H(Y) - H(X, Y) \\
-            I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X) \\
-            H(X|Y) = H(X, Y) - H(Y) \\
+            H(X,Y) \leq H(X) + H(Y) 
+            \end{align}
+            </div>
+            <div class="scroll">
+            \begin{align}
+            I(X;Y) = H(X) + H(Y) - H(X, Y)
+            \end{align}
+            </div>
+            <div class="scroll">
+            \begin{align}
+            I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X) 
+            \end{align}
+            </div>
+            <div class="scroll">
+            \begin{align}
+            H(X|Y) = H(X, Y) - H(Y) 
+            \end{align}
+            </div>
+            <div class="scroll">
+            \begin{align}
             H(Y|X) = H(X, Y) - H(X)
             \end{align}
             </div>
@@ -276,6 +292,80 @@
             \end{align}
             </div>
             <p>によって計算できる。</p>
+        </section>
+        <section>
+            <h2>アルゴリズムとデータ構造</h2>
+            <h3>計算量、オーダー表記</h3>
+            <p>ここ2年（2022, 2023年）は計算量の問題が出題されているため、オーダー表記はしっかり押さえておくべきである。</p>
+            <p>項の強さを強い順に並べると以下のとおりである。</p>
+            <ul>
+                <li>\(n!, 2^n, n^3, n^2, n \log n, n, \sqrt{n}, \log n\)</li>
+            </ul>
+        </section>
+        <section>
+            <h2>人工知能</h2>
+            <h3>Q学習</h3>
+            <p>Q学習は、ここ10年で二度出題されている（2017, 2023年）。</p>
+            <p>問われる内容は簡単なので、基礎的なことは覚えておいて損はない。</p>
+            <p>有限マルコフ決定過程とは：</p>
+            <ul>
+                <li>マルコフ性を満たす環境においてエージェントが意思決定をして状態が確率的に遷移し、状態や行動が有限であるということ。</li>
+                <li>環境がマルコフ性を持つとは、過去の環境の履歴すべてが、現在の環境情報に集約されていることを指す。</li>
+            </ul>
+            <p>方策の例：</p>
+            <ul>
+                <li>
+                    グリーディ方策
+                    <div class="scroll">
+                    \begin{align}
+                    \pi(s, a) = \arg\max\limits_a Q(s, a)
+                    \end{align}
+                    </div>
+                </li>
+                <li>
+                    ε-グリーディ方策
+                    <div class="scroll">
+                    \begin{align}
+                    \pi(s, a) = 
+                    \begin{cases} 
+                    \arg\max\limits_a Q(s, a) & \text{with probability } 1 - \epsilon \\
+                    \text{random action} & \text{with probability } \epsilon
+                    \end{cases}
+                    \end{align}
+                    </div>
+                </li>
+                <li>
+                    ソフトマックス方策
+                    <div class="scroll">
+                    \begin{align}
+                    \pi(s, a) = \frac{e^{Q(s, a) / \tau}}{\sum\limits_{b} e^{Q(s, b) / \tau}}
+                    \end{align}
+                    </div>
+                </li>
+            </ul>
+            <p>Q値の更新式：</p>
+            <ul>
+                <div class="scroll">
+                \begin{align}
+                Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \left( r_{t+1} + \gamma \max\limits_a Q(s_{t+1}, a) - Q(s_t, a_t) \right)
+                \end{align}
+                </div>
+            </ul>
+            <p>Q値の収束性：</p>
+            <ul>
+                <li>エージェントが十分に多くのエピソードを経験し、すべての状態-行動ペアを探索することで、Q値は収束し、最適方策が得られる。理論的には、探索が無限に続く場合、適切な学習率と割引率の選択により、Q値は最適な値に収束することが保証されている。</li>
+            </ul>
+            <h3>ニューラルネットワーク</h3>
+            <p>ニューラルネットワークは、人工知能の範囲では最も出題頻度が高い。つまり、最重要ポイントである。</p>
+            <p>誤差逆伝播法：ネットワーク内の各重みについて損失関数の勾配を計算する方法。</p>
+            <p>最急降下法：その勾配を使って重みを更新する方法。具体的には、以下のように更新される。</p>
+            <div class="scroll">
+            \begin{align}
+            w_{i+1} &= w_i - \alpha \frac{\partial L}{\partial w_i}
+            \end{align}
+            </div>
+            <p>ここで、\(w_i\)は更新する重み、\(\alpha\)は学習率、\(L(\cdot)\)は損失関数である。</p>
+        </section>
     </main>
 </body>
 </html>
