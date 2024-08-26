@@ -391,6 +391,61 @@
                     <li>したがって、標本分散は不偏性を持たず、不偏分散は不偏性を持つ。</li>
                 </ul>
             </ul>
+            <h3>期待値、分散、共分散</h3>
+            <p>期待値：</p>
+            <div class="scroll">
+            \begin{align}
+            E(X) = \int_{-\infty}^{\infty} xf(x) dx = \mu
+            \end{align}
+            </div>
+            <div class="scroll">
+            \begin{align}
+            E(X) = \sum_i x_i f(x_i) = \mu
+            \end{align}
+            </div>
+            <div class="scroll">
+            \begin{align}
+            E(cX + dY + t) &= E(cX + dY) + t \\
+            &= E(cX) + E(dY) + t \\
+            &= cE(X) + dE(Y) + t
+            \end{align}
+            </div>
+            <p>分散：</p>
+            <div class="scroll">
+            \begin{align}
+            V(X) = E[(X - \mu)^2]= \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx = \sigma^2 
+            \end{align}
+            </div>
+            <div class="scroll">
+            \begin{align}
+            V(X) = \sum_i (x_i - \mu)^2 f(x_i) = \sigma^2
+            \end{align}
+            </div>
+            <div class="scroll">
+            \begin{align}
+            V(X) = E(X^2) - \mu^2
+            \end{align}
+            </div>
+            <div class="scroll">
+            \begin{align}
+            V(cX + t) &= V(cX) \\
+            &= c^2 V(X)
+            \end{align}
+            </div>
+            <p>\(X, Y\)が無相関のとき、以下が成り立つ。</p>
+            <div class="scroll">
+            \begin{align}
+            E(XY) = E(X) E(Y) \\
+            V(X+Y) = V(X) + V(Y)
+            \end{align}
+            </div>
+            <p>共分散：</p>
+            <div class="scroll">
+            \begin{align}
+            Cov(X, Y) &= E(XY) - E(X) E(Y) \\
+            &= V(X+Y) = V(X) + V(Y) + 2 Cov(X, Y) \quad \text{\(X, Y\)が無相関\( \iff Cov(X, Y) = 0\)}    
+            \end{align}
+            </div>
         </section>
         <section>
             <h2>情報理論</h2>
