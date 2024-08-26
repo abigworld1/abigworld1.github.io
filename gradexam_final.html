@@ -462,6 +462,98 @@
             </ul>
             <p>無相関だが独立でない例：</p>
             <p>\((X, Y) = (1, 0), (0, 1), (-1, 0), (0, -1)\)となる確率がそれぞれ\(\frac{1}{4}\)であるような場合。</p>
+            <h3>色々な確率分布</h3>
+            <p>ベルヌーイ分布：</p>
+            <ul>
+                <li>注目している結果の起こる確率は一定で、各回の試行結果は互いに独立であるような試行をベルヌーイ試行という。</li>
+                <li>2種類の結果は値（1と0）で表し、成功（値1）である確率を\(p\)とする。</li>
+                <li>1回のベルヌーイ試行で得られる確率分布をベルヌーイ分布とよぶ。</li>
+                <li>確率関数は
+                    <div class="scroll">
+                    \begin{align}
+                    P(X = 1) = f(1) &= p \\
+                    P(X = 0) = f(0) &= 1 - p
+                    \end{align}
+                    </div>
+                と表され、その期待値と分散は
+                    <div class="scroll">
+                    \begin{align}
+                    \mu &= p \\
+                    \sigma^2 &= p(1-p)
+                    \end{align}
+                    </div>
+                となる。</li>
+            </ul>
+            <p>二項分布：</p>
+            <ul>
+                <li>成功確率\(p\)の\(n\)回のベルヌーイ試行を行ったとき、成功の確率が\(x\)、失敗の確率が\(n-x\)である確率、すなわち、成功の回数\(X = x\)に対する確率関数は
+                    <div class="scroll">
+                    \begin{align}
+                    P(X = x) = f(x) = {}_n C_x p^x (1-p)^{n-x}
+                    \end{align}
+                    </div>
+                となる。</li>
+                <li>\(B(n, p)\)で表される。</li>
+                <li>期待値と分散は
+                    <div class="scroll">
+                    \begin{align}
+                    \mu &= np \\
+                    \sigma^2 &= np(1-p)
+                    \end{align}
+                    </div>
+                となって、\(n=1\)のとき、ベルヌーイ分布に一致する。</li>
+            </ul>
+            <p>ポアソン分布：</p>
+            <ul>
+                <li>ポアソン分布は、二項分布\(B(n, p)\)において期待値\(np = \lambda\)を固定し、試行回数と成功確率について\(n \leftarrow \infty, p \leftarrow \infty\)のような極限をとったときに得られる確率分布として定義される。</li>
+                <li>つまり、\(n\)が大きく\(p\)が小さい二項分布に対する近似として使用できる。</li>
+                <li>ポアソン分布の確率関数は
+                    <div class="scroll">
+                    \begin{align}
+                    \frac{e^{- \lambda} \lambda^x}{x!}
+                    \end{align}
+                    </div>
+                であり、期待値と分散は
+                    <div class="scroll">
+                    \begin{align}
+                    E(X) = V(X) = \lambda
+                    \end{align}
+                    </div>
+                となる。</li>
+                <li>ある時間間隔\(T\)の間に電話のかかってくる回数など。</li>
+            </ul>
+            <p>幾何分布：</p>
+            <ul>
+                <li>成功の確率が\(p\)であるベルヌーイ試行を、初めて成功するまで繰り返したときの試行回数\(X\)の確率分布を幾何分布という。</li>
+                <li>初めて成功するのが\(x\)回目であるとすると、それまでの\(n-1\)回は失敗であるため、その確率は
+                    <div class="scroll">
+                    \begin{align}
+                    P(X=x) = f(x) = p(1-p)^{x-1}
+                    \end{align}
+                    </div>
+                であり、期待値と分散は
+                    <div class="scroll">
+                    \begin{align}
+                    E(X) &= \frac{1}{p} \\
+                    V(X) &= \frac{1-p}{p^2}
+                    \end{align}
+                    </div>
+                となる。</li>
+            </ul>
+            <p>一様分布：</p>
+            <ul>
+                <li>区間\([a, b]\)内のどの値も同じ起こりやすさを持つ、すなわち、確率密度関数が
+                    <div class="scroll">
+                    \begin{align}
+                    f(x) = 
+                    \begin{cases}
+                    \frac{1}{b-a} \quad (a \leq x \leq b) \\
+                    0 \quad (otherwise)
+                    \end{cases}
+                    \end{align}
+                    </div>
+                </li>
+            </ul>
         </section>
         <section>
             <h2>情報理論</h2>
