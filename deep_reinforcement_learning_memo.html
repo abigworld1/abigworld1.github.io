@@ -27,6 +27,9 @@
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#source">Source</a></li>
                 <li><a href="#mdp-planning">Makov Decision Process and Planning Algorithm</a></li>
+                <li><a href="#basic">Basic Deep Reinforcement Learning and The Applications</a></li>
+                <li><a href="#cas">Deep Reinforcement Learning in Continuous Action Spaces</a></li>
+                <li><a href="#demo">Methods using demonstrations</a></li>
             </ul>
         </section>
         <section id="neural-network">
@@ -231,7 +234,7 @@
                 <li>DQNアルゴリズムでは、状態を受け取り行動空間上の値を返すネットワークを用いてQ関数を表現する。</li>
             </ul>
         </section>
-        <section id="mdp-planning">
+        <section id="basic">
             <h2>Basic Deep Reinforcement Learning and The Applications</h2>
             <h3>テーブル形式の強化学習</h3>
             <ul>
@@ -551,7 +554,7 @@
                 <li>エージェント内部で世界をモデル化し、空間情報の圧縮とそれをもとに時間方向の予測、つまり世界のシミュレーションを行っていると見なせる。</li>
             </ul>
             </section>
-        <section id="mdp-planning">
+        <section id="cas">
             <h2>Deep Reinforcement Learning in Continuous Action Spaces</h2>
             <h3>よく使われるアルゴリズム</h3>
             <ul>
@@ -657,6 +660,388 @@
             <h3>方策勾配と単調性能向上</h3>
             <ul>
                 <li>TRPOは実装が面倒くさいので、代わりにPPOが用いられる。</li>
+            </ul>
+            </section>
+        <section id="demo">
+            <h2>Methods using demonstrations</h2>
+            <h3>なぜデモンストレーションを利用するのか？</h3>
+            <ul>
+                <li>強化学習の課題：</li>
+                <ul>
+                    <li>複雑なタスクのそれぞれに対して逐一報酬う\(r_t\)を設計するのは大変</li>
+                    <li>何度も環境-エージェント間で相互作用するのが現実的ではない場合がある</li>
+                </ul>
+                <li>デモンストレーションを何らかの方策（他の機械学習エージェント、人間による操作、ヒューリスティックなど）で収集</li>
+                <li>報酬の設計をせずに複雑なタスクをデモデータによる教示で学習させる（模倣学習）</li>
+                <li>環境-エージェント間の相互作用なしで強化学習を行なう（オフライン強化学習）</li>
+            </ul>
+            <h3>デモを利用した強化学習：OT-Opt</h3>
+            <ul>
+                <li>画像入力で、未知物体のGraspingを学習するOT-Optを提案</li>
+                <li>Graspingは、ランダムに行動した場合、成功することは極めて稀</li>
+                <li>→ある程度（15~30%）成功するようなデモを取れる方策からデータ収集</li>
+                <li>58万回の試行データを事前に集めてOff-Policy RLで学習する</li>
+                <ul>
+                    <li>Off-Policy: データ収集に用いた方策と、更新時の方策が異なる</li>
+                    <li>On-Policy: 現在の方策でデータを集めて、方策や価値関数を更新</li>
+                </ul>
+            </ul>
+            <h3>デモを利用した大規模な模倣学習：RT-1</h3>
+            <ul>
+                <li>画像と言語指示を入力に、様々なGraspingタスクを大規模なデモンストレーションの模倣学習で学習する</li>
+                <li>Robotics Transformer 1の</li>
+            </ul>
+            <h3>模倣学習のアプローチ</h3>
+            <ul>
+                <li>大きくわけて二つのアプローチがある。</li>
+                <ul>
+                    <li>Behavior Cloning: デモデータの行動をそのまま真似るように方策を学習する。教師あり学習の問題になる。</li>
+                    <li>逆強化学習：デモデータで選択された行動の裏側にある報酬関数を推定する。推定した報酬関数を用いた強化学習で方策を学習する。深層学習以降は、敵対的学習を用いて、陽に報酬関数を推定せずに強化学習を行なう手法が主流。</li>
+                </ul>
+            </ul>
+            <h3>Behavior Cloning</h3>
+            <ul>
+                <li>デモデータに含まれる、状態と行動について、方策を教師あり学習。</li>
+            </ul>
+            <h3>Distribution Shiftの問題</h3>
+            <ul>
+                <li>Behavior Clonningは簡単な手法だが、特にデモデータが少ない場合には、パラメータの過剰適合などによりパフォーマンスが出ない場合がある。</li>
+            </ul>
+            <h3>逆強化学習</h3>
+            <ul>
+                <li>デモデータから報酬関数を推定し、その報酬関数を用いて強化学習する</li>
+                <ul>
+                    <li>逆強化学習は解が一意に定まらない問題</li>
+                    <li>多くの報酬関数が同じ行動で説明できる</li>
+                </ul>
+                <li>手順は以下のとおり。</li>
+                <ol>
+                    <li>最適方策からサンプル</li>
+                    <li>報酬関数を学習</li>
+                    <li>その報酬関数のもとで方策を学習</li>
+                </ol>
+                <li>報酬関数が一意に定まらない中で、どのように強化学習するのが望ましいか</li>
+                <li>デモデータから推定できる軌道の分布全体をカバーするような方策が学習できると望ましい</li>
+                <li>軌道の模倣ではなく、軌道の分布の模倣と考えるとよい</li>
+                <li>方策から生じる軌道は、デモデータのサポートの中で、できる限り多様な方が望ましい</li>
+                <li>→方策から生じる軌道の分布のエントロピーを最大化する</li>
+                <li>強化学習の文脈のMaximum Entropy RLをもとに考える。</li>
+            </ul>
+            <h3>Max-Ent RL</h3>
+            <ul>
+                <li>方策から生成される軌道の分布、報酬関数から定義されるターゲット分布を考えると、Max-Ent RLの目的関数はKL Divergenceの最小化とみなせる</li>
+                <li>方策から生じる軌道の分布のエントロピーを最大化する逆強化学習</li>
+            </ul>
+            <h3>Generative Adversarial Networks</h3>
+            <ul>
+                <li>Generator（生成器）が潜在変数から画像などを生成するように学習</li>
+                <li>Discriminator（識別器）は学習データと生成されたデータを分類するように学習</li>
+                <li>逆強化学習はGANとして解釈できる</li>
+            </ul>
+            <h3>模倣学習　まとめ</h3>
+            <ul>
+                <li>模倣学習にはBehavior CloningとInverse RLがある。</li>
+                <li>Behavior Cloningは教師あり学習</li>
+                <li>学習した方策を実行て新たにデータを加えるDAggerは、BCのDistiribution Shiftの問題を抑えることができる</li>
+                <li>Inverse RLはデモから報酬関数を推定する問題設定</li>
+                <li>深層学習以降では、敵対的強化学習を用いて陽に報酬関数を推定せずに強化学習を行なう手法が主流</li>
+                <li>エントロピー最大化の観点からIRLを考えると、敵対的学習(GAN)との共通点が見える。</li>
+            </ul>
+            <h3>オフライン強化学習</h3>
+            <ul>
+                <li>何らかの方策で収集されたデモデータから、環境-エージェント間の相互なしで強化学習を行なう。</li>
+                <li>模倣学習では、環境-エージェント間の相互作用を利用するものも多かった。</li>
+                <li>ロボット学習、医療、対話エージェントなど、現実世界の応用には必要不可欠。</li>
+                <li>環境-エージェント間の相互作用コストが高い分野。</li>
+                <li>On-Policy: 学習方策でデータを収集し、そのデータで方策を更新する。</li>
+                <li>Off-Policy: 学習方策でデータを収集し、これまでに集めたデータで方策を更新する</li>
+                <li>Off: 任意の挙動方策で事前にデータを収集し、そのデータで方策を更新する</li>
+            </ul>
+            <h3>Off-Policy Evaluation</h3>
+            <ul>
+                <li>与えられた方策の価値関数の値を、環境で実行せずに推定する問題設定</li>
+                <li>オフライン強化学習の文脈では、どの方策が良いか選ぶModel Selectionへの活用が考えられる。</li>
+            </ul>
+            <h3>オフライン強化学習におけるDistribution Shift</h3>
+            <ul>
+                <li>オフライン強化学習では、挙動方策によるデータセットの分布と学習方策による行動の分布が学習中に離れてしまう。</li>
+                <li>→Distribution Shiftと呼ばれる問題</li>
+            </ul>
+            <h3>Q関数の過大評価</h3>
+            <ul>
+                <li>Q学習ではターゲットの計算の際に最大値を取るが、学習途中の不正確なQ関数では、正しい最大値が取れない可能性がある。</li>
+                <li>オンライン強化学習では探索が促され、新たなサンプルにより、過大評価は解消されうる</li>
+                <li>オフライン強化学習ではデータセット外のQ関数はいくら学習しても不正確なまま</li>
+            </ul>
+            <h3>オフライン強化学習のアプローチ</h3>
+            <ul>
+                <li>Distiributional ShiftによるQ関数の過大評価にどのように対応するか?</li>
+                <li>大きく分けて３つのアプローチがある。</li>
+                <li>①学習方策に制約をかける</li>
+                <li>②価値関数に制約をかける</li>
+                <li>③価値関数を不確実性で重みづけする</li>
+            </ul>
+            <h3>Distribution Matching</h3>
+            <ul>
+                <li>挙動方策をBCで推定し、推定した挙動方策からのサンプリングを学習方策として用いる</li>
+                <li>Distributional Shiftを大幅に抑えることができる</li>
+                <li>挙動方策の性能が悪い場合（ランダム方策など）、学習方策も悪くなってしまう。</li>
+            </ul>
+            <h3>BCQ: Batch-Constrained deep Q-Learning</h3>
+            <ul>
+                <li>方策が出力する行動がデータセットから大きく外れないようにする</li>
+                <li>Conditional VAEでBC</li>
+                <li>CVAEのデコーダー（状態で条件付け）からn個行動をサンプルし、摂動を加えた行動からQ関数が最大になるものを選択する</li>
+                <li>摂動でQ関数のサポートを広げ、価値の高い行動を探索</li>
+                <li>DDPGと同様な方策勾配法で摂動モデルを学習</li>
+                <li>行動に摂動を加えてQ関数の学習に利用</li>
+                <li>Q関数の学習を安定化させる。</li>
+                <li>Clipped Double Q-Learningのｙ変形版を用いる。</li>
+                <li></li>
+            </ul>
+            <h3>Support Matching</h3>
+            <ul>
+                <li>挙動方策をBCで推定し、学習方策を学習する際の正則化項として用いる</li>
+                <li>Distribution matchingと比べて制約は緩い</li>
+            </ul>
+            <h3>学習方策に制約をかける手法の問題点</h3>
+            <ul>
+                <li>挙動方策の推定が必要である。</li>
+                <li>挙動方策の推定がうまくいかないと全く性能がでない</li>
+                <li>制約が保守的すぎる場合がある</li>
+                <li>例えばどんな行動を取っても報酬が0となるような状態にいることを考えると、学習方策に制約をかける必要がない。</li>
+            </ul>
+            <h3>CQL: Conservative Q-Learning</h3>
+            <ul>
+                <li>真の価値関数の値の下界となるように目的関数を構成し、Q関数の過大評価を抑える。</li>
+                <li>SACやDQNQ関数の目的関数をわずかに修正するだけ</li>
+                <li>パフォーマンス：BCや学習方策に直接制約をかける手法と比べて圧倒的に良い。</li>
+            </ul>
+            <h3>Implicit Q-Learning</h3>
+            <ul>
+                <li>オフライン強化学習でQ関数に過大評価の影響がみられるのは、データセット外の行動を用いてTD学習するため</li>
+                <li>データセット外の行動を用いずにQ関数を学習したい→SARSAの目的関数を利用</li>
+                <li>複雑なタスクでは性能がでない。</li>
+                <li>挙動方策の期待収益であって、最適な期待収益ではないため</li>
+                <li>次の目的関数で価値関数を学習することを目指す。</li>
+                <li>Expectile Regression（分位点回帰に類似した手法）を用いて状態価値関数を学習</li>
+            </ul>
+            <h3>LLMに着想を得た研究</h3>
+            <ul>
+                <li>大規模言語モデルが様々な分野で成功を収めている　→　強化学習にも同様の考え方が適用できないか？</li>
+                <li>強化学習にTransformerを取り入れる</li>
+                <li>Internet-scaleの大規模データを用いて方策の事前学習をする</li>
+            </ul>
+            <h3>Dicision Transformer</h3>
+            <ul>
+                <li>Decoder-onlyのTransformerを用いて条件付き模倣学習を行なう</li>
+                <li>GPT-2のアーキテクチャを利用</li>
+                <li>過去Tステップのreturn-to-go（達成すべき累積報酬の目標値）、状態、行動を系列データとみなす。</li>
+                <li>各ステップの行動を予測して教師あり学習</li>
+                <li>軌道の時刻tをposition embeddingのように扱う。</li>
+                <li>(R,s,a,R,s,a,...)の順番に並べてCausal Transformer（自身より前ステップのトークンにしかアテンションを掛けないTransformer）に入力する</li>
+                <li>BCやTD学習と比較しても遜色ない性能</li>
+            </ul>
+            <h3>拡散モデルを用いた研究</h3>
+            <ul>
+                <li>拡散モデルの高い表現力により、画像生成タスクをはじめとした様々な生成タスクで成功を収めている。→強化学習においては連続値行動の方策関数として利用可能</li>
+                <li>拡散モデルを使用する利点としては、様々な条件付き生成を容易に実現できることや、表現力が高いためデータの多様性を捉えることができることなどがある。</li>
+            </ul>
+            <h3>オフライン強化学習　まとめ</h3>
+            <ul>
+                <li>オフライン強化学習は強化学習と実際の応用をつなぐ可能性がある研究分野。</li>
+                <li>大きくわけて３つのアプローチがある</li>
+                <ul>
+                    <li>学習方策に直接制約をかける(Policy constraint methods) ← 簡単</li>
+                    <li>価値関数の下界を用いる (Learning lower-bounded policy-values) ← 性能がいい</li>
+                    <li>価値関数を不確実性で重み付けする (Uncertainty-based methods)</li>
+                </ul>
+                <li>Large Language Models(GPT-3, PaLM, ChatGPTなど)の成功から着想を得た研究</li>
+                <ul>
+                    <li>Decoder-onlyのTransformerを用いて条件付き模倣学習</li>
+                    <li>Internet-scaleの学習データを用いた事前学習</li>
+                </ul>
+                <li>拡散モデルを用いた研究</li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3></h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
             </ul>
             <h3></h3>
             <ul>
