@@ -56,8 +56,30 @@
             
             RUN python -m pip install jupyterlab</code></pre>
           </div>
-          <li></li>
-          <li></li>
+          <li>docker-compose.ymlを以下のように編集する</li>
+          <div class="example">
+            <pre><code>services:
+              python3:
+                restart: always
+                build: .
+                container_name: &#039;python3&#039;
+                working_dir: &#039;/root/&#039;
+                tty: true
+                volumes:
+                  - ./opt:/root/opt</code></pre>
+          </div>
+          <li>sample.pyを以下のように編集する</li>
+          <div class="example">
+            <pre><code>import math
+            import sys
+            
+            def main():
+              val = float(sys.argv[1])
+              print(math.radians(val))
+            
+            if __name__ == &quot;__main__&quot;:
+              main()</code></pre>
+          </div>
           <li></li>
           <li></li>
           <li></li>
