@@ -89,6 +89,16 @@ $ docker compose exec python3 bash
           </div>
           <li>sample.pyを実行できることを確認する</li>
         </ol>
+        <ul>
+            <li>"Ctrl + p + q"でコンテナを抜ける（ショートカットキーを設定する必要があるかも）</li>
+            <li>"docker exec -it [コンテナID] bash"で再接続</li>
+            <li>Jupyter Notebookを起動する</li>
+          <div class="example">
+            <pre><code>
+$ docker run -v $PWD/opt:/root/opt -w /root/opt -it -p 3030:3030 docker_python-python3 jupyter-lab --ip 0.0.0.0 --port 3030 --allow-root
+            </code></pre>
+          </div>            
+        </ul>
       </section>
     </main>
 </body>
