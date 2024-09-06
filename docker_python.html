@@ -111,6 +111,12 @@ $ docker run -it -p 7070:7070 --name [コンテナ名] [イメージ名]
 $ jupyter lab --port=7070 --allow-root --ip=0.0.0.0
             </code></pre>
           </div>
+          <li>マウントしたいとき</li>
+          <div class="example">
+            <pre><code>
+$ docker run -it -p 7070:7070 --name [コンテナ名] -v [ホスト側のパス]:[コンテナ側のパス] [イメージ名]
+            </code></pre>
+          </div>
         </ul>
       </section>
     </main>
