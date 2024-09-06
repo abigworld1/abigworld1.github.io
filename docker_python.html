@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【自然言語処理 ～言語処理100本ノック～】走る作曲家のAIカフェ</title>
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1050827580219099"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>走る作曲家のAIカフェ</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="study.html">勉強</a></li>
+                <li><a href="music.html">音楽</a></li>
+                <li><a href="sports.html">スポーツ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+      <section>
+        <h2>【環境構築】DockerでPythonを動かす方法</h2>
+        <ol>
+          <li>以下のファイル構成を作る</li>
+          <ul>
+            <li>docker-python/</li>
+            <ul>
+              <li>Dockerfile</li>
+              <li>docker-compose.yml</li>
+              <li>opt/</li>
+              <ul>
+                <li>sample.py</li>
+              </ul>
+            </ul>
+          </ul>
+          <li>Dockerfileを以下のように編集する</li>
+          <div class="example">
+            <pre><code>FROM python:3
+            USER root
+            
+            RUN apt-get update
+            RUN apt-get -y install locales &amp;&amp; \
+                localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+            ENV LANG ja_JP.UTF-8
+            ENV LANGUAGE ja_JP:ja
+            ENV LC_ALL ja_JP.UTF-8
+            ENV TZ JST-9
+            ENV TERM xterm
+            
+            RUN apt-get install -y vim less
+            RUN pip install --upgrade pip
+            RUN pip install --upgrade setuptools
+            
+            RUN python -m pip install jupyterlab</code></pre>
+          </div>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ol>
+      </section>
+    </main>
+</body>
+</html>
