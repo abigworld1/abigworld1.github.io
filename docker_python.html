@@ -40,55 +40,59 @@
           <li>Dockerfileを以下のように編集する</li>
           <div class="example">
             <pre><code>
-            FROM python:3
-            USER root
-            
-            RUN apt-get update
-            RUN apt-get -y install locales &amp;&amp; \
-                localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
-            ENV LANG ja_JP.UTF-8
-            ENV LANGUAGE ja_JP:ja
-            ENV LC_ALL ja_JP.UTF-8
-            ENV TZ JST-9
-            ENV TERM xterm
-            
-            RUN apt-get install -y vim less
-            RUN pip install --upgrade pip
-            RUN pip install --upgrade setuptools
-            
-            RUN python -m pip install jupyterlab</code></pre>
+FROM python:3
+USER root
+
+RUN apt-get update
+RUN apt-get -y install locales &amp;&amp; \
+    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:ja
+ENV LC_ALL ja_JP.UTF-8
+ENV TZ JST-9
+ENV TERM xterm
+
+RUN apt-get install -y vim less
+RUN pip install --upgrade pip
+RUN pip install --upgrade setuptools
+
+RUN python -m pip install jupyterlab
+            </code></pre>
           </div>
           <li>docker-compose.ymlを以下のように編集する</li>
           <div class="example">
             <pre><code>
-            services:
-              python3:
-                restart: always
-                build: .
-                container_name: &#039;python3&#039;
-                working_dir: &#039;/root/&#039;
-                tty: true
-                volumes:
-                  - ./opt:/root/opt</code></pre>
+services:
+  python3:
+    restart: always
+    build: .
+    container_name: &#039;python3&#039;
+    working_dir: &#039;/root/&#039;
+    tty: true
+    volumes:
+      - ./opt:/root/opt
+            </code></pre>
           </div>
           <li>sample.pyを以下のように編集する</li>
           <div class="example">
             <pre><code>
-            import math
-            import sys
-            
-            def main():
-              val = float(sys.argv[1])
-              print(math.radians(val))
-            
-            if __name__ == &quot;__main__&quot;:
-              main()</code></pre>
+import math
+import sys
+
+def main():
+  val = float(sys.argv[1])
+  print(math.radians(val))
+
+if __name__ == &quot;__main__&quot;:
+  main()
+            </code></pre>
           </div>
           <li>Docker imageを作成し、コンテナを作成・起動する</li>
           <div class="example">
             <pre><code>
-            $ cd docker-python/
-            $ docker compose up -d --build</code></pre>
+$ cd docker-python/
+$ docker compose up -d --build
+            </code></pre>
           </div>
           <li></li>
           <li></li>
