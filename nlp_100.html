@@ -32,10 +32,17 @@
         <p><b>文字列”stressed”の文字を逆に（末尾から先頭に向かって）並べた文字列を得よ．</b></p>
         <div class="example">
         <pre><code>
-str = &quot;stressed&quot;[::-1]
-print(str)
+# 文字列の定義
+text = "stressed"
+
+# 文字列を逆順に並べ替える
+reversed_text = text[::-1]
+
+# 結果を出力
+print(reversed_text)
         </code></pre>
         </div>
+        <p><code>text[start:end:step]</code>というスライスの一般的な形式で、<code>start</code>と<code>end</code>を省略し、<code>step</code>に<code>-1</code>を指定することで、逆順に文字を取得できる。</p>
         <h3>01.「パタトクカシーー」</h3>
         <p><b>「パタトクカシーー」という文字列の1,3,5,7文字目を取り出して連結した文字列を得よ．</b></p>
         <div class="example">
