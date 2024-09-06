@@ -73,20 +73,7 @@ services:
       - ./opt:/root/opt
             </code></pre>
           </div>
-          <li>sample.pyを以下のように編集する</li>
-          <div class="example">
-            <pre><code>
-import math
-import sys
-
-def main():
-  val = float(sys.argv[1])
-  print(math.radians(val))
-
-if __name__ == &quot;__main__&quot;:
-  main()
-            </code></pre>
-          </div>
+          <li>sample.pyを適当に編集する</li>
           <li>Docker imageを作成し、コンテナを作成・起動する</li>
           <div class="example">
             <pre><code>
@@ -100,12 +87,7 @@ $ docker compose up -d --build
 $ docker compose exec python3 bash
             </code></pre>
           </div>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          <li>sample.pyを実行できることを確認する</li>
         </ol>
       </section>
     </main>
