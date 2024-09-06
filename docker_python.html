@@ -98,7 +98,19 @@ $ docker compose exec python3 bash
             <pre><code>
 $ docker run -v $PWD/opt:/root/opt -w /root/opt -it -p 3030:3030 docker_python-python3 jupyter-lab --ip 0.0.0.0 --port 3030 --allow-root
             </code></pre>
-          </div>            
+          </div>
+          <li>新しいコンテナを作る</li>
+          <div class="example">
+            <pre><code>
+$ docker run -it -p 7070:7070 --name [コンテナ名] [イメージ名]
+            </code></pre>
+          </div>
+          <li>新しいコンテナ内でJupyter Notebookを起動する</li>
+          <div class="example">
+            <pre><code>
+$ jupyter lab --port=7070 --allow-root --ip=0.0.0.0
+            </code></pre>
+          </div>
         </ul>
       </section>
     </main>
