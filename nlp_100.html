@@ -134,7 +134,80 @@ char_bi_gram = n_gram(sentence.replace(&quot; &quot;, &quot;&quot;), 2)  # 空�
 print(&quot;単語bi-gram:&quot;, word_bi_gram)
 print(&quot;文字bi-gram:&quot;, char_bi_gram)
         </code></pre>
-          <p></p>
+          <h3>06.集合</h3>
+          <p><b>“paraparaparadise”と”paragraph”に含まれる文字bi-gramの集合を，それぞれ, XとYとして求め，XとYの和集合，積集合，差集合を求めよ．さらに，’se’というbi-gramがXおよびYに含まれるかどうかを調べよ．</b></p>
+        <pre><code>
+# n-gramを作成する関数
+def n_gram(sequence, n):
+    return [sequence[i:i+n] for i in range(len(sequence) - n + 1)]
+
+# 文字列からbi-gramを作成
+str1 = &quot;paraparaparadise&quot;
+str2 = &quot;paragraph&quot;
+
+# それぞれの文字bi-gram集合を求める
+X = set(n_gram(str1, 2))
+Y = set(n_gram(str2, 2))
+
+# 和集合、積集合、差集合を求める
+union = X | Y
+intersection = X &amp; Y
+difference = X - Y
+
+# &#039;se&#039;がXとYに含まれるかどうかを調べる
+is_se_in_X = &#039;se&#039; in X
+is_se_in_Y = &#039;se&#039; in Y
+
+# 結果を出力
+print(&quot;X:&quot;, X)
+print(&quot;Y:&quot;, Y)
+print(&quot;和集合:&quot;, union)
+print(&quot;積集合:&quot;, intersection)
+print(&quot;差集合:&quot;, difference)
+print(&quot;&#039;se&#039;がXに含まれるか:&quot;, is_se_in_X)
+print(&quot;&#039;se&#039;がYに含まれるか:&quot;, is_se_in_Y)
+        </code></pre>
+          <h3>07.テンプレートによる文生成</h3>
+          <p><b>引数x, y, zを受け取り「x時のyはz」という文字列を返す関数を実装せよ．さらに，x=12, y=”気温”, z=22.4として，実行結果を確認せよ．</b></p>
+        <pre><code>
+# 関数の定義
+def create_sentence(x, y, z):
+    return f&quot;{x}時の{y}は{z}&quot;
+
+# 関数の実行
+x = 12
+y = &quot;気温&quot;
+z = 22.4
+result = create_sentence(x, y, z)
+
+# 結果を出力
+print(result)
+        </code></pre>
+          <h3>08.暗号文</h3>
+          <p><b>与えられた文字列の各文字を，以下の仕様で変換する関数cipherを実装せよ．
+              <ul>
+                  <li>英小文字ならば(219 - 文字コード)の文字に置換</li>
+                  <li>その他の文字はそのまま出力</li>
+              </ul>
+              この関数を用い，英語のメッセージを暗号化・復号化せよ．</b></p>
+        <pre><code>
+# cipher関数の定義
+def cipher(text):
+    # 各文字を処理
+    result = &#039;&#039;.join([chr(219 - ord(c)) if c.islower() else c for c in text])
+    return result
+
+# 暗号化するメッセージ
+message = &quot;I am a NLPer.&quot;
+
+# 暗号化
+encrypted_message = cipher(message)
+print(&quot;暗号化:&quot;, encrypted_message)
+
+# 復号化 (同じ関数を使うことで復号も可能)
+decrypted_message = cipher(encrypted_message)
+print(&quot;復号化:&quot;, decrypted_message)
+        </code></pre>
       </section>
     </main>
 </body>
