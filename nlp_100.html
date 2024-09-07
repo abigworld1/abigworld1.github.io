@@ -347,6 +347,35 @@ print(f&quot;&#039;{col1_file_path}&#039; と &#039;{col2_file_path}&#039; を�
             <pre><code>
 paste col1.txt col2.txt &gt; merged.txt
             </code></pre>
+            <h3>14. 先頭からN行を出力</h3>
+            <p><b>自然数Nをコマンドライン引数などの手段で受け取り，入力のうち先頭のN行だけを表示せよ．確認にはheadコマンドを用いよ．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+# 以下の14.pyファイルを作成し、python 14.py popular-names.txt 5で実行
+
+import sys
+
+# 先頭N行を表示するプログラム
+def head(file_path, N):
+    with open(file_path, &#039;r&#039;) as file:
+        for i, line in enumerate(file):
+            if i &gt;= N:
+                break
+            print(line.strip())
+
+# コマンドライン引数の処理
+if __name__ == &quot;__main__&quot;:
+    if len(sys.argv) != 3:
+        print(&quot;Usage: python script.py &lt;file_path&gt; &lt;N&gt;&quot;)
+    else:
+        file_path = sys.argv[1]  # ファイルのパス
+        N = int(sys.argv[2])     # 表示する行数
+        head(file_path, N)
+            </code></pre>
+            <p>UNIXコマンド</p>
+            <pre><code>
+head -n 5 popular-names.txt
+            </code></pre>
         </section>
     </main>
 </body>
