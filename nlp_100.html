@@ -235,6 +235,67 @@ result = process_sentence(sentence)
 print(result)
         </code></pre>
       </section>
+        <section>
+            <h2>UNIXコマンド</h2>
+            <h3>10. 行数のカウント</h3>
+            <p><b>行数をカウントせよ．確認にはwcコマンドを用いよ．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+# popular-names.txtの行数をカウントするプログラム
+def count_lines(file_path):
+    with open(file_path, &#039;r&#039;) as file:
+        lines = file.readlines()  # ファイルをすべて読み込んで行ごとにリスト化
+        return len(lines)  # 行数を返す
+
+# popular-names.txtのパス
+file_path = &#039;popular-names.txt&#039;
+
+# 行数をカウントして表示
+line_count = count_lines(file_path)
+print(f&quot;行数: {line_count}&quot;)
+            </code></pre>
+            <p>UNIXコマンド</p>
+            <pre><code>
+wc -l popular-names.txt
+            </code></pre>
+            <h3>11. タブをスペースに置換</h3>
+            <p><b>タブ1文字につきスペース1文字に置換せよ．確認にはsedコマンド，trコマンド，もしくはexpandコマンドを用いよ．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+# タブ文字をスペースに置換するプログラム
+def replace_tabs_with_spaces(file_path, output_file_path):
+    with open(file_path, &#039;r&#039;) as file:
+        content = file.read()  # ファイル全体を読み込む
+        modified_content = content.replace(&#039;\t&#039;, &#039; &#039;)  # タブをスペースに置換
+    
+    with open(output_file_path, &#039;w&#039;) as output_file:
+        output_file.write(modified_content)  # 置換後の内容を書き込む
+
+# ファイルパスの指定
+input_file_path = &#039;popular-names.txt&#039;
+output_file_path = &#039;popular-names-space.txt&#039;
+
+# 置換処理の実行
+replace_tabs_with_spaces(input_file_path, output_file_path)
+print(f&quot;&#039;{input_file_path}&#039;のタブをスペースに置換し、&#039;{output_file_path}&#039;に保存しました。&quot;)
+            </code></pre>
+            <p>UNIXコマンド</p>
+            <ul>
+                <li>sed</li>
+                <pre><code>
+sed &#039;s/\t/ /g&#039; popular-names.txt &gt; popular-names-space.txt
+                </code></pre>
+                <li>tr</li>
+                <pre><code>
+tr &#039;\t&#039; &#039; &#039; &lt; popular-names.txt &gt; popular-names-space.txt
+                </code></pre>
+                <li>expand</li>
+                <pre><code>
+expand -t 1 popular-names.txt &gt; popular-names-space.txt
+                </code></pre>
+            </ul>
+
+        </section>
     </main>
 </body>
 </html>
