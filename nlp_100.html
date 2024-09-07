@@ -376,6 +376,34 @@ if __name__ == &quot;__main__&quot;:
             <pre><code>
 head -n 5 popular-names.txt
             </code></pre>
+            <h3>15. 末尾のN行を出力</h3>
+            <p><b>自然数Nをコマンドライン引数などの手段で受け取り，入力のうち末尾のN行だけを表示せよ．確認にはtailコマンドを用いよ．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+# 以下の15.pyファイルを作成し、python 15.py popular-names.txt 5で実行
+
+import sys
+
+# 末尾N行を表示するプログラム
+def tail(file_path, N):
+    with open(file_path, &#039;r&#039;) as file:
+        lines = file.readlines()  # 全ての行をリストとして読み込む
+        for line in lines[-N:]:   # 末尾からN行だけスライスして表示
+            print(line.strip())
+
+# コマンドライン引数の処理
+if __name__ == &quot;__main__&quot;:
+    if len(sys.argv) != 3:
+        print(&quot;Usage: python script.py &lt;file_path&gt; &lt;N&gt;&quot;)
+    else:
+        file_path = sys.argv[1]  # ファイルのパス
+        N = int(sys.argv[2])     # 表示する行数
+        tail(file_path, N)
+            </code></pre>
+            <p>UNIXコマンド</p>
+            <pre><code>
+tail -n 5 popular-names.txt
+            </code></pre>
         </section>
     </main>
 </body>
