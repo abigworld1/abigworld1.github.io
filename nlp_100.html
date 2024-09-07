@@ -45,7 +45,6 @@ print(reversed_text)
         <p><code2>text[start:end:step]</code2>というスライスの一般的な形式で、<code2>start</code2>と<code2>end</code2>を省略し、<code2>step</code2>に<code2>-1</code2>を指定することで、逆順に文字を取得できる。</p>
         <h3>01.「パタトクカシーー」</h3>
         <p><b>「パタトクカシーー」という文字列の1,3,5,7文字目を取り出して連結した文字列を得よ．</b></p>
-        <div class="example">
         <pre><code>
 # 文字列の定義
 text = "パタトクカシーー"
@@ -56,10 +55,8 @@ result = text[0] + text[2] + text[4] + text[6]
 # 結果を出力
 print(result)
         </code></pre>
-        </div>
         <h3>02.「パトカー」＋「タクシー」＝「パタトクカシーー」</h3>
         <p><b>「パトカー」＋「タクシー」の文字を先頭から交互に連結して文字列「パタトクカシーー」を得よ．</b></p>
-        <div class="example">
         <pre><code>
 # 文字列の定義
 text1 = &quot;パトカー&quot;
@@ -71,14 +68,12 @@ result = &#039;&#039;.join([a + b for a, b in zip(text1, text2)])
 # 結果を出力
 print(result)
         </code></pre>
-        </div>
           <p>Pythonの<code2>zip</code2>関数を使うことで、2つの文字列を並列に処理できる。</p>
           <p><code2>zip(text1, text2)</code2>は、<code2>text1</code2>と<code2>text2</code2>のそれぞれ対応する位置の文字をペアにする。</p>
           <p>リスト内包表記を用いて、<code2>a + b</code2>という形で交互に文字を連結する。</p>
           <p><code2>''.join([...])</code2>で、リスト内の連結された文字を1つの文字列にまとめる。</p>
           <h3>03.円周率</h3>
           <p><b>“Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.”という文を単語に分解し，各単語の（アルファベットの）文字数を先頭から出現順に並べたリストを作成せよ．</b></p>
-          <div class="example">
         <pre><code>
 # 与えられた文章
 sentence = &quot;Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.&quot;
@@ -92,13 +87,11 @@ word_lengths = [len(word) for word in words]
 # 結果を出力
 print(word_lengths)
         </code></pre>
-        </div>
           <p><code2>.replace(",", "")</code2>と<code2>.replace(".", "")</code2>を使って、カンマやピリオドなどの句読点を取り除く。これにより、単語だけを扱えるようにする。</p>
           <p><code2>.split()</code2>を使うことで、文章を単語ごとに分割し、リスト<code2>words</code2>に格納する。</p>
           <p>リスト内包表記を使って、<code2>[len(word) for word in words]</code2>で各単語の文字数を計算し、その結果を<code2>word_lengths</code2>に格納する。</p>
           <h3>04.元素記号</h3>
           <p><b>“Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.”という文を単語に分解し，1, 5, 6, 7, 8, 9, 15, 16, 19番目の単語は先頭の1文字，それ以外の単語は先頭の2文字を取り出し，取り出した文字列から単語の位置（先頭から何番目の単語か）への連想配列（辞書型もしくはマップ型）を作成せよ．</b></p>
-          <div class="example">
         <pre><code>
 # 与えられた文章
 sentence = &quot;Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.&quot;
@@ -122,7 +115,6 @@ for i, word in enumerate(words, 1):  # 単語の位置が1から始まるよう�
 # 結果を出力
 print(word_map)
         </code></pre>
-        </div>
       </section>
     </main>
 </body>
