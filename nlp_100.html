@@ -72,10 +72,28 @@ result = &#039;&#039;.join([a + b for a, b in zip(text1, text2)])
 print(result)
         </code></pre>
         </div>
-          <p>Pythonの zip 関数を使うことで、2つの文字列を並列に処理できる。</p>
-          <p>zip(text1, text2) は、text1 と text2 のそれぞれ対応する位置の文字をペアにする。</p>
-          <p>リスト内包表記を用いて、a + b という形で交互に文字を連結する。</p>
-          <p>''.join([...]) で、リスト内の連結された文字を1つの文字列にまとめる。</p>
+          <p>Pythonの<code>zip</code>関数を使うことで、2つの文字列を並列に処理できる。</p>
+          <p><code>zip(text1, text2)</code>は、<code>text1</code>と<code>text2</code>のそれぞれ対応する位置の文字をペアにする。</p>
+          <p>リスト内包表記を用いて、<code>a + b</code>という形で交互に文字を連結する。</p>
+          <p><code>''.join([...])</code>で、リスト内の連結された文字を1つの文字列にまとめる。</p>
+          <h3>03.円周率</h3>
+          <p><b>“Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.”という文を単語に分解し，各単語の（アルファベットの）文字数を先頭から出現順に並べたリストを作成せよ．</b></p>
+          <div class="example">
+        <pre><code>
+# 与えられた文章
+sentence = &quot;Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.&quot;
+
+# 単語に分解（句読点を除去）
+words = sentence.replace(&quot;,&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;&quot;).split()
+
+# 各単語の文字数を計算
+word_lengths = [len(word) for word in words]
+
+# 結果を出力
+print(word_lengths)
+        </code></pre>
+        </div>
+          <p>.replace(",", "") と .replace(".", "") を使って、カンマやピリオドなどの句読点を取り除きます。これにより、単語だけを扱えるようにします。</p>
         </section>
     </main>
 </body>
