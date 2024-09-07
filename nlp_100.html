@@ -236,7 +236,7 @@ print(result)
         </code></pre>
       </section>
         <section>
-            <h2>UNIXコマンド</h2>
+            <h2>第2章：UNIXコマンド</h2>
             <h3>10. 行数のカウント</h3>
             <p><b>行数をカウントせよ．確認にはwcコマンドを用いよ．</b></p>
             <p>Pythonプログラム</p>
@@ -314,7 +314,7 @@ col2_output_path = &#039;col2.txt&#039;
 
 # 列を抜き出してファイルに保存
 extract_columns(input_file_path, col1_output_path, col2_output_path)
-print(f&quot;1列目を &#039;{col1_output_path}&#039; に、2列目を &#039;{col2_output_path}&#039; に保存しました。
+print(f&quot;1列目を &#039;{col1_output_path}&#039; に、2列目を &#039;{col2_output_path}&#039; に保存しました。&quot;)
             </code></pre>
             <p>UNIXコマンド</p>
             <pre><code>
@@ -323,6 +323,29 @@ cut -f 1 popular-names.txt &gt; col1.txt
 
 # 2列目を col2.txt に保存
 cut -f 2 popular-names.txt &gt; col2.txt
+            </code></pre>
+            <h3>13. col1.txtとcol2.txtをマージ</h3>
+            <p><b>12で作ったcol1.txtとcol2.txtを結合し，元のファイルの1列目と2列目をタブ区切りで並べたテキストファイルを作成せよ．確認にはpasteコマンドを用いよ．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+# col1.txtとcol2.txtを結合して、タブ区切りで新しいファイルに書き込むプログラム
+def merge_columns(col1_file, col2_file, output_file):
+    with open(col1_file, &#039;r&#039;) as col1, open(col2_file, &#039;r&#039;) as col2, open(output_file, &#039;w&#039;) as output:
+        for col1_line, col2_line in zip(col1, col2):
+            output.write(f&quot;{col1_line.strip()}\t{col2_line.strip()}\n&quot;)  # タブで結合して書き込む
+
+# ファイルパスの指定
+col1_file_path = &#039;col1.txt&#039;
+col2_file_path = &#039;col2.txt&#039;
+output_file_path = &#039;merged.txt&#039;
+
+# 結合処理の実行
+merge_columns(col1_file_path, col2_file_path, output_file_path)
+print(f&quot;&#039;{col1_file_path}&#039; と &#039;{col2_file_path}&#039; を結合し、&#039;{output_file_path}&#039; に保存しました。&quot;)
+            </code></pre>
+            <p>UNIXコマンド</p>
+            <pre><code>
+paste col1.txt col2.txt &gt; merged.txt
             </code></pre>
         </section>
     </main>
