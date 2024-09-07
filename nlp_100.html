@@ -93,7 +93,9 @@ word_lengths = [len(word) for word in words]
 print(word_lengths)
         </code></pre>
         </div>
-          <p>.replace(",", "") と .replace(".", "") を使って、カンマやピリオドなどの句読点を取り除きます。これにより、単語だけを扱えるようにします。</p>
+          <p><code>.replace(",", "")</code>と<code>.replace(".", "")</code>を使って、カンマやピリオドなどの句読点を取り除く。これにより、単語だけを扱えるようにする。</p>
+          <p><code>.split()</code>を使うことで、文章を単語ごとに分割し、リスト<code>words</code>に格納する。</p>
+          <p>リスト内包表記を使って、<code>[len(word) for word in words]</code>で各単語の文字数を計算し、その結果を<code>word_lengths</code>に格納する。</p>
         </section>
     </main>
 </body>
