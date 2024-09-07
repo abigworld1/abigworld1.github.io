@@ -96,7 +96,34 @@ print(word_lengths)
           <p><code2>.replace(",", "")</code2>と<code2>.replace(".", "")</code2>を使って、カンマやピリオドなどの句読点を取り除く。これにより、単語だけを扱えるようにする。</p>
           <p><code2>.split()</code2>を使うことで、文章を単語ごとに分割し、リスト<code2>words</code2>に格納する。</p>
           <p>リスト内包表記を使って、<code2>[len(word) for word in words]</code2>で各単語の文字数を計算し、その結果を<code2>word_lengths</code2>に格納する。</p>
-        </section>
+          <h3>04.元素記号</h3>
+          <p><b>“Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.”という文を単語に分解し，1, 5, 6, 7, 8, 9, 15, 16, 19番目の単語は先頭の1文字，それ以外の単語は先頭の2文字を取り出し，取り出した文字列から単語の位置（先頭から何番目の単語か）への連想配列（辞書型もしくはマップ型）を作成せよ．</b></p>
+          <div class="example">
+        <pre><code>
+# 与えられた文章
+sentence = &quot;Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.&quot;
+
+# 句読点を除去して単語に分解
+words = sentence.replace(&quot;.&quot;, &quot;&quot;).split()
+
+# 1文字だけを取り出す単語のインデックス（1から始まる）
+one_char_indices = [1, 5, 6, 7, 8, 9, 15, 16, 19]
+
+# 結果を格納する辞書
+word_map = {}
+
+# 各単語を処理して辞書に格納
+for i, word in enumerate(words, 1):  # 単語の位置が1から始まるようにenumerateを使う
+    if i in one_char_indices:
+        word_map[word[:1]] = i  # 1文字だけを取り出す
+    else:
+        word_map[word[:2]] = i  # 2文字を取り出す
+
+# 結果を出力
+print(word_map)
+        </code></pre>
+        </div>
+      </section>
     </main>
 </body>
 </html>
