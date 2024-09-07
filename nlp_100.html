@@ -294,7 +294,36 @@ tr &#039;\t&#039; &#039; &#039; &lt; popular-names.txt &gt; popular-names-space.
 expand -t 1 popular-names.txt &gt; popular-names-space.txt
                 </code></pre>
             </ul>
+            <h3>12. 1列目をcol1.txtに，2列目をcol2.txtに保存</h3>
+            <p><b>各行の1列目だけを抜き出したものをcol1.txtに，2列目だけを抜き出したものをcol2.txtとしてファイルに保存せよ．確認にはcutコマンドを用いよ．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+# 1列目と2列目を別ファイルに保存するプログラム
+def extract_columns(input_file, col1_file, col2_file):
+    with open(input_file, &#039;r&#039;) as file, open(col1_file, &#039;w&#039;) as col1, open(col2_file, &#039;w&#039;) as col2:
+        for line in file:
+            columns = line.split(&#039;\t&#039;)  # タブ区切りで列を分割
+            if len(columns) &gt;= 2:
+                col1.write(columns[0] + &#039;\n&#039;)  # 1列目を書き込み
+                col2.write(columns[1] + &#039;\n&#039;)  # 2列目を書き込み
 
+# 入力ファイルと出力ファイルのパス
+input_file_path = &#039;popular-names.txt&#039;
+col1_output_path = &#039;col1.txt&#039;
+col2_output_path = &#039;col2.txt&#039;
+
+# 列を抜き出してファイルに保存
+extract_columns(input_file_path, col1_output_path, col2_output_path)
+print(f&quot;1列目を &#039;{col1_output_path}&#039; に、2列目を &#039;{col2_output_path}&#039; に保存しました。
+            </code></pre>
+            <p>UNIXコマンド</p>
+            <pre><code>
+# 1列目を col1.txt に保存
+cut -f 1 popular-names.txt &gt; col1.txt
+
+# 2列目を col2.txt に保存
+cut -f 2 popular-names.txt &gt; col2.txt
+            </code></pre>
         </section>
     </main>
 </body>
