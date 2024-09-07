@@ -72,6 +72,12 @@ h3 {
     color: #4a4947;
 }
 
+code {
+    background-color: #DCDCDC;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
 iframe {
     display: block;
     margin: 0 auto;
