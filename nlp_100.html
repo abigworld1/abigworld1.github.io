@@ -208,6 +208,32 @@ print(&quot;暗号化:&quot;, encrypted_message)
 decrypted_message = cipher(encrypted_message)
 print(&quot;復号化:&quot;, decrypted_message)
         </code></pre>
+          <h3>09.Typoglycemia</h3>
+          <p><b>スペースで区切られた単語列に対して，各単語の先頭と末尾の文字は残し，それ以外の文字の順序をランダムに並び替えるプログラムを作成せよ．ただし，長さが４以下の単語は並び替えないこととする．適当な英語の文（例えば”I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind .”）を与え，その実行結果を確認せよ．</b></p>
+        <pre><code>
+import random
+
+# 単語をシャッフルする関数
+def shuffle_middle(word):
+    if len(word) &lt;= 4:  # 長さが4以下の単語は並び替えない
+        return word
+    middle = list(word[1:-1])  # 先頭と末尾以外の文字を取り出す
+    random.shuffle(middle)  # 先頭と末尾以外の文字をシャッフル
+    return word[0] + &#039;&#039;.join(middle) + word[-1]  # 先頭、シャッフルした文字、末尾を結合して返す
+
+# 文章全体を処理する関数
+def process_sentence(sentence):
+    words = sentence.split()  # スペースで分割して単語ごとにリスト化
+    shuffled_words = [shuffle_middle(word) for word in words]  # 各単語をシャッフル処理
+    return &#039; &#039;.join(shuffled_words)  # 単語を再びスペースで結合して返す
+
+# 適当な英語の文
+sentence = &quot;I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind .&quot;
+
+# 実行
+result = process_sentence(sentence)
+print(result)
+        </code></pre>
       </section>
     </main>
 </body>
