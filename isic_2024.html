@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【Kaggle | ISIC 2024 - Skin Cancer Detection with 3D-TBP】走る作曲家のAIカフェ</title>
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1050827580219099"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>走る作曲家のAIカフェ</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="study.html">勉強</a></li>
+                <li><a href="music.html">音楽</a></li>
+                <li><a href="sports.html">スポーツ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>ISIC 2024 - Skin Cancer Detection with 3D-TBP</h2>
+            <p><a href="https://www.kaggle.com/competitions/isic-2024-challenge">ISIC 2024 - Skin Cancer Detection with 3D-TBP</a></p>
+        </section>
+        <section>
+          <h2>概要</h2>
+          <h3>ISIC 2024 - 3D-TBPによる皮膚がん検出</h3>
+          <p>このコンペティションでは、3D全身写真（TBP）から切り取られた単一病変の画像を使用して、組織学的に確認された皮膚がんを特定するアルゴリズムを開発することを目指す。
+            写真の品質はスマートフォンのクローズアップ写真に類似しており、主に遠隔医療のために送信されることを想定している。
+            これにより、専門的なケアがアクセスできない状況でも、皮膚がんの早期診断に役立てることができる。</p>
+          <h3>コンペティションの重要性</h3>
+          <p>皮膚がん、特に悪性黒色腫は早期発見が重要だが、多くの地域では専門的な皮膚科ケアが不足している。
+            このコンペティションでは、3D-TBPによって得られた低品質の画像を使用して、がんのリスクがある病変を自動的に識別することが求められている。
+            これにより、遠隔医療や初期診断においてAIアルゴリズムを活用し、皮膚がんの早期発見と治療効果の向上を図ることが期待されている。</p>
+          <h3>評価方法</h3>
+          <p>提出されたモデルは、80%以上の真陽性率（TPR）に対するROC曲線の部分面積（pAUC）で評価される。
+            この評価方法では、がん診断における高い感度が求められるため、ROC曲線のうち80%以上のTPR部分に重点が置かれている。
+            スコアは0.0から0.2の範囲で評価される。</p>
+        </section>
+      <section>
+        <h2>データ</h2>
+        <h3>データセットの説明</h3>
+        <p>このデータセットは、診断ラベル付きの画像とメタデータで構成されている。
+          主な画像フォーマットはJPEGで、関連するCSVファイルには、バイナリの診断ラベル（ターゲット）や、年齢や性別、解剖学的な位置などの入力変数が含まれている。</p>
+        <b>予測タスク</b>
+        <p>このチャレンジでは、悪性の皮膚病変と良性の病変を識別する。
+          各画像（isic_id）に対して、悪性の可能性（ターゲット）を0から1の範囲で割り当てる。</p>
+        <b>SLICE-3Dデータセット</b>
+        <p>3D全身写真（TBP）から抽出された皮膚病変画像を使用して、非ダーモスコピー画像に類似したデータセットが提供される。
+          Canfield ScientificのVectra WB360という3D TBPシステムが全身の皮膚表面をマクロ品質の解像度で撮影し、その画像からAIソフトウェアが個々の病変を特定する。
+          このデータセットには、2015年から2024年にかけて9つの機関で撮影された数千人の患者のすべての病変が含まれている。</p>
+        <b>提供ファイル</b>
+        <ul>
+          <li>train-image/: トレーニングセットの画像ファイル</li>
+          <li>train-image.hdf5: HDF5形式のトレーニング画像データ</li>
+          <li>train-metadata.csv: トレーニングセットのメタデータ</li>
+          <li>test-image.hdf5: テスト画像データ</li>
+          <li>test-metadata.csv: テストサブセットのメタデータ</li>
+          <li>sample_submission.csv: 提出ファイルのサンプル</li>
+        </ul>
+        <b>メタデータのフィールド</b>
+        <ul>
+          <li>target: バイナリクラス（0: 良性、1: 悪性）</li>
+          <li>isic_id: 画像のユニークID</li>
+          <li>patient_id: 患者のユニークID</li>
+          <li>age_approx: 撮影時の推定年齢</li>
+          <li>sex: 患者の性別</li>
+          <li>anatom_site_general: 病変の位置</li>
+          <li>その他、病変の面積や境界の不規則性、色の対比などを表すフィールドも含まれている。</li>
+        </ul>
+      </section>
+      <section>
+        <h2>解法</h2>
+        <h3>自分の解法</h3>
+        <b>大まかな流れ</b>
+        <ol>
+          <li>ImageNetで事前学習されたEfficientNetをISICデータセットでファインチューニング</li>
+          <li>テスト画像をEfficientNetに入力して、メラノーマである確率を算出し、その結果を特徴量としてデータフレームに追加</li>
+          <li>LightGBM, CatBoost, XGBoostのアンサンブルモデルで予測</li>
+        </ol>
+        <b>工夫</b>
+        <ul>
+          <li>不均衡データへの対処： RandomOverSampler と RandomUnderSampler を使ってクラスバランスを調整した</li>
+          <li>アンサンブルモデルの構築： VotingClassifier を使用して Soft Votingした</li>
+          <li>ノイズの追加：最終的な予測結果にノイズを追加することでモデルの過信を防いだ</li>
+        </ul>
+      </section>
+    </main>
+</body>
+</html>
