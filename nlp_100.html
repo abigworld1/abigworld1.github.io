@@ -404,6 +404,44 @@ if __name__ == &quot;__main__&quot;:
             <pre><code>
 tail -n 5 popular-names.txt
             </code></pre>
+            <h3>16. ファイルをN分割する</h3>
+            <p><b>自然数Nをコマンドライン引数などの手段で受け取り，入力のファイルを行単位でN分割せよ．同様の処理をsplitコマンドで実現せよ．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+# 以下の16.pyファイルを作成し、python 16.py popular-names.txt 5で実行
+
+import sys
+import math
+
+# ファイルを行単位でN分割するプログラム
+def split_file(file_path, N):
+    with open(file_path, &#039;r&#039;) as file:
+        lines = file.readlines()  # ファイルの全行をリストに読み込む
+        total_lines = len(lines)
+        lines_per_file = math.ceil(total_lines / N)  # 各ファイルに含まれる行数を計算
+
+        # ファイルを分割して書き込み
+        for i in range(N):
+            start = i * lines_per_file
+            end = min(start + lines_per_file, total_lines)
+            with open(f&quot;split_{i+1}.txt&quot;, &#039;w&#039;) as output_file:
+                output_file.writelines(lines[start:end])
+            print(f&quot;split_{i+1}.txtに行数 {start+1} から {end} を書き込みました。&quot;)
+
+# コマンドライン引数の処理
+if __name__ == &quot;__main__&quot;:
+    if len(sys.argv) != 3:
+        print(&quot;Usage: python script.py &lt;file_path&gt; &lt;N&gt;&quot;)
+    else:
+        file_path = sys.argv[1]  # ファイルのパス
+        N = int(sys.argv[2])     # 分割数
+        split_file(file_path, N)
+
+            </code></pre>
+            <p>UNIXコマンド</p>
+            <pre><code>
+split -l $(( $(wc -l &lt; popular-names.txt) / 5 )) popular-names.txt split_
+            </code></pre>
         </section>
     </main>
 </body>
