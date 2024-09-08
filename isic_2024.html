@@ -87,6 +87,157 @@
           <li>アンサンブルモデルの構築： VotingClassifier を使用して Soft Votingした</li>
           <li>ノイズの追加：最終的な予測結果にノイズを追加することでモデルの過信を防いだ</li>
         </ul>
+        <h3><a href="https://www.kaggle.com/competitions/isic-2024-challenge/discussion/532704">2位(+23)の解法</a></h3>
+        <b>全体的なアプローチ</b>
+        <ol>
+          <li>画像モデルの特徴量を表形式データに組み込む</li>
+          <li>複数のGBDT（Gradient Boosting Decision Trees）を使用して推論を行う</li>
+        </ol>
+        <b>GBDTモデル</b>
+        <p>アルゴリズムとアンサンブル戦略</p>
+        <ul>
+            <li>使用したアルゴリズム: LightGBM、XGBoost、CatBoost</li>
+            <li>モデル数: 各アルゴリズムで18種類のバリエーションを作成し、合計54モデルを構築</li>
+            <li>シード平均化: データ全体で訓練したモデルを用いてシード平均化（n=5）を実施</li>
+        </ul>
+        <b>特徴量エンジニアリング</b>
+        <p>基本的な特徴量として、以下の公開ノートブックからの手法を採用</p>
+        <ul>
+            <li><a href="https://www.kaggle.com/code/snnclsr/lgbm-baseline-with-new-features/notebook">LGBM Baseline with New Features</a></li>
+            <li><a href="https://www.kaggle.com/code/vyacheslavbolotin/lightgbm-catboost-with-new-features/notebook#Feature-Engineering">LightGBM + Catboost with new features</a></li>
+            <li><a href="https://www.kaggle.com/code/richolson/isic-2024-lgbm-imagenet-v5a">ISIC 2024 LGBM+ImageNet v5a</a></li>
+        </ul>
+        <p>さらに、データの異なる側面を捉えるために、患者関連の特徴量をいくつか作成</p>
+        <ul>
+            <li>患者ごとの標準化</li>
+            <li>患者とtbp_lv_locationによる標準化</li>
+            <li>患者とtbp_lv_location_simpleによる標準化</li>
+            <li>患者とanatom_site_generalによる標準化</li>
+            <li><a href="https://www.kaggle.com/competitions/isic-2024-challenge/discussion/530183">Tabular Ugly Ducklingsテクニック</a>の実装</li>
+        </ul>
+        <p>多様性を持たせるため、一部のモデルではこれらの特徴量の一部のみを使用</p>
+        <b>画像特徴量の統合</b>
+        <ul>
+            <li>使用した画像特徴量の数: モデルごとに0〜3個の画像特徴量をメタ特徴量として使用</li>
+            <li>多様性の向上: 特徴量の使用数を変えることでモデルの多様性を向上</li>
+        </ul>
+        <b>ハイパーパラメータのチューニング</b>
+        <ul>
+            <li>ブーストラウンド数: 200〜300に設定</li>
+            <li>チューニングの組み合わせ:</li>
+            <ul>
+                <li>使用する画像特徴量の数</li>
+                <li>使用する患者特徴量の数</li>
+            </ul>
+        </ul>
+        <b>モデルの多様性</b>
+        <ul>
+            <li>特徴量の微調整: モデルごとに使用する表形式の特徴量を微妙に変更</li>
+            <li>画像特徴量のバリエーション: 画像特徴量の数を変えることで、多様性のあるアンサンブルを実現</li>
+        </ul>
+        <b>画像モデル</b>
+        <b>概要</b>
+        <p>5つの異なるトレーニング設定で合計9つの画像モデルを作成。
+            具体的には、補助損失を導入して表形式データの予測を行い、自己教師あり学習を実装して精度を向上。
+            また、フォールド間の分散が低いモデルを選択することで、安定したパフォーマンスを目指した。</p>
+        <b>トレーニング設定</b>
+        <ul>
+            <li>標準的なトレーニング: 基本的な設定でモデルを訓練</li>
+            <li>Mixup拡張: データ拡張としてMixupを追加</li>
+            <li>表形式データの補助損失: 複数のモダリティからの学習を促進</li>
+            <li>iddx_fullクラスタの補助損失: tf-idfでベクトル化し、k-meansでクラスタリング。各データポイントからクラスタ重心までの距離を補助損失として予測</li>
+            <li>自己教師あり事前学習（表形式データ使用）: <a href="https://arxiv.org/abs/2407.07582">最新のマルチモーダル学習の論文</a>に基づき、自己教師あり事前学習を実施</li>
+        </ul>
+        <b>画像モデルの詳細とCVスコア</b>
+        <table>
+          <thead>
+            <tr>
+              <th>モデル</th>
+              <th>トレーニング設定</th>
+              <th>CVスコア</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>eva02_small</td>
+              <td>標準的なトレーニング</td>
+              <td>0.1537</td>
+            </tr>
+            <tr>
+              <td>deit3_small</td>
+              <td>標準的なトレーニング</td>
+              <td>0.1534</td>
+            </tr>
+            <tr>
+              <td>beitv2_base</td>
+              <td>Mixup拡張</td>
+              <td>0.1594</td>
+            </tr>
+            <tr>
+              <td>convnextv2_tiny</td>
+              <td>表形式データの補助損失</td>
+              <td>0.1548</td>
+            </tr>
+            <tr>
+              <td>swinv2_small</td>
+              <td>iddx_fullクラスターの補助損失</td>
+              <td>0.1612</td>
+            </tr>
+            <tr>
+              <td>eva02_small</td>
+              <td>iddx_fullクラスターの補助損失</td>
+              <td>0.1580</td>
+            </tr>
+            <tr>
+              <td>resnet50</td>
+              <td>iddx_fullクラスターの補助損失</td>
+              <td>0.1515</td>
+            </tr>
+            <tr>
+              <td>convnextv2_nano</td>
+              <td>自己教師あり事前学習 (表形式データ使用)</td>
+              <td>0.1607</td>
+            </tr>
+            <tr>
+              <td>swin_tiny</td>
+              <td>自己教師あり事前学習 (表形式データ使用)</td>
+              <td>0.1596</td>
+            </tr>
+          </tbody>
+        </table>
+        <b>共通のトレーニング設定</b>
+        <ul>
+            <li>アンダーサンプリング: 各エポックで1:3または1:5の比率で実施</li>
+            <li>エポック数: 50〜200エポックで訓練し、早期停止は使用せず</li>
+            <li>データ拡張: <a href="https://www.kaggle.com/competitions/siim-isic-melanoma-classification/discussion/175412">ISIC 2020のトップソリューション</a>を参考に調整。モデルに応じて強度を変更</li>
+            <li>オプティマイザ: AdamWを使用し、バックボーンの学習率を1e-5〜8e-6、ヘッドの学習率を1e-3に設定。ウォームアップとコサインスケジューラを使用</li>
+        </ul>
+        <b>推論</b>
+        <ul>
+            <li>全データでの訓練: モデルはデータ全体で訓練し、推論に使用</li>
+            <li>高速化: Automatic Mixed Precision (AMP)を有効化</li>
+            <ul>
+                <li>AMP：通常float32で計算するところをfloat16で計算して高速化する技術</li>
+            </ul>
+        </ul>
+        <b>クロスバリデーション戦略</b>
+        <p>モデルの評価と選択のためにこのCV戦略の結果に大きく依存した。
+            今回のコンペでは、以前のKaggleコンペで使用されたアプローチに触発された「Triple Stratified Leak-Free KFold CV」戦略を実装した。
+            この方法は、データリークを防ぎつつ、堅牢なモデル検証を可能にする。</p>
+        <b>戦略の主なポイント</b>
+        <ul>
+            <li>患者の分離: 単一の患者からのすべての画像は同じフォールドに保持し、クロスバリデーション中のリークを防止</li>
+            <li>悪性画像のバランス: 層化は各患者の悪性画像の割合を考慮</li>
+            <li>患者の画像数の分布: 患者は画像数に基づいてビン分けされ、層化に使用</li>
+        </ul>
+        <p>これらすべてを同時に実装するために、5フォールドのStratified Group KFoldクロスバリデーションを使用した。</p>
+        <p>元のアイディア：<a href="https://www.kaggle.com/c/siim-isic-melanoma-classification/discussion/165526">riple Stratified Leak-Free KFold CV</a></p>
+        <b>うまくいかなかったこと</b>
+        <p>過去のコンペティションのデータを組み込もうと試みた。
+            トーンを合わせるためにヒストグラムマッチングなどの手法を適用したが、精度の向上は見られなかった。
+            検証のため、ISIC2018のデータと現在のデータを混合し、過去データと現在データを区別する画像モデルを構築した。
+            その結果、モデルは容易にAUC 0.99を達成した。
+            これらの結果から、視覚的には識別できない明確な違いが存在すると判断し、過去のデータの使用を断念した。</p>
       </section>
     </main>
 </body>
