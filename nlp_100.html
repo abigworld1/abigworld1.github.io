@@ -436,12 +436,36 @@ if __name__ == &quot;__main__&quot;:
         file_path = sys.argv[1]  # ファイルのパス
         N = int(sys.argv[2])     # 分割数
         split_file(file_path, N)
-
             </code></pre>
             <p>UNIXコマンド</p>
             <pre><code>
 split -l $(( $(wc -l &lt; popular-names.txt) / 5 )) popular-names.txt split_
             </code></pre>
+            <h3>17. １列目の文字列の異なり</h3>
+            <p><b>1列目の文字列の種類（異なる文字列の集合）を求めよ．確認にはcut, sort, uniqコマンドを用いよ．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+def unique_first_column(file_path):
+    with open(file_path, &#039;r&#039;) as file:
+        first_column = {line.split(&#039;\t&#039;)[0] for line in file}  # 1列目をセットに格納
+    return first_column
+
+# ファイルパスの指定
+file_path = &#039;popular-names.txt&#039;
+
+# 1列目の異なる文字列を取得
+unique_names = unique_first_column(file_path)
+
+# 結果を出力
+for name in sorted(unique_names):
+    print(name)
+            </code></pre>
+            <p>セット<code2>{}</code2>は重複を自動的に除去するため、異なる一列目の文字列のみが取得される。</p>
+            <p>UNIXコマンド</p>
+            <pre><code>
+cut -f 1 popular-names.txt | sort | uniq
+            </code></pre>
+            
         </section>
     </main>
 </body>
