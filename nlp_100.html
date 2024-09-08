@@ -903,8 +903,57 @@ cut -f 1 popular-names.txt | sort | uniq -c | sort -nr
         </section>
         <section id="08">
         <h2>第8章：ニューラルネット</h2>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>70. 単語ベクトルの和による特徴量</h3>
+        <b>
+        <p>問題50で構築した学習データ，検証データ，評価データを行列・ベクトルに変換したい．例えば，学習データについて，すべての事例\(x_i\)の特徴ベクトル\(\boldsymbol{x}_i\)を並べた行列\(X\)と，正解ラベルを並べた行列（ベクトル）\(Y\)を作成したい．</p>
+
+        \[X = \begin{pmatrix} 
+          \boldsymbol{x}_1 \\ 
+          \boldsymbol{x}_2 \\ 
+          \dots \\ 
+          \boldsymbol{x}_n \\ 
+        \end{pmatrix} \in \mathbb{R}^{n \times d},
+        Y = \begin{pmatrix} 
+          y_1 \\ 
+          y_2 \\ 
+          \dots \\ 
+          y_n \\ 
+        \end{pmatrix} \in \mathbb{N}^{n}\]
+        
+        <p>ここで，\(n\)は学習データの事例数であり，\(\boldsymbol{x}_i \in \mathbb{R}^d\)と\(y_i \in \mathbb{N}\)はそれぞれ，\(i \in \{1, \dots, n\}\)番目の事例の特徴量ベクトルと正解ラベルを表す．
+        なお，今回は「ビジネス」「科学技術」「エンターテイメント」「健康」の4カテゴリ分類である．\(\mathbb{N}_{&lt;4}\)で\(4\)未満の自然数（\(0\)を含む）を表すことにすれば，任意の事例の正解ラベル\(y_i\)は\(y_i \in \mathbb{N}_{&lt;4}\)で表現できる．
+        以降では，ラベルの種類数を\(L\)で表す（今回の分類タスクでは\(L=4\)である）．</p>
+        
+        <p>\(i\)番目の事例の特徴ベクトル\(\boldsymbol{x}_i\)は，次式で求める．</p>
+        
+        \[\boldsymbol{x}_i = \frac{1}{T_i} \sum_{t=1}^{T_i} \mathrm{emb}(w_{i,t})\]
+        
+        <p>ここで，\(i\)番目の事例は\(T_i\)個の（記事見出しの）単語列\((w_{i,1}, w_{i,2}, \dots, w_{i,T_i})\)から構成され，\(\mathrm{emb}(w) \in \mathbb{R}^d\)は単語\(w\)に対応する単語ベクトル（次元数は\(d\)）である．すなわち，\(i\)番目の事例の記事見出しを，その見出しに含まれる単語のベクトルの平均で表現したものが\(\boldsymbol{x}_i\)である．今回は単語ベクトルとして，問題60でダウンロードしたものを用いればよい．\(300\)次元の単語ベクトルを用いたので，\(d=300\)である．</p>
+        
+        <p>\(i\)番目の事例のラベル\(y_i\)は，次のように定義する．</p>
+        
+        \[y_i = \begin{cases}
+        0 &amp; (\mbox{記事}x_i\mbox{が「ビジネス」カテゴリの場合}) \\
+        1 &amp; (\mbox{記事}x_i\mbox{が「科学技術」カテゴリの場合}) \\
+        2 &amp; (\mbox{記事}x_i\mbox{が「エンターテイメント」カテゴリの場合}) \\
+        3 &amp; (\mbox{記事}x_i\mbox{が「健康」カテゴリの場合}) \\
+        \end{cases}\]
+        
+        <p>なお，カテゴリ名とラベルの番号が一対一で対応付いていれば，上式の通りの対応付けでなくてもよい．</p>
+        
+        <p>以上の仕様に基づき，以下の行列・ベクトルを作成し，ファイルに保存せよ．</p>
+        
+        <ul>
+          <li>学習データの特徴量行列: \(X_{\rm train} \in \mathbb{R}^{N_t \times d}\)</li>
+          <li>学習データのラベルベクトル: \(Y_{\rm train} \in \mathbb{N}^{N_t}\)</li>
+          <li>検証データの特徴量行列: \(X_{\rm valid} \in \mathbb{R}^{N_v \times d}\)</li>
+          <li>検証データのラベルベクトル: \(Y_{\rm valid} \in \mathbb{N}^{N_v}\)</li>
+          <li>評価データの特徴量行列: \(X_{\rm test} \in \mathbb{R}^{N_e \times d}\)</li>
+          <li>評価データのラベルベクトル: \(Y_{\rm test} \in \mathbb{N}^{N_e}\)</li>
+        </ul>
+        
+        <p>なお，\(N_t, N_v, N_e\)はそれぞれ，学習データの事例数，検証データの事例数，評価データの事例数である．</p>
+        </b>
         <pre><code>
 
         </code></pre>
