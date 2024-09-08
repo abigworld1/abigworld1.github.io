@@ -492,6 +492,36 @@ print(f&quot;3列目を基準に逆順でソートし、&#039;{output_file_path}
             <pre><code>
 sort -k 3,3 -n -r popular-names.txt &gt; sorted_by_third_column.txt
             </code></pre>
+            <h3>19. 各行の1コラム目の文字列の出現頻度を求め，出現頻度の高い順に並べる</h3>
+            <p><b>各行の1列目の文字列の出現頻度を求め，その高い順に並べて表示せよ．確認にはcut, uniq, sortコマンドを用いよ．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+from collections import Counter
+
+# 1列目の出現頻度を求め、頻度順にソートするプログラム
+def count_first_column(file_path):
+    with open(file_path, &#039;r&#039;) as file:
+        first_column = [line.split(&#039;\t&#039;)[0] for line in file]  # 1列目の文字列をリストに格納
+
+    # 出現頻度をカウント
+    counts = Counter(first_column)
+
+    # 出現頻度の高い順にソートして表示
+    sorted_counts = sorted(counts.items(), key=lambda x: x[1], reverse=True)
+
+    for name, count in sorted_counts:
+        print(f&quot;{name}: {count}&quot;)
+
+# ファイルパスの指定
+file_path = &#039;popular-names.txt&#039;
+
+# 出現頻度をカウントして表示
+count_first_column(file_path)
+            </code></pre>
+            <p>UNIXコマンド</p>
+            <pre><code>
+cut -f 1 popular-names.txt | sort | uniq -c | sort -nr
+            </code></pre>
         </section>
     </main>
 </body>
