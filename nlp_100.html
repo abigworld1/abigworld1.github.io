@@ -850,53 +850,53 @@ cut -f 1 popular-names.txt | sort | uniq -c | sort -nr
         </section>
         <section id="07">
         <h2>第7章：単語ベクトル</h2>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>60. 単語ベクトルの読み込みと表示</h3>
+        <p><b>Google Newsデータセット（約1,000億単語）での<a href="https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing">学習済み単語ベクトル</a>（300万単語・フレーズ，300次元）をダウンロードし，”United States”の単語ベクトルを表示せよ．ただし，”United States”は内部的には”United_States”と表現されていることに注意せよ．</b></p>
         <pre><code>
 
         </code></pre>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>61. 単語の類似度</h3>
+        <p><b>“United States”と”U.S.”のコサイン類似度を計算せよ．</b></p>
         <pre><code>
 
         </code></pre>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>62. 類似度の高い単語10件</h3>
+        <p><b>“United States”とコサイン類似度が高い10語と，その類似度を出力せよ．</b></p>
         <pre><code>
 
         </code></pre>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>63. 加法構成性によるアナロジー</h3>
+        <p><b>“Spain”の単語ベクトルから”Madrid”のベクトルを引き，”Athens”のベクトルを足したベクトルを計算し，そのベクトルと類似度の高い10語とその類似度を出力せよ．</b></p>
         <pre><code>
 
         </code></pre>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>64. アナロジーデータでの実験</h3>
+        <p><b><a href="http://download.tensorflow.org/data/questions-words.txt">単語アナロジーの評価データ</a>をダウンロードし，vec(2列目の単語) - vec(1列目の単語) + vec(3列目の単語)を計算し，そのベクトルと類似度が最も高い単語と，その類似度を求めよ．求めた単語と類似度は，各事例の末尾に追記せよ．</b></p>
         <pre><code>
 
         </code></pre>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>65. アナロジータスクでの正解率</h3>
+        <p><b>64の実行結果を用い，意味的アナロジー（semantic analogy）と文法的アナロジー（syntactic analogy）の正解率を測定せよ．</b></p>
         <pre><code>
 
         </code></pre>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>66. WordSimilarity-353での評価</h3>
+        <p><b><a href="http://www.gabrilovich.com/resources/data/wordsim353/wordsim353.html">The WordSimilarity-353 Test Collection</a>の評価データをダウンロードし，単語ベクトルにより計算される類似度のランキングと，人間の類似度判定のランキングの間のスピアマン相関係数を計算せよ．</b></p>
         <pre><code>
 
         </code></pre>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>67. k-meansクラスタリング</h3>
+        <p><b>国名に関する単語ベクトルを抽出し，k-meansクラスタリングをクラスタ数k=5として実行せよ．</b></p>
         <pre><code>
 
         </code></pre>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>68. Ward法によるクラスタリング</h3>
+        <p><b>国名に関する単語ベクトルに対し，Ward法による階層型クラスタリングを実行せよ．さらに，クラスタリング結果をデンドログラムとして可視化せよ．</b></p>
         <pre><code>
 
         </code></pre>
-        <h3></h3>
-        <p><b></b></p>
+        <h3>69. t-SNEによる可視化</h3>
+        <p><b>ベクトル空間上の国名に関する単語ベクトルをt-SNEで可視化せよ．</b></p>
         <pre><code>
 
         </code></pre>
