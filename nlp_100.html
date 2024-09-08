@@ -465,7 +465,33 @@ for name in sorted(unique_names):
             <pre><code>
 cut -f 1 popular-names.txt | sort | uniq
             </code></pre>
-            
+            <h3>18. 各行を3コラム目の数値の降順にソート</h3>
+            <p><b>各行を3コラム目の数値の逆順で整列せよ（注意: 各行の内容は変更せずに並び替えよ）．確認にはsortコマンドを用いよ（この問題はコマンドで実行した時の結果と合わなくてもよい）．</b></p>
+            <p>Pythonプログラム</p>
+            <pre><code>
+def sort_by_third_column(file_path, output_file):
+    with open(file_path, &#039;r&#039;) as file:
+        lines = file.readlines()
+
+    # 3列目の数値を基準に行をソート（逆順）
+    sorted_lines = sorted(lines, key=lambda line: int(line.split(&#039;\t&#039;)[2]), reverse=True)
+
+    # 結果を出力
+    with open(output_file, &#039;w&#039;) as output:
+        output.writelines(sorted_lines)
+
+# ファイルパスの指定
+input_file_path = &#039;popular-names.txt&#039;
+output_file_path = &#039;sorted_by_third_column.txt&#039;
+
+# 3列目の数値でソートして新しいファイルに保存
+sort_by_third_column(input_file_path, output_file_path)
+print(f&quot;3列目を基準に逆順でソートし、&#039;{output_file_path}&#039; に保存しました。&quot;)
+            </code></pre>
+            <p>UNIXコマンド</p>
+            <pre><code>
+sort -k 3,3 -n -r popular-names.txt &gt; sorted_by_third_column.txt
+            </code></pre>
         </section>
     </main>
 </body>
