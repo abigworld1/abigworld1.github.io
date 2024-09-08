@@ -45,7 +45,6 @@
       <section id="01">
         <h2>第1章：準備運動</h2>
         <h3>00.文字列の逆順</h3>
-        <p><b>文字列”stressed”の文字を逆に（末尾から先頭に向かって）並べた文字列を得よ．</b></p>
         <pre><code>
 # 文字列の定義
 text = "stressed"
@@ -58,7 +57,6 @@ print(reversed_text)
         </code></pre>
         <p><code2>text[start:end:step]</code2>というスライスの一般的な形式で、<code2>start</code2>と<code2>end</code2>を省略し、<code2>step</code2>に<code2>-1</code2>を指定することで、逆順に文字を取得できる。</p>
         <h3>01.「パタトクカシーー」</h3>
-        <p><b>「パタトクカシーー」という文字列の1,3,5,7文字目を取り出して連結した文字列を得よ．</b></p>
         <pre><code>
 # 文字列の定義
 text = "パタトクカシーー"
@@ -70,7 +68,6 @@ result = text[0] + text[2] + text[4] + text[6]
 print(result)
         </code></pre>
         <h3>02.「パトカー」＋「タクシー」＝「パタトクカシーー」</h3>
-        <p><b>「パトカー」＋「タクシー」の文字を先頭から交互に連結して文字列「パタトクカシーー」を得よ．</b></p>
         <pre><code>
 # 文字列の定義
 text1 = &quot;パトカー&quot;
@@ -87,7 +84,6 @@ print(result)
           <p>リスト内包表記を用いて、<code2>a + b</code2>という形で交互に文字を連結する。</p>
           <p><code2>''.join([...])</code2>で、リスト内の連結された文字を1つの文字列にまとめる。</p>
           <h3>03.円周率</h3>
-          <p><b>“Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.”という文を単語に分解し，各単語の（アルファベットの）文字数を先頭から出現順に並べたリストを作成せよ．</b></p>
         <pre><code>
 # 与えられた文章
 sentence = &quot;Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.&quot;
@@ -105,7 +101,6 @@ print(word_lengths)
           <p><code2>.split()</code2>を使うことで、文章を単語ごとに分割し、リスト<code2>words</code2>に格納する。</p>
           <p>リスト内包表記を使って、<code2>[len(word) for word in words]</code2>で各単語の文字数を計算し、その結果を<code2>word_lengths</code2>に格納する。</p>
           <h3>04.元素記号</h3>
-          <p><b>“Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.”という文を単語に分解し，1, 5, 6, 7, 8, 9, 15, 16, 19番目の単語は先頭の1文字，それ以外の単語は先頭の2文字を取り出し，取り出した文字列から単語の位置（先頭から何番目の単語か）への連想配列（辞書型もしくはマップ型）を作成せよ．</b></p>
         <pre><code>
 # 与えられた文章
 sentence = &quot;Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.&quot;
@@ -130,7 +125,6 @@ for i, word in enumerate(words, 1):  # 単語の位置が1から始まるよう�
 print(word_map)
         </code></pre>
         <h3>05.n-gram</h3>
-          <p><b>与えられたシーケンス（文字列やリストなど）からn-gramを作る関数を作成せよ．この関数を用い，”I am an NLPer”という文から単語bi-gram，文字bi-gramを得よ．</b></p>
         <pre><code>
 # n-gramを作成する関数
 def n_gram(sequence, n):
@@ -151,7 +145,6 @@ print(&quot;単語bi-gram:&quot;, word_bi_gram)
 print(&quot;文字bi-gram:&quot;, char_bi_gram)
         </code></pre>
           <h3>06.集合</h3>
-          <p><b>“paraparaparadise”と”paragraph”に含まれる文字bi-gramの集合を，それぞれ, XとYとして求め，XとYの和集合，積集合，差集合を求めよ．さらに，’se’というbi-gramがXおよびYに含まれるかどうかを調べよ．</b></p>
         <pre><code>
 # n-gramを作成する関数
 def n_gram(sequence, n):
@@ -184,7 +177,6 @@ print(&quot;&#039;se&#039;がXに含まれるか:&quot;, is_se_in_X)
 print(&quot;&#039;se&#039;がYに含まれるか:&quot;, is_se_in_Y)
         </code></pre>
           <h3>07.テンプレートによる文生成</h3>
-          <p><b>引数x, y, zを受け取り「x時のyはz」という文字列を返す関数を実装せよ．さらに，x=12, y=”気温”, z=22.4として，実行結果を確認せよ．</b></p>
         <pre><code>
 # 関数の定義
 def create_sentence(x, y, z):
@@ -200,12 +192,6 @@ result = create_sentence(x, y, z)
 print(result)
         </code></pre>
           <h3>08.暗号文</h3>
-          <p><b>与えられた文字列の各文字を，以下の仕様で変換する関数cipherを実装せよ．
-              <ul>
-                  <li>英小文字ならば(219 - 文字コード)の文字に置換</li>
-                  <li>その他の文字はそのまま出力</li>
-              </ul>
-              この関数を用い，英語のメッセージを暗号化・復号化せよ．</b></p>
         <pre><code>
 # cipher関数の定義
 def cipher(text):
@@ -225,7 +211,6 @@ decrypted_message = cipher(encrypted_message)
 print(&quot;復号化:&quot;, decrypted_message)
         </code></pre>
           <h3>09.Typoglycemia</h3>
-          <p><b>スペースで区切られた単語列に対して，各単語の先頭と末尾の文字は残し，それ以外の文字の順序をランダムに並び替えるプログラムを作成せよ．ただし，長さが４以下の単語は並び替えないこととする．適当な英語の文（例えば”I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind .”）を与え，その実行結果を確認せよ．</b></p>
         <pre><code>
 import random
 
@@ -254,7 +239,6 @@ print(result)
         <section id="02">
             <h2>第2章：UNIXコマンド</h2>
             <h3>10. 行数のカウント</h3>
-            <p><b>行数をカウントせよ．確認にはwcコマンドを用いよ．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 # popular-names.txtの行数をカウントするプログラム
@@ -275,7 +259,6 @@ print(f&quot;行数: {line_count}&quot;)
 wc -l popular-names.txt
             </code></pre>
             <h3>11. タブをスペースに置換</h3>
-            <p><b>タブ1文字につきスペース1文字に置換せよ．確認にはsedコマンド，trコマンド，もしくはexpandコマンドを用いよ．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 # タブ文字をスペースに置換するプログラム
@@ -311,7 +294,6 @@ expand -t 1 popular-names.txt &gt; popular-names-space.txt
                 </code></pre>
             </ul>
             <h3>12. 1列目をcol1.txtに，2列目をcol2.txtに保存</h3>
-            <p><b>各行の1列目だけを抜き出したものをcol1.txtに，2列目だけを抜き出したものをcol2.txtとしてファイルに保存せよ．確認にはcutコマンドを用いよ．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 # 1列目と2列目を別ファイルに保存するプログラム
@@ -341,7 +323,6 @@ cut -f 1 popular-names.txt &gt; col1.txt
 cut -f 2 popular-names.txt &gt; col2.txt
             </code></pre>
             <h3>13. col1.txtとcol2.txtをマージ</h3>
-            <p><b>12で作ったcol1.txtとcol2.txtを結合し，元のファイルの1列目と2列目をタブ区切りで並べたテキストファイルを作成せよ．確認にはpasteコマンドを用いよ．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 # col1.txtとcol2.txtを結合して、タブ区切りで新しいファイルに書き込むプログラム
@@ -364,7 +345,6 @@ print(f&quot;&#039;{col1_file_path}&#039; と &#039;{col2_file_path}&#039; を�
 paste col1.txt col2.txt &gt; merged.txt
             </code></pre>
             <h3>14. 先頭からN行を出力</h3>
-            <p><b>自然数Nをコマンドライン引数などの手段で受け取り，入力のうち先頭のN行だけを表示せよ．確認にはheadコマンドを用いよ．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 # 以下の14.pyファイルを作成し、python 14.py popular-names.txt 5で実行
@@ -393,7 +373,6 @@ if __name__ == &quot;__main__&quot;:
 head -n 5 popular-names.txt
             </code></pre>
             <h3>15. 末尾のN行を出力</h3>
-            <p><b>自然数Nをコマンドライン引数などの手段で受け取り，入力のうち末尾のN行だけを表示せよ．確認にはtailコマンドを用いよ．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 # 以下の15.pyファイルを作成し、python 15.py popular-names.txt 5で実行
@@ -421,7 +400,6 @@ if __name__ == &quot;__main__&quot;:
 tail -n 5 popular-names.txt
             </code></pre>
             <h3>16. ファイルをN分割する</h3>
-            <p><b>自然数Nをコマンドライン引数などの手段で受け取り，入力のファイルを行単位でN分割せよ．同様の処理をsplitコマンドで実現せよ．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 # 以下の16.pyファイルを作成し、python 16.py popular-names.txt 5で実行
@@ -458,7 +436,6 @@ if __name__ == &quot;__main__&quot;:
 split -l $(( $(wc -l &lt; popular-names.txt) / 5 )) popular-names.txt split_
             </code></pre>
             <h3>17. １列目の文字列の異なり</h3>
-            <p><b>1列目の文字列の種類（異なる文字列の集合）を求めよ．確認にはcut, sort, uniqコマンドを用いよ．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 def unique_first_column(file_path):
@@ -482,7 +459,6 @@ for name in sorted(unique_names):
 cut -f 1 popular-names.txt | sort | uniq
             </code></pre>
             <h3>18. 各行を3コラム目の数値の降順にソート</h3>
-            <p><b>各行を3コラム目の数値の逆順で整列せよ（注意: 各行の内容は変更せずに並び替えよ）．確認にはsortコマンドを用いよ（この問題はコマンドで実行した時の結果と合わなくてもよい）．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 def sort_by_third_column(file_path, output_file):
@@ -509,7 +485,6 @@ print(f&quot;3列目を基準に逆順でソートし、&#039;{output_file_path}
 sort -k 3,3 -n -r popular-names.txt &gt; sorted_by_third_column.txt
             </code></pre>
             <h3>19. 各行の1コラム目の文字列の出現頻度を求め，出現頻度の高い順に並べる</h3>
-            <p><b>各行の1列目の文字列の出現頻度を求め，その高い順に並べて表示せよ．確認にはcut, uniq, sortコマンドを用いよ．</b></p>
             <p>Pythonプログラム</p>
             <pre><code>
 from collections import Counter
@@ -541,594 +516,344 @@ cut -f 1 popular-names.txt | sort | uniq -c | sort -nr
         </section>
         <section id="03">
         <h2>第3章：正規表現</h2>
-        <h3>20. JSONデータの読み込み</h3>
-        <p><b>Wikipedia記事のJSONファイルを読み込み，「イギリス」に関する記事本文を表示せよ．問題21-29では，ここで抽出した記事本文に対して実行せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>21. カテゴリ名を含む行を抽出</h3>
-        <p><b>記事中でカテゴリ名を宣言している行を抽出せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>22. カテゴリ名の抽出</h3>
-        <p><b>記事のカテゴリ名を（行単位ではなく名前で）抽出せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>23. セクション構造</h3>
-        <p><b>記事中に含まれるセクション名とそのレベル（例えば”== セクション名 ==”なら1）を表示せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>24. ファイル参照の抽出</h3>
-        <p><b>記事から参照されているメディアファイルをすべて抜き出せ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>25. テンプレートの抽出</h3>
-        <p><b>記事中に含まれる「基礎情報」テンプレートのフィールド名と値を抽出し，辞書オブジェクトとして格納せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>26. 強調マークアップの除去</h3>
-        <p><b>25の処理時に，テンプレートの値からMediaWikiの強調マークアップ（弱い強調，強調，強い強調のすべて）を除去してテキストに変換せよ（参考: <a href="https://ja.wikipedia.org/wiki/Help:%E6%97%A9%E8%A6%8B%E8%A1%A8">マークアップ早見表</a>）．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>27. 内部リンクの除去</h3>
-        <p><b>26の処理に加えて，テンプレートの値からMediaWikiの内部リンクマークアップを除去し，テキストに変換せよ</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>28. MediaWikiマークアップの除去</h3>
-        <p><b>27の処理に加えて，テンプレートの値からMediaWikiマークアップを可能な限り除去し，国の基本情報を整形せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>29. 国旗画像のURLを取得する</h3>
-        <p><b>テンプレートの内容を利用し，国旗画像のURLを取得せよ．（ヒント: <a href="https://www.mediawiki.org/wiki/API:Main_page/ja">MediaWiki API</a>の<a href="https://www.mediawiki.org/wiki/API:Imageinfo">imageinfo</a>を呼び出して，ファイル参照をURLに変換すればよい）</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
         </section>
         <section id="04">
         <h2>第4章：形態素解析</h2>
-        <h3>30. 形態素解析結果の読み込み</h3>
-        <p><b>形態素解析結果（neko.txt.mecab）を読み込むプログラムを実装せよ．ただし，各形態素は表層形（surface），基本形（base），品詞（pos），品詞細分類1（pos1）をキーとするマッピング型に格納し，1文を形態素（マッピング型）のリストとして表現せよ．第4章の残りの問題では，ここで作ったプログラムを活用せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>31. 動詞</h3>
-        <p><b>動詞の表層形をすべて抽出せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>32. 動詞の基本形</h3>
-        <p><b>動詞の基本形をすべて抽出せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>33. 「AのB」</h3>
-        <p><b>2つの名詞が「の」で連結されている名詞句を抽出せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>34. 名詞の連接</h3>
-        <p><b>名詞の連接（連続して出現する名詞）を最長一致で抽出せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>35. 単語の出現頻度Permalink</h3>
-        <p><b>文章中に出現する単語とその出現頻度を求め，出現頻度の高い順に並べよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>36. 頻度上位10語</h3>
-        <p><b>出現頻度が高い10語とその出現頻度をグラフ（例えば棒グラフなど）で表示せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>37. 「猫」と共起頻度の高い上位10語Permalink</h3>
-        <p><b>「猫」とよく共起する（共起頻度が高い）10語とその出現頻度をグラフ（例えば棒グラフなど）で表示せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>38. ヒストグラムPermalink</h3>
-        <p><b>単語の出現頻度のヒストグラムを描け．ただし，横軸は出現頻度を表し，1から単語の出現頻度の最大値までの線形目盛とする．縦軸はx軸で示される出現頻度となった単語の異なり数（種類数）である．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>39. Zipfの法則</h3>
-        <p><b>単語の出現頻度順位を横軸，その出現頻度を縦軸として，両対数グラフをプロットせよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
         </section>
         <section id="05">
         <h2>第5章：係り受け解析</h2>
-        <h3>40. 係り受け解析結果の読み込み（形態素）</h3>
-        <p><b>形態素を表すクラスMorphを実装せよ．このクラスは表層形（surface），基本形（base），品詞（pos），品詞細分類1（pos1）をメンバ変数に持つこととする．さらに，係り受け解析の結果（ai.ja.txt.parsed）を読み込み，各文をMorphオブジェクトのリストとして表現し，冒頭の説明文の形態素列を表示せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>41. 係り受け解析結果の読み込み（文節・係り受け）</h3>
-        <p><b>40に加えて，文節を表すクラスChunkを実装せよ．このクラスは形態素（Morphオブジェクト）のリスト（morphs），係り先文節インデックス番号（dst），係り元文節インデックス番号のリスト（srcs）をメンバ変数に持つこととする．さらに，入力テキストの係り受け解析結果を読み込み，１文をChunkオブジェクトのリストとして表現し，冒頭の説明文の文節の文字列と係り先を表示せよ．本章の残りの問題では，ここで作ったプログラムを活用せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>42. 係り元と係り先の文節の表示</h3>
-        <p><b>係り元の文節と係り先の文節のテキストをタブ区切り形式ですべて抽出せよ．ただし，句読点などの記号は出力しないようにせよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>43. 名詞を含む文節が動詞を含む文節に係るものを抽出</h3>
-        <p><b>名詞を含む文節が，動詞を含む文節に係るとき，これらをタブ区切り形式で抽出せよ．ただし，句読点などの記号は出力しないようにせよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>44. 係り受け木の可視化</h3>
-        <p><b>与えられた文の係り受け木を有向グラフとして可視化せよ．可視化には，Graphviz等を用いるとよい．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>45. 動詞の格パターンの抽出</h3>
-        <b>
-        <p>今回用いている文章をコーパスと見なし，日本語の述語が取りうる格を調査したい． 動詞を述語，動詞に係っている文節の助詞を格と考え，述語と格をタブ区切り形式で出力せよ． ただし，出力は以下の仕様を満たすようにせよ．</p>
-        <ul>
-            <li>動詞を含む文節において，最左の動詞の基本形を述語とする</li>
-            <li>述語に係る助詞を格とする</li>
-            <li>述語に係る助詞（文節）が複数あるときは，すべての助詞をスペース区切りで辞書順に並べる</li>
-        </ul>
-        <p>「ジョン・マッカーシーはAIに関する最初の会議で人工知能という用語を作り出した。」という例文を考える． この文は「作り出す」という１つの動詞を含み，「作り出す」に係る文節は「ジョン・マッカーシーは」，「会議で」，「用語を」であると解析された場合は，次のような出力になるはずである．</p>
-        <code2>作り出す で は を</code2>
-        <p>このプログラムの出力をファイルに保存し，以下の事項をUNIXコマンドを用いて確認せよ．</p>
-        <ul>
-            <li>コーパス中で頻出する述語と格パターンの組み合わせ</li>
-            <li>「行う」「なる」「与える」という動詞の格パターン（コーパス中で出現頻度の高い順に並べよ）</li>
-        </ul>
-        </b>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>46. 動詞の格フレーム情報の抽出</h3>
-        <b>
-        <p>45のプログラムを改変し，述語と格パターンに続けて項（述語に係っている文節そのもの）をタブ区切り形式で出力せよ．45の仕様に加えて，以下の仕様を満たすようにせよ．</p>
-        <ul>
-            <li>項は述語に係っている文節の単語列とする（末尾の助詞を取り除く必要はない）</li>
-            <li>述語に係る文節が複数あるときは，助詞と同一の基準・順序でスペース区切りで並べる</li>
-        </ul>
-        <p>「ジョン・マッカーシーはAIに関する最初の会議で人工知能という用語を作り出した。」という例文を考える． この文は「作り出す」という１つの動詞を含み，「作り出す」に係る文節は「ジョン・マッカーシーは」，「会議で」，「用語を」であると解析された場合は，次のような出力になるはずである．</p>
-        <code2>作り出す で は を 会議で ジョンマッカーシーは 用語を</code2>
-        </b>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>47. 機能動詞構文のマイニング</h3>
-        <b>
-        <p>動詞のヲ格にサ変接続名詞が入っている場合のみに着目したい．46のプログラムを以下の仕様を満たすように改変せよ．</p>
-        <ul>
-            <li>「サ変接続名詞+を（助詞）」で構成される文節が動詞に係る場合のみを対象とする</li>
-            <li>述語は「サ変接続名詞+を+動詞の基本形」とし，文節中に複数の動詞があるときは，最左の動詞を用いる</li>
-            <li>述語に係る助詞（文節）が複数あるときは，すべての助詞をスペース区切りで辞書順に並べる</li>
-            <li>述語に係る文節が複数ある場合は，すべての項をスペース区切りで並べる（助詞の並び順と揃えよ）</li>
-        </ul>
-        <p>例えば「また、自らの経験を元に学習を行う強化学習という手法もある。」という文から，以下の出力が得られるはずである．</p>
-        <code2>学習を行う    に を  元に 経験を</code2>
-        </b>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>48. 名詞から根へのパスの抽出</h3>
-        <b>
-        <p>文中のすべての名詞を含む文節に対し，その文節から構文木の根に至るパスを抽出せよ． ただし，構文木上のパスは以下の仕様を満たすものとする．</p>
-        <ul>
-            <li>各文節は（表層形の）形態素列で表現する</li>
-            <li>パスの開始文節から終了文節に至るまで，各文節の表現を” -> “で連結する</li>
-        </ul>
-        <p>「ジョン・マッカーシーはAIに関する最初の会議で人工知能という用語を作り出した。」という例文を考える． CaboChaを係り受け解析に用いた場合，次のような出力が得られると思われる．</p>
-        <code2>ジョンマッカーシーは -> 作り出した</code2><br>
-        <code2>AIに関する -> 最初の -> 会議で -> 作り出した</code2><br>
-        <code2>最初の -> 会議で -> 作り出した</code2><br>
-        <code2>会議で -> 作り出した</code2><br>
-        <code2>人工知能という -> 用語を -> 作り出した</code2><br>
-        <code2>用語を -> 作り出した</code2>
-        <p>KNPを係り受け解析に用いた場合，次のような出力が得られると思われる．</p>
-        <code2>ジョンマッカーシーは -> 作り出した</code2><br>
-        <code2>ＡＩに -> 関する -> 会議で -> 作り出した</code2><br>
-        <code2>会議で -> 作り出した</code2><br>
-        <code2>人工知能と -> いう -> 用語を -> 作り出した</code2><br>
-        <code2>用語を -> 作り出した</code2>
-        </b>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>49. 名詞間の係り受けパスの抽出</h3>
-        <b>
-        <p>文中のすべての名詞句のペアを結ぶ最短係り受けパスを抽出せよ．ただし，名詞句ペアの文節番号がiとj（i<j）のとき，係り受けパスは以下の仕様を満たすものとする．</p>
-        <ul>
-            <li>問題48と同様に，パスは開始文節から終了文節に至るまでの各文節の表現（表層形の形態素列）を” -> “で連結して表現する</li>
-            <li>文節iとjに含まれる名詞句はそれぞれ，XとYに置換する</li>
-        </ul>
-        <p>また，係り受けパスの形状は，以下の2通りが考えられる．</p>
-        <ul>
-            <li>文節iから構文木の根に至る経路上に文節jが存在する場合: 文節iから文節jのパスを表示</li>
-            <li>上記以外で，文節iと文節jから構文木の根に至る経路上で共通の文節kで交わる場合: 文節iから文節kに至る直前のパスと文節jから文節kに至る直前までのパス，文節kの内容を” | “で連結して表示</li>
-        </ul>
-        <p>「ジョン・マッカーシーはAIに関する最初の会議で人工知能という用語を作り出した。」という例文を考える． CaboChaを係り受け解析に用いた場合，次のような出力が得られると思われる．</p>
-        <code2>Xは | Yに関する -> 最初の -> 会議で | 作り出した</code2><br>
-        <code2>Xは | Yの -> 会議で | 作り出した</code2><br>
-        <code2>Xは | Yで | 作り出した</code2><br>
-        <code2>Xは | Yという -> 用語を | 作り出した</code2><br>
-        <code2>Xは | Yを | 作り出した</code2><br>
-        <code2>Xに関する -> Yの</code2><br>
-        <code2>Xに関する -> 最初の -> Yで</code2><br>
-        <code2>Xに関する -> 最初の -> 会議で | Yという -> 用語を | 作り出した</code2><br>
-        <code2>Xに関する -> 最初の -> 会議で | Yを | 作り出した</code2><br>
-        <code2>Xの -> Yで</code2><br>
-        <code2>Xの -> 会議で | Yという -> 用語を | 作り出した</code2><br>
-        <code2>Xの -> 会議で | Yを | 作り出した</code2><br>
-        <code2>Xで | Yという -> 用語を | 作り出した</code2><br>
-        <code2>Xで | Yを | 作り出した</code2><br>
-        <code2>Xという -> Yを</code2>
-        <p>KNPを係り受け解析に用いた場合，次のような出力が得られると思われる．</p>
-        <code2>Xは | Yに -> 関する -> 会議で | 作り出した。</code2><br>
-        <code2>Xは | Yで | 作り出した。</code2><br>
-        <code2>Xは | Yと -> いう -> 用語を | 作り出した。</code2><br>
-        <code2>Xは | Yを | 作り出した。</code2><br>
-        <code2>Xに -> 関する -> Yで</code2><br>
-        <code2>Xに -> 関する -> 会議で | Yと -> いう -> 用語を | 作り出した。</code2><br>
-        <code2>Xに -> 関する -> 会議で | Yを | 作り出した。</code2><br>
-        <code2>Xで | Yと -> いう -> 用語を | 作り出した。</code2><br>
-        <code2>Xで | Yを | 作り出した。</code2><br>
-        <code2>Xと -> いう -> Yを</code2>
-        </b>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
         </section>
         <section id="06">
         <h2>第6章：機械学習</h2>
-        <h3>50. データの入手・整形</h3>
-        <b>
-            <p><a href="https://archive.ics.uci.edu/dataset/359/news+aggregator">News Aggregator Data Set</a>をダウンロードし、以下の要領で学習データ（train.txt），検証データ（valid.txt），評価データ（test.txt）を作成せよ．</p>
-            <ol>
-                <li>ダウンロードしたzipファイルを解凍し，readme.txtの説明を読む．</li>
-                <li>情報源（publisher）が”Reuters”, “Huffington Post”, “Businessweek”, “Contactmusic.com”, “Daily Mail”の事例（記事）のみを抽出する．</li>
-                <li>抽出された事例をランダムに並び替える．</li>
-                <li>抽出された事例の80%を学習データ，残りの10%ずつを検証データと評価データに分割し，それぞれtrain.txt，valid.txt，test.txtというファイル名で保存する．ファイルには，１行に１事例を書き出すこととし，カテゴリ名と記事見出しのタブ区切り形式とせよ（このファイルは後に問題70で再利用する）．</li>
-            </ol>
-            <p>学習データと評価データを作成したら，各カテゴリの事例数を確認せよ．</p>
-        </b>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>51. 特徴量抽出Permalink</h3>
-        <p><b>学習データ，検証データ，評価データから特徴量を抽出し，それぞれtrain.feature.txt，valid.feature.txt，test.feature.txtというファイル名で保存せよ． なお，カテゴリ分類に有用そうな特徴量は各自で自由に設計せよ．記事の見出しを単語列に変換したものが最低限のベースラインとなるであろう．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>52. 学習</h3>
-        <p><b>51で構築した学習データを用いて，ロジスティック回帰モデルを学習せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>53. 予測</h3>
-        <p><b>52で学習したロジスティック回帰モデルを用い，与えられた記事見出しからカテゴリとその予測確率を計算するプログラムを実装せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>54. 正解率の計測</h3>
-        <p><b>52で学習したロジスティック回帰モデルの正解率を，学習データおよび評価データ上で計測せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>55. 混同行列の作成</h3>
-        <p><b>52で学習したロジスティック回帰モデルの混同行列（confusion matrix）を，学習データおよび評価データ上で作成せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>56. 適合率，再現率，F1スコアの計測</h3>
-        <p><b>52で学習したロジスティック回帰モデルの適合率，再現率，F1スコアを，評価データ上で計測せよ．カテゴリごとに適合率，再現率，F1スコアを求め，カテゴリごとの性能をマイクロ平均（micro-average）とマクロ平均（macro-average）で統合せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>57. 特徴量の重みの確認</h3>
-        <p><b>52で学習したロジスティック回帰モデルの中で，重みの高い特徴量トップ10と，重みの低い特徴量トップ10を確認せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>58. 正則化パラメータの変更</h3>
-        <p><b>ロジスティック回帰モデルを学習するとき，正則化パラメータを調整することで，学習時の過学習（overfitting）の度合いを制御できる．異なる正則化パラメータでロジスティック回帰モデルを学習し，学習データ，検証データ，および評価データ上の正解率を求めよ．実験の結果は，正則化パラメータを横軸，正解率を縦軸としたグラフにまとめよ</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>59. ハイパーパラメータの探索</h3>
-        <p><b>学習アルゴリズムや学習パラメータを変えながら，カテゴリ分類モデルを学習せよ．検証データ上の正解率が最も高くなる学習アルゴリズム・パラメータを求めよ．また，その学習アルゴリズム・パラメータを用いたときの評価データ上の正解率を求めよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
         </section>
         <section id="07">
         <h2>第7章：単語ベクトル</h2>
-        <h3>60. 単語ベクトルの読み込みと表示</h3>
-        <p><b>Google Newsデータセット（約1,000億単語）での<a href="https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing">学習済み単語ベクトル</a>（300万単語・フレーズ，300次元）をダウンロードし，”United States”の単語ベクトルを表示せよ．ただし，”United States”は内部的には”United_States”と表現されていることに注意せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>61. 単語の類似度</h3>
-        <p><b>“United States”と”U.S.”のコサイン類似度を計算せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>62. 類似度の高い単語10件</h3>
-        <p><b>“United States”とコサイン類似度が高い10語と，その類似度を出力せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>63. 加法構成性によるアナロジー</h3>
-        <p><b>“Spain”の単語ベクトルから”Madrid”のベクトルを引き，”Athens”のベクトルを足したベクトルを計算し，そのベクトルと類似度の高い10語とその類似度を出力せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>64. アナロジーデータでの実験</h3>
-        <p><b><a href="http://download.tensorflow.org/data/questions-words.txt">単語アナロジーの評価データ</a>をダウンロードし，vec(2列目の単語) - vec(1列目の単語) + vec(3列目の単語)を計算し，そのベクトルと類似度が最も高い単語と，その類似度を求めよ．求めた単語と類似度は，各事例の末尾に追記せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>65. アナロジータスクでの正解率</h3>
-        <p><b>64の実行結果を用い，意味的アナロジー（semantic analogy）と文法的アナロジー（syntactic analogy）の正解率を測定せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>66. WordSimilarity-353での評価</h3>
-        <p><b><a href="http://www.gabrilovich.com/resources/data/wordsim353/wordsim353.html">The WordSimilarity-353 Test Collection</a>の評価データをダウンロードし，単語ベクトルにより計算される類似度のランキングと，人間の類似度判定のランキングの間のスピアマン相関係数を計算せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>67. k-meansクラスタリング</h3>
-        <p><b>国名に関する単語ベクトルを抽出し，k-meansクラスタリングをクラスタ数k=5として実行せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>68. Ward法によるクラスタリング</h3>
-        <p><b>国名に関する単語ベクトルに対し，Ward法による階層型クラスタリングを実行せよ．さらに，クラスタリング結果をデンドログラムとして可視化せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
-        <h3>69. t-SNEによる可視化</h3>
-        <p><b>ベクトル空間上の国名に関する単語ベクトルをt-SNEで可視化せよ．</b></p>
-        <pre><code>
-
-        </code></pre>
-        </section>
-        <section id="08">
-        <h2>第8章：ニューラルネット</h2>
-        <h3>70. 単語ベクトルの和による特徴量</h3>
-        <b>
-        <p>問題50で構築した学習データ，検証データ，評価データを行列・ベクトルに変換したい．例えば，学習データについて，すべての事例\(x_i\)の特徴ベクトル\(\boldsymbol{x}_i\)を並べた行列\(X\)と，正解ラベルを並べた行列（ベクトル）\(Y\)を作成したい．</p>
-
-        \[X = \begin{pmatrix} 
-          \boldsymbol{x}_1 \\ 
-          \boldsymbol{x}_2 \\ 
-          \dots \\ 
-          \boldsymbol{x}_n \\ 
-        \end{pmatrix} \in \mathbb{R}^{n \times d},
-        Y = \begin{pmatrix} 
-          y_1 \\ 
-          y_2 \\ 
-          \dots \\ 
-          y_n \\ 
-        \end{pmatrix} \in \mathbb{N}^{n}\]
-        
-        <p>ここで，\(n\)は学習データの事例数であり，\(\boldsymbol{x}_i \in \mathbb{R}^d\)と\(y_i \in \mathbb{N}\)はそれぞれ，\(i \in \{1, \dots, n\}\)番目の事例の特徴量ベクトルと正解ラベルを表す．
-        なお，今回は「ビジネス」「科学技術」「エンターテイメント」「健康」の4カテゴリ分類である．\(\mathbb{N}_{&lt;4}\)で\(4\)未満の自然数（\(0\)を含む）を表すことにすれば，任意の事例の正解ラベル\(y_i\)は\(y_i \in \mathbb{N}_{&lt;4}\)で表現できる．
-        以降では，ラベルの種類数を\(L\)で表す（今回の分類タスクでは\(L=4\)である）．</p>
-        
-        <p>\(i\)番目の事例の特徴ベクトル\(\boldsymbol{x}_i\)は，次式で求める．</p>
-        
-        \[\boldsymbol{x}_i = \frac{1}{T_i} \sum_{t=1}^{T_i} \mathrm{emb}(w_{i,t})\]
-        
-        <p>ここで，\(i\)番目の事例は\(T_i\)個の（記事見出しの）単語列\((w_{i,1}, w_{i,2}, \dots, w_{i,T_i})\)から構成され，\(\mathrm{emb}(w) \in \mathbb{R}^d\)は単語\(w\)に対応する単語ベクトル（次元数は\(d\)）である．すなわち，\(i\)番目の事例の記事見出しを，その見出しに含まれる単語のベクトルの平均で表現したものが\(\boldsymbol{x}_i\)である．今回は単語ベクトルとして，問題60でダウンロードしたものを用いればよい．\(300\)次元の単語ベクトルを用いたので，\(d=300\)である．</p>
-        
-        <p>\(i\)番目の事例のラベル\(y_i\)は，次のように定義する．</p>
-        
-        \[y_i = \begin{cases}
-        0 &amp; (\mbox{記事}x_i\mbox{が「ビジネス」カテゴリの場合}) \\
-        1 &amp; (\mbox{記事}x_i\mbox{が「科学技術」カテゴリの場合}) \\
-        2 &amp; (\mbox{記事}x_i\mbox{が「エンターテイメント」カテゴリの場合}) \\
-        3 &amp; (\mbox{記事}x_i\mbox{が「健康」カテゴリの場合}) \\
-        \end{cases}\]
-        
-        <p>なお，カテゴリ名とラベルの番号が一対一で対応付いていれば，上式の通りの対応付けでなくてもよい．</p>
-        
-        <p>以上の仕様に基づき，以下の行列・ベクトルを作成し，ファイルに保存せよ．</p>
-        
-        <ul>
-          <li>学習データの特徴量行列: \(X_{\rm train} \in \mathbb{R}^{N_t \times d}\)</li>
-          <li>学習データのラベルベクトル: \(Y_{\rm train} \in \mathbb{N}^{N_t}\)</li>
-          <li>検証データの特徴量行列: \(X_{\rm valid} \in \mathbb{R}^{N_v \times d}\)</li>
-          <li>検証データのラベルベクトル: \(Y_{\rm valid} \in \mathbb{N}^{N_v}\)</li>
-          <li>評価データの特徴量行列: \(X_{\rm test} \in \mathbb{R}^{N_e \times d}\)</li>
-          <li>評価データのラベルベクトル: \(Y_{\rm test} \in \mathbb{N}^{N_e}\)</li>
-        </ul>
-        
-        <p>なお，\(N_t, N_v, N_e\)はそれぞれ，学習データの事例数，検証データの事例数，評価データの事例数である．</p>
-        </b>
-        <pre><code>
-
-        </code></pre>
-        <h3>71. 単層ニューラルネットワークによる予測</h3>
-        <b>
-        <p>問題70で保存した行列を読み込み，学習データについて以下の計算を実行せよ．</p>
-        
-        \[\hat{\boldsymbol{y}}_1 = {\rm softmax}(\boldsymbol{x}_1 W), \\
-        \hat{Y} = {\rm softmax}(X_{[1:4]} W)\]
-        
-        <p>ただし，\({\rm softmax}\)はソフトマックス関数，\(X_{[1:4]} \in \mathbb{R}^{4 \times d}\)は特徴ベクトル\(\boldsymbol{x}_1, \boldsymbol{x}_2, \boldsymbol{x}_3, \boldsymbol{x}_4\)を縦に並べた行列である．</p>
-        
-        \[X_{[1:4]} = \begin{pmatrix} 
-          \boldsymbol{x}_1 \\ 
-          \boldsymbol{x}_2 \\ 
-          \boldsymbol{x}_3 \\ 
-          \boldsymbol{x}_4 \\ 
-        \end{pmatrix}\]
-        
-        <p>行列\(W \in \mathbb{R}^{d \times L}\)は単層ニューラルネットワークの重み行列で，ここではランダムな値で初期化すればよい（問題73以降で学習して求める）．なお，\(\hat{\boldsymbol{y}}_1 \in \mathbb{R}^L\)は未学習の行列\(W\)で事例\(x_1\)を分類したときに，各カテゴリに属する確率を表すベクトルである．
-        同様に，\(\hat{Y} \in \mathbb{R}^{n \times L}\)は，学習データの事例\(x_1, x_2, x_3, x_4\)について，各カテゴリに属する確率を行列として表現している．</p>
-        </b>
-        <pre><code>
-
-        </code></pre>
-        <h3>72. 損失と勾配の計算</h3>
-        <b>
-            <p>学習データの事例\(x_1\)と事例集合\(x_1, x_2, x_3, x_4\)に対して，クロスエントロピー損失と，行列\(W\)に対する勾配を計算せよ．なお，ある事例\(x_i\)に対して損失は次式で計算される．</p>
-            
-            \[l_i = - \log [\mbox{事例}x_i\mbox{が}y_i\mbox{に分類される確率}]\]
-            
-            <p>ただし，事例集合に対するクロスエントロピー損失は，その集合に含まれる各事例の損失の平均とする．</p>
-        </b>
-        <pre><code>
-
-        </code></pre>
-        <h3>73. 確率的勾配降下法による学習</h3>
-        <p><b>率的勾配降下法（SGD: Stochastic Gradient Descent）を用いて，行列\(W\)を学習せよ．なお，学習は適当な基準で終了させればよい（例えば「100エポックで終了」など）．</b></p>
-        <pre><code>
-
-        </code></pre>
-        <h3>74. 正解率の計測</h3>
-        <p><b>問題73で求めた行列を用いて学習データおよび評価データの事例を分類したとき，その正解率をそれぞれ求めよ．</b></p>
-        <pre><code>
-
-        </code></pre>
-        <h3>75. 損失と正解率のプロット</h3>
-        <p><b>問題73のコードを改変し，各エポックのパラメータ更新が完了するたびに，訓練データでの損失，正解率，検証データでの損失，正解率をグラフにプロットし，学習の進捗状況を確認できるようにせよ．</b></p>
-        <pre><code>
-
-        </code></pre>
-        <h3>76. チェックポイント</h3>
-        <p><b>問題75のコードを改変し，各エポックのパラメータ更新が完了するたびに，チェックポイント（学習途中のパラメータ（重み行列など）の値や最適化アルゴリズムの内部状態）をファイルに書き出せ．</b></p>
-        <pre><code>
-
-        </code></pre>
-        <h3>77. ミニバッチ化</h3>
-        <p><b>問題76のコードを改変し，\(B\)事例ごとに損失・勾配を計算し，行列\(W\)の値を更新せよ（ミニバッチ化）．\(B\)の値を\(1, 2, 4, 8, \dots\)と変化させながら，1エポックの学習に要する時間を比較せよ．</b></p>
-        <pre><code>
-
-        </code></pre>
-        <h3>78. GPU上での学習</h3>
-        <p><b>問題77のコードを改変し，GPU上で学習を実行せよ．</b></p>
-        <pre><code>
-
-        </code></pre>
-        <h3>79. 多層ニューラルネットワーク</h3>
-        <p><b>問題78のコードを改変し，バイアス項の導入や多層化など，ニューラルネットワークの形状を変更しながら，高性能なカテゴリ分類器を構築せよ．</b></p>
+        <h3></h3>
         <pre><code>
 
         </code></pre>
         </section>
         <section id="03">
+        <h2>第8章：ニューラルネット</h2>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        <h3></h3>
+        <pre><code>
+
+        </code></pre>
+        </section>
+        <section id="09">
         <h2>第9章：RNNとCNN</h2>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         </section>
-        <section id="03">
+        <section id="10">
         <h2>第10章：機械翻訳</h2>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
         <h3></h3>
-        <p><b></b></p>
         <pre><code>
 
         </code></pre>
