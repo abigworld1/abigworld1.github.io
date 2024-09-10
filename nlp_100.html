@@ -592,10 +592,31 @@ for name in category_names:
         <p><code2>(.*?)</code2>: 非貪欲なマッチで、カテゴリ名をキャプチャする（<code2>カテゴリ名</code2>部分）。</p>
         <p><code2>(\|.*)?</code2>: <code2>|</code2>から始まるオプション部品（ソートキーなど）にマッチするが、この部分は必要ないため無視する。</p>
         <p><code2>\]\]</code2>: <code2>]]</code2>にマッチしてカテゴリ行の終わりを示す。</p>
-        <h3></h3>
+        <h3>23. セクション構造</h3>
         <pre><code>
+import re
 
+# セクション名とそのレベルを抽出する関数
+def extract_sections(article_text):
+    # 正規表現パターン: セクション名とそのレベルにマッチ
+    pattern = r&#039;(={2,})\s*(.+?)\s*\1&#039;
+    
+    # findallでマッチしたセクション名とレベルをリストで抽出
+    sections = re.findall(pattern, article_text)
+    
+    # セクション名とそのレベルを表示
+    for section in sections:
+        level = len(section[0]) - 1  # &#039;=&#039; の数でセクションレベルを決定
+        section_name = section[1].strip()  # セクション名の前後の空白を除去
+        print(f&quot;{section_name} : {level}&quot;)
+
+# 「イギリス」の記事本文からセクション構造を抽出して表示
+extract_sections(UK_text)
         </code></pre>
+        <p><code2>(={2,})</code2>: <code2>=</code2>が2つ以上連続する部分にマッチする。これによりセクションの始まりと終わりの「=」の数を取得できる。</p>
+        <p><code2>\s*</code2>: セクション名の前後の空白を無視する。</p>
+        <p><code2>(.+?)</code2>: 非貪欲にセクション名をキャプションする。</p>
+        <p><code2>\1</code2>前半でマッチした「=」と同じ数の「=」があることを確認する。</p>
         <h3></h3>
         <pre><code>
 
