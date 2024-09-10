@@ -517,14 +517,57 @@ cut -f 1 popular-names.txt | sort | uniq -c | sort -nr
         </section>
         <section id="03">
         <h2>第3章：正規表現</h2>
-        <h3></h3>
+        <h3>20</h3>
         <pre><code>
+import json
+import re
+import gzip
 
+# 圧縮されたJSONファイルから、Wikipedia記事のリストを読み込む
+text_list = []
+with gzip.open(&#039;jawiki-country.json.gz&#039;, &#039;rt&#039;, encoding=&#039;utf-8&#039;) as f:
+    lines = f.readlines()  # すべての行を読み込む
+    for line in lines:
+        # 各行がJSON形式なので、json.loadsでPythonの辞書形式に変換
+        text_list.append(json.loads(line))
+
+# 「イギリス」の記事本文を探す
+UK_text = None  # 「イギリス」の記事を格納するための変数
+for article in text_list:
+    if article[&#039;title&#039;] == &quot;イギリス&quot;:
+        UK_text = article[&#039;text&#039;]  # 記事本文のみを抽出
+        break  # 一度見つかったらループを終了
+
+# 「イギリス」の記事本文を表示（デバッグ用）
+if UK_text:
+    print(UK_text)
+else:
+    print(&quot;記事が見つかりませんでした。&quot;)
         </code></pre>
-        <h3></h3>
+        <p><code2>rt</code2>は、ファイルをテキストモードで開くということ。</p>
+        <p><code2>json.loads()</code2>を使用して辞書型に変換している。</p>
+        <p><code2>article["title"] == "イギリス"</code2>で、タイトルが「イギリス」の記事を見つけ、該当する記事の本文<code2>article["text"]</code2>を<code2>UK_textに格納。</code2></p>
+        <h3>21</h3>
         <pre><code>
+import re
 
+# 正規表現パターンを定義
+# \[\[Category:.*?\]\] は、[[Category:カテゴリ名]] の形式にマッチするパターン
+pattern = r&quot;\[\[Category:.*?\]\]&quot;  # 生文字列として正規表現を記述
+
+# UK_textに含まれるすべてのカテゴリ行を正規表現で抽出
+result = re.findall(pattern, UK_text)
+
+# 結果を表示
+for line in result:
+    print(line)
         </code></pre>
+        <p>正規表現のパターン<code2>r"\[\[Category:.*?\]\]"</code2>をraw文字列（先頭に<code2>r</code2>をつける）として定義。これにより、Pythonのエスケープ処理を避け、正規表現のパターンをそのまま記述できる。</p>
+        <ul>
+            <li><code2>\[\[Category:.*?\]\]</code2>: <code2>[[Category:...]]</code2>の形式にマッチする正規表現</li>
+            <li><code2>.*?</code2>: <code2>Category:</code2>の後に続く任意の文字列に非貪欲にマッチする（最短一致）</li>
+        </ul>
+        <p><code2>re.findall()</code2>を使って、<code2>UK_text</code2>内の<code2>[[Category:...]]</code2>形式にマッチする全ての部分を抽出する。<code2>findall</code2>は一致する部分全てをリストとして返す。</p>
         <h3></h3>
         <pre><code>
 
