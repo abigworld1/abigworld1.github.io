@@ -28,6 +28,8 @@
             <ul>
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#source">Source</a></li>
+                <li><a href="#library">Library</a></li>
+                <li><a href="#numpy">NumPy</a></li>
             </ul>
         </section>
         <section id="overview">
@@ -36,8 +38,28 @@
         </section>
         <section id="source">
             <h2>Source</h2>
-            <p>以下のサイトを参考にしました。</p>
+            <p>以下のサイト・書籍を参考にしました。</p>
             <ul>
                 <li><a href="https://utokyo-ipp.github.io/">Pythonプログラミング入門 — Pythonプログラミング入門 documentation</a></li>
+                <li><a href="https://www.amazon.co.jp/%E6%9C%80%E7%9F%AD%E3%82%B3%E3%83%BC%E3%82%B9%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8B-PyTorch-%E6%B7%B1%E5%B1%A4%E5%AD%A6%E7%BF%92%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0-%E8%B5%A4%E7%9F%B3-%E9%9B%85%E5%85%B8/dp/4296110322#customerReviews">最短コースでわかる PyTorch &深層学習プログラミング</a></li>
             </ul>
+        </section>
+        <section id="library">
+            <h2>Library</h2>
+            <h3>導入</h3>
+            <p>例）<code2>!pip install japanize-matplotlob | tail -n l</code2></p>
+            <p>!pipと行頭に!がついているのは、Notebook内からOSコマンドを発行する場合のルール。</p>
+            <p>「| tail -n l」は、UNIX/Linux独特の「パイプライン処理」を使っていて、導入コマンドの出力が複数行で長くて煩わしいので、最後の一行だけ表示させる工夫である。</p>
+            <h3>ワーニングの非表示</h3>
+            <p>例）</p>
+            <pre>
+                <code>
+# 余分なワーニングを非表示にする
+import warning
+warnings.filterwarnings('ignore')
+                </code>
+            </pre>
+        </section>
+        <section id="numpy">
+            <h2>NumPy</h2>
         </section>
