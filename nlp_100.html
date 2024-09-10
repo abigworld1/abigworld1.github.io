@@ -562,11 +562,7 @@ result = re.findall(pattern, UK_text)
 for line in result:
     print(line)
         </code></pre>
-        <p>正規表現のパターン<code2>r&quot;\[\[Category:.*?\]\]&quot;</code2>をraw文字列（先頭に<code2>r</code2>をつける）として定義。これにより、Pythonのエスケープ処理を避け、正規表現のパターンをそのまま記述できる。</p>
-        <ul>
-            <li><code2>\[\[Category:.*?\]\]</code2>: <code2>[[Category:...]]</code2>の形式にマッチする正規表現</li>
-            <li><code2>.*?</code2>: <code2>Category:</code2>の後に続く任意の文字列に非貪欲にマッチする（最短一致）</li>
-        </ul>
+        <p>正規表現のパターンをraw文字列（先頭に<code2>r</code2>をつける）として定義。これにより、Pythonのエスケープ処理を避け、正規表現のパターンをそのまま記述できる。</p>
         <p><code2>re.findall()</code2>を使って、<code2>UK_text</code2>内の<code2>[[Category:...]]</code2>形式にマッチする全ての部分を抽出する。<code2>findall</code2>は一致する部分全てをリストとして返す。</p>
         <h3>22. カテゴリ名の抽出</h3>
         <pre><code>
@@ -594,7 +590,8 @@ for name in category_names:
         </code></pre>
         <p><code2>\[\[Category:</code2>: <code2>[[Category:</code2>にマッチする。</p>
         <p><code2>(.*?)</code2>: 非貪欲なマッチで、カテゴリ名をキャプチャする（<code2>カテゴリ名</code2>部分）。</p>
-        <p><code2></code2></p>
+        <p><code2>(\|.*)?</code2>: <code2>|</code2>から始まるオプション部品（ソートキーなど）にマッチするが、この部分は必要ないため無視する。</p>
+        <p><code2>\]\]</code2>: <code2>]]</code2>にマッチしてカテゴリ行の終わりを示す。</p>
         <h3></h3>
         <pre><code>
 
