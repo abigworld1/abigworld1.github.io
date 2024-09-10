@@ -517,7 +517,7 @@ cut -f 1 popular-names.txt | sort | uniq -c | sort -nr
         </section>
         <section id="03">
         <h2>第3章：正規表現</h2>
-        <h3>20</h3>
+        <h3>20. JSONデータの読み込み</h3>
         <pre><code>
 import json
 import re
@@ -547,7 +547,7 @@ else:
         <p><code2>rt</code2>は、ファイルをテキストモードで開くということ。</p>
         <p><code2>json.loads()</code2>を使用して辞書型に変換している。</p>
         <p><code2>article["title"] == "イギリス"</code2>で、タイトルが「イギリス」の記事を見つけ、該当する記事の本文<code2>article["text"]</code2>を<code2>UK_textに格納。</code2></p>
-        <h3>21</h3>
+        <h3>21. カテゴリ名を含む行を抽出</h3>
         <pre><code>
 import re
 
@@ -562,16 +562,39 @@ result = re.findall(pattern, UK_text)
 for line in result:
     print(line)
         </code></pre>
-        <p>正規表現のパターン<code2>r"\[\[Category:.*?\]\]"</code2>をraw文字列（先頭に<code2>r</code2>をつける）として定義。これにより、Pythonのエスケープ処理を避け、正規表現のパターンをそのまま記述できる。</p>
+        <p>正規表現のパターン<code2>r&quot;\[\[Category:.*?\]\]&quot;</code2>をraw文字列（先頭に<code2>r</code2>をつける）として定義。これにより、Pythonのエスケープ処理を避け、正規表現のパターンをそのまま記述できる。</p>
         <ul>
             <li><code2>\[\[Category:.*?\]\]</code2>: <code2>[[Category:...]]</code2>の形式にマッチする正規表現</li>
             <li><code2>.*?</code2>: <code2>Category:</code2>の後に続く任意の文字列に非貪欲にマッチする（最短一致）</li>
         </ul>
         <p><code2>re.findall()</code2>を使って、<code2>UK_text</code2>内の<code2>[[Category:...]]</code2>形式にマッチする全ての部分を抽出する。<code2>findall</code2>は一致する部分全てをリストとして返す。</p>
-        <h3></h3>
+        <h3>22. カテゴリ名の抽出</h3>
         <pre><code>
+import re
 
+# カテゴリ名のみを抽出する関数
+def extract_category_names(article_text):
+    # 正規表現パターン: [[Category:カテゴリ名]] もしくは [[Category:カテゴリ名|...]] にマッチ
+    pattern = r&#039;\[\[Category:(.*?)(\|.*)?\]\]&#039;
+    
+    # findallでマッチしたカテゴリ名をリストで抽出
+    category_names = re.findall(pattern, article_text)
+    
+    # マッチした結果はタプル (カテゴリ名, オプション部分) なので、カテゴリ名だけを取り出す
+    category_names = [match[0] for match in category_names]
+    
+    return category_names
+
+# UK_textに含まれるカテゴリ名を抽出
+category_names = extract_category_names(UK_text)
+
+# 結果を表示
+for name in category_names:
+    print(name)
         </code></pre>
+        <p><code2>\[\[Category:</code2>: <code2>[[Category:</code2>にマッチする。</p>
+        <p><code2>(.*?)</code2>: 非貪欲なマッチで、カテゴリ名をキャプチャする（<code2>カテゴリ名</code2>部分）。</p>
+        <p><code2></code2></p>
         <h3></h3>
         <pre><code>
 
