@@ -30,6 +30,7 @@
                 <li><a href="#source">Source</a></li>
                 <li><a href="#library">Library</a></li>
                 <li><a href="#numpy">NumPy</a></li>
+                <li><a href="#plt">Matplotlib</a></li>
             </ul>
         </section>
         <section id="overview">
@@ -52,14 +53,56 @@
             <p>「| tail -n l」は、UNIX/Linux独特の「パイプライン処理」を使っていて、導入コマンドの出力が複数行で長くて煩わしいので、最後の一行だけ表示させる工夫である。</p>
             <h3>ワーニングの非表示</h3>
             <p>例）</p>
-            <pre>
-                <code>
+            <pre><code>
 # 余分なワーニングを非表示にする
 import warning
 warnings.filterwarnings('ignore')
-                </code>
-            </pre>
+            </code></pre>
         </section>
         <section id="numpy">
             <h2>NumPy</h2>
+            <h3>ライブラリインポート</h3>
+            <p>例）<code2>np.set_printoptions(suppress=True, precision=5)</code2></p>
+            <p>浮動小数点の表示精度を、小数点以下5桁に統一。</p>
+            <h3>グラフ描画用の数値配列の生成</h3>
+            <p>例）<code2>np.linspace(-1, 1, 11)</code2></p>
+            <p>等間隔に点をとる。最初の引数が始点、２番目の引数が終点、３つ目の引数がこの区間に作る点の数を意味する。</p>
+            <p>例）<code2>np.arange(-1, 1.2, 0.2)</code2></p>
+            <p>第１引数が区間の始点、第２引数が区間の終点（「未満」であることに注意）、第３引数が刻み幅を意味する。</p>
+            <h3>特定行・列の抽出</h3>
+            <p>例）<code2>n[:, 0]</code2></p>
+            <p>nのすべての行の0列を抽出する。</p>
+            <p>例）<code2>n_index = np.array([False, True, False, True])</code2></p>
+            <p><code2>n[n_index]</code2>によって2, 4行だけを抽出できる。</p>
+            <h3>reshape関数</h3>
+            <p>例）<code2>m = n.reshape(2, -1, 4)</code2></p>
+            <p>引数に１か所だけ「-1」を設定可能で、「-1」の場所の値がいくつになるか自動計算する。</p>
+            <p><code2>.reshape(-1, 1)</code2>とすれば、(N, 1)の形に。</p>
+            <p>例）<code2>np.transpose(n, (1, 2, 0))</code2></p>
+            <p>３階以上の配列に対する置換（0, 1, 2 を 1, 2, 0 の順番に入れ替える）。</p>
+            <h3>行列の連結</h3>
+            <p><code2>np.vstack()</code2>で縦連結。<code2>np.hstack()</code2>で横連結。</p>
+            <p>縦もしくは横のサイズが揃っていないと、連結できない。</p>
         </section>
+        <section id="plt">
+            <h2>Matplotlib</h2>
+            <h3>デフォルト値変更</h3>
+            <pre><code>
+# デフォルトフォントサイズ変更
+plt.rcParams['font.size'] = 14
+# デフォルトグラフサイズ変更
+plt.rcParams['figure.figsize'] = (6, 6)
+# デフォルトで方眼表示ON
+plt.rcParams['axes.grid'] = True
+            </code></pre>
+            <h3>散布図</h3>
+            <p><code2>plt.scatter(xs, ys)</code2></p>
+            <h3>関数グラフ</h3>
+            <p><code2>plt.plot(xp, yp)</code2></p>
+            <h3>subplot</h3>
+            <p><code2>plt.tight_layout()</code2></p>
+            <p>隣接オブジェクトとぶつからないようにする。</p>
+        </section>
+    </main>
+</body>
+</html>
