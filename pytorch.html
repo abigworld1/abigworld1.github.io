@@ -50,7 +50,133 @@
         </section>
         <section id="python">
             <h2>ディープラーニングのためのPython</h2>
-            
+            <h3>コンテナデータ型</h3>
+            <p>コンテナデータ型：「リスト」やNumPy配列のように、名前から実際のデータにアクセスするのにインデックスを経由する必要があるデータの型。</p>
+            <p>
+                <pre><code>
+x = np.array([5, 7, 9])
+y = x
+x[1] = -1
+print(y)
+                </code></pre>
+            この出力は、<code2>[5, -1, 9]</code2>となる。xの要素の変更がyに影響しないようにするには、<code2>y = x.copy()</code2>を使う。</p>
+            <p>PyTorchで扱うデータは「テンソル」(Tensor)というクラスのインスタンスに保存される。</p>
+            <p>テンソルの場合も同様にcopyしておけば他からの影響を気にしないで済む。</p>
+            <h3>カスタムクラス定義</h3>
+            <b>オブジェクト指向の基礎概念</b>
+            <p>クラス：「型」。</p>
+            <p>インスタンス：「型」から生成された個別の実体。</p>
+            <p>クラスは、「属性」と呼ばれるクラス内の変数を持っている。</p>
+            <p>「関数」あるいは「メソッド」と呼ばれる処理機能も持っている。</p>
+            <p>属性と呼ばれるクラス内の変数の値は、インスタンスごとに異なる。</p>
+            <b>最初のクラス定義</b>
+            <p>例）Pointというクラスを定義してみる。</p>
+            <p>Pointクラスの属性のxとyは、点のx座標とy座標である。</p>
+            <p>また、関数drawは、自分を点としてグラフに表示する関数である。</p>
+            <p>以下のように実装される。</p>
+            <pre><code>
+import matplotlib.pyplot as plt
+
+# 円描画に必要なライブラリ
+import matplotlib.patches as patches
+
+# クラスPointの定義
+Class Point:
+    # インスタンス生成時にxとyの２つの引数を持つ
+    def __init__(self, x, y):
+        # インスタンスの属性xに第１引数をセットする
+        self.x = x
+        # インスタンスの属性yに第２引数をセットする
+        self.y = y
+    # 描画関数drawの定義（引数なし）
+        def draw(self):
+            # (x, y)に点を描画する
+            plt.plot(self.x, self.y, marker='o', markersize=10, c='k')
+            </code></pre>
+            <p><code2>__init__</code2>は初期化処理。</p>
+            <p><code2>self</code2>はクラスからインスタンスが生成された際、インスタンス自身を指す。</p>
+            <b>最初のインスタンス生成</b>
+            <pre><code>
+# クラスPointからインスタンス変数p1とp2を生成する
+p1 = Point(2, 3)
+p2 = Point(-1, -2)
+            </code></pre>
+            <p>引数リストの引数は、__init__関数の定義の引数からselfを取り除いたもの。</p>
+            <b>インスタンス属性へのアクセス</b>
+            <pre><code>
+# p1とp2の属性x、yの参照
+print(p1.x, p1.y)
+print(p2.x, p2.y)
+            </code></pre>
+            <b>draw関数の呼び出し</b>
+            <pre><code>
+# p1とp2のdraw関数を呼び出し、2つの点を描画する
+p1.draw()
+p2.draw()
+plt.xlim(-4, 4)
+plt.ylim(-4, 4)
+plt.show()
+            </code></pre>
+            <b>Circle1クラスの定義</b>
+            <p>中心点のx座標とy座標の他に半径を意味する属性rを持つ。</p>
+            <p>xとyについてはPointクラスの定義を再利用できる（「クラスの継承」）。</p>
+            <pre><code>
+# Pointの子クラスCircleの定義
+class Circle1(Point)
+    # Circleはインスタンス生成時に引数x、y、rを持つ
+    def __init__(self, x, y, r):
+        # xとyは、親クラスの属性として設定
+        super().__init__(x, y)
+        # rは、Circleの属性として設定
+        self.r = r
+
+    # Circleのdraw関数は、親の関数呼び出しのあとで、円の描画も独自に行う
+    def draw(self):
+        # 親クラスのdraw関数呼び出し
+        super().draw()
+                
+        # 円の描画
+        c = patches.Circle(xy=(self.x, self.y), radius=self.r, fc='b', ec='k')
+        ax.add_patch(c)
+            </code></pre>
+            <p>Circle1クラスはPointクラスの子クラスとして定義している。</p>
+            <b>Circle1インスタンスの生成とdraw関数の呼び出し</b>
+            <pre><code>
+# クラスCircleからインスタンス変数c1を生成する
+c1 = Circle(1, 0, 2)
+
+# p1, p2, c1のそれぞれのdraw関数を呼び出す
+ax = plt.subplot()
+p1.draw()
+p2.draw()
+c1.draw()
+plt.xlim(-4, 4)
+plt.ylim(-4, 4)
+plt.show()
+            </code></pre>
+            <p>親クラスと同じ名前の関数を子クラスでも定義して振る舞いを変更させることを「オーバーライド」と呼ぶ。</p>
+            <h3>インスタンスを関数として扱う</h3>
+            <p>クラスから生成したインスタンスを呼び出し可能な関数にする。</p>
+            <pre><code>
+# 関数クラスHの定義
+class H:
+    def __call__(self, x):
+        return 2*x**2 + 2
+            </code></pre>
+            <pre><code>
+# hが関数として動作することを確認する
+
+# NumPy配列としてxを定義
+x = np.arange(-2, 2.1, 0.25)
+print(x)
+
+# Hクラスのインスタンスとしてhを生成
+h = H()
+
+# 関数hの呼び出し
+y = h(x)
+print(y)
+            </code></pre>
         </section>
     </main>
 </body>
