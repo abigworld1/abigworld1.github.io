@@ -117,12 +117,12 @@ plt.xlim(-4, 4)
 plt.ylim(-4, 4)
 plt.show()
             </code></pre>
-            <b>Circle1クラスの定義</b>
+            <b>Circleクラスの定義</b>
             <p>中心点のx座標とy座標の他に半径を意味する属性rを持つ。</p>
             <p>xとyについてはPointクラスの定義を再利用できる（「クラスの継承」）。</p>
             <pre><code>
 # Pointの子クラスCircleの定義
-class Circle1(Point)
+class Circle(Point)
     # Circleはインスタンス生成時に引数x、y、rを持つ
     def __init__(self, x, y, r):
         # xとyは、親クラスの属性として設定
@@ -139,8 +139,8 @@ class Circle1(Point)
         c = patches.Circle(xy=(self.x, self.y), radius=self.r, fc='b', ec='k')
         ax.add_patch(c)
             </code></pre>
-            <p>Circle1クラスはPointクラスの子クラスとして定義している。</p>
-            <b>Circle1インスタンスの生成とdraw関数の呼び出し</b>
+            <p>CircleクラスはPointクラスの子クラスとして定義している。</p>
+            <b>Circleインスタンスの生成とdraw関数の呼び出し</b>
             <pre><code>
 # クラスCircleからインスタンス変数c1を生成する
 c1 = Circle(1, 0, 2)
