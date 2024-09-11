@@ -395,7 +395,48 @@ print(x.grad)
 # 6. 勾配の初期化は関数zero_()を使う
 x.grad.zero_()
             </code></pre>
-            
+            <h3>シグモイド関数の勾配計算</h3>
+            <b>シグモイド関数の定義</b>
+            <pre><code>
+# シグモイド関数の定義
+sigmoid = torch.nn.Sigmoid()
+            </code></pre>
+            <b>2. テンソル変数でyの値を計算</b>
+            <pre><code>
+# 2. yの値の計算
+y = sigmoid(x)
+            </code></pre>
+            <b>グラフ描画</b>
+            <pre><code>
+plt.plot(x.data, y.data)
+plt.show()
+            </code></pre>
+            <b>最終結果をスカラー化</b>
+            <pre><code>
+z = y.sum()
+            </code></pre>
+            <b>3. 計算グラフの可視化</b>
+            <pre><code>
+3. 計算グラフの可視化
+g = make_dot(z, params={'x': x})
+            </code></pre>
+            <b>4. 勾配計算、5. 勾配値の取得</b>
+            <pre><code>
+# 4. 勾配計算
+z.backward()
+
+# 5. 勾配値の確認
+print(x.grad)
+            </code></pre>
+            <p>グラフに表示する。</p>
+            <pre><code>
+# 元の関数と勾配のグラフ化
+
+plt.plot(x.data, y.data, c='b', label='y')
+plt.plot(x.data, x.grad.data, c='k', label='y.grad')
+plt.legend()
+plt.show()
+            </code></pre>
         </section>
     </main>
 </body>
