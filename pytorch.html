@@ -29,6 +29,7 @@
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#source">Source</a></li>
                 <li><a href="#python">ディープラーニングのためのPython</a></li>
+                <li><a href="#pytorch">PyTorchの基本</a></li>
             </ul>
         </section>
         <section id="overview">
@@ -177,6 +178,122 @@ h = H()
 y = h(x)
 print(y)
             </code></pre>
+        </section>
+        <section id="pytorch">
+            <h2>PyTorchの基本</h2>
+            <h3>重要な概念</h3>
+            <p>PyTorchでは、テンソルという独自のクラスでデータを表現する。</p>
+            <p>PyTorchの最大の特徴は、自動微分機能。</p>
+            <h3>テンソル</h3>
+            <b>ライブラリインポート</b>
+            <pre><code>
+import torch
+            </code></pre>
+            <b>色々な階層のテンソル</b>
+            <pre><code>
+# 0階テンソル（スカラー）
+r0 = torch.tensor(1.0).float()
+            </code></pre>
+            <p>テンソル変数を作るのに一番簡単なのは、torch.tensor関数を使う方法。</p>
+            <p>テンソル変数の生成時には、必ず後ろにfloat関数の呼び出しをつけて、dtype（テンソル変数の要素のデータ型）を強制的にfloat32に変換する。</p>
+            <pre><code>
+# 1階テンソル（ベクトル）
+
+# 1階のNumPy変数作成
+r1_np = np.array([1, 2, 3, 4, 5])
+
+# NumPyからテンソルに変換
+r1 = torch.tensor(r1_np).float()
+
+# dtypeを調べる
+print(r1.dtype)
+
+# shapeを調べる
+print(r1.shape)
+
+# データを調べる
+print(r1.data)
+            </code></pre>
+            <pre><code>
+# 2階テンソル（行列）
+
+# 2階のNumPy変数作成
+r2_np = np.array([1, 5, 6], [4, 3, 2])
+
+# NumPyからテンソルに変換
+r2 = torch.tensor(r2_np).float()
+            </code></pre>
+            <pre><code>
+# 3階テンソル
+
+# 乱数seedの初期化
+torch.manual_seed(123)
+
+# shape=[3,2,2]の正規分布変数テンソルを作る
+r3 = torch.randn((3, 2, 2))
+            </code></pre>
+            <b>整数値のテンソル</b>
+            <p>PyTorchによる計算では、そのほとんどの場合、数値型としてdtype=float32を利用する。</p>
+            <p>しかし、「多値分類」用の損失関数である、nn.CrossEntropyLossとnn.NLLLossは、損失関数呼び出し時に、第2引数に整数型を指定する必要がある。</p>
+            <p>その際は、以下のように整数型へ変換する。</p>
+            <pre><code>
+r5 = r1.long()
+            </code></pre>
+            <p>このようにlong関数をかけると、dtype=torch.int64になる。</p>
+            <b>view関数</b>
+            <p>view関数は、NumPyのreshape関数に相当し、変数の階数を変換することができる。</p>
+            <pre><code>
+# 2階化（r3は[3,2,2]の3階テンソル）
+# 要素数に-1を指定すると、この数を自動調整する
+r6 = r3.view(3, -1)
+            </code></pre>
+            <p>結果として、[3, 4]の2階テンソルが得られる。</p>
+            <pre><code>
+# 1階化
+r7 - r3.view(-1)
+            </code></pre>
+            <b>それ以外の属性</b>
+            <p>テンソルはデータとして扱うことも、クラスとして扱うこともできる。</p>
+            <pre><code>
+# requires_grad属性
+print('requires_grad: ', r1.requires_grad)
+
+# device属性
+print('device: ', r1.device)
+            </code></pre>
+            <b>item関数</b>
+            <p>スカラー（0階テンソル）に対しては、テンソルからPython本来のクラスの数値（floatまたはint）を取り出すのにitem関数が使える。</p>
+            <p>計算結果テンソルとしてのlossから、データ記録用に値だけを抽出する場合によく用いる。</p>
+            <pre><code>
+item = r0.item()
+            </code></pre>
+            <p>この関数は、1階以上のテンソルを対象にできない。</p>
+            <b>max関数</b>
+            <pre><code>
+# max関数を引数無しで呼び出すと、全体の最大値が取得できる
+print(r2.max())
+            </code></pre>
+            <pre><code>
+# torch.max関数
+# 2つ目の引数はどの軸で集約するかを意味する（軸=1: 行方向、軸=0: 列方向）
+print(torch.max(r2, 1))
+            </code></pre>
+            <p>この呼び出し方をした場合、最大値の値そのものだけでなく、どのindexで最大値を取ったかも返ってくる。</p>
+            <p>後ろに[1]をつけると、後者のみを抽出できる。</p>
+            <pre><code>
+# 何番目の要素が最大値を取るかは、indicesを調べると良い
+# 以下の計算は、多値分類で予測ラベルを求めるときによく利用される
+print(torch.max(r2, 1)[1])
+            </code></pre>
+            <p>「複数の予測器の出力のうち、最も大きな値を出した予測器のindexが予測結果ラベルになる」ことを実装している。</p>
+            <b>NumPy変数への変換</b>
+            <pre><code>
+# NumPy化
+r2_np = r2.data.numpy()
+            </code></pre>
+            <p>ただし、この方法だと、テンソル変数とNumPy配列は同じデータを指すため、テンソル側で値を変えるとNumPyも連動して値が変わる。</p>
+            <p>連動しないようにするには、r2.data.numpy.copy()として、データのコピーを作る。</p>
+            <h3>自動微分機能</h3>
         </section>
     </main>
 </body>
