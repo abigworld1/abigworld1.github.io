@@ -450,7 +450,349 @@ plt.show()
         </section>
         <section id="ml">
             <h2>Introduction to Machine Learning</h2>
-            
+            <h3>問題の定義</h3>
+            <p>与えられた身長から体重を予測する機械学習モデルを作る（線形回帰）。</p>
+            <h3>勾配降下法</h3>
+            <p>勾配降下法は、「予測計算」「損失関数」「勾配計算」「パラメータ修正」の４つのステップを繰り返すことで、予測関数の中のパラメータを最適な値に近づけることである。</p>
+            <b>①予測計算</b>
+            <p>入力テンソルXを入力とし、予測結果は出力テンソルYpに出力されるものとする。</p>
+            <p>今回は、予測関数の実体は次のような１次関数である。</p>
+            <div class="scroll">
+                \begin{align}
+                Yp = W * X + B
+                \end{align}
+            </div>
+            <p>予測関数により予測値Ypを求めることを「①予測計算」と呼ぶ。</p>
+            <b>②損失計算</b>
+            <p>「教師あり学習」における学習データは通常、入力と正解値の両方を含んでいるので、正解値の列を分離して正解テンソルYとする。</p>
+            <p>予測計算の結果であるYpと正解であるYの、2つのテンソルを入力とする「損失」lossを定義する。</p>
+            <p>損失が最小になるようなWとBを見つけることが目標である。</p>
+            <p>この損失を計算する過程が「②損失計算」である。</p>
+            <p>損失関数は、予測関数の性質に応じて適したものを選ぶ。</p>
+            <p>今回は値を予測する回帰モデルであるため、YとYpの差の2乗を利用することにする。</p>
+            <p>正確には、すべてのデータ系列の差を2乗して、その平均をとった関数である「平均２乗誤差」を選択する。</p>
+            <b>③勾配計算</b>
+            <p>予測関数を構成するパラメータWとBの値を少しだけ変え、その時の損失の変化の度合（勾配）を調べる。これが「③勾配計算」である。</p>
+            <p>損失関数の最低値を目指すために、WとBをずらすベストな方向が勾配にあたる。</p>
+            <b>④パラメータ修正</b>
+            <p>勾配に小さな定数（学習率）lrをかけ、その値だけWとBを同時に減らす。この操作が「④パラメータ修正」である。</p>
+            <h3>データ前処理</h3>
+            <pre><code>
+# サンプルデータの宣言
+sampleData1 = np.array([
+    [166, 58.7],
+    [176.0, 75.7],
+    [171.0, 62.1],
+    [173.0, 70.4],
+    [169.0,60.1]
+])
+print(sampleData1)
+            </code></pre>
+            <p>学習データを入力データxと正解データyに分割する。</p>
+            <pre><code>
+# 機械学習モデルで扱うため、身長だけを抜き出した変数xと
+# 体重だけを抜き出した変数yをセットする
+
+x = sampleData1[:,0]
+y = sampleData1[:,1]
+            </code></pre>
+            <p>データの散布図を表示する。</p>
+            <pre><code>
+# 散布図表示で状況の確認
+
+plt.scatter(x,  y,  c='k',  s=50)
+plt.xlabel('$x$: 身長(cm) ')
+plt.ylabel('$y$: 体重(kg)')
+plt.title('身長と体重の関係')
+plt.show()
+            </code></pre>
+            <b>データの変換</b>
+            <p>勾配降下法では、対象となる数値は絶対値が1以内に収まるような比較的小さな値の方が望ましい。</p>
+            <p>今回の学習データは身長も体重も大きな数値なので、それぞれ平均値を引くことで勾配降下法がやりやすい条件に変換する。</p>
+            <p>変換後のxとyをXとYで表す。</p>
+            <pre><code>
+X = x - x.mean()
+Y = y - y.mean()
+            </code></pre>
+            <h3>予測計算</h3>
+            <p>まず、変換後のXとYをテンソル変数に変換する。</p>
+            <pre><code>
+# XとYをテンソル変数化する
+
+X = torch.tensor(X).float()
+Y = torch.tensor(Y).float()
+            </code></pre>
+            <p>次に、１次関数の係数にあたる変数Wと定数項にあたる変数Bもテンソル変数として定義する。</p>
+            <pre><code>
+# 重み変数の定義
+# WとBは勾配計算をするので、requires_grad=Trueとする
+
+W = torch.tensor(1.0, requires_grad=True).float()
+B = torch.tensor(1.0, requires_grad=True).float()
+            </code></pre>
+            <p>２つの変数には初期値として1.０の値を設定する。</p>
+            <p>また、この２つの変数は勾配降下法の対象となるので、requires_grad属性をTrueに設定して自動微分ができるようにする。</p>
+            <p>予測関数を定義し、予測値を計算する。</p>
+            <pre><code>
+# 予測関数は一次関数
+
+def pred(X):
+    return W * X + B
+
+# 予測値の計算
+
+Yp =  pred(X)
+            </code></pre>
+            <p>計算グラフを表示する。</p>
+            <pre><code>
+# 予測値の計算グラフ可視化
+
+params = {'W': W, 'B': B}
+g = make_dot(Yp, params=params)
+display(g)
+            </code></pre>
+            <h3>損失計算</h3>
+            <p>損失関数はMSE（平均２乗誤差）と呼ばれる方法で計算する。</p>
+            <pre><code>
+# 損失関数は誤差二乗平均
+
+def mse(Yp, Y):
+    loss = ((Yp - Y) ** 2).mean()
+    return loss
+
+# 損失計算
+
+loss = mse(Yp, Y)
+            </code></pre>
+            <p>ここで得られた損失(loss)は、１次関数の係数Wと定数項Bの関数になっている。計算グラフで確認する。</p>
+            <pre><code>
+# 損失の計算グラフ可視化
+
+params = {'W': W, 'B': B}
+g = make_dot(loss, params=params)
+display(g)
+            </code></pre>
+            <h3>勾配計算</h3>
+            <p>backward関数を呼び出すだけ。</p>
+            <pre><code>
+# 勾配計算
+
+loss.backward()
+
+# 勾配値確認
+
+print(W.grad)
+print(B.grad)
+            </code></pre>
+            <h3>パラメータ修正</h3>
+            <p>勾配計算ができたら、その値に一定の学習率lr（0.01や0.001）を掛けた結果を、もとのパラメータ値から引くのが勾配降下法の基本的な考え方である。</p>
+            <pre><code>
+# 学習率の定義
+
+lr = 0.001
+
+#  勾配を元にパラメータ修正
+
+W -= lr * W.grad
+B -= lr * B.grad
+            </code></pre>
+            <p>ただし、このコードではエラーが発生する。</p>
+            <p>勾配計算をしている最中の変数は他に影響が及んでしまうため、勝手に値を修正できない。</p>
+            <p>この場合、with torch.no_grad()というコンテキストを設定すると、そのコンテキストの内部では一時的に計算グラフ生成機能が止まり、変数の修正が可能になる。</p>
+            <pre><code>
+# 勾配を元にパラメータ修正
+# with torch.no_grad() を付ける必要がある
+
+with torch.no_grad():
+    W -= lr * W.grad
+    B -= lr * B.grad
+
+    # 計算済みの勾配値をリセットする
+    W.grad.zero_()
+    B.grad.zero_()
+            </code></pre>
+            <p>勾配値を使ってパラメータ値を更新したあと、次の勾配計算の準備のため、zero_関数で勾配値の初期化もしている。</p>
+            <h3>繰り返し計算</h3>
+            <p>実際に繰り返し計算を行う。初期化のセルは以下の通り。</p>
+            <pre><code>
+# 初期化
+
+# WとBを変数として扱う
+W = torch.tensor(1.0, requires_grad=True).float()
+B = torch.tensor(1.0, requires_grad=True).float()
+
+# 繰り返し回数
+num_epochs = 500
+
+# 学習率
+lr = 0.001
+
+# 記録用配列初期化
+history = np.zeros((0, 2))
+            </code></pre>
+            <p>ループ処理のセルは以下の通り。</p>
+            <pre><code>
+# ループ処理
+
+for epoch in range(num_epochs):
+
+    # 予測計算
+    Yp = pred(X)
+
+    # 損失計算
+    loss = mse(Yp, Y)
+
+    # 勾配計算
+    loss.backward()
+
+    with torch.no_grad():
+        # パラメータ修正
+        W -= lr * W.grad
+        B -= lr * B.grad
+
+        # 勾配値の初期化
+        W.grad.zero_()
+        B.grad.zero_()
+
+    # 損失の記録
+    if (epoch %10 == 0):
+        item = np.array([epoch, loss.item()])
+        history = np.vstack((history, item))
+        print(f'epoch = {epoch}  loss = {loss:.4f}')
+            </code></pre>
+            <h3>結果評価</h3>
+            <p>WとBの最終的な値と、損失の開始時、終了時の値を表示する。</p>
+            <pre><code>
+# パラメータの最終値
+print('W = ', W.data.numpy())
+print('B = ', B.data.numpy())
+
+#損失の確認
+print(f'初期状態: 損失:{history[0,1]:.4f}')
+print(f'最終状態: 損失:{history[-1,1]:.4f}')
+            </code></pre>
+            <p>損失の減り方をグラフで可視化する（学習曲線）。</p>
+            <pre><code>
+# 学習曲線の表示 (損失)
+
+plt.plot(history[:,0], history[:,1], 'b')
+plt.xlabel('繰り返し回数')
+plt.ylabel('損失')
+plt.title('学習曲線(損失)')
+plt.show()
+            </code></pre>
+            <p>求めたWとBの値から直線の式を算出し、散布図に重ね描きする。</p>
+            <pre><code>
+# xの範囲を求める(Xrange)
+X_max = X.max()
+X_min = X.min()
+X_range = np.array((X_min, X_max))
+X_range = torch.from_numpy(X_range).float()
+print(X_range)
+
+# 対応するyの予測値を求める
+Y_range = pred(X_range)
+print(Y_range.data)
+
+# グラフ描画
+
+plt.scatter(X,  Y,  c='k',  s=50)
+plt.xlabel('$X$')
+plt.ylabel('$Y$')
+plt.plot(X_range.data, Y_range.data, lw=2, c='b')
+plt.title('身長と体重の相関直線(加工後)')
+plt.show()
+            </code></pre>
+            <p>最後に、平均値を引き算した(X, Y)から元の(x, y)に戻して同じ散布図表示をする。</p>
+            <pre><code>
+# y座標値とx座標値の計算
+
+x_range = X_range + x.mean()
+yp_range = Y_range + y.mean()
+
+# グラフ描画
+
+plt.scatter(x,  y,  c='k',  s=50)
+plt.xlabel('$x$')
+plt.ylabel('$y$')
+plt.plot(x_range, yp_range.data, lw=2, c='b')
+plt.title('身長と体重の相関直線(加工前)')
+plt.show()
+            </code></pre>
+            <h3>最適化関数の利用</h3>
+            <p>WとBのパラメータの変更は、「最適化関数」と呼ばれる関数を経由して変更するのが主流。</p>
+            <pre><code>
+# 初期化
+
+# WとBを変数として扱う
+W = torch.tensor(1.0, requires_grad=True).float()
+B = torch.tensor(1.0, requires_grad=True).float()
+
+# 繰り返し回数
+num_epochs = 500
+
+# 学習率
+lr = 0.001
+
+# optimizerとしてSGD(確率的勾配降下法)を指定する
+import torch.optim as optim
+optimizer = optim.SGD([W, B], lr=lr)
+
+# 記録用配列初期化
+history = np.zeros((0, 2))
+            </code></pre>
+            <p>SGDというクラスのインスタンスを生成し、optimizerという変数に保存している。</p>
+            <pre><code>
+# ループ処理
+
+for epoch in range(num_epochs):
+
+    # 予測計算
+    Yp = pred(X)
+
+    # 損失計算
+    loss = mse(Yp, Y)
+
+    # 勾配計算
+    loss.backward()
+
+    # パラメータ修正
+    optimizer.step()
+
+    #勾配値初期化
+    optimizer.zero_grad()
+
+    # 損失値の記録
+    if (epoch %10 == 0):
+        item = np.array([epoch, loss.item()])
+        history = np.vstack((history, item))
+        print(f'epoch = {epoch}  loss = {loss:.4f}')
+            </code></pre>
+            <p>最適化関数を利用してパラメータ値を間接的に変更している。</p>
+            <b>最適化関数のチューニング</b>
+            <p>最適化関数を導入することで、学習に関して色々なチューニングを簡単にできるようになる。</p>
+            <pre><code>
+# 初期化
+
+# WとBを変数として扱う
+W = torch.tensor(1.0, requires_grad=True).float()
+B = torch.tensor(1.0, requires_grad=True).float()
+
+# 繰り返し回数
+num_epochs = 500
+
+# 学習率
+lr = 0.001
+
+# optimizerとしてSGD(確率的勾配降下法)を指定する
+import torch.optim as optim
+optimizer = optim.SGD([W, B], lr=lr, momentum=0.9)
+
+# 記録用配列初期化
+history2 = np.zeros((0, 2))
+            </code></pre>
+            <p>momentum=0.9というオプションを、最適化関数のインスタンスoptimizerの生成時に設定している。</p>
+            <p>これにより、学習の速度を速くすることができる。</p>
         </section>
         <section id="pf">
             <h2>Definition of the Prediction Function</h2>
