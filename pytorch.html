@@ -428,12 +428,12 @@ z.backward()
 # 5. 勾配値の確認
 print(x.grad)
             </code></pre>
-            <p>グラフに表示する。</p>
+            <p>グラフに表示</p>
             <pre><code>
 # 元の関数と勾配のグラフ化
 
 plt.plot(x.data, y.data, c='b', label='y')
-plt.plot(x.data, x.grad.data, c='k', label='y.grad')
+plt.plot(x.data, x.grad.data, c='k', label='x.grad')
 plt.legend()
 plt.show()
             </code></pre>
