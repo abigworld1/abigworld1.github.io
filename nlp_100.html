@@ -996,45 +996,39 @@ head -15 ./neko.txt.mecab # 先頭15行を確認する
         </code></pre>    
         <h3>30. 形態素解析結果の読み込み</h3>
         <pre><code>
-def parse_mecab_output(file_path):
-    sentences = []  # 全文の形態素情報を格納するリスト
-    sentence = []   # 1文の形態素情報を格納するリスト
-    
-    with open(file_path, &#039;r&#039;, encoding=&#039;utf-8&#039;) as f:
-        for line in f:
-            # 文の区切り（空行が文の終わりを示す）
-            if line == &#039;EOS\n&#039;:
-                if sentence:  # 文が存在する場合
-                    sentences.append(sentence)
-                    sentence = []  # 文リセット
-                continue
+filename = &#039;./neko.txt.mecab&#039;  # 形態素解析結果が保存されているファイル
 
-            # 行が空か、タブで分割できない場合はスキップ
-            if &#039;\t&#039; not in line:
-                continue
+sentences = []  # 文全体の形態素リストを格納するリスト
+morphs = []  # 1文ごとの形態素リストを格納するリスト
 
-            # 表層形とそれ以外に分割
-            surface, details = line.split(&#039;\t&#039;)
-            details_split = details.split(&#039;,&#039;)
-
-            # 形態素情報を辞書に格納
-            morpheme = {
-                &#039;surface&#039;: surface,               # 表層形
-                &#039;base&#039;: details_split[6] if len(details_split) &gt; 6 else &#039;*&#039;,  # 基本形がない場合は&#039;*&#039;
-                &#039;pos&#039;: details_split[0],          # 品詞
-                &#039;pos1&#039;: details_split[1]          # 品詞細分類1
+# ファイルを読み込み、1行ずつ解析結果を処理
+with open(filename, mode=&#039;r&#039;) as f:
+    for line in f:
+        if line != &#039;EOS\n&#039;:  # 文末を示す &#039;EOS&#039; でない場合
+            fields = line.split(&#039;\t&#039;)  # 行をタブで分割（表層形とその他の情報に分ける）
+            
+            # 行が正しく分割されない場合や空行の場合はスキップ
+            if len(fields) != 2 or fields[0] == &#039;&#039;:
+                continue  # 次の行へスキップ
+            
+            # 形態素の情報（品詞など）をカンマで分割
+            attr = fields[1].split(&#039;,&#039;)
+            
+            # 形態素情報を辞書型に格納
+            morph = {
+                &#039;surface&#039;: fields[0],  # 表層形（単語そのもの）
+                &#039;base&#039;: attr[6],       # 基本形（辞書形）
+                &#039;pos&#039;: attr[0],        # 品詞
+                &#039;pos1&#039;: attr[1]        # 品詞細分類1
             }
-            sentence.append(morpheme)
+            morphs.append(morph)  # 形態素リストに追加
+        else:  # &#039;EOS&#039; に到達した場合（文の終わりを示す）
+            sentences.append(morphs)  # これまでの形態素リストを文リストに追加
+            morphs = []  # 新しい文に備えてリストをリセット
 
-    return sentences
-
-# 形態素解析結果の読み込み
-file_path = &#039;neko.txt.mecab&#039;
-morphological_data = parse_mecab_output(file_path)
-
-# 結果の一部を表示
-for morpheme in morphological_data[2]:
-    print(morpheme)
+# 確認として、3番目の文の形態素を表示
+for morph in sentences[2]:
+    print(morph)
         </code></pre>
         <p>各形態素（単語）は次の形式で辞書に格納される：</p>
         <ul>
@@ -1045,23 +1039,96 @@ for morpheme in morphological_data[2]:
         </ul>
         <p>文の終わりはEOSで示される。</p>
         <p>'\t'で行を分割し、形態素の詳細情報をカンマで分割する。基本形が存在しない場合には、'*'を使ってエラーを防止する。</p>
-        <h3></h3>
+        <h3>31. 動詞</h3>
         <pre><code>
+ans = set()  # 動詞の表層形を格納するためのset（重複を排除）
 
+# すべての文に対して処理を行う
+for sentence in sentences:
+  # 各文に含まれるすべての形態素をチェック
+  for morph in sentence:
+    # 品詞が「動詞」である場合、その表層形をsetに追加
+    if morph[&#039;pos&#039;] == &#039;動詞&#039;:
+      ans.add(morph[&#039;surface&#039;])  # setに追加することで自動的に重複を排除
+
+# 動詞の表層形の種類を確認
+print(f&#039;動詞の表層形の種類: {len(ans)}\n&#039;)  # 動詞の種類の数を表示
+
+# 抽出された動詞の表層形の最初の10個を表示
+for v in list(ans)[:10]:
+  print(v)
         </code></pre>
-        <h3></h3>
+        <h3>32. 動詞の基本形</h3>
         <pre><code>
+ans = set()  # 動詞の基本形を格納するためのset（重複を排除）
 
+# すべての文に対して処理を行う
+for sentence in sentences:
+  # 各文に含まれるすべての形態素をチェック
+  for morph in sentence:
+    # 品詞が「動詞」である場合、その基本形をsetに追加
+    if morph[&#039;pos&#039;] == &#039;動詞&#039;:
+      ans.add(morph[&#039;base&#039;])  # 基本形をsetに追加することで自動的に重複を排除
+
+# 動詞の基本形の種類を確認
+print(f&#039;動詞の基本形の種類: {len(ans)}\n&#039;)  # 動詞の基本形の種類を表示
+
+# 抽出された動詞の基本形の最初の10個を表示
+for v in list(ans)[:10]:
+  print(v)
         </code></pre>
-        <h3></h3>
+        <h3>33. 「AのB」</h3>
         <pre><code>
+ans = set()  # 動詞の基本形を格納するためのset（重複を排除）
 
+# すべての文に対して処理を行う
+for sentence in sentences:
+  # 各文に含まれるすべての形態素をチェック
+  for morph in sentence:
+    # 品詞が「動詞」である場合、その基本形をsetに追加
+    if morph[&#039;pos&#039;] == &#039;動詞&#039;:
+      ans.add(morph[&#039;base&#039;])  # 基本形をsetに追加することで自動的に重複を排除
+
+# 動詞の基本形の種類を確認
+print(f&#039;動詞の基本形の種類: {len(ans)}\n&#039;)  # 動詞の基本形の種類を表示
+
+# 抽出された動詞の基本形の最初の10個を表示
+for v in list(ans)[:10]:
+  print(v)
         </code></pre>
-        <h3></h3>
+        <h3>34. 名詞の連接</h3>
         <pre><code>
+ans = set()  # 連接名詞を格納するためのset（重複を排除）
 
+# 文ごとに形態素を処理
+for sentence in sentences:
+  nouns = &#039;&#039;  # 名詞の連続部分を一時的に格納
+  num = 0     # 名詞が連続している個数をカウント
+  
+  for morph in sentence:
+    if morph[&#039;pos&#039;] == &#039;名詞&#039;:  # 名詞の場合
+      nouns = &#039;&#039;.join([nouns, morph[&#039;surface&#039;]])  # 名詞を連結
+      num += 1  # 名詞のカウントを増やす
+    elif num &gt;= 2:  # 名詞以外が出現し、2つ以上の名詞が連続していた場合
+      ans.add(nouns)  # 連接名詞をsetに追加（重複排除）
+      nouns = &#039;&#039;  # nounsをリセット
+      num = 0     # カウントをリセット
+    else:  # 名詞が1つ以下で連接が途切れた場合
+      nouns = &#039;&#039;  # リセット
+      num = 0     # リセット
+
+  # 文の最後に名詞が2つ以上連続していた場合
+  if num &gt;= 2:
+    ans.add(nouns)
+
+# 連接名詞の種類といくつかの例を表示
+print(f&#039;連接名詞の種類: {len(ans)}\n&#039;)
+
+# 最初の10個の連接名詞を表示
+for n in list(ans)[:10]:
+  print(n)
         </code></pre>
-        <h3></h3>
+        <h3>35. 単語の出現頻度</h3>
         <pre><code>
 
         </code></pre>
