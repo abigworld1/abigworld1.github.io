@@ -881,7 +881,324 @@ print('出力テンソル', outputs2.shape)
         </section>
         <section id="lr">
             <h2>Linear Regression</h2>
-            
+            <h3>問題の定義</h3>
+            <p><a href="https://www.cs.toronto.edu/~delve/data/boston/bostonDetail.html#:~:text=This%20dataset%20contains%20information">「ボストン・データセット」</a>を利用する。</p>
+            <p>ボストン近郊を506の地域に分割し、それぞれの地域で様々な観点の統計情報を取得している。</p>
+            <p>その中の１項目に「住宅平均価格」があり、「他の項目から住宅平均価格を予測する」という回帰モデルの題材としてよく利用される。</p>
+            <p>まずは、入力項目のうち「平均部屋数」を意味するRMという項目を使って、目的関数にあたる不動産価格を予測する、単回帰と呼ばれるモデルを作る。</p>
+            <p>その後、もう一つ「低所得者率」を意味するLSTATという項目も追加し、2入力1出力のモデルを作る。</p>
+            <p>このモデルは、「単回帰」に対して「重回帰」と呼ばれる。両者を合わせて「線形回帰」と呼ぶ。</p>
+            <p>１次関数はレイヤー関数でいうと、線形関数（nn.Linear）に該当する。</p>
+            <p>線形回帰モデルは、他のレイヤー関数との組み合わせなしに、nn.Linearというう単独のレイヤー関数でモデルを実装できる。</p>
+            <h3>線形関数</h3>
+            <p>インスタンスを生成するコードは以下の通り。</p>
+            <pre><code>
+# 入力：２、出力：３の線形関数の定義
+l3 = nn.Linear(2, 3)
+            </code></pre>
+            <p>このレイヤー関数はインスタンス生成時、２つの引数をとる。</p>
+            <p>最初の引数は入力テンソルの次元数を、次の引数は出力テンソルの次元数を意味する。</p>
+            <p>つまり、この例だと、２次元テンソルを入力として３次元テンソルを出力とする関数になる。</p>
+            <b>１入力１出力</b>
+            <pre><code>
+# 乱数の種固定
+torch.manual_seed(123)
+
+# 入力:1 出力:1 の線形関数の定義
+l1 = nn.Linear(1, 1)
+
+# 線形関数の表示
+print(l1)
+            </code></pre>
+            <p>レイヤー関数には、nn.Linear以外の関数うを含め、統一的にnamed_parametersという関数が組み込まれている。</p>
+            <p>この関数を呼び出すと、（パラメータ名、パラメータ参照）のリストを返す。</p>
+            <p>変数l1内にどのようなパラメータがあり、どのような値とshapeを持っているか調べる。</p>
+            <pre><code>
+# パラメータ名、パラメータ値、shapeの表示
+
+for param in l1.named_parameters():
+    print('name: ', param[0])
+    print('tensor: ', param[1])
+    print('shape: ', param[1].shape)
+            </code></pre>
+            <p>結果から、[1, 1]というshapeを持つ変数weightと、[1]というshapeを持つ変数biasがあることが分かる。</p>
+            <p>weightは「重み」（１次関数の係数）を、biasはバイアス（１次関数の定数項）を意味する。</p>
+            <p>今回は、入力も出力も１次元なので、weightもbiasも本来ならスカラー（０階テンソル）で問題ないはずである。</p>
+            <p>わざわざ[1, 1]という行列、[1]というベクトルになっているのは、入力・出力テンソルの次元数が２以上に増えた時も簡単に拡張できるようにするためである。</p>
+            <p>２つのパラメータでは、requires=Trueになっている。通常、レイヤー関数内のパラメータは学習対象である。</p>
+            <p>weightとbiasはともにランダムな値に設定されている。</p>
+            <p>通常乱数値がセットされるパラメータに明示的な値を設定したい場合、次のコードのように、nn.init.constant_を呼び出す（ここでは、\(y = 2x + 1\)としてみる）。</p>
+            <pre><code>
+# 初期値設定
+nn.init.constant_(l1.weight, 2.0)
+nn.init.constant_(l1.bias, 1.0)
+
+# 結果確認
+print(l1.weight)
+print(l1.bias)
+            </code></pre>
+            <p>ダミーデータをこの関数にかけて、１次関数として動作していることを確認する。</p>
+            <pre><code>
+# テスト用データ生成
+
+# x_npをnumpy配列で定義(x_np = [-2. -1. 0. 1. 2.])
+x_np = np.arange(-2, 2.1, 1)
+
+# Tensor化
+x = torch.tensor(x_np).float()
+
+# サイズを(N,1)に変更
+x = x.view(-1,1)
+
+# 結果確認
+print(x.shape)
+print(x)
+            </code></pre>
+            <p>weightが[1, 1]の行列であるため、入力変数xは[5, 1]の２次元テンソルに変換している。</p>
+            <b>２入力１出力</b>
+            <p>線形関数\(y = x_1 + x_2 + 2\)を作る。</p>
+            <pre><code>
+# 2次元numpy配列
+x2_np = np.array([[0, 0], [0, 1], [1, 0], [1,1]])
+
+# Tensor化
+x2 =  torch.tensor(x2_np).float()
+
+# 結果確認
+print(x2.shape)
+print(x2)
+            </code></pre>
+            <p>以下のコードで４行２列のテストデータを用意する。</p>
+            <pre><code>
+# 2次元numpy配列
+x2_np = np.array([[0, 0], [0, 1], [1, 0], [1,1]])
+
+# Tensor化
+x2 =  torch.tensor(x2_np).float()
+
+# 結果確認
+print(x2.shape)
+print(x2)
+            </code></pre>
+            <p>以下のように関数呼び出しを行う。</p>
+            <pre><code>
+# 関数値計算
+y2 = l2(x2)
+
+# shape確認
+print(y2.shape)
+
+# 値確認
+print(y2.data)
+            </code></pre>
+            <b>２入力３出力</b>
+            <pre><code>
+# 入力:2 出力:3 の線形関数の定義
+
+l3 = nn.Linear(2, 3)
+
+# 初期値設定
+nn.init.constant_(l3.weight[0,:], 1.0)
+nn.init.constant_(l3.weight[1,:], 2.0)
+nn.init.constant_(l3.weight[2,:], 3.0)
+nn.init.constant_(l3.bias, 2.0)
+
+# 結果確認
+print(l3.weight)
+print(l3.bias)
+            </code></pre>
+            <pre><code>
+# 関数値計算
+y3 = l3(x2)
+
+# shape確認
+print(y3.shape)
+
+# 値確認
+print(y3.data)
+            </code></pre>
+            <h3>カスタムクラスを利用したモデル定義</h3>
+            <pre><code>
+# モデルのクラス定義
+
+class Net(nn.Module):
+    def __init__(self, n_input, n_output):
+        #  親クラスnn.Modulesの初期化呼び出し
+        super().__init__()
+
+        # 出力層の定義
+        self.l1 = nn.Linear(n_input, n_output)
+
+    # 予測関数の定義
+    def forward(self, x):
+        x1 = self.l1(x) # 線形回帰
+        return x1
+            </code></pre>
+            <p>このコードは、機械学習モデル定義のコードの一番本質的な部分である。</p>
+            <p>Netというクラスの親クラスは、nn.Moduleである。</p>
+            <p>クラスの内部にはforward関数が定義されていて、この関数で予測処理を実装する。</p>
+            <p>予測は次のように行う。</p>
+            <pre><code>
+# ダミー入力
+inputs = torch.ones(100,1)
+
+# インスタンスの生成 (１入力1出力の線形モデル)
+n_input = 1
+n_output = 1
+net = Net(n_input, n_output)
+
+# 予測
+outputs = net(inputs)
+            </code></pre>
+            <p>カスタムクラスのインスタンス変数netは自分自身が関数として動く。</p>
+            <h3>MSELossクラスを利用した損失関数</h3>
+            <p>「損失loss」とは、「予測関数」と「損失関数」を組み合わせてできあがった合成関数で、「損失計算」とは、この合成関数を計算することを意味する。</p>
+            <p>この合成関数（損失）はパラメータ（weightとbias）を引数とする。</p>
+            <p>合成関数（損失）をパラメータで偏微分することが「勾配計算」であり、勾配計算の結果が勾配降下法の「パラメータ修正」で用いられる。</p>
+            <pre><code>
+# 損失関数：平均２乗誤差
+criterion = nn.MSELoss()
+            </code></pre>
+            <p>このコードでは、初期化処理の中で損失関数criterionを、クラスnn.MSELossのインスタンスとして定義している。</p>
+            <pre><code>
+# 誤差計算
+loss = criterion(outputs, labels1) / 2.0
+            </code></pre>
+            <p>このコードでは、繰り返し処理の中で、損失関数を出力テンソルoutputsと正解テンソルlabelsの２つをパラメータとして取る関数として呼び出し、さらに2.0で割った結果を損失lossに代入している。これが「損失計算」である。</p>
+            <p>また、損失lossに対してbackward関数を呼び出し、勾配計算をしている。</p>
+            <h3>データ準備</h3>
+            <pre><code>
+# 学習用データ準備
+                
+data_url = "http://lib.stat.cmu.edu/datasets/boston"
+raw_df = pd.read_csv(data_url, sep="\s+",
+    skiprows=22, header=None)
+x_org = np.hstack([raw_df.values[::2, :],
+    raw_df.values[1::2, :2]])
+yt = raw_df.values[1::2, 2]
+feature_names = np.array(['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX',
+    'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO','B', 'LSTAT'])
+
+# 結果確認
+print('元データ', x_org.shape, yt.shape)
+print('項目名: ', feature_names)
+            </code></pre>
+            <pre><code>
+# データ絞り込み (項目 RMのみ)
+x = x_org[:,feature_names == 'RM']
+print('絞り込み後', x.shape)
+print(x[:5,:])
+
+# 正解データ yの表示
+print('正解データ')
+print(yt[:5])
+            </code></pre>
+            <pre><code>
+# 散布図の表示
+
+plt.scatter(x, yt, s=10, c='b')
+plt.xlabel('部屋数')
+plt.ylabel('価格')
+plt.title('部屋数と価格の散布図')
+plt.show()
+            </code></pre>
+            <h3>モデル定義</h3>
+            <b>変数定義</b>
+            <pre><code>
+# 変数定義
+
+# 入力次元数
+n_input= x.shape[1]
+
+# 出力次元数
+n_output = 1
+
+print(f'入力次元数: {n_input}  出力次元数: {n_output}')
+            </code></pre>
+            <p>機械学習・ディープラーニングモデルとは、「入力ベクトルに対して出力ベクトルを返す関数」である。</p>
+            <p>今回のモデルは、１入力１出力のとてもシンプルなモデルである。</p>
+            <b>機械学習モデル（予測モデル）のクラス定義</b>
+            <pre><code>
+# 機械学習モデル（予測モデル）クラス定義
+
+class Net(nn.Module):
+    def __init__(self, n_input, n_output):
+        #  親クラスnn.Modulesの初期化呼び出し
+        super().__init__()
+
+        # 出力層の定義
+        self.l1 = nn.Linear(n_input, n_output)
+
+        # 初期値を全部1にする
+        nn.init.constant_(self.l1.weight, 1.0)
+        nn.init.constant_(self.l1.bias, 1.0)
+
+    # 予測関数の定義
+    def forward(self, x):
+        x1 = self.l1(x) # 線形回帰
+        return x1
+            </code></pre>
+            <p>PyTorchでは、モデル用のクラスの内部で必ずforward関数を定義し、入力テンソルinputsを入力として出力テンソルoutputsを出力するための処理を記述するルールになっている。</p>
+            <b>インスタンス生成</b>
+            <pre><code>
+# インスタンスの生成
+# １入力1出力の線形モデル
+
+net = Net(n_input, n_output)
+            </code></pre>
+            <p>Netクラスのインスタンスであるnet変数を定義すると、次の呼び出し方で入力テンソルから、予測値である出力テンソルを取得できる。</p>
+            <pre><code>
+outputs = net(inputs)
+            </code></pre>
+            <b>モデル内の変数値表示</b>
+            <p>このように生成したモデルを表す変数netでは、親クラスのnn.Module内で定義されている便利な機能（関数）を利用可能である。</p>
+            <p>その一つとして、モデル内の変数名とその値を取得する関数named_parametersがある。</p>
+            <pre><code>
+# モデル内のパラメータの確認
+# モデル内の変数取得にはnamed_parameters関数を利用する
+# 結果の第1要素が名前、第2要素が値
+#
+# predict.weightとpredict.biasがあることがわかる
+# 初期値はどちらも1.0になっている
+
+for parameter in net.named_parameters():
+    print(f'変数名: {parameter[0]}')
+    print(f'変数値: {parameter[1].data}')
+            </code></pre>
+            <b>parameters関数の呼び出し</b>
+            <p>もう一つの便利機能として、parameters関数もある。</p>
+            <p>parameters関数は、「パラメータ変数」だけが名前なしにリスト形式で返ってくる。</p>
+            <p>最適化関数のインスタンス生成において、最適化対象のパラメータをリストで渡すときによく使われる。</p>
+            <pre><code>
+# パラメータのリスト取得にはparameters関数を利用する
+
+for parameter in net.parameters():
+    print(parameter)
+            </code></pre>
+            <b>モデルの概要表示</b>
+            <pre><code>
+# モデルの概要表示
+
+print(net)
+            </code></pre>
+            <pre><code>
+# モデルのサマリー表示
+
+from torchinfo import summary
+summary(net, (1,))
+            </code></pre>
+            <p>summaryという関数を呼び出すが、引数としてnet変数そのものと、入力変数のサイズを指定する。</p>
+            <b>損失関数と最適化関数の定義</b>
+            <pre><code>
+# 損失関数： 平均2乗誤差
+criterion = nn.MSELoss()
+
+# 学習率
+lr = 0.01
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+            </code></pre>
         </section>
         <section id="binary">
             <h2>Binary Classification</h2>
