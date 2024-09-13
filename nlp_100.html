@@ -985,10 +985,66 @@ else:
         </section>
         <section id="04">
         <h2>第4章：形態素解析</h2>
-        <h3></h3>
+        <h3>準備</h3>
+        <p>ターミナルで以下のコマンドを打つ。</p>
         <pre><code>
+wget https://nlp100.github.io/data/neko.txt
+apt install mecab libmecab-dev mecab-ipadic-utf8
+mecab -o ./neko.txt.mecab ./neko.txt
+wc -l ./neko.txt.mecab # 行数を確認する
+head -15 ./neko.txt.mecab # 先頭15行を確認する
+        </code></pre>    
+        <h3>30. 形態素解析結果の読み込み</h3>
+        <pre><code>
+def parse_mecab_output(file_path):
+    sentences = []  # 全文の形態素情報を格納するリスト
+    sentence = []   # 1文の形態素情報を格納するリスト
+    
+    with open(file_path, &#039;r&#039;, encoding=&#039;utf-8&#039;) as f:
+        for line in f:
+            # 文の区切り（空行が文の終わりを示す）
+            if line == &#039;EOS\n&#039;:
+                if sentence:  # 文が存在する場合
+                    sentences.append(sentence)
+                    sentence = []  # 文リセット
+                continue
 
+            # 行が空か、タブで分割できない場合はスキップ
+            if &#039;\t&#039; not in line:
+                continue
+
+            # 表層形とそれ以外に分割
+            surface, details = line.split(&#039;\t&#039;)
+            details_split = details.split(&#039;,&#039;)
+
+            # 形態素情報を辞書に格納
+            morpheme = {
+                &#039;surface&#039;: surface,               # 表層形
+                &#039;base&#039;: details_split[6] if len(details_split) &gt; 6 else &#039;*&#039;,  # 基本形がない場合は&#039;*&#039;
+                &#039;pos&#039;: details_split[0],          # 品詞
+                &#039;pos1&#039;: details_split[1]          # 品詞細分類1
+            }
+            sentence.append(morpheme)
+
+    return sentences
+
+# 形態素解析結果の読み込み
+file_path = &#039;neko.txt.mecab&#039;
+morphological_data = parse_mecab_output(file_path)
+
+# 結果の一部を表示
+for morpheme in morphological_data[2]:
+    print(morpheme)
         </code></pre>
+        <p>各形態素（単語）は次の形式で辞書に格納される：</p>
+        <ul>
+            <li>surface: 表層形（単語そのもの）</li>
+            <li>base: 基本形（辞書形、存在しない場合は'*'）</li>
+            <li>pos: 品詞</li>
+            <li>pos1: 品詞細分類1</li>
+        </ul>
+        <p>文の終わりはEOSで示される。</p>
+        <p>'\t'で行を分割し、形態素の詳細情報をカンマで分割する。基本形が存在しない場合には、'*'を使ってエラーを防止する。</p>
         <h3></h3>
         <pre><code>
 
