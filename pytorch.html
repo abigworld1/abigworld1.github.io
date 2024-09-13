@@ -1029,7 +1029,7 @@ class Net(nn.Module):
         # 出力層の定義
         self.l1 = nn.Linear(n_input, n_output)
 
-    # 予測関数の定義
+    # 予測関数の定義 
     def forward(self, x):
         x1 = self.l1(x) # 線形回帰
         return x1
