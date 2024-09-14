@@ -1999,7 +1999,309 @@ for epoch in range(num_epochs):
         </section>
         <section id="multi">
             <h2>Multiclass Classification</h2>
-            
+            <h3>問題の定義</h3>
+            <p>ここでも、「アイリス・データセット」を利用する。</p>
+            <p>３種類すべてのアヤメの学習データを利用する。</p>
+            <p>入力項目は、最初は２個に絞り込む。</p>
+            <p>多値分類モデルでは、分類先グループ数をNとしたときに、N次元出力になる。</p>
+            <h3>複数の分類器</h3>
+            <p>次の考え方を用いる。</p>
+            <ul>
+                <li>モデルの出力を１次元でなく、Ｎ次元とする。</li>
+                <li>Ｎ個の出力（分類器）は、それぞれ分類先のグループと１対１に割り当てる。</li>
+                <li>個々の分類器の出力が、入力データがそのグループである確率を表すものとする。</li>
+                <li>確率値の一番大きい分類器に該当するグループがモデルとしての予測値になる。</li>
+            </ul>
+            <h3>softmax関数</h3>
+            <p>softmax関数は、数式では以下のように表される。</p>
+            <div class="scroll">
+                \begin{align}
+                y_i = \frac{\exp(x_i)}{\sum_{k=1}^{n} \exp(x_k)} \quad (i = 1, 2, \cdots, n)
+                \end{align}
+            </div>
+            <p>シグモイド関数同様に、出力を確率値として扱える性質を持っている。</p>
+            <p>softmax関数は、入力値として一番大きな項目の確率値が一番高くなる（さらに全確率値を足すと１になる）。</p>
+            <p>しかし、他の項目の確率値も完全にゼロになるわけではなく、ある程度の値が残る。</p>
+            <p>単純に最大値を調べる関数なら、一番大きな値の項目が確率値を全取り（確率値＝１）して、残りの項目の確率値はゼロになる。</p>
+            <p>そこまでしないソフトな最大値関数というのが、この関数名の由来になっている。</p>
+            <h3>交差エントロピー関数</h3>
+            <p>２値分類のときと同様に、損失関数には、交差エントロピー関数を利用する。</p>
+            <p>しかし、名前が同じでも、数式が多少異なる。</p>
+            <div class="scroll">
+                \begin{align}
+                \sum_{i=0}^{N-1} (yt_i \log(yp_i))
+                \end{align}
+            </div>
+            <p>ここで、\(yt_i\)は、正解のときに１、正解でないときに０の値をとる。</p>
+            <p>交差エントロピー関数は、まずsoftmax関数の出力である中間テンソル\(x2\)のすべての要素に対して対数計算をする。</p>
+            <p>その後で、正解値の要素だけを抽出する。</p>
+            <p>「正解値の要素だけ抽出」という操作をするには、正解値が、（0, 1, 2）のどれかという整数値で与えられる必要がある。</p>
+            <p>PyTorchの交差エントロピー関数は、このような操作をする目的で、損失関数に渡す正解値（第２引数）は整数値から構成される値である必要がある。</p>
+            <h3>予測関数と損失関数の関係</h3>
+            <p>予測関数側では活性化関数は不要で、線形関数の出力をそのまま出力とする。</p>
+            <p>予測関数出力から確率値を得たい場合は、予測関数出力にsoftmax関数をかける。</p>
+            <p>損失関数はCrossEntropyLoss関数を利用する。</p>
+            <h3>データ準備</h3>
+            <pre><code>
+# 学習用データ準備
+
+# ライブラリのインポート
+from sklearn.datasets import load_iris
+
+# データ読み込み
+iris = load_iris()
+
+# 入力データと正解データ取得
+x_org, y_org = iris.data, iris.target
+
+# 結果確認
+print('元データ', x_org.shape, y_org.shape)
+            </code></pre>
+            <b>データ絞り込み</b>
+            <pre><code>
+# データ絞り込み
+
+# 入力データに関しては、sepal length(0)とpetal length(2)のみ抽出
+x_select = x_org[:,[0,2]]
+
+# 結果確認
+print('元データ', x_select.shape, y_org.shape)
+            </code></pre>
+            <b>訓練データと検証データの分割</b>
+            <pre><code>
+# 訓練データ、検証データに分割 (シャフルも同時に実施)
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(
+    x_select, y_org, train_size=75, test_size=75,
+    random_state=123)
+print(x_train.shape, x_test.shape, y_train.shape, y_test.shape)
+            </code></pre>
+            <b>散布図の表示</b>
+            <pre><code>
+# データを正解値ごとに分割
+
+x_t0 = x_train[y_train == 0]
+x_t1 = x_train[y_train == 1]
+x_t2 = x_train[y_train == 2]
+            </code></pre>
+            <pre><code>
+# 散布図の表示
+
+plt.scatter(x_t0[:,0], x_t0[:,1], marker='x', c='k', s=50, label='0 (setosa)')
+plt.scatter(x_t1[:,0], x_t1[:,1], marker='o', c='b', s=50, label='1 (versicolour)')
+plt.scatter(x_t2[:,0], x_t2[:,1], marker='+', c='k', s=50, label='2 (virginica)')
+plt.xlabel('sepal_length')
+plt.ylabel('petal_length')
+plt.legend()
+plt.show()
+            </code></pre>
+            <h3>モデルの定義</h3>
+            <b>入力次元数と出力次元数の確認</b>
+            <pre><code>
+# 学習用パラメータ設定
+
+# 入力次元数
+n_input = x_train.shape[1]
+
+# 出力次元数
+# 分類先クラス数　今回は3になる
+n_output = len(list(set(y_train)))
+
+# 結果確認
+print(f'n_input: {n_input}  n_output: {n_output}')
+            </code></pre>
+            <b>モデル定義</b>
+            <pre><code>
+# モデルの定義
+# 2入力3出力のロジスティック回帰モデル
+
+class Net(nn.Module):
+    def __init__(self, n_input, n_output):
+        super().__init__()
+        self.l1 = nn.Linear(n_input, n_output)
+
+        # 初期値を全部1にする
+        self.l1.weight.data.fill_(1.0)
+        self.l1.bias.data.fill_(1.0)
+
+    def forward(self, x):
+        x1 = self.l1(x)
+        return x1
+
+# インスタンスの生成
+net = Net(n_input, n_output)
+            </code></pre>
+            <b>モデル内のパラメータ確認</b>
+            <pre><code>
+# モデル内のパラメータの確認
+# l1.weightが行列にl1.biasがベクトルになっている
+
+for parameter in net.named_parameters():
+    print(parameter)
+            </code></pre>
+            <pre><code>
+# モデルの概要表示
+
+print(net)
+            </code></pre>
+            <pre><code>
+# モデルのサマリー表示
+
+summary(net, (2,))
+            </code></pre>
+            <b>最適化アルゴリズムと損失関数定義</b>
+            <pre><code>
+# 損失関数： 交差エントロピー関数
+criterion = nn.CrossEntropyLoss()
+
+# 学習率
+lr = 0.01
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+            </code></pre>
+            <p>損失関数定義にnn.CrossEntropyLossクラスを利用している。</p>
+            <p>このクラスで生成した損失関数は、「softmax関数」「対数関数」「正解値の抽出」の３つを全部まとめてやってしまう関数となっている。</p>
+            <h3>勾配降下法</h3>
+            <b>データのテンソル変数化</b>
+            <pre><code>
+# 入力変数x_trainと正解値 y_trainのテンソル変数化
+
+inputs = torch.tensor(x_train).float()
+labels = torch.tensor(y_train).long()
+
+# 検証用変数のテンソル変数化
+
+inputs_test = torch.tensor(x_test).float()
+labels_test = torch.tensor(y_test).long()
+            </code></pre>
+            <p>loss = criterion(outputs, labels)において、第２引数は整数でないといけないため、long関数を呼び出している。</p>
+            <b>損失の計算グラフ可視化</b>
+            <pre><code>
+# 予測計算
+outputs = net(inputs)
+
+#  損失計算
+loss = criterion(outputs, labels)
+
+# 損失の計算グラフ可視化
+g = make_dot(loss, params=dict(net.named_parameters()))
+display(g)
+            </code></pre>
+            <b>予測ラベルの取得方法</b>
+            <p>softmax関数は入力の段階で最大であった項目が出力後も最大になる性質を持っている。</p>
+            <p>そのため、softmax関数の前の状態で最大の値を持つ項目を見つければ、それが予測値ラベルになる。</p>
+            <pre><code>
+# torch.max関数呼び出し
+# 2つめの引数は軸を意味している。1だと行ごとの集計
+
+print(torch.max(outputs, 1))
+            </code></pre>
+            <p>torch.max関数は、最大値そのものと最大値をとったインデックスの２つを同時に返す仕様になっている。</p>
+            <p>ラベル値を取得したい場合は、２つ目のindicesをとってくればよい。</p>
+            <pre><code>
+# ラベル値の配列を取得
+torch.max(outputs, 1)[1]
+            </code></pre>
+            <b>繰り返し処理</b>
+            <pre><code>
+# 学習率
+lr = 0.01
+
+# 初期化
+net = Net(n_input, n_output)
+
+# 損失関数： 交差エントロピー関数
+criterion = nn.CrossEntropyLoss()
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+
+# 繰り返し回数
+num_epochs = 10000
+
+# 評価結果記録用
+history = np.zeros((0,5))
+            </code></pre>
+            <pre><code>
+# 繰り返し計算メインループ
+
+for epoch in range(num_epochs):
+
+    # 訓練フェーズ
+
+    #勾配の初期化
+    optimizer.zero_grad()
+
+    # 予測計算
+    outputs = net(inputs)
+
+    # 損失計算
+    loss = criterion(outputs, labels)
+
+    # 勾配計算
+    loss.backward()
+
+    # パラメータ修正
+    optimizer.step()
+
+    # 予測ラベル算出
+    predicted = torch.max(outputs, 1)[1]
+
+    # 損失と精度の計算
+    train_loss = loss.item()
+    train_acc = (predicted == labels).sum()  / len(labels)
+
+    #予測フェーズ
+
+    # 予測計算
+    outputs_test = net(inputs_test)
+
+    # 損失計算
+    loss_test = criterion(outputs_test, labels_test)
+
+    # 予測ラベル算出
+    predicted_test = torch.max(outputs_test, 1)[1]
+
+    # 損失と精度の計算
+    val_loss =  loss_test.item()
+    val_acc =  (predicted_test == labels_test).sum() / len(labels_test)
+
+    if ((epoch) % 10 == 0):
+        print (f'Epoch [{epoch}/{num_epochs}], loss: {train_loss:.5f} acc: {train_acc:.5f} val_loss: {val_loss:.5f}, val_acc: {val_acc:.5f}')
+        item = np.array([epoch, train_loss, train_acc, val_loss, val_acc])
+        history = np.vstack((history, item))
+            </code></pre>
+            <h3>結果確認</h3>
+            <pre><code>
+#損失と精度の確認
+
+print(f'初期状態: 損失: {history[0,3]:.5f} 精度: {history[0,4]:.5f}' )
+print(f'最終状態: 損失: {history[-1,3]:.5f} 精度: {history[-1,4]:.5f}' )
+            </code></pre>
+            <pre><code>
+# 学習曲線の表示 (損失)
+
+plt.plot(history[:,0], history[:,1], 'b', label='訓練')
+plt.plot(history[:,0], history[:,3], 'k', label='検証')
+plt.xlabel('繰り返し回数')
+plt.ylabel('損失')
+plt.title('学習曲線(損失)')
+plt.legend()
+plt.show()
+            </code></pre>
+            <pre><code>
+# 学習曲線の表示 (精度)
+
+plt.plot(history[:,0], history[:,2], 'b', label='訓練')
+plt.plot(history[:,0], history[:,4], 'k', label='検証')
+plt.xlabel('繰り返し回数')
+plt.ylabel('精度')
+plt.title('学習曲線(精度)')
+plt.legend()
+plt.show()
+            </code></pre>
         </section>
         <section id="mnist">
             <h2>MNIST</h2>
