@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【Kaggle | ISIC 2024 - Skin Cancer Detection with 3D-TBP】走る作曲家のAIカフェ</title>
+    <title>【RSNA 2024 | Kaggle】走る作曲家のAIカフェ</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1050827580219099"
      crossorigin="anonymous"></script>
 </head>
@@ -22,27 +24,41 @@
     </header>
     <main>
         <section>
-            <h2>ISIC 2024 - Skin Cancer Detection with 3D-TBP</h2>
-            <p><a href="https://www.kaggle.com/competitions/isic-2024-challenge">ISIC 2024 - Skin Cancer Detection with 3D-TBP</a></p>
+            <h2>RSNA 2024 Lumbar Spine Degenerative Classification</h2>
+            <p><a href="https://www.kaggle.com/competitions/rsna-2024-lumbar-spine-degenerative-classification">RSNA 2024 Lumbar Spine Degenerative Classification</a></p>
         </section>
         <section>
           <h2>概要</h2>
-          <h3>ISIC 2024 - 3D-TBPによる皮膚がん検出</h3>
-          <p>このコンペティションでは、3D全身写真（TBP）から切り取られた単一病変の画像を使用して、組織学的に確認された皮膚がんを特定するアルゴリズムを開発することを目指す。
-            写真の品質はスマートフォンのクローズアップ写真に類似しており、主に遠隔医療のために送信されることを想定している。
-            これにより、専門的なケアがアクセスできない状況でも、皮膚がんの早期診断に役立てることができる。</p>
-          <h3>コンペティションの重要性</h3>
-          <p>皮膚がん、特に悪性黒色腫は早期発見が重要だが、多くの地域では専門的な皮膚科ケアが不足している。
-            このコンペティションでは、3D-TBPによって得られた低品質の画像を使用して、がんのリスクがある病変を自動的に識別することが求められている。
-            これにより、遠隔医療や初期診断においてAIアルゴリズムを活用し、皮膚がんの早期発見と治療効果の向上を図ることが期待されている。</p>
-          <h3>評価方法</h3>
-          <p>提出されたモデルは、80%以上の真陽性率（TPR）に対するROC曲線の部分面積（pAUC）で評価される。
-            この評価方法では、がん診断における高い感度が求められるため、ROC曲線のうち80%以上のTPR部分に重点が置かれている。
-            スコアは0.0から0.2の範囲で評価される。</p>
+          <p>このコンペティションの目的は、腰椎のMRI画像を用いて、変性疾患を診断・分類するAIモデルを開発することである。
+              参加者は、放射線科医が行う診断と同様の精度で、腰椎の変性疾患を検出・分類できるモデルを作成する。</p>
+          <h3>病態</h3>
+          <p>腰痛は世界中で最も一般的な障害の原因であり、世界保健機関（WHO）によると、2020年には6億1900万人が腰痛に苦しんでいた。
+              腰痛は加齢と共に発生頻度が高まり、多くの人が一度は経験する。
+              腰痛は、椎間板の変性や脊椎管の狭窄など、神経の圧迫や炎症を引き起こす変性疾患によって引き起こされることがある。
+              MRIは、腰椎や椎間板、神経の詳細な画像を提供し、これらの変性疾患の有無や重症度を評価することができる。
+              適切な診断と分類は、治療や手術の指針となり、患者の痛みや生活の質の向上に貢献する。</p>
+          <h3>コンペティションの焦点</h3>
+          <p>このコンペティションでは、以下の5つの腰椎変性疾患を分類することを目指す：</p>
+            <ul>
+                <li>左神経孔狭窄</li>
+                <li>右神経孔狭窄</li>
+                <li>左関節包狭窄</li>
+                <li>右関節包狭窄</li>
+                <li>脊椎管狭窄</li>
+            </ul>
+            <p>それぞれの椎間板レベル（L1/L2、L2/L3、L3/L4、L4/L5、L5/S1）において、各疾患の重症度（正常/軽度、中等度、重度）がラベル付けされたデータが提供される。</p>
+            <h3>評価方法</h3>
+            <p>評価は、サンプル重み付きロス関数の平均と、重度の脊椎疾患を検出する予測モデルを組み合わせたカスタムメトリックで行われる。</p>
+            <p>サンプルの重みは以下の通り：</p>
+            <ul>
+                <li>正常/軽度：1</li>
+                <li>中等度：2</li>
+                <li>重度：4</li>
+            </ul>
         </section>
       <section>
         <h2>データ</h2>
-        <h3>データセットの説明</h3>
+        <h3>データセットの目的</h3>
         <p>このデータセットは、診断ラベル付きの画像とメタデータで構成されている。
           主な画像フォーマットはJPEGで、関連するCSVファイルには、バイナリの診断ラベル（ターゲット）や、年齢や性別、解剖学的な位置などの入力変数が含まれている。</p>
         <b>予測タスク</b>
