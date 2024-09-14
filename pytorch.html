@@ -1530,7 +1530,472 @@ plt.show()
         </section>
         <section id="binary">
             <h2>Binary Classification</h2>
-            
+            <h3>問題の定義</h3>
+            <p>「アイリス・データセット」を使用する。</p>
+            <p>このデータセットは、Setosa、Versicolour、Virgincaという３種類のアヤメの花に対して、「花弁」と「がく片」のそれぞれの「長さ」と「幅」を測定した結果である。</p>
+            <p>４種類のサイズ（長さまたは幅）を入力に、花の種類を予測するモデルを作るための学習データとしてよく利用される。</p>
+            <p>まずは２種類の花だけを対象に、入力項目も２つだけに絞りこむ。</p>
+            <p>２値ロジスティック回帰モデルを作る。</p>
+            <p>「分類」モデルは、「精度」という指標値を導入することにより、「回帰」モデルよりもモデルの性能を判断しやすいという特徴がある。</p>
+            <h3>精度（Accuracy）</h3>
+            <p>（正解件数）/（全体件数）によって、モデルがどの程度の比率で正しく予測できているかを数値化する。</p>
+            <h3>訓練データと検証データの分割</h3>
+            <p>過学習をチェックするためには、検証データを事前に準備しておくことが重要。</p>
+            <h3>シグモイド関数</h3>
+            <pre><code>
+# NumPy配列でxデータを定義
+x_np = np.arange(-4, 4.1, 0.25)
+
+# データをTensor形式に変換
+x = torch.tensor(x_np).float()
+
+# yの値を計算
+y = torch.sigmoid(x)
+
+# グラフ描画
+plt.title('シグモイド関数のグラフ')
+plt.plot(x.data, y.data)
+plt.show()
+            </code></pre>
+            <p>シグモイド関数は、数式では次のように表される。</p>
+            <div class="scroll">
+                \begin{align}
+                f(x) = \frac{1}{1 + \exp(-x)}
+                \end{align}
+            </div>
+            <p>次の特徴を持つ。</p>
+            <ul>
+                <li>単調増加関数</li>
+                <li>0と1の間の値を取る</li>
+                <li>x = 0のときの値は0.5</li>
+                <li>グラフは点(0, 0.5)に関して点対称</li>
+            </ul>
+            <p>この性質は、関数値を「確率」として解釈して利用するのに適している。</p>
+            <p>この性質を利用することで２値分類モデルの予測の仕組みが実装される。</p>
+            <p>入力ベクトルxをnn.Linearで実装される線形関数にかけて結果を得るところまでは、線形回帰モデルとまったく同じである。</p>
+            <p>唯一異なるのは、線形関数の出力uに対してシグモイド関数をかけて、確率値を取得するところである。</p>
+            <h3>交差エントロピー関数</h3>
+            <p>線形回帰では２次関数だった損失関数は、分類モデルでは交差エントロピー関数になる。</p>
+            <p>シグモイド関数の出力として得られる確率値は、厳密には「入力データに対して分類結果が１になる確率」である。</p>
+            <p>２値分類の場合、正解値は１か０のいずれかなので、「分類結果が１になる確率」がf(u)なら、「分類結果が０になる確率」は1-f(u)で表されることになる。</p>
+            <p>ここで、損失関数に最尤推定という考えを導入する。</p>
+            <p>「すべてのデータに対する確信度（分類結果が正解の確率）を掛け合わせた結果を最大にするパラメータが一番もっともらしいので採用する」という考えである。</p>
+            <p>対数尤度関数は次の通りである。</p>
+            <div class="scroll">
+                \begin{align}
+                \sum_{i} {yt_i \cdot \log(f(u_i)) + (1 - u_i) \log(1 - f(u_i))}
+                \end{align}
+            </div>
+            <p>損失関数は、できるだけ小さくすることが目標なので、この式にマイナスをかけ、さらにデータ件数で割って平均を取ったものが、交差エントロピー関数と呼ばれる、２値分類モデルで損失関数として利用される関数になる。</p>
+            <p>PyTorchで２値分類用の交差エントロピー関数を利用する場合、nn.BCELossというクラスを利用する。</p>
+            <h3>データ準備</h3>
+            <b>データ読み込み</b>
+            <pre><code>
+# 学習用データ準備
+
+# ライブラリのインポート
+from sklearn.datasets import load_iris
+
+# データ読み込み
+iris = load_iris()
+
+# 入力データと正解データ取得
+x_org, y_org = iris.data, iris.target
+
+# 結果確認
+print('元データ', x_org.shape, y_org.shape)
+            </code></pre>
+            <b>データ絞り込み</b>
+            <p>次にデータを絞り込む。絞り込みは行方向と列方向（xのみ対象）に対して行う。</p>
+            <p>アイリス・データセットは元々150行のデータがあるが、これを先頭から100行に限定すると、正解値がSetosa、Versicolourのみのデータになる。</p>
+            <p>xの列方向も最初の２列のみ（がく片sepalの長さと幅）に絞り込む。</p>
+            <pre><code>
+# データ絞り込み
+#   クラス0, 1のみ
+#   項目sepal_lengthとsepal_widthのみ
+
+x_data = iris.data[:100,:2]
+y_data = iris.target[:100]
+
+# 結果確認
+print('対象データ', x_data.shape, y_data.shape)
+            </code></pre>
+            <b>訓練データと検証データへの分割</b>
+            <pre><code>
+# 　元データのサイズ
+print(x_data.shape, y_data.shape)
+
+# 訓練データ、検証データに分割 (シャフルも同時に実施)
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(
+    x_data, y_data, train_size=70, test_size=30,
+    random_state=123)
+print(x_train.shape, x_test.shape, y_train.shape, y_test.shape)
+            </code></pre>
+            <p>順番を変えずに分割すると、データに偏りが出てしまいがちだが、同時にシャッフルもしているので問題ない。</p>
+            <p>また、random_stateパラメータを指定すると、シャッフルする際の乱数の種も固定になるので、分割結果も常に同じになる。</p>
+            <b>散布図表示</b>
+            <pre><code>
+# 散布図の表示
+
+x_t0 = x_train[y_train == 0]
+x_t1 = x_train[y_train == 1]
+plt.scatter(x_t0[:,0], x_t0[:,1], marker='x', c='b', label='0 (setosa)')
+plt.scatter(x_t1[:,0], x_t1[:,1], marker='o', c='k', label='1 (versicolor)')
+plt.xlabel('sepal_length')
+plt.ylabel('sepal_width')
+plt.legend()
+plt.show()
+            </code></pre>
+            <h3>モデル定義</h3>
+            <p>まずは、入力次元数と出力次元数の定義を行う。</p>
+            <pre><code>
+# 入力次元数　(今の場合2)
+n_input= x_train.shape[1]
+
+# 出力次元数
+n_output = 1
+
+# 結果確認
+print(f'n_input: {n_input}  n_output:{n_output}')
+            </code></pre>
+            <p>以下でモデル定義を行う。</p>
+            <pre><code>
+# モデルの定義
+# 2入力1出力のロジスティック回帰モデル
+
+class Net(nn.Module):
+    def __init__(self, n_input, n_output):
+        super().__init__()
+        self.l1 = nn.Linear(n_input, n_output)
+        self.sigmoid = nn.Sigmoid()
+
+        # 初期値を全部1にする
+        self.l1.weight.data.fill_(1.0)
+        self.l1.bias.data.fill_(1.0)
+
+    # 予測関数の定義
+    def forward(self, x):
+        # 最初に入力値を線形関数にかけたを計算する
+        x1 = self.l1(x)
+        # 計算結果にシグモイド関数をかける
+        x2 = self.sigmoid(x1)
+        return x2
+            </code></pre>
+            <p>次に、インスタンス生成、モデル内のパラメータ確認を行う。</p>
+            <pre><code>
+# インスタンスの生成
+
+net = Net(n_input, n_output)
+            </code></pre>
+            <pre><code>
+# モデル内のパラメータの確認
+# l1.weightとl1.biasがあることがわかる
+
+for parameter in net.named_parameters():
+    print(parameter)
+            </code></pre>
+            <pre><code>
+# モデルの概要表示
+
+print(net)
+            </code></pre>
+            <pre><code>
+# モデルのサマリー表示
+
+summary(net, (2,))
+            </code></pre>
+            <b>最適化アルゴリズムと損失関数の定義</b>
+            <pre><code>
+# 損失関数： 交差エントロピー関数
+criterion = nn.BCELoss()
+
+# 学習率
+lr = 0.01
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+            </code></pre>
+            <h3>勾配降下法</h3>
+            <b>入力データと正解データのテンソル化</b>
+            <p>訓練に使うinputsとlabelsだけでなく、検証に使うinputs_testとlabels_testも精度評価用に準備しておく。</p>
+            <p>損失関数BCELossを使用する場合、正解データとしての第２引数は、第１引数とshapeがそろっている必要がある。</p>
+            <p>そのため、BCELoss用の変数としてlabels1といlabels_testも用意しておく。</p>
+            <pre><code>
+# 入力データ x_train と正解データ y_train のテンソル化
+
+inputs = torch.tensor(x_train).float()
+labels = torch.tensor(y_train).float()
+
+# 正解データはN行1列の行列に変換する
+labels1 = labels.view((-1,1))
+
+# 検証データのテンソル化
+inputs_test = torch.tensor(x_test).float()
+labels_test = torch.tensor(y_test).float()
+
+# 検証用の正解データもN行1列の行列に変換する
+labels1_test = labels_test.view((-1,1))
+            </code></pre>
+            <pre><code>
+# 予測計算
+outputs = net(inputs)
+
+# 損失計算
+loss = criterion(outputs, labels1)
+
+# 損失の計算グラフ可視化
+g = make_dot(loss, params=dict(net.named_parameters()))
+display(g)
+            </code></pre>
+            <b>初期化処理</b>
+            <pre><code>
+# 学習率
+lr = 0.01
+
+# 初期化
+net = Net(n_input, n_output)
+
+# 損失関数： 交差エントロピー関数
+criterion = nn.BCELoss()
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+
+# 繰り返し回数
+num_epochs = 10000
+
+# 記録用リストの初期化
+history = np.zeros((0,5))
+            </code></pre>
+            <p>history変数が５列なのは、以下の情報を含めるからである。</p>
+            <ol>
+                <li>繰り返し数</li>
+                <li>訓練データの損失</li>
+                <li>訓練データの精度</li>
+                <li>検証データの損失</li>
+                <li>検証データの精度</li>
+            </ol>
+            <b>メインループ</b>
+            <pre><code>
+# 繰り返し計算メインループ
+
+for epoch in range(num_epochs):
+    # 訓練フェーズ
+
+    #勾配値初期化
+    optimizer.zero_grad()
+
+    # 予測計算
+    outputs = net(inputs)
+
+    # 損失計算
+    loss = criterion(outputs, labels1)
+
+    # 勾配計算
+    loss.backward()
+
+    # パラメータ修正
+    optimizer.step()
+
+    # 損失の保存(スカラー値の取得)
+    train_loss = loss.item()
+
+    # 予測ラベル(1 or 0)計算
+    predicted = torch.where(outputs < 0.5, 0, 1)
+
+    # 精度計算
+    train_acc = (predicted == labels1).sum() / len(y_train)
+
+    # 予測フェーズ
+
+    # 予測計算
+    outputs_test = net(inputs_test)
+
+    # 損失計算
+    loss_test = criterion(outputs_test, labels1_test)
+
+    # 損失の保存（スカラー値の取得）
+    val_loss =  loss_test.item()
+
+    # 予測ラベル(1 or 0)計算
+    predicted_test = torch.where(outputs_test < 0.5, 0, 1)
+
+    # 精度計算
+    val_acc = (predicted_test == labels1_test).sum() / len(y_test)
+
+    if ( epoch % 10 == 0):
+        print (f'Epoch [{epoch}/{num_epochs}], loss: {train_loss:.5f} acc: {train_acc:.5f} val_loss: {val_loss:.5f}, val_acc: {val_acc:.5f}')
+        item = np.array([epoch, train_loss, train_acc, val_loss, val_acc])
+        history = np.vstack((history, item))
+            </code></pre>
+            <p><code2>train_loss = loss.item()</code2>では、損失をスカラー化してtrain_lossに保存している（item関数を使うと、テンソルから数値を取り出せる）。</p>
+            <h3>結果確認</h3>
+            <p>まず、損失と精度を確認する。</p>
+            <pre><code>
+#損失と精度の確認
+
+print(f'初期状態: 損失: {history[0,3]:.5f} 精度: {history[0,4]:.5f}' )
+print(f'最終状態: 損失: {history[-1,3]:.5f} 精度: {history[-1,4]:.5f}' )
+            </code></pre>
+            <p>次に、学習曲線を可視化する。</p>
+            <pre><code>
+# 学習曲線の表示 (損失)
+
+plt.plot(history[:,0], history[:,1], 'b', label='訓練')
+plt.plot(history[:,0], history[:,3], 'k', label='検証')
+plt.xlabel('繰り返し回数')
+plt.ylabel('損失')
+plt.title('学習曲線(損失)')
+plt.legend()
+plt.show()
+            </code></pre>
+            <pre><code>
+# 学習曲線の表示 (精度)
+
+plt.plot(history[:,0], history[:,2], 'b', label='訓練')
+plt.plot(history[:,0], history[:,4], 'k', label='検証')
+plt.xlabel('繰り返し回数')
+plt.ylabel('精度')
+plt.title('学習曲線(精度)')
+plt.legend()
+plt.show()
+            </code></pre>
+            <p>今回のロジスティック回帰モデルでは、２つの分類結果の境界になる直線が存在し、その直線のことを決定境界と呼ぶ。</p>
+            <pre><code>
+# 検証データを散布図用に準備
+
+x_t0 = x_test[y_test==0]
+x_t1 = x_test[y_test==1]
+            </code></pre>
+            <pre><code>
+# パラメータの取得
+
+bias = net.l1.bias.data.numpy()
+weight = net.l1.weight.data.numpy()
+print(f'BIAS = {bias}, WEIGHT = {weight}')
+
+# 決定境界描画用 x1の値から x2の値を計算する
+def decision(x):
+    return(-(bias + weight[0,0] * x)/ weight[0,1])
+
+# 散布図のx1の最小値と最大値
+xl = np.array([x_test[:,0].min(), x_test[:,0].max()])
+yl = decision(xl)
+
+# 結果確認
+print(f'xl = {xl}  yl = {yl}')
+            </code></pre>
+            <pre><code>
+# 散布図表示
+plt.scatter(x_t0[:,0], x_t0[:,1], marker='x',
+        c='b', s=50, label='class 0')
+plt.scatter(x_t1[:,0], x_t1[:,1], marker='o',
+        c='k', s=50, label='class 1')
+
+# 決定境界直線
+plt.plot(xl, yl, c='b')
+plt.xlabel('sepal_length')
+plt.ylabel('sepal_width')
+plt.legend()
+plt.show()
+            </code></pre>
+            <h3>BCEWithLogitsLoss関数</h3>
+            <p>BCELossとよく似た関数として、BCEWithLogitsLossがある。</p>
+            <pre><code>
+# モデルの定義
+# 2入力1出力のロジスティック回帰モデル
+
+class Net(nn.Module):
+    def __init__(self, n_input, n_output):
+        super().__init__()
+        self.l1 = nn.Linear(n_input, n_output)
+
+        # 初期値を全部1にする
+        # 「ディープラーニングの数学」と条件を合わせる目的
+        self.l1.weight.data.fill_(1.0)
+        self.l1.bias.data.fill_(1.0)
+
+    # 予測関数の定義
+    def forward(self, x):
+        # 入力値と行列の積を計算する
+        x1 = self.l1(x)
+        return x1
+            </code></pre>
+            <pre><code>
+# 学習率
+lr = 0.01
+
+# 初期化
+net = Net(n_input, n_output)
+
+# 損失関数： logits付き交差エントロピー関数
+criterion = nn.BCEWithLogitsLoss()
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+
+# 繰り返し回数
+num_epochs = 10000
+
+# 記録用リストの初期化
+history = np.zeros((0,5))
+            </code></pre>
+            <pre><code>
+# 繰り返し計算メインループ
+
+for epoch in range(num_epochs):
+    # 訓練フェーズ
+
+    #勾配値初期化
+    optimizer.zero_grad()
+
+    # 予測計算
+    outputs = net(inputs)
+
+    # 損失計算
+    loss = criterion(outputs, labels1)
+
+    # 勾配計算
+    loss.backward()
+
+    # パラメータ修正
+    optimizer.step()
+
+    # 損失のスカラー化
+    train_loss = loss.item()
+
+    # 予測ラベル(1 or 0)計算
+    predicted = torch.where(outputs < 0.0, 0, 1)
+
+    # 精度計算
+    train_acc = (predicted == labels1).sum() / len(y_train)
+
+    # 予測フェーズ
+
+    # 予測計算
+    outputs_test = net(inputs_test)
+
+    # 損失計算
+    loss_test = criterion(outputs_test, labels1_test)
+
+    # 損失のスカラー化
+    val_loss =  loss_test.item()
+
+    #予測ラベル(1 or 0)計算
+    predicted_test = torch.where(outputs_test < 0.0, 0, 1)
+
+    # 精度計算
+    val_acc = (predicted_test == labels1_test).sum() / len(y_test)
+
+    if ( epoch % 10 == 0):
+        print (f'Epoch [{epoch}/{num_epochs}], loss: {train_loss:.5f} acc: {train_acc:.5f} val_loss: {val_loss:.5f}, val_acc: {val_acc:.5f}')
+        item = np.array([epoch, train_loss, train_acc, val_loss, val_acc])
+        history = np.vstack((history, item))
+            </code></pre>
+            <p>BCELWithLogitsLossは、シグモイド関数の後で、交差エントロピー関数を呼び出す。</p>
+            <p>BCELossを使う場合と異なり、モデルの出力がどちらのクラスに属しているかの基準は0.5より大きいかどうかでなく、0より大きいかどうかになる。</p>
+            <p>「指数関数（シグモイド関数などに含まれる）と対数関数（交差エントロピー関数などに含まれる）を独立して計算すると結果が不安定になりやすいから、極力セットで計算すべき」というポリシーがPyTorchにはある。</p>
         </section>
         <section id="multi">
             <h2>Multiclass Classification</h2>
