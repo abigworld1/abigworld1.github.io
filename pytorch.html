@@ -1199,6 +1199,334 @@ lr = 0.01
 # 最適化関数: 勾配降下法
 optimizer = optim.SGD(net.parameters(), lr=lr)
             </code></pre>
+            <h3>勾配降下法</h3>
+            <b>入力値xと正解値ytのテンソル化</b>
+            <pre><code>
+# 入力変数x と正解値 ytのテンソル変数化
+
+inputs = torch.tensor(x).float()
+labels = torch.tensor(yt).float()
+
+# 次元数確認
+
+print(inputs.shape)
+print(labels.shape)
+            </code></pre>
+            <p>正解値をテンソル変数化した変数labelsに関しては、これからMSELossのインスタンスであるcriterion関数に、予測値とともに渡して、損失を計算する。</p>
+            <p>そのときに引数はN次元のベクトル形式でなく、(N, 1)次元の行列形式であることが必要である。</p>
+            <p>そのため、view関数を利用してデータサイズを変更する。</p>
+            <pre><code>
+# 損失値計算用にlabels変数を(N,1)次元の行列に変換する
+
+labels1 = labels.view((-1, 1))
+
+# 次元数確認
+print(labels1.shape)
+            </code></pre>
+            <p>あとは①予測計算、②損失計算、③勾配計算、④パラメータ修正、を繰り返せば勾配降下法が実現できる。</p>
+            <b>①予測計算</b>
+            <pre><code>
+# 予測計算
+
+outputs = net(inputs)
+            </code></pre>
+            <b>②損失計算</b>
+            <pre><code>
+#  損失計算
+loss = criterion(outputs, labels1)
+
+# 損失値の取得
+print(f'{loss.item():.5f}')
+            </code></pre>
+            <b>計算グラフの可視化</b>
+            <pre><code>
+# 損失の計算グラフ可視化
+
+g = make_dot(loss, params=dict(net.named_parameters()))
+display(g)
+            </code></pre>
+            <b>③勾配計算</b>
+            <pre><code>
+# 予測計算
+outputs = net(inputs)
+
+# 損失計算
+loss = criterion(outputs, labels1)
+
+# 勾配計算
+loss.backward()
+
+# 勾配の結果が取得可能に
+print(net.l1.weight.grad)
+print(net.l1.bias.grad)
+            </code></pre>
+            <b>④パラメータ修正</b>
+            <pre><code>
+# パラメータ修正
+optimizer.step()
+
+# パラメータ値が変わる
+print(net.l1.weight)
+print(net.l1.bias)
+            </code></pre>
+            <p>勾配値の初期化も忘れずに。</p>
+            <pre><code>
+# 勾配値の初期化
+optimizer.zero_grad()
+
+# 勾配値がすべてゼロになっている
+print(net.l1.weight.grad)
+print(net.l1.bias.grad)
+            </code></pre>
+            <b>繰り返し計算</b>
+            <p>まず、初期化処理の部分を示す。</p>
+            <pre><code>
+# 学習率
+lr = 0.01
+
+# インスタンス生成　(パラメータ値初期化)
+net = Net(n_input, n_output)
+
+# 損失関数： 平均2乗誤差
+criterion = nn.MSELoss()
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+
+# 繰り返し回数
+num_epochs = 50000
+
+# 評価結果記録用 (損失関数値のみ記録)
+history = np.zeros((0,2))
+            </code></pre>
+            <p>続いて、ループ処理の部分を示す。</p>
+            <pre><code>
+# 繰り返し計算メインループ
+
+for epoch in range(num_epochs):
+
+    # 勾配値初期化
+    optimizer.zero_grad()
+
+    # 予測計算
+    outputs = net(inputs)
+
+    # 損失計算
+    loss = criterion(outputs, labels1) / 2.0
+
+    # 勾配計算
+    loss.backward()
+
+    # パラメータ修正
+    optimizer.step()
+
+    # 100回ごとに途中経過を記録する
+    if ( epoch % 100 == 0):
+        history = np.vstack((history, np.array([epoch, loss.item()])))
+        print(f'Epoch {epoch} loss: {loss.item():.5f}')
+            </code></pre>
+            <h3>結果確認</h3>
+            <pre><code>
+# 損失初期値と最終値
+
+print(f'損失初期値: {history[0,1]:.5f}')
+print(f'損失最終値: {history[-1,1]:.5f}')
+            </code></pre>
+            <pre><code>
+# 学習曲線の表示 (損失)
+# 最初の1つを除く
+
+plt.plot(history[1:,0], history[1:,1], 'b')
+plt.xlabel('繰り返し回数')
+plt.ylabel('損失')
+plt.title('学習曲線(損失)')
+plt.show()
+            </code></pre>
+            <pre><code>
+# 回帰直線の算出
+
+# xの最小値、最大値
+xse = np.array((x.min(), x.max())).reshape(-1,1)
+Xse = torch.tensor(xse).float()
+
+with torch.no_grad():
+  Yse = net(Xse)
+
+print(Yse.numpy())
+            </code></pre>
+            <pre><code>
+# 散布図と回帰直線の描画
+
+plt.scatter(x, yt, s=10, c='b')
+plt.xlabel('部屋数')
+plt.ylabel('価格')
+plt.plot(Xse.data, Yse.data, c='k')
+plt.title('散布図と回帰直線')
+plt.show()
+            </code></pre>
+            <h3>重回帰モデルへの拡張</h3>
+            <p>これまでは、入力変数が平均部屋数（RM）の１項目だけだったが、新しくLSTATを追加して２入力とする。</p>
+            <p>新しい入力変数をx2とする。</p>
+            <pre><code>
+# 列(LSTAT: 低所得者率)の追加
+
+x_add = x_org[:,feature_names == 'LSTAT']
+x2 = np.hstack((x, x_add))
+
+# shapeの表示
+print(x2.shape)
+
+# 入力データxの表示
+print(x2[:5,:])
+            </code></pre>
+            <p>入力データの次元数n_inputが２になるため、モデルインスタンスを生成し直す。</p>
+            <pre><code>
+# 今度は入力次元数=2
+
+n_input = x2.shape[1]
+print(n_input)
+
+# モデルインスタンスの生成
+net = Net(n_input, n_output)
+            </code></pre>
+            <p>インスタンス変数net内のパラメータがどう変わったか、いくつかの方法で確認する。</p>
+            <pre><code>
+# モデル内のパラメータの確認
+# predict.weight が2次元に変わった
+
+for parameter in net.named_parameters():
+    print(f'変数名: {parameter[0]}')
+    print(f'変数値: {parameter[1].data}')
+            </code></pre>
+            <pre><code>
+# モデルの概要表示
+
+print(net)
+            </code></pre>
+            <pre><code>
+# モデルのサマリー表示
+
+from torchinfo import summary
+summary(net, (2,))
+            </code></pre>
+            <p>param # が３となっているのは、weightが２個とbiasが１個という意味。</p>
+            <p>新しい入力変数x2を改めてテンソルinputsに定義し直す。</p>
+            <pre><code>
+# 入力変数x2 のテンソル変数化
+# labels, labels1は前のものをそのまま利用
+
+inputs = torch.tensor(x2).float()
+            </code></pre>
+            <p>繰り返し計算は以下の通り。</p>
+            <pre><code>
+# 初期化処理
+
+# 学習率
+lr = 0.01
+
+# インスタンス生成　(パラメータ値初期化)
+net = Net(n_input, n_output)
+
+# 損失関数： 平均2乗誤差
+criterion = nn.MSELoss()
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+
+# 繰り返し回数
+num_epochs = 50000
+
+# 評価結果記録用 (損失関数値のみ記録)
+history = np.zeros((0,2))
+            </code></pre>
+            <pre><code>
+# 繰り返し計算メインループ
+
+for epoch in range(num_epochs):
+
+    # 勾配値初期化
+    optimizer.zero_grad()
+
+    # 予測計算
+    outputs = net(inputs)
+
+    # 誤差計算
+    loss = criterion(outputs, labels1) / 2.0
+
+    # 勾配計算
+    loss.backward()
+
+    # パラメータ修正
+    optimizer.step()
+
+    # 100回ごとに途中経過を記録する
+    if ( epoch % 100 == 0):
+        history = np.vstack((history, np.array([epoch, loss.item()])))
+        print(f'Epoch {epoch} loss: {loss.item():.5f}')
+            </code></pre>
+            <p>損失計算の値がinf→nanになってしまうので、学習率の値を再設定してやり直す。</p>
+            <h3>学習率の変更</h3>
+            <pre><code>
+# 繰り返し回数
+#num_epochs = 50000
+num_epochs = 2000
+
+# 学習率
+#l r = 0.01
+lr = 0.001
+
+# モデルインスタンスの生成
+net = Net(n_input, n_output)
+
+# 損失関数： 平均2乗誤差
+criterion = nn.MSELoss()
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+            </code></pre>
+            <pre><code>
+# 繰り返し計算メインループ
+
+# 評価結果記録用 (損失関数値のみ記録)
+history = np.zeros((0,2))
+
+for epoch in range(num_epochs):
+
+    # 勾配値初期化
+    optimizer.zero_grad()
+
+    # 予測計算
+    outputs = net(inputs)
+
+    # 誤差計算
+    loss = criterion(outputs, labels1) / 2.0
+
+    #勾配計算
+    loss.backward()
+
+    # パラメータ修正
+    optimizer.step()
+
+    # 100回ごとに途中経過を記録する
+    if ( epoch % 100 == 0):
+        history = np.vstack((history, np.array([epoch, loss.item()])))
+        print(f'Epoch {epoch} loss: {loss.item():.5f}')
+            </code></pre>
+            <pre><code>
+# 損失初期値、最終値
+
+print(f'損失初期値: {history[0,1]:.5f}')
+print(f'損失最終値: {history[-1,1]:.5f}')
+            </code></pre>
+            <pre><code>
+# 学習曲線の表示 (損失)
+
+plt.plot(history[:,0], history[:,1], 'b')
+plt.xlabel('繰り返し回数')
+plt.ylabel('損失')
+plt.title('学習曲線(損失)')
+plt.show()
+            </code></pre>
         </section>
         <section id="binary">
             <h2>Binary Classification</h2>
