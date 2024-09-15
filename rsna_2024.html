@@ -59,33 +59,34 @@
       <section>
         <h2>データ</h2>
         <h3>データセットの目的</h3>
-        <p>このデータセットは、診断ラベル付きの画像とメタデータで構成されている。
-          主な画像フォーマットはJPEGで、関連するCSVファイルには、バイナリの診断ラベル（ターゲット）や、年齢や性別、解剖学的な位置などの入力変数が含まれている。</p>
-        <b>予測タスク</b>
-        <p>このチャレンジでは、悪性の皮膚病変と良性の病変を識別する。
-          各画像（isic_id）に対して、悪性の可能性（ターゲット）を0から1の範囲で割り当てる。</p>
-        <b>SLICE-3Dデータセット</b>
-        <p>3D全身写真（TBP）から抽出された皮膚病変画像を使用して、非ダーモスコピー画像に類似したデータセットが提供される。
-          Canfield ScientificのVectra WB360という3D TBPシステムが全身の皮膚表面をマクロ品質の解像度で撮影し、その画像からAIソフトウェアが個々の病変を特定する。
-          このデータセットには、2015年から2024年にかけて9つの機関で撮影された数千人の患者のすべての病変が含まれている。</p>
-        <b>提供ファイル</b>
+        <p>このコンペティションでは、腰椎MRI画像から医療的な疾患を特定するモデルを開発することを目指している。
+            具体的には、MRI画像から腰椎の変性疾患を診断し、分類するモデルの構築が求められる。</p>
+        <b>データの概要</b>
         <ul>
-          <li>train-image/: トレーニングセットの画像ファイル</li>
-          <li>train-image.hdf5: HDF5形式のトレーニング画像データ</li>
-          <li>train-metadata.csv: トレーニングセットのメタデータ</li>
-          <li>test-image.hdf5: テスト画像データ</li>
-          <li>test-metadata.csv: テストサブセットのメタデータ</li>
-          <li>sample_submission.csv: 提出ファイルのサンプル</li>
-        </ul>
-        <b>メタデータのフィールド</b>
-        <ul>
-          <li>target: バイナリクラス（0: 良性、1: 悪性）</li>
-          <li>isic_id: 画像のユニークID</li>
-          <li>patient_id: 患者のユニークID</li>
-          <li>age_approx: 撮影時の推定年齢</li>
-          <li>sex: 患者の性別</li>
-          <li>anatom_site_general: 病変の位置</li>
-          <li>その他、病変の面積や境界の不規則性、色の対比などを表すフィールドも含まれている。</li>
+          <li>train.csv: トレーニングセットのラベルが記載されている。</li>
+            <ul>
+                <li>study_id: 研究ID。1つの研究は複数の画像シリーズを含む場合がある。</li>
+                <li>[condition]_[level]: 対象ラベル（例: spinal_canal_stenosis_l1_l2）。
+                    Normal/Mild、Moderate、Severeのいずれかの重症度が記載されている。一部のエントリーはラベルが不完全。</li>
+            </ul>
+            <li>train_label_coordinates.csv: ラベルの位置情報が記載されている。</li>
+            <ul>
+                <li>study_id: 研究ID。</li>
+                <li>series_id: 画像シリーズID。</li>
+                <li>instance_number: 画像の順番。</li>
+                <li>condition: 3つのコア疾患（spinal canal stenosis、neural foraminal narrowing、subarticular stenosis）。</li>
+                <li>level: 椎間のレベル（例: l3_l4）。</li>
+                <li>x/y: ラベルが適用された領域の中心座標。</li>
+            </ul>
+            <li>sample_submission.csv: 提出ファイルのサンプル形式が記載されている。</li>
+            <ul>
+                <li>row_id: 研究ID、疾患、椎間レベルを示す行ID（例: 12345_spinal_canal_stenosis_l3_l4）。</li>
+                <li>normal_mild/moderate/severe: 予測の3つの重症度列。</li>
+            </ul>
+            <li>[train/test]_images: 画像データ（DICOM形式）。</li>
+            <ul>
+                <li>[train/test]_series_descriptions.csv: 各シリーズのスキャンの向きが記載されている。</li>
+            </ul>
         </ul>
       </section>
       <section>
