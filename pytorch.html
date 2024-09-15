@@ -2305,7 +2305,279 @@ plt.show()
         </section>
         <section id="mnist">
             <h2>MNIST</h2>
-            
+            <h3>問題の定義</h3>
+            <p>MNISTを使用する。</p>
+            <p>様々なパターンの手書き数字が、訓練用に６万枚、検証用に１万枚用意されていて、ディープラーニングの実習によく用いられる。</p>
+            <p>画像データは縦、横それぞれ28画素ある。画素ごとの色の濃淡は、0から255までの整数値で表される。</p>
+            <p>ただし、実習で利用するPyTorchのライブラリ経由で取得する場合は、[0, 1]の範囲の浮動小数点表現になっている。</p>
+            <p>PyTorchで取得する場合、このデータは[1, 28, 28]の３階テンソルになっている。最初の１はカラー画像を意識した色次元を意味している。</p>
+            <p>この形式の画像データは、CNNであれば、このままの状態で機械学習モデルに入力できる。</p>
+            <p>しかし、今回扱う「全結合型ニューラルネットワーク」の場合、入力は１階テンソル（ベクトル）形式になっていることが前提になる。</p>
+            <p>そこで、今回は入力データに加工を施すことで、784(28×28)要素の１次元配列に展開した形式のデータを入力とする。</p>
+            <p>数字は全部で10種類あるので、分類先のクラス数は10個である。</p>
+            <p>今回作るモデルは、入力784次元、出力10次元の隠れ層ありニューラルネットワークである。</p>
+            <h3>GPUの利用</h3>
+            <b>GPUの存在チェック</b>
+            <pre><code>
+# デバイスの割り当て
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
+            </code></pre>
+            <b>GPU利用のルール</b>
+            <p>PyTorchでGPUを利用する場合のルールは以下の通り。</p>
+            <ol>
+                <li>テンソル変数はデータがCPU / GPU上のどちらにあるのかを属性として持っている。</li>
+                <li>CPUとGPU間でデータはto関数で転送する。</li>
+                <li>２つの変数が両方ともGPU上にある場合、演算はGPUで行われる。</li>
+                <li>変数の片方がCPU、もう一方がGPUの場合、演算はエラーになる。</li>
+            </ol>
+            <h3>データ前処理</h3>
+            <p>PyTorchでは、torchvision.transformersというライブラリに、前処理に便利な部品がそろっていて、この部品を組み合わせて使うだけで、簡単に望む形式のデータへ変換できる。</p>
+            <h3>ミニバッチ学習法</h3>
+            <p>事前に決めた数でグループを作り、このグループ単位で勾配計算をする方法。グループのメンバーを選ぶ際に乱数を使うため、繰り返し処理ごとに別のグループができる。</p>
+            <p>こうすることで、勾配降下法の計算結果が局所最適化にとどまってしまうことを避けられる。</p>
+            <p>元の学習データ全件でまとめて勾配計算する方法を「バッチ学習法」と呼ぶのに対して、この学習法は「ミニバッチ学習法」と呼ばれる。</p>
+            <p>PyTorchでは、簡単にこのミニバッチ学習法が使えるデータローダーという仕組みが用意されている。</p>
+            <h3>データセットによる読み込み</h3>
+            <p>PyTorchでは、データ準備のための道具立てが行き届いている。</p>
+            <ul>
+                <li>データ入手：Dataset（データセット）</li>
+                <li>データ加工：Transforms</li>
+                <li>ミニバッチ用データセット生成：DataLoader（データローダー）</li>
+            </ul>
+            <b>データ取得</b>
+            <pre><code>
+# ライブラリインポート
+import torchvision.datasets as datasets
+
+# ダウンロード先ディレクトリ名
+data_root = './data'
+
+train_set0 = datasets.MNIST(
+    # 元データダウンロード先の指定
+    root = data_root,
+    # 訓練データか検証データか
+    train = True,
+    # 元データがない場合にダウンロードするか
+    download = True)
+            </code></pre>
+            <p>データセットクラスのインスタンスの１つであるdatasets.MNISTを利用して、train_set0という変数に読み込んでいる。</p>
+            <p>データセットクラスを使って読み込んだデータは、Pythonで手軽に扱えるようになっている。</p>
+            <p>以下のコードで、データがどのようなファイルとしてダウンロードされたかを確認する。</p>
+            <pre><code>
+# ダウンロードしたファイルの確認
+
+!ls -lR ./data/MNIST
+            </code></pre>
+            <p>読み込んだデータセットであるtrain_set0は、Pythonのリストとして、（入力データ、正解データ）のセットを順に取得できる。</p>
+            <p>以下のコードは、データセットの最初の要素を入力データimageと正解データlabelに代入し、それぞれの型をtype関数で調べたものである。</p>
+            <pre><code>
+# データ件数の確認
+print('データ件数: ', len(train_set0))
+
+# 最初の要素の取得
+image, label = train_set0[0]
+
+# データ型の確認
+print('入力データの型: ', type(image))
+print('正解データの型: ', type(label))
+            </code></pre>
+            <p>データの内容を確認する。</p>
+            <pre><code>
+# 入力データの画像表示
+
+plt.figure(figsize=(2,3))
+plt.title(f'{label}')
+plt.imshow(image, cmap='gray_r')
+plt.axis('off')
+plt.show()
+            </code></pre>
+            <p>最初の20個のデータを正解データ付きで表示してみる。</p>
+            <pre><code>
+# 正解データ付きで、最初の20個をイメージ表示
+
+plt.figure(figsize=(10, 3))
+for i in range(20):
+    ax = plt.subplot(2, 10, i + 1)
+
+    # image と labelの取得
+    image, label = train_set0[i]
+
+    # イメージ表示
+    plt.imshow(image, cmap='gray_r')
+    ax.set_title(f'{label}')
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+plt.show()
+            </code></pre>
+            <h3>Transformsによるデータ前処理</h3>
+            <b>ToTensorの利用</b>
+            <p>入力データの形式をPyTorchで扱えるテンソル形式に変換する機能。</p>
+            <pre><code>
+# ライブラリインポート
+import torchvision.transforms as transforms
+
+transform1 = transforms.Compose([
+    # データのTensor化
+    transforms.ToTensor(),
+])
+
+train_set1 = datasets.MNIST(
+    root=data_root,  train=True,  download=True,
+    transform = transform1)
+            </code></pre>
+            <p>transform1というインスタンスを定義し、その中でToTensorクラスを呼び出している。</p>
+            <p>さらに、このtransform1をtrain_setのtransformオプションとして指定している。</p>
+            <p>変換後のデータセットのうち入力データ側がどうなったかを調べる。</p>
+            <pre><code>
+# 変換結果の確認
+
+image, label = train_set1[0]
+print('入力データの型: ', type(image))
+print('入力データのshape: ', image.shape)
+print('最小値: ', image.data.min())
+print('最大値: ', image.data.max())
+            </code></pre>
+            <b>Normalizeの利用</b>
+            <p>データを正規化する。今回のデータは既に値の範囲が[0, 1]になるように正規化されているが、データ範囲を[-1, 1]に変更する。</p>
+            <p>Normalize(\(\mu, \sigma\))により、元のデータ\(x\)は\(X = \frac{x - \mu}{\sigma}\)に変換される。</p>
+            <p>\(\mu = \sigma = 0.5\)とすると、[0, 1]の範囲の値\(x\)を[-1, 1]の範囲の値\(X\)に変換できる。</p>
+            <pre><code>
+transform2 = transforms.Compose([
+    # データのTensor化
+    transforms.ToTensor(),
+
+    # データの正規化
+    transforms.Normalize(0.5,  0.5),
+])
+
+train_set2 = datasets.MNIST(
+    root = data_root,  train = True,  download = True,
+    transform = transform2)
+            </code></pre>
+            <p>Composeというクラスに複数の部品をリスト形式で渡すと、それぞれの処理を順次行うtransformを作ることができる。</p>
+            <p>以下のコードで結果を確認する。</p>
+            <pre><code>
+# 変換結果の確認
+
+image, label = train_set2[0]
+print('shape: ', image.shape)
+print('最小値: ', image.data.min())
+print('最大値: ', image.data.max())
+            </code></pre>
+            <b>Lambdaクラスを利用して１次元化</b>
+            <p>全結合ニューラルネットワークの入力にできるよう、入力変数のshapeを元の[1, 28, 28]から[784]に変更する。</p>
+            <pre><code>
+transform3 = transforms.Compose([
+    # データのTensor化
+    transforms.ToTensor(),
+
+    # データの正規化
+    transforms.Normalize(0.5, 0.5),
+
+    # Tensorの1階テンソル化
+    transforms.Lambda(lambda x: x.view(-1)),
+])
+
+train_set3 = datasets.MNIST(
+    root = data_root,  train = True,
+    download=True, transform = transform3)
+            </code></pre>
+            <p>結果を確認する。</p>
+            <pre><code>
+# 変換結果の確認
+
+image, label = train_set3[0]
+print('shape: ', image.shape)
+print('最小値: ', image.data.min())
+print('最大値: ', image.data.max())
+            </code></pre>
+            <b>最終的な実装</b>
+            <p>最終的なTransformsとデータセットの定義は以下の通り。</p>
+            <pre><code>
+# データ変換用関数 Transforms
+# (1) Imageをテンソル化
+# (2) [0, 1]の範囲の値を[-1, 1]の範囲にする
+# (3) データのshapeを[1, 28, 28]から[784]に変換
+
+transform = transforms.Compose([
+    # (1) データのテンソル化
+    transforms.ToTensor(),
+
+    # (2) データの正規化
+    transforms.Normalize(0.5, 0.5),
+
+    # (3) 1階テンソルに変換
+    transforms.Lambda(lambda x: x.view(-1)),
+])
+            </code></pre>
+            <pre><code>
+# データ取得用関数 Dataset
+
+# 訓練用データセットの定義
+train_set = datasets.MNIST(
+    root = data_root, train = True,
+    download = True, transform = transform)
+
+# 検証データセットの定義
+test_set = datasets.MNIST(
+    root = data_root, train = False,
+    download = True, transform = transform)
+            </code></pre>
+            <p>train_setとtest_setという２種類のデータセットを定義している。</p>
+            <p>インスタンス生成時のオプションであるtrain=Falseをつけると、検証データのデータセットを読みだせる。</p>
+            <h3>データローダーによるミニバッチ用データ生成</h3>
+            <pre><code>
+# ライブラリインポート
+from torch.utils.data import DataLoader
+
+# ミニバッチのサイズ指定
+batch_size = 500
+
+# 訓練用データローダー
+# 訓練用なので、シャッフルをかける
+train_loader = DataLoader(
+    train_set, batch_size = batch_size,
+    shuffle = True)
+
+# 検証用データローダー
+# 検証時にシャッフルは不要
+test_loader = DataLoader(
+    test_set,  batch_size = batch_size,
+    shuffle = False)
+            </code></pre>
+            <p>定義したデータローダーは<code2>for inputs, labels in train_loader:</code2>のような形でループを定義すると、今回の例でいうと、６万件の学習データをbatch_size（ここでは500）分の小さなグループに分けてくれる。</p>
+            <pre><code>
+# 何組のデータが取得できるか
+print(len(train_loader))
+
+# DataLoaderから最初の1セットを取得する
+for images, labels in train_loader:
+    break
+
+print(images.shape)
+print(labels.shape)
+            </code></pre>
+            <p>ここで取得したimagesとlabelsに対して、その先頭20個の画像と正解データを表示する。</p>
+            <pre><code>
+# イメージ表示
+plt.figure(figsize=(10, 3))
+for i in range(20):
+    ax = plt.subplot(2, 10, i + 1)
+
+    # numpyに変換
+    image = images[i].numpy()
+    label = labels[i]
+
+    # imgの範囲を[0, 1]に戻す
+    image2 = (image + 1)/ 2
+    # イメージ表示
+    plt.imshow(image2.reshape(28, 28),cmap='gray_r')
+    ax.set_title(f'{label}')
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+plt.show()
+            </code></pre>
         </section>
         <section id="cnn">
             <h2>CNN</h2>
