@@ -3188,15 +3188,88 @@ print(conv1.bias.shape)
 print(conv2.weight.shape)
 print(conv2.bias.shape)
             </code></pre>
+            <p>conv1とconv2のweightは４つのインデックスを持つ４階テンソルになっている。</p>
+            <p>weightのshapeの最初の要素である「32」は出力チャネル数に対応している。</p>
+            <p>２つ目の要素の「3」は入力チャネル数である。</p>
+            <p>例えば、出力チャネル１用のカーネルは「入力チャネル０用」から「入力チャネル２用」まで３枚ある。</p>
+            <p>実際の畳み込み計算をする際には、積和演算を全部で入力チャネル数回行う。</p>
+            <p>その結果をすべて加算したものが、出力チャネル１のパターンになっている。</p>
+            <p>今は特定のチャネルである「出力チャネル１」に注目したが、全体では「出力チャネル０用」から「出力チャネル３１用」まで全部で３２セット、このようなパラメータが存在する。</p>
+            <b>畳み込み処理とプーリング層のシミュレーション</b>
+            <p>入力として使うダミーデータを生成する。</p>
             <pre><code>
-
+# ダミーで入力と同じサイズのTensorを生成
+inputs = torch.randn(100, 3, 32, 32)
+print(inputs.shape)
             </code></pre>
             <pre><code>
+# CNNの前半部分をシミュレーションする
 
+x1 = conv1(inputs)
+x2 = relu(x1)
+x3 = conv2(x2)
+x4 = relu(x3)
+x5 = maxpool(x4)
             </code></pre>
             <pre><code>
+# それぞれのshapeの確認
 
+print(inputs.shape)
+print(x1.shape)
+print(x2.shape)
+print(x3.shape)
+print(x4.shape)
+print(x5.shape)
             </code></pre>
+            <p>結果の読み方は、最初の数字が学習データの件数、２番目の数字がチャネル数、３番目と４番目が、タテとヨコの画素数である。</p>
+            <b>nn.Sequential</b>
+            <p>PyTorchの中で「コンテナ（入れ物）」と呼ばれているクラスの１つ。</p>
+            <pre><code>
+# 関数定義
+features = nn.Sequential(
+    conv1,
+    relu,
+    conv2,
+    relu,
+    maxpool
+)
+            </code></pre>
+            <b>nn.Flatten</b>
+            <p>この部品の目的は、「畳み込み処理」「プーリング処理」の最中は３階テンソルの形で扱われていたデータを、線形関数（nn.Linear）で扱えるよう、１階テンソルの形に変換することである。</p>
+            <pre><code>
+# 関数定義
+flatten = nn.Flatten()
+
+# 動作テスト
+outputs2 = flatten(outputs)
+
+# 結果確認
+print(outputs.shape)
+print(outputs2.shape)
+            </code></pre>
+            <h3>共通関数の利用</h3>
+            <b>eval_loss（損失計算）</b>
+            <pre><code>
+# 損失計算用
+def eval_loss(loader, device, net, criterion):
+
+    # データローダーから最初の1セットを取得する
+    for images, labels in loader:
+        break
+
+    # デバイスの割り当て
+    inputs = images.to(device)
+    labels = labels.to(device)
+
+    # 予測計算
+    outputs = net(inputs)
+
+    #  損失計算
+    loss = criterion(outputs, labels)
+
+    return loss
+            </code></pre>
+            <p>最初にデータローダーを使って、入力データと正解データを取得し、入力データとモデルインスタンスから予測値を計算、予測値と正解データを使って損失を計算するのが、処理の流れである。</p>
         </section>
         <section id="tuning">
             <h2>Tuning</h2>
