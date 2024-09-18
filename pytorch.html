@@ -3804,25 +3804,527 @@ show_images_labels(test_loader2, classes, net, device)
         </section>
         <section id="tuning">
             <h2>Tuning</h2>
-             <pre><code>
+            <p>画像を対象とした分類型ディープラーニングモデルのチューニングの手法は大きく</p>
+            <ol>
+                <li>ニューラルネットワークの多層化</li>
+                <li>最適化関数の改善</li>
+                <li>過学習対策</li>
+            </ol>
+            <p>の３つに分類できる。</p>
+            <h3>ニューラルネットワークの多層化</h3>
+            <p>ディープラーニングでは、ネットワークの階層を深くすればするだけ、汎化能力が高く、より精度の高いモデルができる可能性がある。</p>
+            <h3>最適化関数</h3>
+            <p>最適化関数とは、損失の勾配値をもとに、どのようなアルゴリズムでパラメータを修正するかという方式を指している。</p>
+            <b>SGD（Stochastic Gradient Descent）</b>
+            <p>勾配に一定の学習率を掛けてパラメータを修正していくという、基本的な勾配降下法に基づく方式。</p>
+            <p>クラスを使わずに実装する場合の更新式は以下の通り。</p>
+            <pre><code>
+# 学習率の定義
+lr = 0.001
 
+# 勾配をもとにパラメータの更新
+W -= lr * W.grad
+B -= lr * B.grad 
+            </code></pre>
+            <b>Momentum</b>
+            <p>SGDを改善したアルゴリズムとしてMomentumがある。SGDが直近の勾配値しかパラメータ更新に利用しないのに対して、Momentumは過去の勾配値も記憶して、その分もパラメータを一定比率で減らしつつパラメータ更新に利用する。</p>
+            <p>PyTorchでMomentumを利用するには、次のコードのように、クラスとしてはoptim.SGDを利用しつつmomentumのパラメータ値だけ指定する。</p>
+            <pre><code>
+optimizer = optim.SGD(net.parameters(), lr=lr, momentum=0.9)
+            </code></pre>
+            <b>Adam</b>
+            <p>AdamはMomentumをはじめ、多数のアルゴリズムのいいところをすべて取り入れて実装したようなイメージ。</p>
+            <pre><code>
+optimizer = optim.Adam(net.parameters())
+            </code></pre>
+            <h3>過学習とその対応</h3>
+            <p>最もよく利用される対策法は、ドロップアウト、Batch Normalization、Data Augmentationの３つである。</p>
+            <b>ドロップアウト</b>
+            <p>ドロップアウトを用いた学習は次のような形で進められる。</p>
+            <ol>
+                <li>ニューラルネットワークを定義する際に、２つのレイヤー関数の間にドロップアウト関数を部品として追加する。ドロップアウト関数のインスタンス生成時、「ドロップアウト比率」をパラメータとして設定しておく。</li>
+                <li>学習のたびに、設定したドロップアウト比率の分だけ、ドロップアウト関数の入力となる中間テンソルからランダムにドロップアウトの対象を選び、その要素を出力しなくなる。ドロップアウトに該当した一部のテンソル要素が無い状態で学習することになる。</li>
+                <li>次の学習時には、新しい乱数により別のテンソル要素がドロップアウトの対象として選ばれる。その後の学習に関しては同様である。</li>
+                <li>学習が完了し、予測フェーズになったときは、ドロップアウトの状態をなくしてすべてのテンソル要素が参加した形で予測する。</li>
+            </ol>
+            <p>学習の回ごとに学習に参加する入力要素を入れ替えることにより、まんべんなく重み情報がいきわたり、結果的に過学習対策になると考えられている。</p>
+            <p>PyTorchでは、ドロップアウト用のレイヤー関数nn.Dropoutが用意されていて、対象のレイヤー関数間に配置することで、ドロップアウト学習ができる。</p>
+            <pre><code>
+# ドロップアウトテスト用ダミーデータの作成
+
+torch.manual_seed(123)
+inputs = torch.randn(1, 10)
+print(inputs)
             </code></pre>
             <pre><code>
+# dropout関数の定義
+dropout = nn.Dropout(0.5)
 
+# 訓練フェーズでの挙動
+dropout.train()
+print(dropout.training)
+outputs = dropout(inputs)
+print(outputs)
+
+# 予測フェーズでの挙動
+dropout.eval()
+print(dropout.training)
+outputs = dropout(inputs)
+print(outputs)
+            </code></pre>
+            <p>0でない要素では、入力値と異なる値が出力される。この挙動はオンラインドキュメントに説明されていて、「ドロップアウトの比率をpとしたとき、出力は1/(1-p)倍した値が戻される」となっている。入力値全体の平均がドロップアウト前と変わらないようにするための工夫と考えられる。</p>
+            <p>予測フェーズにおける出力は、入力と全く同じになっている。</p>
+            <b>Batch Normalization</b>
+            <p>ミニバッチ学習法をしているときに、ミニバッチの単位で、前のレイヤー関数の出力に対して正規化の処理をした後、次のレイヤー関数の入力にすると、学習効率が上がると共に過学習対策になることが発見された。このアルゴリズムをBatch Normalizationと呼ぶ。</p>
+            <p>PyTochでは、Batch Normalizationはドロップアウトと同様にレイヤー関数として部品が用意されていて、これを他のレイヤー関数間に配置することで簡単に使える。</p>
+            <p>Batch Normalization用のレイヤー関数を利用するのに必要な知識は次の通りである。</p>
+            <ul>
+                <li>畳み込み処理中はnn.BatchNorm2dを、線形関数の直後はnn.BatchNorm1dを利用する。</li>
+                <li>インスタンス生成時には、整数パラメータを１つとる。値はnn.BatchNorm2dのときは入力データのチャネル数、nn.BatchNorm1dのときは入力データの次元数。</li>
+                <li>学習対象のパラメータとしてweightとbiasを持っている。</li>
+                <li>ドロップアウト関数と同様に訓練フェーズと予測フェーズで挙動が異なる。</li>
+            </ul>
+            <b>Data Augmentation</b>
+            <p>学習前の入力データに加工を施すことで、結果的に学習データのバリエーションを増やす手法である。</p>
+            <p>モデルから見ると、繰り返しのたびに異なるパターンのデータがやってくることになるので、過学習が起きにくくなる。</p>
+            <pre><code>
+# 訓練データ用: 正規化に追加で反転とRandomErasingを実施
+transform_train = transforms.Compose([
+  transforms.RandomHorizontalFlip(p=0.5),
+  transforms.ToTensor(),
+  transforms.Normalize(0.5, 0.5),
+  transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False)
+])
+            </code></pre>
+            <p>ToTensorとNormalizeに追加して、RandomHolizontalFlip（ランダムに左右を反転させる）と、RandomErasing（ランダムに矩形領域を削除する）の機能を使っている。</p>
+            <p>PyTorchの場合、このようにTransformsを差し替えるだけで、あとは全く同じコードを使って、Data Augmentaion後のデータを訓練データとして利用した学習ができる。</p>
+            <h3>共通関数のライブラリ化</h3>
+            <pre><code>
+# 共通関数のダウンロード
+!git clone https://github.com/makaishi2/pythonlibs.git
+
+# 共通関数のロード
+from pythonlibs.torch_lib1 import *
+
+# 共通関数の存在チェック
+print(README)
+            </code></pre>
+            <p>このコードの先頭では、OSコマンドの１つであるgit cloneコマンドを呼び出している。</p>
+            <h3>階層を深くしたモデルの実装</h3>
+            <p>畳み込み関数が６層、プーリング関数が３層のモデルを作る。</p>
+            <b>クラス定義</b>
+            <pre><code>
+class CNN_v2(nn.Module):
+    def __init__(self, num_classes):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 32, 3, padding=(1,1))
+        self.conv2 = nn.Conv2d(32, 32, 3, padding=(1,1))
+        self.conv3 = nn.Conv2d(32, 64, 3, padding=(1,1))
+        self.conv4 = nn.Conv2d(64, 64, 3, padding=(1,1))
+        self.conv5 = nn.Conv2d(64, 128, 3, padding=(1,1))
+        self.conv6 = nn.Conv2d(128, 128, 3, padding=(1,1))
+        self.relu = nn.ReLU(inplace=True)
+        self.flatten = nn.Flatten()
+        self.maxpool = nn.MaxPool2d((2,2))
+        self.l1 = nn.Linear(4*4*128, 128)
+        self.l2 = nn.Linear(128, num_classes)
+
+        self.features = nn.Sequential(
+            self.conv1,
+            self.relu,
+            self.conv2,
+            self.relu,
+            self.maxpool,
+            self.conv3,
+            self.relu,
+            self.conv4,
+            self.relu,
+            self.maxpool,
+            self.conv5,
+            self.relu,
+            self.conv6,
+            self.relu,
+            self.maxpool,
+            )
+
+        self.classifier = nn.Sequential(
+            self.l1,
+            self.relu,
+            self.l2
+        )
+
+    def forward(self, x):
+        x1 = self.features(x)
+        x2 = self.flatten(x1)
+        x3 = self.classifier(x2)
+        return x3
+            </code></pre>
+            <p><code2>nn.Conv2d(3, 32, 3, padding=(1,1))</code2>のように、paddingオプションを指定している。</p>
+            <p>paddingオプションなしにカーネルサイズ3×3の畳み込み関数を適用すると、出力テンソルは入力テンソルと比較して２要素分小さくなる。</p>
+            <p>paddingとは「入力テンソルの外側をダミーデータで埋める」ということを意味していて、(1,1)の大きさでpaddingすることで、結果的に入力テンソルと同じ要素数の出力テンソルが得られる。</p>
+            <p>計算グラフを可視化する。</p>
+            <pre><code>
+# 損失関数のグラフ表示
+net = CNN_v2(n_output).to(device)
+criterion = nn.CrossEntropyLoss()
+loss = eval_loss(test_loader, device, net, criterion)
+g = make_dot(loss, params=dict(net.named_parameters()))
+display(g)
+            </code></pre>
+            <b>インスタンス生成</b>
+            <p>新しいクラス（CNN_v2）からのインスタンスの生成は以下の通り。</p>
+            <pre><code>
+# 乱数の固定化
+torch_seed()
+
+# モデルインスタンス生成
+lr = 0.01
+net = CNN_v2(n_output).to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(net.parameters(), lr=lr)
+history = np.zeros((0, 5))
+            </code></pre>
+            <b>学習</b>
+            <pre><code>
+# 学習
+
+num_epochs = 50
+history = fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history)
+            </code></pre>
+            <p>層の深いモデルに対しては、最適化関数もなんらかの工夫が必要である。</p>
+            <p>結果を可視化してみる。</p>
+            <pre><code>
+evaluate_history(history)
+            </code></pre>
+            <h3>最適化関数の選択</h3>
+            <p>最適化関数だけMomentumに差し替える。</p>
+            <pre><code>
+# 乱数の固定化
+torch_seed()
+
+# モデルインスタンス生成
+lr = 0.01
+net = CNN_v2(n_output).to(device)
+criterion = nn.CrossEntropyLoss()
+# 最適化関数にmomentumを指定
+optimizer = optim.SGD(net.parameters(), lr=lr, momentum=0.9)
+history2 = np.zeros((0, 5))
             </code></pre>
             <pre><code>
+# 学習
 
+num_epochs = 20
+history2 = fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history2)
             </code></pre>
             <pre><code>
+evaluate_history(history2)
+            </code></pre>
+            <p>Adamの場合は以下の通り。</p>
+            <pre><code>
+# 乱数の固定化
+torch_seed()
 
+# モデルインスタンス生成
+net = CNN_v2(n_output).to(device)
+criterion = nn.CrossEntropyLoss()
+# 最適化関数にAdamを指定
+optimizer = optim.Adam(net.parameters())
+history3 = np.zeros((0, 5))
             </code></pre>
             <pre><code>
+print(optimizer)
+            </code></pre>
+            <pre><code>
+# 学習
 
+num_epochs = 20
+history3 = fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history3)
+            </code></pre>
+            <pre><code>
+evaluate_history(history3)
+            </code></pre>
+            <p>結果を比較してみる。</p>
+            <pre><code>
+# 結果の比較(検証データへの精度)
+plt.figure(figsize=(9,8))
+plt.plot(history[:,0], history[:,4], label='SGD', c='k',ls='dashed' )
+plt.plot(history2[:,0], history2[:,4], label='SGD momentum=0.9', c='k')
+plt.plot(history3[:,0], history3[:,4], label='Adam', c='b')
+plt.title('最適化関数　比較結果（検証データへの精度）')
+plt.xlabel('繰り返し回数')
+plt.ylabel('精度')
+plt.legend()
+plt.show()
+            </code></pre>
+            <p>Adamが最も良いことが分かる。</p>
+            <h3>ドロップアウト</h3>
+            <pre><code>
+# 予測クラスの定義
+
+class CNN_v3(nn.Module):
+    def __init__(self, num_classes):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 32, 3, padding=(1,1))
+        self.conv2 = nn.Conv2d(32, 32, 3, padding=(1,1))
+        self.conv3 = nn.Conv2d(32, 64, 3, padding=(1,1))
+        self.conv4 = nn.Conv2d(64, 64, 3, padding=(1,1))
+        self.conv5 = nn.Conv2d(64, 128, 3, padding=(1,1))
+        self.conv6 = nn.Conv2d(128, 128, 3, padding=(1,1))
+        self.relu = nn.ReLU(inplace=True)
+        self.flatten = nn.Flatten()
+        self.maxpool = nn.MaxPool2d((2,2))
+        self.l1 = nn.Linear(4*4*128, 128)
+        self.l2 = nn.Linear(128, num_classes)
+        self.dropout1 = nn.Dropout(0.2)
+        self.dropout2 = nn.Dropout(0.3)
+        self.dropout3 = nn.Dropout(0.4)
+
+        self.features = nn.Sequential(
+            self.conv1,
+            self.relu,
+            self.conv2,
+            self.relu,
+            self.maxpool,
+            self.dropout1,
+            self.conv3,
+            self.relu,
+            self.conv4,
+            self.relu,
+            self.maxpool,
+            self.dropout2,
+            self.conv5,
+            self.relu,
+            self.conv6,
+            self.relu,
+            self.maxpool,
+            self.dropout3,
+            )
+
+        self.classifier = nn.Sequential(
+            self.l1,
+            self.relu,
+            self.dropout3,
+            self.l2
+        )
+
+    def forward(self, x):
+        x1 = self.features(x)
+        x2 = self.flatten(x1)
+        x3 = self.classifier(x2)
+        return x3
+            </code></pre>
+            <pre><code>
+# 損失関数のグラフ表示
+net = CNN_v3(n_output).to(device)
+criterion = nn.CrossEntropyLoss()
+loss = eval_loss(test_loader, device, net, criterion)
+g = make_dot(loss, params=dict(net.named_parameters()))
+display(g)
+            </code></pre>
+            <pre><code>
+# 乱数の固定化
+torch_seed()
+
+# モデルインスタンス生成
+net = CNN_v3(n_output).to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(net.parameters())
+history = np.zeros((0, 5))
+            </code></pre>
+            <pre><code>
+# 学習
+
+num_epochs = 50
+history = fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history)
+            </code></pre>
+            <pre><code>
+evaluate_history(history)
+            </code></pre>
+            <p>ドロップアウトを導入することで過学習に対しては強くなったが、学習にかかる時間がより長くなっていることが分かる。</p>
+            <h3>Batch Normalization</h3>
+            <pre><code>
+class CNN_v4(nn.Module):
+    def __init__(self, num_classes):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 32, 3, padding=(1,1))
+        self.conv2 = nn.Conv2d(32, 32, 3, padding=(1,1))
+        self.conv3 = nn.Conv2d(32, 64, 3, padding=(1,1))
+        self.conv4 = nn.Conv2d(64, 64, 3, padding=(1,1))
+        self.conv5 = nn.Conv2d(64, 128, 3, padding=(1,1))
+        self.conv6 = nn.Conv2d(128, 128, 3, padding=(1,1))
+        self.relu = nn.ReLU(inplace=True)
+        self.flatten = nn.Flatten()
+        self.maxpool = nn.MaxPool2d((2,2))
+        self.l1 = nn.Linear(4*4*128, 128)
+        self.l2 = nn.Linear(128, num_classes)
+        self.dropout1 = nn.Dropout(0.2)
+        self.dropout2 = nn.Dropout(0.3)
+        self.dropout3 = nn.Dropout(0.4)
+        self.bn1 = nn.BatchNorm2d(32)
+        self.bn2 = nn.BatchNorm2d(32)
+        self.bn3 = nn.BatchNorm2d(64)
+        self.bn4 = nn.BatchNorm2d(64)
+        self.bn5 = nn.BatchNorm2d(128)
+        self.bn6 = nn.BatchNorm2d(128)
+
+        self.features = nn.Sequential(
+            self.conv1,
+            self.bn1,
+            self.relu,
+            self.conv2,
+            self.bn2,
+            self.relu,
+            self.maxpool,
+            self.dropout1,
+            self.conv3,
+            self.bn3,
+            self.relu,
+            self.conv4,
+            self.bn4,
+            self.relu,
+            self.maxpool,
+            self.dropout2,
+            self.conv5,
+            self.bn5,
+            self.relu,
+            self.conv6,
+            self.bn6,
+            self.relu,
+            self.maxpool,
+            self.dropout3,
+            )
+
+        self.classifier = nn.Sequential(
+            self.l1,
+            self.relu,
+            self.dropout3,
+            self.l2
+        )
+
+    def forward(self, x):
+        x1 = self.features(x)
+        x2 = self.flatten(x1)
+        x3 = self.classifier(x2)
+        return x3
+            </code></pre>
+            <p>PyTorchで畳込み処理中にBatch Normalization関数を入れる場合、nn.BatchNorm2dというクラスを利用する。</p>
+            <p>インスタンス生成時のパラメータは、画像のチャネルがいくつあるかを示すものである。</p>
+            <p>BN関数利用時に注意しないといけないのは、この部品は単なる関数ではなく、自分自身もパラメータを持っていて、学習対象の一部になっている点である。</p>
+            <p>そのため、インスタンスを定義する際に、チャネル数が同じだからといって使いまわして良いわけはなく、使う場所ごとに別のインスタンスを定義しなければならない。</p>
+            <pre><code>
+# 乱数の固定化
+torch_seed()
+
+# モデルインスタンス生成
+net = CNN_v4(n_output).to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(net.parameters())
+history = np.zeros((0, 5))
+            </code></pre>
+            <pre><code>
+# 学習
+
+num_epochs = 50
+history = fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history)
+            </code></pre>
+            <pre><code>
+evaluate_history(history)
+            </code></pre>
+            <h3>Data Augmentation</h3>
+            <p>PyTorchでData Augmentationする場合、Transformsにその機能を追加すればよい。</p>
+            <pre><code>
+# 訓練データ用: 正規化に追加で反転とRandomErasingを実施
+transform_train = transforms.Compose([
+  transforms.RandomHorizontalFlip(p=0.5),
+  transforms.ToTensor(),
+  transforms.Normalize(0.5, 0.5),
+  transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False)
+])
+            </code></pre>
+            <p>RandomHorizontalFlipはランダムに左右反転する処理、RandomErasingはランダムに部分領域を削除する処理である。</p>
+            <p>実際の利用時には、上で定義した新しいTransformsを受けて、新しいデータセットと新しいデータローダーを順に定義していく。</p>
+            <pre><code>
+# transfrom_trainを利用したデータセットの定義
+train_set2 = datasets.CIFAR10(
+    root = data_root, train = True,
+    download = True, transform = transform_train)
+
+# traisform_trainを利用したデータローダーの定義
+batch_size = 100
+train_loader2 = DataLoader(train_set2, batch_size=batch_size, shuffle=True)
+            </code></pre>
+            <p>今定義した新しいデータローダーで本当に望む加工がされているか実際に確認してみる。</p>
+            <pre><code>
+# 新しい訓練用データの先頭50個を表示してみる
+
+# 乱数初期化
+torch_seed()
+
+show_images_labels(train_loader2, classes, None, None)
+            </code></pre>
+            <p>この新しい訓練データを使って学習を行なう。</p>
+            <pre><code>
+# 乱数の固定化
+torch_seed()
+
+# モデルインスタンス生成
+net = CNN_v4(n_output).to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(net.parameters())
+history = np.zeros((0, 5))
+            </code></pre>
+            <pre><code>
+# 学習
+# 同じモデルでtrain_loader2に変更
+
+num_epochs = 100
+history = fit(net, optimizer, criterion, num_epochs,
+        train_loader2, test_loader, device, history)
+            </code></pre>
+            <p>ドロップアウト関数のときと同じで、Data Augmentationも過学習対策として有効な反面、学習回数がより多く必要になる。</p>
+            <pre><code>
+evaluate_history(history)
+            </code></pre>
+            <p>モデル自体に手を加えず、既存の訓練データを加工することで、モデルの精度が上がることを確認できる。</p>
+            <p>検証データの先頭50個で、どの程度正しく認識できているか確認する。</p>
+            <pre><code>
+show_images_labels(test_loader, classes, net, device)
+            </code></pre>
+            <p>正解：car、予測：truckと間違えた38番目のデータの確率値を確認してみる。</p>
+            <pre><code>
+# 間違えた38番目のデータを抽出
+for images, labels in test_loader:
+    break
+image = images[37]
+label = labels[37]
+
+# イメージを表示して確認
+plt.figure(figsize=(3,3))
+w = image.numpy().copy()
+w2 = np.transpose(w, (1, 2, 0))
+w3 = (w2 + 1)/2
+plt.title(classes[label])
+plt.imshow(w3)
+plt.show()
+            </code></pre>
+            <pre><code>
+# 予測値を取得
+image = image.view(1, 3, 32, 32)
+image = image.to(device)
+output = net(image)
+
+# ラベル別の確率値を表示
+probs = torch.softmax(output, dim=1)
+probs_np = probs.data.to('cpu').numpy()[0]
+values = np.frompyfunc(lambda x: f'{x:.04f}', 1, 1)(probs_np)
+names = np.array(classes)
+tbl = np.array([names, values]).T
+print(tbl)
             </code></pre>
         </section>
         <section id="pretrain">
             <h2>Pretrained Model</h2>
-             <pre><code>
+            <pre><code>
 
             </code></pre>
             <pre><code>
