@@ -3379,7 +3379,428 @@ def fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device
             </code></pre>
             <p>netというモデルインスタンスに対して、訓練フェーズ、予測フェーズそれぞれの先頭でnet.train(), net.eval()という関数を呼び出している。この２つの関数はモデルクラスを定義する際に利用している親クラスnn.Moduleで定義されている。</p>
             <p>ドロップアウト関数（nn.Dropout）やBN関数（nn.BatchNorm2d）というレイヤー関数では、それぞれの関数に対して「今は訓練フェーズ」「今は予測フェーズ」という違いを教えてあげる必要がある。</p>
-            
+            <b>evaluate_history（学習ログ）</b>
+            <p>学習結果の評価に関しては、</p>
+            <ul>
+                <li>historyの先頭と最後をprint関数で表示して学習結果の概要を表示</li>
+                <li>学習曲線を損失、精度の２つで表示</li>
+            </ul>
+            <p>というのが、今までのパターンだったが、この典型的な評価パターンをまとめて行う関数が、evaluate_historyの役割である。</p>
+            <p>引数はhistoryだけでよい。</p>
+            <pre><copde>
+# 学習ログ解析
+
+def evaluate_history(history):
+    #損失と精度の確認
+    print(f'初期状態: 損失: {history[0,3]:.5f} 精度: {history[0,4]:.5f}')
+    print(f'最終状態: 損失: {history[-1,3]:.5f} 精度: {history[-1,4]:.5f}' )
+
+    num_epochs = len(history)
+    unit = num_epochs / 10
+
+    # 学習曲線の表示 (損失)
+    plt.figure(figsize=(9,8))
+    plt.plot(history[:,0], history[:,1], 'b', label='訓練')
+    plt.plot(history[:,0], history[:,3], 'k', label='検証')
+    plt.xticks(np.arange(0,num_epochs+1, unit))
+    plt.xlabel('繰り返し回数')
+    plt.ylabel('損失')
+    plt.title('学習曲線(損失)')
+    plt.legend()
+    plt.show()
+
+    # 学習曲線の表示 (精度)
+    plt.figure(figsize=(9,8))
+    plt.plot(history[:,0], history[:,2], 'b', label='訓練')
+    plt.plot(history[:,0], history[:,4], 'k', label='検証')
+    plt.xticks(np.arange(0,num_epochs+1,unit))
+    plt.xlabel('繰り返し回数')
+    plt.ylabel('精度')
+    plt.title('学習曲線(精度)')
+    plt.legend()
+    plt.show()
+            </copde></pre>
+            <b>show_images_labels（予測結果表示）</b>
+            <p>事前学習済みモデルで正しい予測ができているかを、元データのイメージ表示とともに行う。また、モデルを作る前に、イメージとラベルだけを表示することもできる。</p>
+            <p>対象はデータローダーで取得される先頭50件のデータになる。</p>
+            <p>引数は次の４つである。</p>
+            <ul>
+                <li>loader : 検証用データローダー</li>
+                <li>classes : 正解データに対応するラベル値のリスト</li>
+                <li>net : 予測対象の事前学習済みモデルインスタンス。Noneを渡すと正解データのみ表示でき、学習前にデータの様子を確認したいときに使う。</li>
+                <li>device : 予測計算に利用するデバイス。予測結果も表示するときにのみ利用する。</li>
+            </ul>
+            <pre><code>
+# イメージとラベル表示
+def show_images_labels(loader, classes, net, device):
+
+    # データローダーから最初の1セットを取得する
+    for images, labels in loader:
+        break
+    # 表示数は50個とバッチサイズのうち小さい方
+    n_size = min(len(images), 50)
+
+    if net is not None:
+      # デバイスの割り当て
+      inputs = images.to(device)
+      labels = labels.to(device)
+
+      # 予測計算
+      outputs = net(inputs)
+      predicted = torch.max(outputs,1)[1]
+      #images = images.to('cpu')
+
+    # 最初のn_size個の表示
+    plt.figure(figsize=(20, 15))
+    for i in range(n_size):
+        ax = plt.subplot(5, 10, i + 1)
+        label_name = classes[labels[i]]
+        # netがNoneでない場合は、予測結果もタイトルに表示する
+        if net is not None:
+          predicted_name = classes[predicted[i]]
+          # 正解かどうかで色分けをする
+          if label_name == predicted_name:
+            c = 'k'
+          else:
+            c = 'b'
+          ax.set_title(label_name + ':' + predicted_name, c=c, fontsize=20)
+        # netがNoneの場合は、正解ラベルのみ表示
+        else:
+          ax.set_title(label_name, fontsize=20)
+        # TensorをNumPyに変換
+        image_np = images[i].numpy().copy()
+        # 軸の順番変更 (channel, row, column) -> (row, column, channel)
+        img = np.transpose(image_np, (1, 2, 0))
+        # 値の範囲を[-1, 1] -> [0, 1]に戻す
+        img = (img + 1)/2
+        # 結果表示
+        plt.imshow(img)
+        ax.set_axis_off()
+    plt.show()
+            </code></pre>
+            <b>torch_seed（乱数初期化）</b>
+            <pre><code>
+# PyTorch乱数固定用
+
+def torch_seed(seed=123):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.use_deterministic_algorithms = True
+            </code></pre>
+            <p>PyTorchでは、GPUを使って計算した場合、乱数の種を指定しただけでは結果が同じにならないことがある。その事象を避けるためにプロパティを設定する最後の２行を追加している。</p>
+            <h3>データ準備</h3>
+            <b>Transforms定義</b>
+            <p>データ前処理に関しては、その後で２通りのモデルを作ることを想定して１階テンソル版、３階テンソル版の２バージョンを用意する。</p>
+            <pre><code>
+# Transformsの定義
+
+# transformer1 1階テンソル化
+
+transform1 = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize(0.5, 0.5),
+    transforms.Lambda(lambda x: x.view(-1)),
+])
+
+# transformer2 正規化のみ実施
+
+# 検証データ用 : 正規化のみ実施
+transform2 = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize(0.5, 0.5),
+])
+            </code></pre>
+            <p>transform1が全結合型ニューラルネットワーク用、transform2がCNN用になる。</p>
+            <b>データセット定義</b>
+            <pre><code>
+# データ取得用関数 Datasets
+
+data_root = './data'
+
+# 訓練データセット 1階テンソル版
+train_set1 = datasets.CIFAR10(
+    root = data_root, train = True,
+    download = True, transform = transform1)
+
+# 検証データセット 1階テンソル版
+test_set1 = datasets.CIFAR10(
+    root = data_root, train = False,
+    download = True, transform = transform1)
+
+# 訓練データセット 3階テンソル版
+train_set2 = datasets.CIFAR10(
+    root =  data_root, train = True,
+    download = True, transform = transform2)
+
+# 検証データセット 3階テンソル版
+test_set2 = datasets.CIFAR10(
+    root = data_root, train = False,
+    download = True, transform = transform2)
+            </code></pre>
+            <p>データセットのshapeを確認する。</p>
+            <pre><code>
+image1, label1 = train_set1[0]
+image2, label2 = train_set2[0]
+
+print(image1.shape)
+print(image2.shape)
+            </code></pre>
+            <b>データローダー定義</b>
+            <pre><code>
+# データローダーの定義
+
+# ミニバッチのサイズ指定
+batch_size = 100
+
+# 訓練用データローダー
+# 訓練用なので、シャッフルをかける
+train_loader1 = DataLoader(train_set1, batch_size=batch_size, shuffle=True)
+
+# 検証用データローダー
+# 検証時にシャッフルは不要
+test_loader1 = DataLoader(test_set1,  batch_size=batch_size, shuffle=False)
+
+# 訓練用データローダー
+# 訓練用なので、シャッフルをかける
+train_loader2 = DataLoader(train_set2, batch_size=batch_size, shuffle=True)
+
+# 検証用データローダー
+# 検証時にシャッフルは不要
+test_loader2 = DataLoader(test_set2,  batch_size=batch_size, shuffle=False)
+            </code></pre>
+            <p>意図したデータができているか、確認する。</p>
+            <pre><code>
+# train_loader1から1セット取得
+for images1, labels1 in train_loader1:
+    break
+
+# train_loader2から1セット取得
+for images2, labels2 in train_loader2:
+    break
+
+# それぞれのshape確認
+print(images1.shape)
+print(images2.shape)
+            </code></pre>
+            <b>検証データのイメージ表示</b>
+            <p>検証データをtest_loader2から読み取り、先頭50個のイメージを表示してみる。</p>
+            <pre><code>
+# 正解ラベル定義
+classes = ('plane', 'car', 'bird', 'cat',
+           'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+
+# 検証データ最初の50個の表示
+show_images_labels(test_loader2, classes, None, None)
+            </code></pre>
+            <h3>モデル定義（全結合版）</h3>
+            <b>学習用パラメータ設定</b>
+            <pre><code>
+# 入力次元数 今回は3*32*32=3072
+n_input = image1.view(-1).shape[0]
+
+# 出力次元数
+# 分類先クラス数　今回は10になる
+n_output = len(classes)
+
+# 隠れ層のノード数
+n_hidden = 128
+
+# 結果確認
+print(f'n_input: {n_input}  n_hidden: {n_hidden} n_output: {n_output}')
+            </code></pre>
+            <pre><code>
+# モデルの定義
+# 3072入力10出力1隠れ層のニューラルネットワークモデル
+
+class Net(nn.Module):
+    def __init__(self, n_input, n_output, n_hidden):
+        super().__init__()
+
+        # 隠れ層の定義 (隠れ層のノード数: n_hidden)
+        self.l1 = nn.Linear(n_input, n_hidden)
+
+        # 出力層の定義
+        self.l2 = nn.Linear(n_hidden, n_output)
+
+        # ReLU関数の定義
+        self.relu = nn.ReLU(inplace=True)
+
+    def forward(self, x):
+        x1 = self.l1(x)
+        x2 = self.relu(x1)
+        x3 = self.l2(x2)
+        return x3
+            </code></pre>
+            <b>モデルインスタンス生成とGPUの割り当て</b>
+            <pre><code>
+# モデルインスタンス生成
+net = Net(n_input, n_output, n_hidden).to(device)
+
+# 損失関数： 交差エントロピー関数
+criterion = nn.CrossEntropyLoss()
+
+# 学習率
+lr = 0.01
+
+# 最適化関数: 勾配降下法
+optimizer = torch.optim.SGD(net.parameters(), lr=lr)
+            </code></pre>
+            <pre><code>
+# モデルの概要表示
+
+print(net)
+            </code></pre>
+            <pre><code>
+# モデルのサマリー表示
+
+summary(net, (100,3072),depth=1)
+            </code></pre>
+            <pre><code>
+# 損失計算
+loss = eval_loss(test_loader1, device, net, criterion)
+
+# 損失の計算グラフ可視化
+g = make_dot(loss, params=dict(net.named_parameters()))
+display(g)
+            </code></pre>
+            <h3>結果（全結合版）</h3>
+            <b>学習</b>
+            <pre><code>
+# 乱数初期化
+torch_seed()
+
+# モデルインスタンス生成
+net = Net(n_input, n_output, n_hidden).to(device)
+
+# 損失関数： 交差エントロピー関数
+criterion = nn.CrossEntropyLoss()
+
+# 学習率
+lr = 0.01
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+
+# 繰り返し回数
+num_epochs = 50
+
+# 評価結果記録用
+history = np.zeros((0,5))
+
+# 学習
+history = fit(net, optimizer, criterion, num_epochs, train_loader1, test_loader1, device, history)
+            </code></pre>
+            <b>評価</b>
+            <pre><code>
+# 評価
+
+evaluate_history(history)
+            </code></pre>
+            <h3>モデル定義（CNN版）</h3>
+            <pre><code>
+class CNN(nn.Module):
+  def __init__(self, n_output, n_hidden):
+    super().__init__()
+    self.conv1 = nn.Conv2d(3, 32, 3)
+    self.conv2 = nn.Conv2d(32, 32, 3)
+    self.relu = nn.ReLU(inplace=True)
+    self.maxpool = nn.MaxPool2d((2,2))
+    self.flatten = nn.Flatten()
+    self.l1 = nn.Linear(6272, n_hidden)
+    self.l2 = nn.Linear(n_hidden, n_output)
+
+    self.features = nn.Sequential(
+        self.conv1,
+        self.relu,
+        self.conv2,
+        self.relu,
+        self.maxpool)
+
+    self.classifier = nn.Sequential(
+       self.l1,
+       self.relu,
+       self.l2)
+
+  def forward(self, x):
+    x1 = self.features(x)
+    x2 = self.flatten(x1)
+    x3 = self.classifier(x2)
+    return x3
+            </code></pre>
+            <b>モデルインスタンスの生成</b>
+            <pre><code>
+# モデルインスタンス生成
+net = CNN(n_output, n_hidden).to(device)
+
+# 損失関数： 交差エントロピー関数
+criterion = nn.CrossEntropyLoss()
+
+# 学習率
+lr = 0.01
+
+# 最適化関数: 勾配降下法
+optimizer = torch.optim.SGD(net.parameters(), lr=lr)
+            </code></pre>
+            <b>モデルの概要表示</b>
+            <pre><code>
+# モデルの概要表示
+
+print(net)
+            </code></pre>
+            <pre><code>
+# モデルのサマリー表示
+
+summary(net,(100,3,32,32),depth=1)
+            </code></pre>
+            <pre><code>
+# 損失計算
+loss = eval_loss(test_loader2, device, net, criterion)
+
+# 損失の計算グラフ可視化
+g = make_dot(loss, params=dict(net.named_parameters()))
+display(g)
+            </code></pre>
+            <h3>結果（CNN版）</h3>
+            <b>モデル初期化と学習</b>
+            <pre><code>
+# 乱数初期化
+torch_seed()
+
+# モデルインスタンス生成
+net = CNN(n_output, n_hidden).to(device)
+
+# 損失関数： 交差エントロピー関数
+criterion = nn.CrossEntropyLoss()
+
+# 学習率
+lr = 0.01
+
+# 最適化関数: 勾配降下法
+optimizer = optim.SGD(net.parameters(), lr=lr)
+
+# 繰り返し回数
+num_epochs = 50
+
+# 評価結果記録用
+history2 = np.zeros((0,5))
+
+# 学習
+history2 = fit(net, optimizer, criterion, num_epochs, train_loader2, test_loader2, device, history2)
+            </code></pre>
+            <p>モデルインスタンス生成時のパラメータからn_inputがなくなっている。</p>
+            <p>これは、全結合版では、先頭の線形関数の重み行列は入力データの件数に合わせてあらかじめ用意しておく必要があり、それがパラメータになっていたが、CNNでは固定長のカーネル行列を用意しておくだけなので、どんな大きさの入力でも受け取れるからである。</p>
+            <b>評価</b>
+            <pre><code>
+# 評価
+
+evaluate_history(history2)
+            </code></pre>
+            <pre><code>
+# 最初の50個の表示
+
+show_images_labels(test_loader2, classes, net, device)
+            </code></pre>
         </section>
         <section id="tuning">
             <h2>Tuning</h2>
