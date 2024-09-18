@@ -3270,6 +3270,116 @@ def eval_loss(loader, device, net, criterion):
     return loss
             </code></pre>
             <p>最初にデータローダーを使って、入力データと正解データを取得し、入力データとモデルインスタンスから予測値を計算、予測値と正解データを使って損失を計算するのが、処理の流れである。</p>
+            <b>fit（学習）</b>
+            <p>呼び出し時の引数は次の８つである。</p>
+            <ul>
+                <li>net : 学習対象のモデルインスタンス</li>
+                <li>optimizer : 最適化関数のインスタンス</li>
+                <li>criterion : 損失関数のインスタンス</li>
+                <li>num_epochs : 繰り返し数</li>
+                <li>train_loader : 訓練用のデータローダー</li>
+                <li>test_loader : 検証用のデータローダー</li>
+                <li>device : GPU or CPU</li>
+                <li>history : これまでのhistory</li>
+            </ul>
+            <p>戻り値はhistoryで、（繰り返し回数、訓練損失、訓練精度、検証損失、損失精度）の２次元配列をNumPy形式で返す。</p>
+            <p>このfit関数では、引数historyに今までのhistoryを渡すことで、「追加学習」の扱いで過去分も追加したhistoryを生成してくれる。</p>
+            <pre><code>
+# 学習用関数
+def fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history):
+
+    # tqdmライブラリのインポート
+    from tqdm.notebook import tqdm
+
+    base_epochs = len(history)
+
+    for epoch in range(base_epochs, num_epochs+base_epochs):
+        # 1エポックあたりの正解数(精度計算用)
+        n_train_acc, n_val_acc = 0, 0
+        # 1エポックあたりの累積損失(平均化前)
+        train_loss, val_loss = 0, 0
+        # 1エポックあたりのデータ累積件数
+        n_train, n_test = 0, 0
+
+        #訓練フェーズ
+        net.train()
+
+        for inputs, labels in tqdm(train_loader):
+            # 1バッチあたりのデータ件数
+            train_batch_size = len(labels)
+            # 1エポックあたりのデータ累積件数
+            n_train += train_batch_size
+
+            # GPUヘ転送
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+
+            # 勾配の初期化
+            optimizer.zero_grad()
+
+            # 予測計算
+            outputs = net(inputs)
+
+            # 損失計算
+            loss = criterion(outputs, labels)
+
+            # 勾配計算
+            loss.backward()
+
+            # パラメータ修正
+            optimizer.step()
+
+            # 予測ラベル導出
+            predicted = torch.max(outputs, 1)[1]
+
+            # 平均前の損失と正解数の計算
+            # lossは平均計算が行われているので平均前の損失に戻して加算
+            train_loss += loss.item() * train_batch_size
+            n_train_acc += (predicted == labels).sum().item()
+
+        #予測フェーズ
+        net.eval()
+
+        for inputs_test, labels_test in test_loader:
+            # 1バッチあたりのデータ件数
+            test_batch_size = len(labels_test)
+            # 1エポックあたりのデータ累積件数
+            n_test += test_batch_size
+
+            # GPUヘ転送
+            inputs_test = inputs_test.to(device)
+            labels_test = labels_test.to(device)
+
+            # 予測計算
+            outputs_test = net(inputs_test)
+
+            # 損失計算
+            loss_test = criterion(outputs_test, labels_test)
+
+            # 予測ラベル導出
+            predicted_test = torch.max(outputs_test, 1)[1]
+
+            #  平均前の損失と正解数の計算
+            # lossは平均計算が行われているので平均前の損失に戻して加算
+            val_loss +=  loss_test.item() * test_batch_size
+            n_val_acc +=  (predicted_test == labels_test).sum().item()
+
+        # 精度計算
+        train_acc = n_train_acc / n_train
+        val_acc = n_val_acc / n_test
+        # 損失計算
+        avg_train_loss = train_loss / n_train
+        avg_val_loss = val_loss / n_test
+        # 結果表示
+        print (f'Epoch [{(epoch+1)}/{num_epochs+base_epochs}], loss: {avg_train_loss:.5f} acc: {train_acc:.5f} val_loss: {avg_val_loss:.5f}, val_acc: {val_acc:.5f}')
+        # 記録
+        item = np.array([epoch+1, avg_train_loss, train_acc, avg_val_loss, val_acc])
+        history = np.vstack((history, item))
+    return history
+            </code></pre>
+            <p>netというモデルインスタンスに対して、訓練フェーズ、予測フェーズそれぞれの先頭でnet.train(), net.eval()という関数を呼び出している。この２つの関数はモデルクラスを定義する際に利用している親クラスnn.Moduleで定義されている。</p>
+            <p>ドロップアウト関数（nn.Dropout）やBN関数（nn.BatchNorm2d）というレイヤー関数では、それぞれの関数に対して「今は訓練フェーズ」「今は予測フェーズ」という違いを教えてあげる必要がある。</p>
+            
         </section>
         <section id="tuning">
             <h2>Tuning</h2>
