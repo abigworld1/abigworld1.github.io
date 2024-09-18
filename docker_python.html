@@ -117,6 +117,13 @@ $ jupyter lab --port=7070 --allow-root --ip=0.0.0.0
 $ docker run -it -p 7070:7070 --name [コンテナ名] -v [ホスト側のパス]:[コンテナ側のパス] [イメージ名]
             </code></pre>
           </div>
+            <li>GPUを使いたいとき</li>
+            <div class="example">
+            <pre><code>
+$ docker run -p 7070:7070 -v [ホスト側のパス]:[コンテナ側のパス] --gpus all --shm-size=16g -it gcr.io/kaggle-gpu-images/python:v116 bash
+jupyter lab --port=7070 --allow-root --ip=0.0.0.0
+            </code></pre>
+          </div>
         </ul>
       </section>
     </main>
