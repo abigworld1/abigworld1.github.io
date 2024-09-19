@@ -4375,16 +4375,718 @@ print(m3.shape)
             <p>CNNのモデルを作るときに、最初の線形関数の入力次数を何らかの形で計算する必要があったが、この問題は、畳み込み処理の最終段に適合的平均プーリング関数を使うことで解決する。</p>
             <p>このような工夫をすることで、事前学習済みモデルがどのような入力画素数の画像に対しても利用できるようになっている。</p>
             <p>とはいえ、今回利用するResNet-18とVGG-19-BNはどちらも、学習時はタテヨコ224画素の画像で学習しているので、それに合わせて学習時は可能な限り入力データ画素数をこの値に合わせることが、精度向上の観点では望ましい。</p>
+            <h3>データ準備</h3>
             <pre><code>
+# 分類先クラス名の定義
 
+classes = ('plane', 'car', 'bird', 'cat',
+           'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+
+# 分類先クラス数　今回は10になる
+n_output = len(classes)
             </code></pre>
             <pre><code>
+# Transformsの定義
 
+# 学習データ用: 正規化に追加で反転とRandomErasingを実施
+transform_train = transforms.Compose([
+  transforms.Resize(112),
+  transforms.RandomHorizontalFlip(p=0.5),
+  transforms.ToTensor(),
+  transforms.Normalize(0.5, 0.5),
+  transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False)
+])
+
+# 検証データ用 : 正規化のみ実施
+transform = transforms.Compose([
+  transforms.Resize(112),
+  transforms.ToTensor(),
+  transforms.Normalize(0.5, 0.5)
+])
+            </code></pre>
+            <p>Resize(112)の呼び出しが追加されている。この機能は、元の画像を拡大・縮小して指定した画素数に変換するというものである。</p>
+            <pre><code>
+# データ取得用関数 Dataset
+
+data_root = './data'
+
+train_set = datasets.CIFAR10(
+    root = data_root, train = True,
+    download = True, transform = transform_train)
+
+# 検証データの取得
+test_set = datasets.CIFAR10(
+    root = data_root, train = False,
+    download = True, transform = transform)
+            </code></pre>
+            <pre><code>
+# バッチサイズ指定
+batch_size = 50
+
+# データローダー
+
+# 訓練用データローダー
+# 訓練用なので、シャッフルをかける
+train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
+
+# 検証用データローダー
+# 検証時にシャッフルは不要
+test_loader = DataLoader(test_set,  batch_size=batch_size, shuffle=False)
+            </code></pre>
+            <h3>ResNet-18の読み込み</h3>
+            <pre><code>
+#  必要ライブラリのロード
+from torchvision import models
+
+# 事前学習済みモデルのロード
+# pretraind = True で学習済みパラメータも一緒に読み込む
+net = models.resnet18(pretrained = True)
+            </code></pre>
+            <p>pinrt関数でこのニューラルネットワークの構造を調べてみる。</p>
+            <pre><code>
+# ネットワークの概要表示
+
+print(net)
+            </code></pre>
+            <p>summary関数を使って、中間テンソルのshapeがどのように変化していくかを確認してみる。</p>
+            <pre><code>
+# モデルのサマリー表示
+net = net.to(device)
+summary(net,(100,3,112,112))
+            </code></pre>
+            <p>モデルの最終段の線形関数fcをより詳しく確認してみる。</p>
+            <pre><code>
+print(net.fc)
+print(net.fc.in_features)
+            </code></pre>
+            <p>変数fcの実体は線形関数（nn.Linear）であり、入力（in_features）は512、出力（out_features）は1000だと分かる。</p>
+            <h3>最終レイヤー関数の付け替え</h3>
+            <p>読み込んだ直後の事前学習済みモデルは、1000種類の分類を学習タスクとしていたので、最終段の線形関数の出力は10次元で十分である。</p>
+            <p>学習方法がファインチューニングの場合も、転移学習の場合も、読み込んだ事前学習済みモデルの最終段を目的に合った線形関数に付け替える必要がある。このタスクを「最終レイヤー関数の付け替え」と呼ぶ。</p>
+            <pre><code>
+# 乱数の初期化
+torch_seed()
+
+# 最終レイヤー関数の入力次元数を確認
+fc_in_features = net.fc.in_features
+
+# 最終レイヤー関数の付け替え
+net.fc = nn.Linear(fc_in_features, n_output)
+            </code></pre>
+            <pre><code>
+# 確認
+print(net)
+            </code></pre>
+            <pre><code>
+net = net.to(device)
+summary(net,(100,3,224,224))
+            </code></pre>
+            <p>最終的に出来上がったモデルを使って損失を定義し、損失の計算グラフを可視化する。</p>
+            <pre><code>
+# 損失の計算グラフ可視化
+
+criterion = nn.CrossEntropyLoss()
+loss = eval_loss(test_loader, device, net, criterion)
+g = make_dot(loss, params=dict(net.named_parameters()))
+display(g)
+            </code></pre>
+            <h3>学習と結果評価</h3>
+            <b>初期設定</b>
+            <p>乱数初期化の後で、モデルの読み込み、ノードの付け替えを改めて行い、その後に損失関数や最適化関数を定義する。</p>
+            <pre><code>
+# 乱数の初期化
+torch_seed()
+
+# 事前学習済みモデルのロード
+# pretraind = True で学習済みパラメータも一緒に読み込む
+net = models.resnet18(pretrained = True)
+
+# 最終レイヤー関数の入力次元数を確認
+fc_in_features = net.fc.in_features
+
+# 最終レイヤー関数の付け替え
+net.fc = nn.Linear(fc_in_features, n_output)
+
+# GPUの利用
+net = net.to(device)
+
+# 学習率
+lr = 0.001
+
+# 損失関数定義
+criterion = nn.CrossEntropyLoss()
+
+# 最適化関数定義
+optimizer = optim.SGD(net.parameters(), lr=lr, momentum=0.9)
+
+# historyファイル初期化する
+history = np.zeros((0, 5))
+            </code></pre>
+            <p>事前学習済みモデルを利用する場合、各レイヤー関数のパラメータはほぼ出来上がった状態になっている。このような条件の場合は、あまり複雑な最適化関数を利用するより、シンプルなアルゴリズムが望ましいと言われている。</p>
+            <p>そこで、今回は最適化関数にはmomentumオプションを付けた状態のoptim.SGD関数を利用している。</p>
+            <b>学習</b>
+            <pre><code>
+# 学習
+num_epochs = 5
+history = fit(net, optimizer, criterion, num_epochs,
+        train_loader, test_loader, device, history)
+            </code></pre>
+            <b>結果確認</b>
+            <pre><code>
+# 結果サマリー
+evaluate_history(history)
+            </code></pre>
+            <h3>VGG-19-BNの利用</h3>
+            <b>モデルの読み込み</b>
+            <pre><code>
+# 事前学習済みモデルの読み込み
+from torchvision import models
+net = models.vgg19_bn(pretrained = True)
+            </code></pre>
+            <b>モデル構造の確認</b>
+            <pre><code>
+# モデルの確認
+print(net)
+            </code></pre>
+            <p>最終段の線形関数の詳細を確認する。</p>
+            <pre><code>
+# 最終レイヤー関数の確認
+print(net.classifier[6])
+            </code></pre>
+            <b>最終レイヤー関数の付け替え</b>
+            <pre><code>
+# 乱数の初期化
+torch_seed()
+
+# 最終レイヤー関数の付け替え
+in_features = net.classifier[6].in_features
+net.classifier[6] = nn.Linear(in_features, n_output)
+
+# features最後のMaxPool2dをはずす
+net.features = net.features[:-1]
+
+# AdaptiveAvgPool2dをはずす
+net.avgpool = nn.Identity()
+            </code></pre>
+            <p>最後の2行は、本来のノード付け替え作業には不要だが、精度に関して再現性のあるモデルを作るために必要だった処理である。</p>
+            <pre><code>
+# モデルのサマリー表示
+net = net.to(device)
+summary(net,(100,3,112,112))
+            </code></pre>
+            <b>損失の計算グラフの可視化</b>
+            <pre><code>
+# 損失の計算グラフ可視化
+
+criterion = nn.CrossEntropyLoss()
+loss = eval_loss(test_loader, device, net, criterion)
+g = make_dot(loss, params=dict(net.named_parameters()))
+display(g)
+            </code></pre>
+            <b>学習</b>
+            <pre><code>
+num_epochs = 5
+history = fit(net, optimizer, criterion, num_epochs,
+          train_loader, test_loader, device, history)
+            </code></pre>
+            <b>結果確認</b>
+            <pre><code>
+# 結果サマリー
+evaluate_history(history)
+            </code></pre>
+            <p>最後にshow_images_labels関数を使って、検証データの先頭50個のイメージ表示と予測結果を確認する。</p>
+            <pre><code>
+# イメージと正解・予測結果の表示
+show_images_labels(test_loader, classes, net, device)
+            </code></pre>
+            <h3>再現性のある機械学習モデルの作り方</h3>
+            <pre><code>
+# PyTorch乱数固定用
+def torch_seed(seed=123):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministi = True
+    torch.use_deterministic_algorithms = True
+            </code></pre>
+            <b>機械学習と乱数の関係</b>
+            <p>機械学習・ディープラーニングでは、そのアルゴリズムの中で乱数が必要な処理がいくつかある。</p>
+            <ul>
+                <li>パラメータの初期化</li>
+                <li>データローダー</li>
+                <li>ドロップアウト</li>
+                <li>Data Augmentation</li>
+            </ul>
+            <b>CPU or GPU</b>
+            <p>次のコードのように、CPUとGPUのどちらに対しても乱数の種を明示的に指定する必要がある。</p>
+            <pre><code>
+seed = 123
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+            </code></pre>
+            <b>deterministic設定</b>
+            <p>この項目をTrueに設定すると、パフォーマンスより値の再現性重視で、GPUが同じ結果を返すようになる。</p>
+            <pre><code>
+torch.backends.cudnn.deterministi = True
+torch.use_deterministic_algorithms = True
+            </code></pre>
+            <h3>汎用性のある事前学習済みモデルの作り方</h3>
+            <pre><code>
+# 乱数の初期化
+torch_seed()
+
+# 最終レイヤー関数の付け替え
+in_features = net.classifier[6].in_features
+net.classifier[6] = nn.Linear(in_features, n_output)
+
+# features最後のMaxPool2dをはずす
+net.features = net.features[:-1]
+
+# AdaptiveAvgPool2dをはずす
+net.avgpool = nn.Identity()
+            </code></pre>
+            <b>モデルの読み込みと構造の確認</b>
+            <pre><code>
+# 事前学習済みモデルの読み込み
+from torchvision import models
+net = models.vgg19_bn(pretrained = True)
+            </code></pre>
+            <pre><code>
+print(net)
+            </code></pre>
+            <b>中間テンソルの確認</b>
+            <pre><code>
+# オリジナルデータサイズの場合
+net = net.to(device)
+summary(net,(100,3,224,224))
+            </code></pre>
+            <pre><code>
+# 実習用データサイズの場合
+summary(net,(100,3,112,112))
+            </code></pre>
+            <b>MaxPool2d-53を落とす</b>
+            <pre><code>
+# featuresの最後の要素(MaxPool2d)を落とす
+net.features = net.features[:-1]
+print(net.features)
+            </code></pre>
+            <b>AdaptiveAvgPool2d-54を落とす</b>
+            <pre><code>
+# avgpoolに入っているAdaptiveAvgPool2dを何もしない関数(nn.Identity)に置き換え
+net.avgpool = nn.Identity()
             </code></pre>
         </section>
         <section id="custom">
             <h2>Custom Data</h2>
-             <pre><code>
+            <h3>問題の定義</h3>
+            <p>PyTorchではImageFolderという便利な機能があり、データセット指定をこの関数呼び出しに差し替えるだけで、これまでのコードがそのまま使える。</p>
+            <p>最初は、PyTorchのチュートリアルで取り上げられている、「アリ」と「ハチ」の分類問題に取り組む。</p>
+            <p>この問題では244件の訓練データと153件の検証データが、すべてJPEG形式で分類先ごとの別のフォルダーに含まれている。</p>
+            <p>モデルとしては、VGG-19-BNを利用する。学習方法としては、最初にファインチューニングの方法を使った後、転移学習の方法も試してみる。</p>
+            <p>2つ目の問題では、「シベリアンハスキー」と「オオカミ」を分類するモデルを、VGG-19-BNを使って、転移学習により作成する。</p>
+            <h3>データ準備</h3>
+            <b>データのダウンロード、解凍、ツリー表示</b>
+            <p>Pythonの関数を使うのではなく、Linuxのコマンドを利用する。</p>
+            <ul>
+                <li>ダウンロード：wget</li>
+                <li>解凍：unzip</li>
+                <li>ツリー表示：tree</li>
+            </ul>
+            <b>treeコマンドの導入</b>
+            <pre><code>
+# 必要ライブラリ・コマンドの導入
+
+!pip install japanize_matplotlib | tail -n 1
+!pip install torchviz | tail -n 1
+!pip install torchinfo | tail -n 1
+w = !apt install tree
+print(w[-2])
+            </code></pre>
+            <p>実行結果をwという変数に代入しているのは、OSコマンドの余分な出力を見えないようにするためである。</p>
+            <b>ダウンロード</b>
+            <p>学習対象データがインターネットからダウンロード可能であることが前提である。</p>
+            <pre><code>
+# サンプルデータのダウンロード
+w = !wget -nc https://download.pytorch.org/tutorial/hymenoptera_data.zip
+
+# 結果確認
+print(w[-2])
+            </code></pre>
+            <b>解凍</b>
+            <pre><code>
+# データ解凍
+w = !unzip -o hymenoptera_data.zip
+
+# 結果確認
+print(w[-1])
+            </code></pre>
+            <p>-oのオプションを付けているのは、2度目以降の実行で上書きできるようにするためである。</p>
+            <pre><code>
+# 解凍ファイルのtree表示
+!tree hymenoptera_data
+            </code></pre>
+            <p>これがImageFolderを利用してデータセットを定義するための前提となる。</p>
+            <b>Transforms定義</b>
+            <pre><code>
+# Transforms定義
+
+# 検証データ用 : 正規化のみ実施
+test_transform = transforms.Compose([
+    transforms.Resize(256),
+    transforms.CenterCrop(224),
+    transforms.ToTensor(),
+    transforms.Normalize(0.5, 0.5)
+])
+
+# 訓練データ用: 正規化に追加で反転とRandomErasingを実施
+train_transform = transforms.Compose([
+    transforms.RandomResizedCrop(224),
+    transforms.RandomHorizontalFlip(),
+    transforms.ToTensor(),
+    transforms.Normalize(0.5, 0.5),
+    transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False)
+])
+            </code></pre>
+            <p>検証用データのTransformsでは、Resize(256)の後でCenterCrop(224)としている。</p>
+            <p>事前学習済みモデルは入力データの解像度が224画素で学習しているので、ファインチューニングや転移学習をする場合も同じ画素に合わせることが望ましい。</p>
+            <p>そこで、画面全体を一旦256×256に拡大縮小した後、中央の224×224の部分をくり抜くようにしている。</p>
+            <p>訓練データ用では、この２つの機能の代わりに、RandomResizedCropという機能を利用している。</p>
+            <p>最終的に224×224画素のデータを作るところは同じだが、Resizeとくり抜きの位置に乱数の要素を入れることで、Data Augmentationとしての役割を果たすようにしている。</p>
+            <b>ImageFolderの利用</b>
+            <p>最初にImageFolderを利用してデータセットを定義するのに必要な変数を定義しておく。</p>
+            <pre><code>
+# ツリーのベースディレクトリ
+data_dir = 'hymenoptera_data'
+
+# 訓練データディレクトリと検証データディレクトリの指定
+import os
+train_dir = os.path.join(data_dir, 'train')
+test_dir = os.path.join(data_dir, 'val')
+
+# join関数の結果確認
+print(train_dir, test_dir)
+
+# 分類先クラスのリスト作成
+classes = ['ants', 'bees']
+            </code></pre>
+            <b>データセット定義</b>
+            <pre><code>
+# データセット定義
+
+# 訓練用
+train_data = datasets.ImageFolder(train_dir,
+            transform=train_transform)
+# 訓練データのイメージ表示用
+train_data2 = datasets.ImageFolder(train_dir,
+            transform=test_transform)
+# 検証用
+test_data = datasets.ImageFolder(test_dir,
+            transform=test_transform)
+            </code></pre>
+            <p>訓練用データセットは２つ用意している。2つ目のtrain_data2は、訓練用画像をイメージとして表示するためのものである。このときだけは、Augmentationなど訓練用の加工がない状態で確認したいため、このような実装にしている。</p>
+            <p>データ件数を確認してみる。</p>
+            <pre><code>
+# データ件数確認
+
+print(f'訓練データ: {len(train_data)}件')
+print(f'検証データ: {len(test_data)}件')
+            </code></pre>
+            <p>訓練データが244件、検証データが153件になっている。</p>
+            <p>次に、検証データの先頭10件と最後の10件を表示してみる。</p>
+            <pre><code>
+# 検証データ
+# 最初の10個と最後の10個の表示
+
+plt.figure(figsize=(15, 4))
+for i in range(10):
+    ax = plt.subplot(2, 10, i + 1)
+    image, label = test_data[i]
+    img = (np.transpose(image.numpy(), (1, 2, 0)) + 1)/2
+    plt.imshow(img)
+    ax.set_title(classes[label])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
+    ax = plt.subplot(2, 10, i + 11)
+    image, label = test_data[-i-1]
+    img = (np.transpose(image.numpy(), (1, 2, 0)) + 1)/2
+    plt.imshow(img)
+    ax.set_title(classes[label])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
+plt.show()
+            </code></pre>
+            <b>データローダー定義</b>
+            <pre><code>
+# データローダー定義
+
+batch_size = 10
+
+# 訓練用
+train_loader = DataLoader(train_data,
+      batch_size=batch_size, shuffle=True)
+
+# 検証用
+test_loader = DataLoader(test_data,
+      batch_size=batch_size, shuffle=False)
+
+# イメージ表示用
+train_loader2 = DataLoader(train_data2,
+      batch_size=50, shuffle=True)
+test_loader2 = DataLoader(test_data,
+      batch_size=50, shuffle=True)
+            </code></pre>
+            <pre><code>
+# 検証用データ(50件)
+torch_seed()
+show_images_labels(test_loader2, classes, None, None)
+            </code></pre>
+            <h3>ファインチューニング版</h3>
+            <pre><code>
+# ファインチューニング版
+
+# 学習済みモデルの読み込み
+# vgg19_bnをパラメータ付きで読み込む
+from torchvision import models
+net = models.vgg19_bn(pretrained = True)
+
+# 乱数初期化
+torch_seed()
+
+# 最終ノードの出力を2に変更する
+in_features = net.classifier[6].in_features
+net.classifier[6] = nn.Linear(in_features, 2)
+
+# AdaptiveAvgPool2d関数の取り外し
+net.avgpool = nn.Identity()
+
+# GPUの利用
+net = net.to(device)
+
+# 学習率
+lr = 0.001
+
+# 損失関数定義
+criterion = nn.CrossEntropyLoss()
+
+# 最適化関数定義
+optimizer = optim.SGD(net.parameters(),lr=lr,momentum=0.9)
+
+# historyファイルも同時に初期化する
+history = np.zeros((0, 5))
+            </code></pre>
+            <pre><code>
+# 学習
+num_epochs = 5
+history = fit(net, optimizer, criterion, num_epochs,
+          train_loader, test_loader, device, history)
+            </code></pre>
+            <pre><code>
+# 結果確認
+evaluate_history(history)
+            </code></pre>
+            <pre><code>
+# 乱数初期化
+torch_seed()
+
+# 検証データへの結果表示
+show_images_labels(test_loader2, classes, net, device)
+            </code></pre>
+            <h3>転移学習版</h3>
+            <pre><code>
+# vgg19_bnをパラメータ付きで読み込む
+from torchvision import models
+net = models.vgg19_bn(pretrained = True)
+
+# すべてのパラメータで勾配計算なしに
+for param in net.parameters():
+    param.requires_grad = False
+
+# 乱数初期化
+torch_seed()
+
+# 最終ノードの出力を2に変更する
+# このノードのみ勾配計算をすることになる
+in_features = net.classifier[6].in_features
+net.classifier[6] = nn.Linear(in_features, 2)
+
+# AdaptiveAvgPool2d関数の取り外し
+net.avgpool = nn.Identity()
+
+# GPUの利用
+net = net.to(device)
+
+# 学習率
+lr = 0.001
+
+# 損失関数定義
+criterion = nn.CrossEntropyLoss()
+
+# 最適化関数定義
+# パラメータ修正の対象を最終ノードに限定
+optimizer = optim.SGD(net.classifier[6].parameters(),lr=lr,momentum=0.9)
+
+# historyファイルも同時に初期化する
+history = np.zeros((0, 5))
+            </code></pre>
+            <p>ニューラルネットワークのすべてのレイヤー関数に対して、勾配計算をしない設定をしている。その後で付け替えをしりnet.classifier[6]ではデフォルトの状態でrequires_grad=Trueとなっているので、結局このレイヤー関数に対してのみ勾配計算をする形になる。</p>
+            <p>また、今まではnet.classifier.parameters()とモデル内のすべてのパラメータを渡していたが、今回は付け替えしたnet.classifier[6].parameters()と対象を絞りこむ操作をしている。</p>
+            <pre><code>
+# 学習
+num_epochs = 5
+history = fit(net, optimizer, criterion, num_epochs,
+          train_loader, test_loader, device, history)
+            </code></pre>
+            <pre><code>
+# 結果サマリー
+evaluate_history(history)
+            </code></pre>
+            <pre><code>
+# 乱数初期化
+torch_seed()
+
+# 検証データへの結果表示
+show_images_labels(test_loader2, classes, net, device)
+            </code></pre>
+            <h3>ユーザー定義データの場合</h3>
+            <pre><code>
+# データダウンロード
+w = !wget https://github.com/makaishi2/pythonlibs/raw/main/images/dog_wolf.zip
+print(w[-2])
+
+# 解凍
+!unzip dog_wolf.zip | tail -n 1
+
+# 解凍結果のツリー表示
+!tree dog_wolf
+            </code></pre>
+            <b>Transforms定義</b>
+            <pre><code>
+# Transforms定義
+
+# 検証データ用 : 正規化のみ実施
+test_transform = transforms.Compose([
+    transforms.Resize(224),
+    transforms.CenterCrop(224),
+    transforms.ToTensor(),
+    transforms.Normalize(0.5, 0.5)
+])
+
+# 訓練データ用: 正規化に追加で反転とRandomErasingを実施
+train_transform = transforms.Compose([
+    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.Resize(224),
+    transforms.CenterCrop(224),
+    transforms.ToTensor(),
+    transforms.Normalize(0.5, 0.5),
+    transforms.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False)
+])
+            </code></pre>
+            <b>データセット定義</b>
+            <pre><code>
+# データセット定義
+
+data_dir = 'dog_wolf'
+
+import os
+train_dir = os.path.join(data_dir, 'train')
+test_dir = os.path.join(data_dir, 'test')
+
+classes = ['dog', 'wolf']
+
+train_data = datasets.ImageFolder(train_dir,
+            transform=train_transform)
+train_data2 = datasets.ImageFolder(train_dir,
+            transform=test_transform)
+test_data = datasets.ImageFolder(test_dir,
+            transform=test_transform)
+            </code></pre>
+            <pre><code>
+# データ件数確認
+
+print(f'学習データ: {len(train_data)}件')
+print(f'検証データ: {len(test_data)}件')
+            </code></pre>
+            <b>データローダー定義</b>
+            <pre><code>
+# データローダー定義
+
+batch_size = 5
+# 学習データ
+train_loader = DataLoader(train_data,
+            batch_size=batch_size, shuffle=True)
+# 学習データ　イメージ表示用
+train_loader2 = DataLoader(train_data2,
+            batch_size=40, shuffle=False)
+# 検証データ
+test_loader = DataLoader(test_data,
+            batch_size=batch_size, shuffle=False)
+# 検証データ　イメージ表示用
+test_loader2 = DataLoader(test_data,
+            batch_size=10, shuffle=True)
+            </code></pre>
+            <b>訓練・検証データイメージ表示</b>
+            <pre><code>
+# 訓練用データ(40件)
+show_images_labels(train_loader2, classes, None, None)
+            </code></pre>
+            <pre><code>
+# 検証用データ(10件)
+torch_seed()
+show_images_labels(test_loader2, classes, None, None)
+            </code></pre>
+            <b>モデル定義（転移学習）</b>
+            <pre><code>
+# 学習済みモデルの読み込み
+net = models.vgg19_bn(pretrained = True)
+
+for param in net.parameters():
+    param.requires_grad = False
+
+# 乱数初期化
+torch_seed()
+
+# 最終ノードの出力を2に変更する
+in_features = net.classifier[6].in_features
+net.classifier[6] = nn.Linear(in_features, 2)
+
+# AdaptiveAvgPool2d関数の取り外し
+net.avgpool = nn.Identity()
+
+# GPUの利用
+net = net.to(device)
+
+lr = 0.001
+# 損失関数定義
+criterion = nn.CrossEntropyLoss()
+
+# 最適化関数定義
+# パラメータ修正の対象を最終ノードに限定
+optimizer = optim.SGD(net.classifier[6].parameters(),lr=lr,momentum=0.9)
+
+# historyファイルも同時に初期化する
+history = np.zeros((0, 5))
+            </code></pre>
+            <pre><code>
+# 学習の実行
+
+num_epochs = 10
+history = fit(net, optimizer, criterion, num_epochs,
+          train_loader, test_loader, device, history)
+            </code></pre>
+            <pre><code>
+# 結果サマリー
+evaluate_history(history)
+            </code></pre>
+            <pre><code>
+# 予測結果表示
+torch_seed()
+show_images_labels(test_loader2, classes, net, device)
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
 
             </code></pre>
             <pre><code>
