@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【snbsgnssvsnhasdfbadfhbsdb】走る作曲家のAIカフェ</title>
+    <title>【LLM入門】走る作曲家のAIカフェ</title>
     <link rel="stylesheet" href="style.css"> 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -29,6 +29,7 @@
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#source">Source</a></li>
                 <li><a href="#into">Introduction</a></li>
+                <li><a href="#transformer">Transformer</a></li>
             </ul>
         </section>
         <section id="overview">
@@ -45,14 +46,6 @@
         </section>
         <section id="intro">
           <h2>Introduction</h2>
-          <p>transformersをインストール。</p>
-          <pre><code>
-!pip install transformers[ja,sentencepiece,torch]
-          </code></pre>
-          <p>transformersにはモデルを簡単に扱うためのpiplinesという機能がある。</p>
-          <pre><code>
-from transformers import pipline
-          </code></pre>
           <h3>文書分類</h3>
           <p>文書分類（document classification）：テキストを予め定められたラベルに分類するタスク。</p>
           <p>感情分析（sentiment analysis）：テキストから読み取れる感情を検出する文書分類。</p>
@@ -94,4 +87,21 @@ from transformers import pipline
           <p>こうしたモデルでは、単語に対して１つの埋め込みが割り当てられるword2vecとは異なり、入力テキストの周辺の文脈を加味して動的に単語埋め込みが計算される。</p>
           <p>文脈化単語埋め込みを計算するTransformerを大規模コーパスでの自己教師あり学習で事前学習し、そのモデルを下流タスクのデータセットを使って微調整して解く方法が、自然言語処理の標準的な手法になっている。</p>
           <p>こうした事前学習した大規模なニューラルネットワークは、大規模言語モデルや事前学習済み言語モデル（pre-trained language model; PLM）のように呼ばれる。</p>
+        </section>
+        <section id="transformer">
+            <h2>Transformer</h2>
+            <p>Transformerは、2017年にGoogleが提案したニューラルネットワーク。</p>
+            <p>入力には、単語よりも細かい単位であるサブワード（sub-word）や文字を使うことが一般的。</p>
+            <h3>概要</h3>
+            <p>Transformerには、エンコーダ・デコーダ（encoder-decoder）、エンコーダのみ、デコーダのみの3種類の構成が存在する。</p>
+            <p>エンコーダのみで使う場合は入力に対する文脈化トークン埋め込みを出力するモデル、デコーダのみの場合は入力から次のトークンを予測するモデルとして使う。</p>
+            <h3>エンコーダ</h3>
+            <p>単純なエンコーダのみのTransformerについて。</p>
+            <p>エンコーダは入力トークン列に対応する文脈化トークン埋め込みを出力する。</p>
+            <p>Transformerでは、入力トークン埋め込みに対して、多段的に文脈情報を付与する。</p>
+            <p>この多段的な処理によって、低い位置にある層では表層的、中間にある層では文法的、高い位置にある層では意味的というように、複雑で抽象的な文脈を捉えられるようになると考えられている。</p>
+            <h3>入力トークンの埋め込み</h3>
+            <p>Transformerでは、語彙Ｖに含まれるすべてのトークンに対して、Ｄ次元の入力トークン埋め込みを付与する。</p>
+            <p>to-kunn 
+            </p>
         </section>
