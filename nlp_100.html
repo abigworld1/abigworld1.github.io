@@ -1130,23 +1130,158 @@ for n in list(ans)[:10]:
         </code></pre>
         <h3>35. 単語の出現頻度</h3>
         <pre><code>
+from collections import Counter
 
+# すべての名詞や動詞などのコンテンツ語（機能語以外）をリストに格納
+words = []
+for sentence in sentences:
+    for morph in sentence:
+        # 機能語を除外（助詞、助動詞、記号を除く）
+        if morph[&#039;pos&#039;] not in [&#039;助詞&#039;, &#039;助動詞&#039;, &#039;記号&#039;]:
+            words.append(morph[&#039;surface&#039;])  # 表層形をリストに追加
+
+# 出現頻度をカウント
+word_count = Counter(words)
+
+# 出現頻度の高い順にソートして表示
+word_count_sorted = word_count.most_common()
+
+# 結果を表示（上位20単語を表示）
+print(&quot;機能語を除いた出現頻度の高い単語（上位20件）:&quot;)
+for word, freq in word_count_sorted[:20]:
+    print(f&quot;{word}: {freq}&quot;)
         </code></pre>
-        <h3></h3>
+        <h3>36. 頻度上位10語</h3>
         <pre><code>
+from collections import Counter
+import matplotlib.pyplot as plt
 
+# すべての名詞や動詞などのコンテンツ語（機能語以外）をリストに格納
+words = []
+for sentence in sentences:
+    for morph in sentence:
+        # 機能語を除外（助詞、助動詞、記号を除く）
+        if morph[&#039;pos&#039;] not in [&#039;助詞&#039;, &#039;助動詞&#039;, &#039;記号&#039;]:
+            words.append(morph[&#039;surface&#039;])  # 表層形をリストに追加
+
+# 出現頻度をカウント
+word_count = Counter(words)
+
+# 出現頻度上位10語を抽出
+top_10 = word_count.most_common(10)
+
+# 出現頻度上位10語とその頻度を表示
+print(&quot;機能語を除いた出現頻度上位10語とその出現頻度:&quot;)
+for word, freq in top_10:
+    print(f&quot;{word}: {freq}&quot;)
+
+# データをグラフに表示
+words, frequencies = zip(*top_10)  # それぞれのリストに分ける
+
+# 棒グラフを描画
+plt.figure(figsize=(10, 6))
+plt.bar(words, frequencies, color=&#039;skyblue&#039;)
+plt.xlabel(&#039;Words&#039;)
+plt.ylabel(&#039;Frequency&#039;)
+plt.title(&#039;Top 10 Words by Frequency (Excluding Function Words)&#039;)
+plt.xticks(rotation=45)  # X軸のラベルを45度傾ける
+plt.show()
         </code></pre>
-        <h3></h3>
+        <h3>37. 「猫」と共起頻度の高い上位10語</h3>
         <pre><code>
+from collections import Counter
+import matplotlib.pyplot as plt
 
+# 「猫」が含まれる文における共起語をカウント
+cooccurrence_words = []
+
+for sentence in sentences:
+    # 文に「猫」が含まれているか確認
+    if any(morph[&#039;surface&#039;] == &#039;猫&#039; for morph in sentence):
+        for morph in sentence:
+            # 「猫」自体や助詞、助動詞、記号は除外してカウント
+            if morph[&#039;surface&#039;] != &#039;猫&#039; and morph[&#039;pos&#039;] not in [&#039;助詞&#039;, &#039;助動詞&#039;, &#039;記号&#039;]:
+                cooccurrence_words.append(morph[&#039;surface&#039;])
+
+# 共起語の出現頻度をカウント
+cooccurrence_count = Counter(cooccurrence_words)
+
+# 共起頻度上位10語を抽出
+top_10_cooccurrence = cooccurrence_count.most_common(10)
+
+# 共起頻度上位10語とその頻度を表示
+print(&quot;「猫」と共起する頻度が高い10語とその出現頻度:&quot;)
+for word, freq in top_10_cooccurrence:
+    print(f&quot;{word}: {freq}&quot;)
+
+# データをグラフに表示
+words, frequencies = zip(*top_10_cooccurrence)  # それぞれのリストに分ける
+
+# 棒グラフを描画
+plt.figure(figsize=(10, 6))
+plt.bar(words, frequencies, color=&#039;lightcoral&#039;)
+plt.xlabel(&#039;Words&#039;)
+plt.ylabel(&#039;Co-occurrence Frequency&#039;)
+plt.title(&#039;Top 10 Words Co-occurring with &quot;猫&quot;&#039;)
+plt.xticks(rotation=45)  # X軸のラベルを45度傾ける
+plt.show()
         </code></pre>
-        <h3></h3>
+        <h3>38. ヒストグラム</h3>
         <pre><code>
+from collections import Counter
+import matplotlib.pyplot as plt
 
+# すべての表層形をリストに格納（機能語を除かず全単語をカウント）
+words = []
+for sentence in sentences:
+    for morph in sentence:
+        words.append(morph[&#039;surface&#039;])  # 表層形をリストに追加
+
+# 出現頻度をカウント
+word_count = Counter(words)
+
+# 出現頻度のリストを作成
+frequencies = list(word_count.values())
+
+# ヒストグラムの描画
+plt.figure(figsize=(10, 6))
+plt.hist(frequencies, bins=range(1, max(frequencies) + 1), edgecolor=&#039;black&#039;, log=True)
+plt.xlabel(&#039;Frequency&#039;)
+plt.ylabel(&#039;Number of Words&#039;)
+plt.title(&#039;Histogram of Word Frequencies&#039;)
+plt.show()
         </code></pre>
-        <h3></h3>
+        <h3>39. Zipfの法則</h3>
         <pre><code>
+from collections import Counter
+import matplotlib.pyplot as plt
+import numpy as np
 
+# すべての表層形をリストに格納（機能語を除かず全単語をカウント）
+words = []
+for sentence in sentences:
+    for morph in sentence:
+        words.append(morph[&#039;surface&#039;])  # 表層形をリストに追加
+
+# 出現頻度をカウント
+word_count = Counter(words)
+
+# 出現頻度を高い順にソート（most_commonで自動的に降順にソートされる）
+word_freq = [freq for word, freq in word_count.most_common()]
+
+# 頻度順位を作成（順位は1から始まる）
+ranks = np.arange(1, len(word_freq) + 1)
+
+# 両対数グラフの描画
+plt.figure(figsize=(10, 6))
+plt.plot(ranks, word_freq)
+plt.xscale(&#039;log&#039;)  # X軸を対数スケールにする
+plt.yscale(&#039;log&#039;)  # Y軸を対数スケールにする
+plt.xlabel(&#039;Rank&#039;)
+plt.ylabel(&#039;Frequency&#039;)
+plt.title(&#039;Zipf\&#039;s Law: Rank vs Frequency&#039;)
+plt.grid(True)
+plt.show()
         </code></pre>
         </section>
         <section id="05">
