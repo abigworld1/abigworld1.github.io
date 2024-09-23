@@ -153,6 +153,7 @@
             一方のDueling DQNでは、価値関数\(V(s)\)を経由する。価値関数はある状態\(s\)における価値である。そのため、今回の場面を経験すれば\(V(s)\)が学習され、それによって他の行動を試さなくても\(Q(s, a)\)の近似性能が改善する。これにより、学習が促進することが期待できる。</p>
         </section>
         <section id="pgm">
+            <h2>Policy Gradient Method</h2>
             <p>Q学習やSARSA、モンテカルロ法などは、大別すれば価値ベースの手法に分類される。価値ベースの手法は、価値関数をモデル化し、価値関数を学習する。そして、価値関数を経由して方策を得る。
             価値ベースの手法では、一般化方策反復というアイデアに基づいて最適方策を見つけることが多く行われる。具体的には、価値関数の評価と方策を改善するというプロセスを繰り返すことで、徐々に最適方策に近づく。
             価値ベースの手法の他に、価値関数を経由せずに方策を直接表す手法も考えられる。これが方策ベースの手法である。中でも、方策をニューラルネットワークなどでモデル化し、勾配を使って方策を最適化する手法は方策勾配法と呼ばれる。
@@ -168,20 +169,20 @@
             \(\tau\)は軌道と呼ばれる。このとき、収益は以下のように設定できる。
             <div class="scroll">
                 \begin{align}
-                G(\tau) = R_0, \gamma R_1 + \gamma^2 R_2 + \cdots + \gamma^T R_T
+                G(\tau) = R_0 + \gamma R_1 + \gamma^2 R_2 + \cdots + \gamma^T R_T
                 \end{align}
             </div>
             このとき、目的関数は次の式で表される。
             <div class="scroll">
                 \begin{align}
-                J(\theta) = \mathbb{E}_{\tau~\pi_\theta} [G(\tau)]
+                J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [G(\tau)]
                 \end{align}
             </div>
-            収益は確率的に変動するため、その期待値が目的関数となる。\(\tau~\pi_\theta\)は、\(\tau\)が\(\pi_\theta\)によって生成されることを示している。
+            収益は確率的に変動するため、その期待値が目的関数となる。\(\tau \sim \pi_\theta\)は、\(\tau\)が\(\pi_\theta\)によって生成されることを示している。
             目的関数が決まれば、次はその勾配を求める。ここではパラメータ\(\theta\)に関する勾配を\(\nabla_{\theta}\)で表す。ここでの目標は、\(\nabla_{\theta} J(\theta)\)を求めることである。この結果は以下のようになる。
             <div class="scroll">
                 \begin{align}
-                \nabla_{\theta} J(\theta) &= \nabla_{\theta} \mathbb{E}_{\tau~\pi_\theta} [G(\tau)] \\
+                \nabla_{\theta} J(\theta) &= \nabla_{\theta} \mathbb{E}_{\tau \sim \pi_\theta} [G(\tau)] \\
                 &= \mathbb{E}_{\tau~\pi_\theta} [\sum_{t=0}^{T} G(\tau) \nabla_{\theta} \log \pi_{\theta} (A_t | S_t)]
                 \end{align}
             </div>
