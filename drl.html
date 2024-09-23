@@ -29,6 +29,7 @@
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#nn-q">NN & Q-Learning</a></li>
                 <li><a href="#dqn">DQN</a></li>
+                <li><a href="#pgm">Policy Gradient Method</a></li>
             </ul>
         </section>
         <section id="overview">
@@ -46,14 +47,14 @@
             <p>Q学習では次の式によってQ関数を更新する。
             <div class="scroll">
                 \begin{align}
-                Q'(S_t, A_t) = Q(S_t, A_t) + \alpha {R_t + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)}
+                Q'(S_t, A_t) = Q(S_t, A_t) + \alpha \{R_t + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)\}
                 \end{align}
             </div>
             この式によって、\(Q(S_t, A_t)\)の値は、ターゲットである\(R_t + \gamma \max_a Q(S_{t+1}, a)\)の方向へと更新される。このとき、\(\alpha\)によってどれだけターゲットの方向へ進むかが調整される。
             ここで、ターゲットである\(R_t + \gamma \max_a Q(S_{t+1}, a)\)を\(T\)で表すことにする。そうすると、上式は以下のように表される。
             <div class="scroll">
                 \begin{align}
-                Q'(S_t, A_t) = Q(S_t, A_t) + \alpha {T - Q(S_t, A_t)}
+                Q'(S_t, A_t) = Q(S_t, A_t) + \alpha \{T - Q(S_t, A_t)\}
                 \end{align}
             </div>
             この式は、入力が\(S_t, A_t\)のとき出力が\(T\)になるようにQ関数を更新すると解釈できる。これをニューラルネットワークの文脈に当てはめると、入力が\(S_t, A_t\)で、出力が\(T\)となるように学習させることと同じである。
@@ -151,3 +152,49 @@
             DQNの場合、ある状態\(s\)で実際に行った行動\(a\)に対して\(Q(s, a)\)を学習する。行動に関わらず結果が決まっている状態であっても、すべての行動を試さなければ\(Q(s,a)\)は学習されない。
             一方のDueling DQNでは、価値関数\(V(s)\)を経由する。価値関数はある状態\(s\)における価値である。そのため、今回の場面を経験すれば\(V(s)\)が学習され、それによって他の行動を試さなくても\(Q(s, a)\)の近似性能が改善する。これにより、学習が促進することが期待できる。</p>
         </section>
+        <section id="pgm">
+            <p>Q学習やSARSA、モンテカルロ法などは、大別すれば価値ベースの手法に分類される。価値ベースの手法は、価値関数をモデル化し、価値関数を学習する。そして、価値関数を経由して方策を得る。
+            価値ベースの手法では、一般化方策反復というアイデアに基づいて最適方策を見つけることが多く行われる。具体的には、価値関数の評価と方策を改善するというプロセスを繰り返すことで、徐々に最適方策に近づく。
+            価値ベースの手法の他に、価値関数を経由せずに方策を直接表す手法も考えられる。これが方策ベースの手法である。中でも、方策をニューラルネットワークなどでモデル化し、勾配を使って方策を最適化する手法は方策勾配法と呼ばれる。
+            方策勾配法に基づくアルゴリズムは様々な手法が提案されている。</p>
+            <p>確率的な方策は数式で\(\pi (a|s)\)と表される。\(\pi (a|s)\)は、状態\(s\)において、\(a\)という行動を取る確率である。ここでは、方策をニューラルネットワークでモデル化する。
+            それにあたり、ニューラルネットワークのすべての重みパラメータを\(\theta\)で表す（\(\theta\)は、すべてのパラメータの要素を一列に並べたベクトルとする）。そして、ニューラルネットワークによる方策を\(\pi_{\theta} (a|s)\)で表す。</p>
+            <p>方策\(\pi_{\theta}\)を使って目的関数を設定する。まず、次のような「状態、行動、報酬」からなる時系列データが得られたと仮定する。
+            <div class="scroll">
+                \begin{align}
+                \tau = (S_0, A_0, R_0, S_1, A_1, R_1, \cdots, S_{T+1})
+                \end{align}
+            </div>
+            \(\tau\)は軌道と呼ばれる。このとき、収益は以下のように設定できる。
+            <div class="scroll">
+                \begin{align}
+                G(\tau) = R_0, \gamma R_1 + \gamma^2 R_2 + \cdots + \gamma^T R_T
+                \end{align}
+            </div>
+            このとき、目的関数は次の式で表される。
+            <div class="scroll">
+                \begin{align}
+                J(\theta) = \mathbb{E}_{\tau~\pi_\theta} [G(\tau)]
+                \end{align}
+            </div>
+            収益は確率的に変動するため、その期待値が目的関数となる。\(\tau~\pi_\theta\)は、\(\tau\)が\(\pi_\theta\)によって生成されることを示している。
+            目的関数が決まれば、次はその勾配を求める。ここではパラメータ\(\theta\)に関する勾配を\(\nabla_{\theta}\)で表す。ここでの目標は、\(\nabla_{\theta} J(\theta)\)を求めることである。この結果は以下のようになる。
+            <div class="scroll">
+                \begin{align}
+                \nabla_{\theta} J(\theta) &= \nabla_{\theta} \mathbb{E}_{\tau~\pi_\theta} [G(\tau)] \\
+                &= \mathbb{E}_{\tau~\pi_\theta} [\sum_{t=0}^{T} G(\tau) \nabla_{\theta} \log \pi_{\theta} (A_t | S_t)]
+                \end{align}
+            </div>
+            この式で注目したい点は、\(\nabla_{\theta}\)が\(\mathbb{E}\)の中にあることである。これが求まれば、続いてニューラルネットワークのパラメータを更新する。単純な最適化の方法は次の式で表される。
+            <div class="scroll">
+                \begin{align}
+                \theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)
+                \end{align}
+            </div></p>
+            <p>\(\nabla_{\theta} J(\theta)\)は上で示したように、期待値として表される。この期待値はモンテカルロ法によって求めることができる。モンテカルロ法は、サンプリングをいくつか行って、その平均を取る。
+                今回の場合、方策\(\pi_{\theta}\)のエージェントに実際に行動させ、軌道\(\tau\)を\(n\)個得たとする。その場合、各\(\tau\)において上式における期待値の中身を計算して、その平均を求めることで\(\nabla_{\theta} J(\theta)\)を近似できる。</p>
+            <h3>REINFORCE</h3>
+        </section>
+    </main>
+</body>
+</html>
