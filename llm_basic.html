@@ -140,7 +140,7 @@
             <p>この仕組みによって、入力全体を考慮しつつ、関連性の高いトークンから優先的に情報を取得できるようになっている。</p>
             <p>クエリ埋め込み、キー埋め込み、バリュー埋め込みを計算するための3つのD×D次元の行列\(\mathbf{W_q}\)、\(\mathbf{W_k}\)、\(\mathbf{W_v}\)が含まれる。</p>
             <p>これらの行列を訓練時に学習することで、重要度を加味した文脈化ができるようになる。</p>
-            <p>ここで、D次元の埋め込み列\(\mathbf{h_1}, \mathbf{h_2}, \cdots, \mahtbf{h_N}\)に対して、自己注意機構を適用することを考えると、\(\mathbf{h_i}\)に対するクエリ埋め込み\(\mathbf{q_i}\)、キー埋め込み\(\mathbf{k_i}\)、バリュー埋め込み\(\mathbf{v_i}\)は次のように計算される。</p>
+            <p>ここで、D次元の埋め込み列\(\mathbf{h_1}, \mathbf{h_2}, \cdots, \mathbf{h_N}\)に対して、自己注意機構を適用することを考えると、\(\mathbf{h_i}\)に対するクエリ埋め込み\(\mathbf{q_i}\)、キー埋め込み\(\mathbf{k_i}\)、バリュー埋め込み\(\mathbf{v_i}\)は次のように計算される。</p>
             <div class="scroll">
                 \begin{align}
                 \mathbf{q_i} &= \mathbf{W_q} \mathbf{h_i} \\
@@ -148,4 +148,56 @@
                 \mathbf{v_i} &= \mathbf{W_v} \mathbf{h_i} 
                 \end{align}
             </div>
+            <p>i番目のトークンから見たj番目のトークンの関連性スコア\(s_{ij}\)は、内積を用いて以下のように計算される。</p>
+            <div class="scroll">
+                \begin{align}
+                s_{ij} = \frac{\mathbf{q_i}^T \mathbf{k_j}}{\sqrt{D}}
+                \end{align}
+            </div>
+            <p>ここで、分母の\(\sqrt{D}\)は、次元Dが増えるのにともなって、内積の絶対値が大きな値になりすぎることを防ぐことで、訓練を安定化させるために導入されている。</p>
+            <p>出力埋め込み\(\mathbf{o_i}\)は、関連性スコア\(s_{ij}\)をソフトマックス関数を用いて正規化した重み\(\alpha_{ij}\)によるバリュー埋め込みの重み付き和になる。</p>
+            <div class="scroll">
+                \begin{align}
+                \alpha_{ij} &= \frac{\exp(s_{ij})}{\sum_{j'=1}^{N} \exp(s_{ij'})} \\
+                \mathbf{o_i} &= \sum_{j=1}^{N} \alpha_{ij} \mathbf{v_{j}}
+                \end{align}
+            </div>
+            <p>上式のように、重み\(\alpha_{ij}\)を使ってすべてのトークンのバリュー埋め込みの重み付き和を計算することで、すべてのトークンから重要度を加味しつつ必要な情報を集めて文脈化が行われる。</p>
+            <h3>マルチヘッド注意機構</h3>
+            <p>Transformerでは、キー・クエリ・バリュー注意機構の表現力をさらに高めるために、この注意機構を同時に複数適用するマルチヘッド注意機構（multi-head attention）が採用されている。</p>
+            <p>複数の注意機構を同時に適用することで、複数の観点から文脈化を行うことができる。</p>
+            <p>マルチヘッド注意機構では、D次元の埋め込み\(\mathbf{h_i}\)に対して、M個の注意機構を同時に適用する。</p>
+            <p>ここで、MはDの約数である必要がある。\(\mathbf{h_i}\)に対応する\(m \in {1, 2, \cdots, M}\)番目の注意機構の埋め込みは以下のように計算される。</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{q_i^{(m)}} &= \mathbf{W_q^{(m)}} \mathbf{h_i} \\
+                \mathbf{k_i^{(m)}} &= \mathbf{W_k^{(m)}} \mathbf{h_i} \\
+                \mathbf{v_i^{(m)}} &= \mathbf{W_v^{(m)}} \mathbf{h_i} 
+                \end{align}
+            </div>
+            <p>\(\mathbf{W_q^{(m)}}, \mathbf{W_k^{(m)}}, \mathbf{W_v^{(m)}}\)は、m番目のヘッド（head）に対応する\(\frac{D}{M} \times D\)の行列であり、したがって\(\mathbf{q_i^{(m)}}, \mathbf{k_i^{(m)}}, \mathbf{v_i^{(m)}}\)は、\(\frac{D}{M}\)次元のベクトルになる。</p>
+            <p>このM個のヘッドがそれぞれ異なる観点から文脈化を行う。</p>
+            <p>各ヘッドの出力埋め込み\(\mathbf{o_i^{(m)}}\)は、単一のヘッドによる注意機構と同様に以下のように表される。</p>
+             <div class="scroll">
+                \begin{align}
+                s_{ij}^{(m)} &= \frac{\mathbf{q_i}^{(m)T} \mathbf{k_j}^{(m)}}{\sqrt{D/M}} \\
+                \alpha_{ij}^{(m)} &= \frac{\exp(s_{ij}^{(m)})}{\sum_{j'=1}^{N} \exp(s_{ij'}^{(m)})} \\
+                \mathbf{o_i}^{(m)} &= \sum_{j=1}^{N} \alpha_{ij}^{(m)} \mathbf{v_{j}^{(m)}}
+                \end{align}
+            </div>
+            <p>マルチヘッド注意機構の出力は、M個の出力埋め込みを連結して計算される。</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{o_i} = \mathbf{W_o}
+                \begin{bmatrix}
+                \mathbf{o_i^{(1)}} \\
+                \cdots \\
+                \mathbf{o_i^{(M)}}
+                \end{bmatrix}
+                \end{align}
+            </div>
+            <p>ここで、\(\mathbf{W_o}\)は、D×D次元の行列である。</p>
         </section>
+    </main>
+</body>
+</html>
