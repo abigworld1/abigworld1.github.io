@@ -199,7 +199,7 @@
             <p>ここで、\(\mathbf{W_o}\)は、D×D次元の行列である。</p>
             <h3>フィードフォワード層</h3>
             <p>フィードフォワード層（feed-forward layer）は、2層の順伝播型ニューラルネットワーク（feed-forward neural network）または多層パーセプトロン（mutilayer perceptron; MLP）と同じ構造である。</p>
-            <p>フィードフォワード層への入力ベクトルを\(\mahtbf{u_i}\)とすると、出力ベクトル\(\mathbf{z_i}\)は以下の式で求められる。</p>
+            <p>フィードフォワード層への入力ベクトルを\(\mathbf{u_i}\)とすると、出力ベクトル\(\mathbf{z_i}\)は以下の式で求められる。</p>
             <div class="scroll">
                 \begin{align}
                 \mathbf{z_i} = \mathbf{W_2} f (\mathbf{W_1} \mathbf{u_i} + \mathbf{b_1}) + \mathbf{b_2}
@@ -230,6 +230,33 @@
                 \end{align}
             </div>
             <p>この式から、\(\mathcal{F}^{(k)} (\mathbf{X}^{(k)})\)は出力と入力の残差のみを捉えればよくなることが分かる。これが残差結合という名前の由来である。</p>
+            <p>この式を使ってエンコーダ構成のTransformerの出力\(\mathbf{X^{(2L+1)}}\)を展開すると、以下のようになる。</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{X^{(2L+1)}} = \mathbf{X^{(1)}} + \mathcal{F}^{(1)} (\mathbf{X}^{(1)}) + \mathcal{F}^{(2)} (\mathbf{X}^{(2)}) + \cdots + \mathcal{F}^{(2L)} (\mathbf{X}^{(2L)})
+                \end{align}
+            </div>
+            <p>Transformerの出力は、入力埋め込みと2L個の層の出力を足し合わせたものである。</p>
+            <p>入力埋め込み\(\mathbf{X^{(1)}}\)に対して、マルチヘッド注意機構とフィードフォワード層を通じて、静的な埋め込みでは捉えられない文脈情報を順に付与していくことで、文脈化トークン埋め込みが計算される。</p>
+            <p>また、損失の計算に使われる出力に対して、構成要素を直接接続する構造をとることで、深層ニューラルネットワークにおける勾配消失・爆発問題を防ぎ、訓練を安定化させている。</p>
+            <h3>層正規化</h3>
+            <p>層正規化（layer normalization）は、過剰に大きい値によって訓練が不安定になることを防ぐために、ベクトルの値を正規化する仕組みである。</p>
+            <p>まず、層正規化へのD次元の入力ベクトルを\(\mathbf{x}\)とおき、ベクトルの要素の平均\(\mu_\mathbf{x}\)と標準偏差\(\sigma_\mathbf{x}\)を求める。</p>
+            <div class="scroll">
+                \begin{align}
+                \mu_\mathbf{x} &= \frac{1}{D} \sum_{i=1}^{D} x_i \\
+                \sigma_\mathbf{x} &= \sqrt{\frac{1}{D} \sum_{i=1}^{D} (x_i - \mu_\mathbf{x})^2}
+                \end{align}
+            </div>
+            <p>層正規化関数layernorm(\(\mathbf{x}\))のk番目の要素は、以下のように求められる。</p>
+            <div class="scroll">
+                \begin{align}
+                layernorm(\mathbf{x})_k = g_k \frac{x_k - \mu_{\mathbf{x}}}{\sigma_{\mathbf{x}} + \epsilon} + b_k
+                \end{align}
+            </div>
+            <p>\(g_k\)と\(b_k\)は、ゲインベクトル\(\mathbf{g}\)とバイアスベクトル\(\mathbf{b}\)のk番目の要素である。</p>
+            <p>この二つのベクトルは、層正規化の表現力を向上するために導入されているが、\(\mathbf{g} = 1, \mathbf{b} = 0\)のようにすることで無効にすることもできる。</p>
+            <h3>ドロップアウト</h3>
         </section>
     </main>
 </body>
