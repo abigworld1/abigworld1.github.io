@@ -197,6 +197,39 @@
                 \end{align}
             </div>
             <p>ここで、\(\mathbf{W_o}\)は、D×D次元の行列である。</p>
+            <h3>フィードフォワード層</h3>
+            <p>フィードフォワード層（feed-forward layer）は、2層の順伝播型ニューラルネットワーク（feed-forward neural network）または多層パーセプトロン（mutilayer perceptron; MLP）と同じ構造である。</p>
+            <p>フィードフォワード層への入力ベクトルを\(\mahtbf{u_i}\)とすると、出力ベクトル\(\mathbf{z_i}\)は以下の式で求められる。</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{z_i} = \mathbf{W_2} f (\mathbf{W_1} \mathbf{u_i} + \mathbf{b_1}) + \mathbf{b_2}
+                \end{align}
+            </div>
+            <p>\(\mathbf{W_1}, \mathbf{W_2}\)は、それぞれ\(D_f \times D\)次元の行列、\(\mathbf{b_1}, \mathbf{b_2}\)は、それぞれ\(D_f, D\)次元のベクトルで、\(f(\cdot)\)は、活性化関数（activation function）である。</p>
+            <p>ここで、フィードフォワード層はすべての位置の入力ベクトルを使う注意機構とは異なり、入力された位置のベクトルのみに閉じて計算される。</p>
+            <p>活性化関数としては、提案当初のTransformerでは正規化線形ユニット（rectified linear unit; ReLU）が用いられている。</p>
+            <p>また、大規模言語モデルでは、正規化線形関数よりも滑らかであり経験的に良い収束性能を発揮するガウス誤差線形ユニット（gaussian error linear unit; GELU）が標準的に用いられている。</p>
+            <p>活性化関数は、入力ベクトルの要素単位で適用される。もしTransformerにフィードフォワード層がないと、単に入力を線形変換して重み付きで足し合わせるだけになってしまい、表現力が著しく低くなってしまう。</p>
+            <p>提案時のTransformerでは、入力次元D=512に対して、中間層の次元は4倍の\(D_f = 2048\)が使われている。この結果、フィードフォワード層に含まれるパラメータ数は、Transformer全体のパラメータ数の約2/3を占めている。</p>
+            <p>フィードフォワード層は、文脈に関する情報をその豊富なパラメータの中に記憶していて、入力された文脈に対して関連する情報を付加する役割を果たしている。</p>
+            <h3>残差結合</h3>
+            <p>残差結合（residual connection）はTransformerの訓練を安定させるための仕組みである。</p>
+            <p>エンコーダ構成のTransformerでは、各ブロックに二つの残差結合を適用した層（マルチヘッド注意機構とフィードフォワード層）がある。</p>
+            <p>このため、L個のブロックを含んだモデルでは、入力から2L個の残差結合を適用した層を通って出力が計算される。</p>
+            <p>ここで、\(k \in {1, 2, \cdots, 2L}\)に対して、\(k\)番目の残差結合を適用する前の元の層の処理を\(\mathcal{F}^{(k)} (\mathbf{X})\)、層への入力ベクトル列を行列表記して\(\mathbf{X^{(k)}} = [\mathbf{x_1^{(k)}}, \mathbf{x_2^{(k)}}, \cdots, \mathbf{x_N^{(k)}},]^T\)とする。</p>
+            <p>残差結合を適用した層の出力（k+1番目の層の入力）\(\mathbf{X^{(k+1)}}\)は元々の層の出力\(\mathcal{F}^{(k)} (\mathbf{X}^{(k)})\)に入力\(\mathbf{X^{(k)}}\)を加算して計算される。</p>
+            <div class="scroll">
+                \begin{align}
+                \mathbf{X^{(k+1)}} = \mathcal{F}^{(k)} (\mathbf{X}^{(k)}) + \mathbf{X^{(k)}}
+                \end{align}
+            </div>
+            <p>この式を変形すると、以下のようになる。</p>
+            <div class="scroll">
+                \begin{align}
+                \mathcal{F}^{(k)} (\mathbf{X}^{(k)}) = \mathbf{X^{(k+1)}} - \mathbf{X^{(k)}}
+                \end{align}
+            </div>
+            <p>この式から、\(\mathcal{F}^{(k)} (\mathbf{X}^{(k)})\)は出力と入力の残差のみを捉えればよくなることが分かる。これが残差結合という名前の由来である。</p>
         </section>
     </main>
 </body>
