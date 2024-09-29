@@ -28,16 +28,13 @@
             <ul>
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#source">Source</a></li>
-                <li><a href="#nn-q">NN & Q-Learning</a></li>
-                <li><a href="#dqn">DQN</a></li>
-                <li><a href="#pgm">Policy Gradient Method</a></li>
-                <li><a href="#advance">Advanced Topics</a></li>
+                <li><a href="#review">Review</a></li>
             </ul>
         </section>
         <section id="overview">
             <h2>Overview</h2>
             深層強化学習とは、強化学習と深層学習を組み合わせた手法です。ニューラルネットワークを使用して、エージェントが環境から得られる観測値をもとに価値関数や方策を近似します。<br>
-            このページでは、深層強化学習について基礎から学んでいきます。
+            このページでは、深層強化学習についてPyTorchによる実装の方法をメインに学んでいきます。
         </section>
         <section id="source">
             <h2>Source</h2>
@@ -58,6 +55,155 @@
                 <li><a href="https://www.amazon.co.jp/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA-Python%E3%81%A7%E5%AD%A6%E3%81%B6%E5%BC%B7%E5%8C%96%E5%AD%A6%E7%BF%92-%E6%94%B9%E8%A8%82%E7%AC%AC2%E7%89%88-%E5%85%A5%E9%96%80%E3%81%8B%E3%82%89%E5%AE%9F%E8%B7%B5%E3%81%BE%E3%81%A7-%E4%B9%85%E4%BF%9D/dp/4065172519">機械学習スタートアップシリーズ Pythonで学ぶ強化学習 [改訂第2版] 入門から実践まで</a></li>
                 <li><a href="https://www.amazon.co.jp/%E3%81%A4%E3%81%8F%E3%82%8A%E3%81%AA%E3%81%8C%E3%82%89%E5%AD%A6%E3%81%B6-%E6%B7%B1%E5%B1%A4%E5%BC%B7%E5%8C%96%E5%AD%A6%E7%BF%92-PyTorch%E3%81%AB%E3%82%88%E3%82%8B%E5%AE%9F%E8%B7%B5%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0-%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE%E9%9B%BB%E9%80%9A%E5%9B%BD%E9%9A%9B%E6%83%85%E5%A0%B1%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9-%E5%B0%8F%E5%B7%9D%E9%9B%84%E5%A4%AA%E9%83%8E/dp/4839965625">つくりながら学ぶ! 深層強化学習 ~PyTorchによる実践プログラミング~</a></li>
             </ul>
+        </section>
+        <section id="review">
+            <h2>Review</h2>
+            <h3>PyTorchによるディープラーニングの実装</h3>
+            <ol>
+                <li>データの前処理</li>
+                <li>DataLoaderの作成</li>
+                <li>ネットワークの構築</li>
+                <li>誤差関数と最適化手法の設定</li>
+                <li>学習と推論の実行</li>
+            </ol>
+            <p>MNISTを使って復習してみる。</p>
+            <pre><code>
+from sklearn.datasets import fetch_openml
+import numpy as np
+import matplotlib.pyplot as plt
+
+# MNISTデータを取得
+mnist = fetch_openml(&#039;mnist_784&#039;, version=1, data_home=&quot;.&quot;)
+            </code></pre>
+            <b>1. データの前処理</b>
+            <pre><code>
+# データをNumPy配列に変換
+X = np.array(mnist.data) / 255  # 正規化
+y = np.array(mnist.target).astype(np.int32)  # ラベルをint32型に変換
+
+# 1つ目の画像を表示
+plt.imshow(X[0].reshape(28, 28), cmap=&#039;gray&#039;)
+plt.title(f&quot;The label of this image is {y[0]}.&quot;)
+plt.show()
+            </code></pre>
+            <b>2. データローダーの作成</b>
+            <p>DataLoaderへの変換は以下の4つの手続きからなる。</p>
+            <ol>
+                <li>訓練データとテストデータに分割</li>
+                <li>NumPyデータをTensorに変換</li>
+                <li>Datasetの作成</li>
+                <li>DatasetをDataLoaderに変換</li>
+            </ol>
+            <pre><code>
+# 2. DataLoderの作成
+
+import torch
+from torch.utils.data import TensorDataset, DataLoader
+from sklearn.model_selection import train_test_split
+
+# 2.1 データを訓練とテストに分割（6:1）
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=1/7, random_state=0)
+
+# 2.2 データをPyTorchのTensorに変換
+X_train = torch.Tensor(X_train)
+X_test = torch.Tensor(X_test)
+y_train = torch.LongTensor(y_train)
+y_test = torch.LongTensor(y_test)
+
+# 2.3 データとラベルをセットにしたDatasetを作成
+ds_train = TensorDataset(X_train, y_train)
+ds_test = TensorDataset(X_test, y_test)
+
+# 2.4 データセットのミニバッチサイズを指定した、Dataloaderを作成
+# Chainerのiterators.SerialIteratorと似ている
+loader_train = DataLoader(ds_train, batch_size=64, shuffle=True)
+loader_test = DataLoader(ds_test, batch_size=64, shuffle=False)
+            </code></pre>
+            <p>ラベルのような整数データの場合は<code2>torch.LongTensor</code2>を使う。</p>
+            <b>3. ネットワークの構築</b>
+            <pre><code>
+# 3. ネットワークの構築
+# Keras風の書き方 
+
+from torch import nn
+
+model = nn.Sequential()
+model.add_module(&#039;fc1&#039;, nn.Linear(28*28*1, 100))
+model.add_module(&#039;relu1&#039;, nn.ReLU())
+model.add_module(&#039;fc2&#039;, nn.Linear(100, 100))
+model.add_module(&#039;relu2&#039;, nn.ReLU())
+model.add_module(&#039;fc3&#039;, nn.Linear(100, 10))
+
+print(model)
+            </code></pre>
+            <b>4. 誤差関数と最適化手法の設定</b>
+            <p>誤差関数にはクロスエントロピー誤差関数を、最適化手法にはAdamを設定する</p>
+            <pre><code>
+# 4. 誤差関数と最適化手法の設定
+
+from torch import optim
+
+# 誤差関数の設定
+loss_fn = nn.CrossEntropyLoss()  # 変数名にはcriterionが使われることも多い
+
+# 重みを学習する際の最適化手法の選択
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+            </code></pre>
+            <b>5. 学習と推論の設定</b>
+            <pre><code>
+# 5. 学習と推論の設定
+# 5-1. 学習1回でやることを定義します
+# Chainerのtraining.Trainer()に対応するものはない
+
+
+def train(epoch):
+    model.train()  # ネットワークを学習モードに切り替える
+
+    # データローダーから1ミニバッチずつ取り出して計算する
+    for data, targets in loader_train:
+      
+        optimizer.zero_grad()  # 一度計算された勾配結果を0にリセット
+        outputs = model(data)  # 入力dataをinputし、出力を求める
+        loss = loss_fn(outputs, targets)  # 出力と訓練データの正解との誤差を求める
+        loss.backward()  # 誤差のバックプロパゲーションを求める
+        optimizer.step()  # バックプロパゲーションの値で重みを更新する
+
+    print(&quot;epoch{}：終了\n&quot;.format(epoch))
+            </code></pre>
+            <pre><code>
+# 5. 学習と推論の設定
+# 5-2. 推論1回でやることを定義します
+# Chainerのtrainer.extend(extensions.Evaluator())に対応するものはない
+
+
+def test():
+    model.eval()  # ネットワークを推論モードに切り替える
+    correct = 0
+
+    # データローダーから1ミニバッチずつ取り出して計算する
+    with torch.no_grad():  # 微分は推論では必要ない
+        for data, targets in loader_test:
+
+            outputs = model(data)  # 入力dataをinputし、出力を求める
+
+            # 推論する
+            _, predicted = torch.max(outputs.data, 1)  # 確率が最大のラベルを求める
+            correct += predicted.eq(targets.data.view_as(predicted)).sum()  # 正解と一緒だったらカウントアップ
+
+    # 正解率を出力
+    data_num = len(loader_test.dataset)  # データの総数
+    print(&#039;\nテストデータの正解率: {}/{} ({:.0f}%)\n&#039;.format(correct,
+                                                   data_num, 100. * correct / data_num))
+            </code></pre>
+            <b>6. 学習と推論の実行</b>
+            <pre><code>
+# 6. 学習と推論の実行
+for epoch in range(3):
+    train(epoch)
+
+test()
+            </code></pre>
         </section>
     </main>
 </body>
