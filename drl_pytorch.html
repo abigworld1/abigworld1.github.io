@@ -29,6 +29,7 @@
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#source">Source</a></li>
                 <li><a href="#review">Review</a></li>
+                <li><a href="#dqn">DQN</a></li>
             </ul>
         </section>
         <section id="overview">
@@ -203,6 +204,358 @@ for epoch in range(3):
     train(epoch)
 
 test()
+            </code></pre>
+        </section>
+        <section id="dqn">
+            <h2>DQN</h2>
+            <p>ニューラルネットワークへの入力は、各状態変数の値となる。よって、ニューラルネットワークの入力層の祖指数は、状態変数の値と同じになる。</p>
+            <p>出力層の素子数は、行動の種類数となる。出力する値は、行動価値関数\(Q(s_t, a_t)\)の値である。</p>
+            <p>誤差関数は以下の通り。</p>
+            <div class="scroll">
+                \begin{align}
+                E(s_t, a_t) = (R_{t+1} + \gamma \max_a Q(s_{t+1}, a) - Q(s_t, a_t))^2
+                \end{align}
+            </div>
+            <p>状態\(s_{t+1}\)は、実際に\(s_t\)から行動\(a_t\)を実施して求める。</p>
+            <p>\(\max_a Q(s_{t+1}, a)\)の値はニューラルネットワークに状態\(s_{t+1}\)を入力して求める。</p>
+            <h3>Experience Replay</h3>
+            <p>DQNでは、表形式表現のQ学習のように1ステップごとにそのステップの内容（experience）を学習するのではなく、メモリに各ステップの内容を保存しておき、メモリから内容をランダムに取り出して（replay）、ニューラルネットワークに学習させる。
+            1ステップごとの内容をtransitionという。</p>
+            <p>各ステップごとにそのステップの内容を学習すると、時間的に相関が高い内容（時刻\(t\)と時刻\(t+1\)の学習内容はよく似ている）を連続してニューラルネットワークが学習するため、結合パラメータの学習が安定しづらいという問題が発生する。
+            Experience Replayはこの問題を解決する工夫となる。また、Experience Replayであればメモリから複数ステップの経験を使用することができるので、ミニバッチ学習でニューラルネットワークを学習させることができる。</p>
+            <h3>Fixed Target Q-Network</h3>
+            <p>ニューラルネットワークとして、行動を決定するmain-networkと誤差関数の計算時に行動価値を求めるtarget-networkの2種類を用意する。</p>
+            <P>DQNでは価値関数\(Q(s_t, a)\)を更新していきたいが、Q学習のアルゴリズムで行動価値関数を更新するには、次の時刻の状態\(s_{t+1}\)での価値関数\(Q(s_{t+1}, a)\)が必要である。
+            つまり、Q関数の更新のために、同じQ関数を使用する必要がある。これら2つを同じQ関数にしていると、Q関数の更新学習が不安定になりやすくなるという問題が発生する。
+            そこで、更新に必要な\(\max_a Q(s_{t+1}, a)\)を求めるときには、少し前の時間の別のQ関数（Fixed Target Q-Network）を使って計算する。</P>
+            <p>少し前の時間の別のQ関数とは、ニューラルネットワークの結合パラメータの学習が最新版より古いという意味である。ここでの少し前という表現は、強化学習の課題対象が持つ時間ではなく、ニューラルネットワークの結合パラメータ更新のタイミングを意味している。
+            そのため、target-networkは定期的にmain-networkで上書きすることになる。</p>
+            <h3>報酬のclipping</h3>
+            <p>各ステップで得られる報酬を-1, 0, 1のいずれかに固定しておく。こうすることで課題内容（学習対象）によらず、同じハイパーパラメータでDQNを実行できるというメリットがある。</p>
+            <h3>Huber関数</h3>
+            <p>誤差を二乗誤差関数ではなく、Huber関数を使用して計算する。誤差が大きい場合に二乗誤差を使用すると、誤差関数の出力が大きくなりすぎて学習が安定しづらいという問題が発生する。</p>
+            <h3>実装</h3>
+            <p>CartPoleを例に、実装してみる。</p>
+            <pre><code>
+# パッケージのimport
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+import gym
+            </code></pre>
+            <pre><code>
+from matplotlib import animation
+from IPython.display import display, Video
+import matplotlib.pyplot as plt
+
+def display_frames_as_gif(frames):
+    &quot;&quot;&quot;
+    Displays a list of frames as a video (mp4), with controls.
+    &quot;&quot;&quot;
+    # Figureの設定
+    fig = plt.figure(figsize=(frames[0].shape[1]/72.0, frames[0].shape[0]/72.0),
+                     dpi=72)
+    patch = plt.imshow(frames[0])
+    plt.axis(&#039;off&#039;)
+
+    # 各フレームを更新する関数
+    def animate(i):
+        patch.set_data(frames[i])
+
+    # アニメーションの設定
+    anim = animation.FuncAnimation(fig, animate, frames=len(frames), interval=50)
+
+    # mp4ファイルとして保存
+    anim.save(&#039;movie_cartpole_DQN.mp4&#039;, writer=&#039;ffmpeg&#039;)
+
+    # IPython上で動画を表示
+    display(Video(&quot;movie_cartpole_DQN.mp4&quot;, embed=True))
+            </code></pre>
+            <p>ここで、<code2>namedtuple</code2>の使用例を示す。</p>
+            <pre><code>
+# 本コードでは、namedtupleを使用します。
+# namedtupleを使うことで、値をフィールド名とペアで格納できます。
+# すると値に対して、フィールド名でアクセスできて便利です。
+# https://docs.python.jp/3/library/collections.html#collections.namedtuple
+# 以下は使用例です
+
+from collections import namedtuple
+
+Tr = namedtuple(&#039;tr&#039;, (&#039;name_a&#039;, &#039;value_b&#039;))
+Tr_object = Tr(&#039;名前Aです&#039;, 100)
+
+print(Tr_object)  # 出力：tr(name_a=&#039;名前Aです&#039;, value_b=100)
+print(Tr_object.value_b)  # 出力：100
+            </code></pre>
+            <p>DQNの実装時にも状態や行動の値にアクセスしやすくするために、各ステップでのtransition(経験)をnamedtupleを使用して変換する。実際に使用するnamedtupleは以下の通り。</p>
+            <pre><code>
+# namedtupleを生成
+from collections import namedtuple
+
+Transition = namedtuple(
+    &#039;Transition&#039;, (&#039;state&#039;, &#039;action&#039;, &#039;next_state&#039;, &#039;reward&#039;))
+            </code></pre>
+            <p>今回使用する定数を宣言する。</p>
+            <pre><code>
+# 定数の設定
+ENV = 'CartPole-v0'  # 使用する課題名
+GAMMA = 0.99  # 時間割引率
+MAX_STEPS = 200  # 1試行のstep数
+NUM_EPISODES = 500  # 最大試行回数
+            </code></pre>
+            <p>ミニバッチ学習を実現するために、経験データを保存しておくメモリクラスReplayMemoryを定義する。
+            ReplayMemoryはそのstepでのtransition（経験）を保存する関数pushと、ランダムにtransitionを取り出す関数sampleを用意する。
+            また、関数lenに対して、現在格納しているtransitionの数を返すように定義する。
+            メモリクラスは保存しているtransitionの数が定数CAPACITY以上になった場合には、インデックスを前に戻して古い内容がから上書きしていく。</p>
+            <pre><code>
+# 経験を保存するメモリクラスを定義します
+
+
+class ReplayMemory:
+
+    def __init__(self, CAPACITY):
+        self.capacity = CAPACITY  # メモリの最大長さ
+        self.memory = []  # 経験を保存する変数
+        self.index = 0  # 保存するindexを示す変数
+
+    def push(self, state, action, state_next, reward):
+        &#039;&#039;&#039;transition = (state, action, state_next, reward)をメモリに保存する&#039;&#039;&#039;
+
+        if len(self.memory) &lt; self.capacity:
+            self.memory.append(None)  # メモリが満タンでないときは足す
+
+        # namedtupleのTransitionを使用し、値とフィールド名をペアにして保存します
+        self.memory[self.index] = Transition(state, action, state_next, reward)
+
+        self.index = (self.index + 1) % self.capacity  # 保存するindexを1つずらす
+
+    def sample(self, batch_size):
+        &#039;&#039;&#039;batch_size分だけ、ランダムに保存内容を取り出す&#039;&#039;&#039;
+        return random.sample(self.memory, batch_size)
+
+    def __len__(self):
+        &#039;&#039;&#039;関数lenに対して、現在の変数memoryの長さを返す&#039;&#039;&#039;
+        return len(self.memory)
+            </code></pre>
+            <p>次に、Brainクラスを実装する。ここがDQNの中心部である。メソッドは関数replayと関数decide_actionである。
+            関数replayはメモリクラスからミニバッチを取り出して、ニューラルネットワークの結合パラメータを学習し、Q関数を更新する。
+            関数decide_actionはε-greedy法に従い、ランダムな行動もしくは現在の状態に対してQ値が最大となる行動のindexを返す。</p>
+            <pre><code>
+# エージェントが持つ脳となるクラスです、DQNを実行します
+# Q関数をディープラーニングのネットワークをクラスとして定義
+
+import random
+import torch
+from torch import nn
+from torch import optim
+import torch.nn.functional as F
+
+BATCH_SIZE = 32
+CAPACITY = 10000
+
+
+class Brain:
+    def __init__(self, num_states, num_actions):
+        self.num_actions = num_actions  # CartPoleの行動（右に左に押す）の2を取得
+
+        # 経験を記憶するメモリオブジェクトを生成
+        self.memory = ReplayMemory(CAPACITY)
+
+        # ニューラルネットワークを構築
+        self.model = nn.Sequential()
+        self.model.add_module(&#039;fc1&#039;, nn.Linear(num_states, 32))
+        self.model.add_module(&#039;relu1&#039;, nn.ReLU())
+        self.model.add_module(&#039;fc2&#039;, nn.Linear(32, 32))
+        self.model.add_module(&#039;relu2&#039;, nn.ReLU())
+        self.model.add_module(&#039;fc3&#039;, nn.Linear(32, num_actions))
+
+        print(self.model)  # ネットワークの形を出力
+
+        # 最適化手法の設定
+        self.optimizer = optim.Adam(self.model.parameters(), lr=0.0001)
+
+    def replay(self):
+        &#039;&#039;&#039;Experience Replayでネットワークの結合パラメータを学習&#039;&#039;&#039;
+
+        # -----------------------------------------
+        # 1. メモリサイズの確認
+        # -----------------------------------------
+        # 1.1 メモリサイズがミニバッチより小さい間は何もしない
+        if len(self.memory) &lt; BATCH_SIZE:
+            return
+
+        # -----------------------------------------
+        # 2. ミニバッチの作成
+        # -----------------------------------------
+        # 2.1 メモリからミニバッチ分のデータを取り出す
+        transitions = self.memory.sample(BATCH_SIZE)
+
+        # 2.2 各変数をミニバッチに対応する形に変形
+        # transitionsは1stepごとの(state, action, state_next, reward)が、BATCH_SIZE分格納されている
+        # つまり、(state, action, state_next, reward)×BATCH_SIZE
+        # これをミニバッチにしたい。つまり
+        # (state×BATCH_SIZE, action×BATCH_SIZE, state_next×BATCH_SIZE, reward×BATCH_SIZE)にする
+        batch = Transition(*zip(*transitions))
+
+        # 2.3 各変数の要素をミニバッチに対応する形に変形し、ネットワークで扱えるようVariableにする
+        # 例えばstateの場合、[torch.FloatTensor of size 1x4]がBATCH_SIZE分並んでいるのですが、
+        # それを torch.FloatTensor of size BATCH_SIZEx4 に変換します
+        # 状態、行動、報酬、non_finalの状態のミニバッチのVariableを作成
+        # catはConcatenates（結合）のことです。
+        state_batch = torch.cat(batch.state)
+        action_batch = torch.cat(batch.action)
+        reward_batch = torch.cat(batch.reward)
+        non_final_next_states = torch.cat([s for s in batch.next_state
+                                           if s is not None])
+
+        # -----------------------------------------
+        # 3. 教師信号となるQ(s_t, a_t)値を求める
+        # -----------------------------------------
+        # 3.1 ネットワークを推論モードに切り替える
+        self.model.eval()
+
+        # 3.2 ネットワークが出力したQ(s_t, a_t)を求める
+        # self.model(state_batch)は、右左の両方のQ値を出力しており
+        # [torch.FloatTensor of size BATCH_SIZEx2]になっている。
+        # ここから実行したアクションa_tに対応するQ値を求めるため、action_batchで行った行動a_tが右か左かのindexを求め
+        # それに対応するQ値をgatherでひっぱり出す。
+        state_action_values = self.model(state_batch).gather(1, action_batch)
+
+        # 3.3 max{Q(s_t+1, a)}値を求める。ただし次の状態があるかに注意。
+
+        # cartpoleがdoneになっておらず、next_stateがあるかをチェックするインデックスマスクを作成
+        non_final_mask = torch.ByteTensor(tuple(map(lambda s: s is not None,
+                                                    batch.next_state)))
+        # まずは全部0にしておく
+        next_state_values = torch.zeros(BATCH_SIZE)
+
+        # 次の状態があるindexの最大Q値を求める
+        # 出力にアクセスし、max(1)で列方向の最大値の[値、index]を求めます
+        # そしてそのQ値（index=0）を出力します
+        # detachでその値を取り出します
+        next_state_values[non_final_mask] = self.model(
+            non_final_next_states).max(1)[0].detach()
+
+        # 3.4 教師となるQ(s_t, a_t)値を、Q学習の式から求める
+        expected_state_action_values = reward_batch + GAMMA * next_state_values
+
+        # -----------------------------------------
+        # 4. 結合パラメータの更新
+        # -----------------------------------------
+        # 4.1 ネットワークを訓練モードに切り替える
+        self.model.train()
+
+        # 4.2 損失関数を計算する（smooth_l1_lossはHuberloss）
+        # expected_state_action_valuesは
+        # sizeが[minbatch]になっているので、unsqueezeで[minibatch x 1]へ
+        loss = F.smooth_l1_loss(state_action_values,
+                                expected_state_action_values.unsqueeze(1))
+
+        # 4.3 結合パラメータを更新する
+        self.optimizer.zero_grad()  # 勾配をリセット
+        loss.backward()  # バックプロパゲーションを計算
+        self.optimizer.step()  # 結合パラメータを更新
+
+    def decide_action(self, state, episode):
+        &#039;&#039;&#039;現在の状態に応じて、行動を決定する&#039;&#039;&#039;
+        # ε-greedy法で徐々に最適行動のみを採用する
+        epsilon = 0.5 * (1 / (episode + 1))
+
+        if epsilon &lt;= np.random.uniform(0, 1):
+            self.model.eval()  # ネットワークを推論モードに切り替える
+            with torch.no_grad():
+                action = self.model(state).max(1)[1].view(1, 1)
+            # ネットワークの出力の最大値のindexを取り出します = max(1)[1]
+            # .view(1,1)は[torch.LongTensor of size 1]　を size 1x1 に変換します
+
+        else:
+            # 0,1の行動をランダムに返す
+            action = torch.LongTensor(
+                [[random.randrange(self.num_actions)]])  # 0,1の行動をランダムに返す
+            # actionは[torch.LongTensor of size 1x1]の形になります
+
+        return action
+            </code></pre>
+            <p>関数replayでは4つのことを行っている。</p>
+            <ol>
+                <li>メモリサイズの確認</li>
+                <ul>
+                    <li>メモリサイズがミニバッチより小さい間は何もしない</li>
+                </ul>
+                <li>ミニバッチの作成</li>
+                <ul>
+                    <li>メモリからミニバッチ分のデータを取り出す</li>
+                    <li>各変数をミニバッチに対応する形に変形</li>
+                    <li>各変数の要素をミニバッチに対応する形に変形</li>
+                    <ul>
+                        <li>ミニバッチの作成はステップから成る。まずランダムにミニバッチ数分だけtransitionを取り出した変数transitionsを作成する。
+                        transitionが1stepごとのデータを固めて格納しているため、transitionsのままではPyTorchのミニバッチとして扱えない。
+                        そこで2段階の変形を行う。はじめに各変数（状態や行動など）をミニバッチに対応する形に変形する。
+                        具体的には、<code2>(state, action, state_next, reward)×BATCH_SIZE</code2>となっている形を、<code2>(state×BATCH_SIZE, action×BATCH_SIZE, state_next×BATCH_SIZE, reward×BATCH_SIZE)</code2>にする。
+                        次に各変数（状態や行動など）の要素（位置や速度など）をミニバッチで扱える形に変形する。
+                        例えばstateの場合、torch.FloatTensor of size 1x4がBATCH_SIZE分並んでいるが、それをtorch.FloatTensor of size BATCH_SIZEx4になるように変換する。
+                        なお次の状態があるのか終了状態なのかでQ学習の更新式が変わる。
+                        そこで変数<code2>non_final_next_states</code2>という、次の状態が存在する状態だけを集めたミニバッチも別途用意する。</li>
+                    </ul>
+                </ul>
+                <li>教師信号となる\(Q(s_t, a_t)\)値を求める</li>
+                <ul>
+                    <li>ネットワークを推論モードに切り替える</li>
+                    <li>ネットワークが出力した\(Q(s_t, a_t)\)を求める</li>
+                    <li>\(\max_a Q(s_{t+1}, a)\)の値を求める（次の状態がある場合のみ）</li>
+                    <li>教師となる\(Q(s_t, a_t)\)の値をQ学習の式から求める</li>
+                </ul>
+                <li>結合パラメータの更新</li>
+                <ul>
+                    <li>ネットワークを訓練モードに切り替える</li>
+                    <li>損失関数の値を計算する</li>
+                    <li>結合パラメータを更新する</li>
+                </ul>
+            </ol>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
+            </code></pre>
+            <pre><code>
+
             </code></pre>
         </section>
     </main>
