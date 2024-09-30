@@ -632,7 +632,17 @@ cartpole_env.run()
         </section>
         <section id="ddqn">
             <h2>DDQN</h2>
-            <p>DQNには、2013年バージョンｇと2015年Natureバージョンの2通りがある。</p>
+            <p>DQNには、2013年バージョンと2015年バージョンの2通りがある。
+            前のセクションでの、ミニバッチ学習による実装は2013年バージョンに相当する。
+            2015年バージョンでは、Target Q-Networkを用意してMain Q-Networkを学習させる。
+            そして、数ステップに一度、Target Q-Networkを更新してMain Q-Networkと一致させる。
+            2015年バージョンのDQNの更新式は以下の通り。</p>
+            <div class="scroll">
+                \begin{align}
+                Q_m (s_t, a_t) = Q_m (s_t, a_t) + \eta * (R_{t+1} + \gamma \max_a Q_t (s_{t+1}, a) - Q_m (s_t, a_t))
+                \end{align}
+            </div>
+            <p>ここで、</p>
         </section>
     </main>
 </body>
