@@ -157,3 +157,12 @@ pre {
   overflow-x: auto; 
   -webkit-overflow-scrolling: touch; 
 }
+
+.full-screen-image {
+    width: 100vw;        /* 画面の幅に合わせる */
+    height: 100vh;       /* 画面の高さに合わせる */
+    object-fit: cover;   /* 画像が領域にフィットするように調整 */
+    position: absolute;  /* スクロールに影響を受けないように配置 */
+    top: 0;              /* 上端に配置 */
+    left: 0;             /* 左端に配置 */
+}
