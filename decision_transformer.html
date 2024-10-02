@@ -44,5 +44,8 @@
                 自己回帰モデルを目標とするリターン（報酬）、過去の状態、行動に条件付けることで、Decision Transformerモデルは目標のリターンを達成する将来の行動を生成することができます。
                 シンプルでありながら、Decision TransformerはAtari、OpenAI Gym、Key-to-Doorタスクにおいて、最先端のモデルフリーオフラインRLベースラインと同等かそれ以上のパフォーマンスを発揮します。</p>
             <img src="images/decision_transformer1.png" alt="decision_transformer1" class="full-screen-image">
+            <p>図1: Decision Transformerのアーキテクチャ。
+                状態、行動、およびリターンは、それぞれのモダリティに特化した線形埋め込みに入力され、エピソードのタイムステップを示す位置エンコーディングが追加されます。
+                トークンは、因果自己注意マスクを使用して自己回帰的に行動を予測するGPTアーキテクチャに入力されます。</p>
         </section>
 
