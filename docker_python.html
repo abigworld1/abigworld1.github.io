@@ -43,8 +43,9 @@
 FROM python:3
 USER root
 
-RUN apt-get update
-RUN apt-get -y install locales &amp;&amp; \
+# Set up locale and time zone
+RUN apt-get update && \
+    apt-get -y install locales && \
     localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
 ENV LANG ja_JP.UTF-8
 ENV LANGUAGE ja_JP:ja
@@ -52,11 +53,31 @@ ENV LC_ALL ja_JP.UTF-8
 ENV TZ JST-9
 ENV TERM xterm
 
+# Install additional tools
 RUN apt-get install -y vim less
-RUN pip install --upgrade pip
-RUN pip install --upgrade setuptools
 
-RUN python -m pip install jupyterlab
+# Upgrade pip and setuptools
+RUN pip install --upgrade pip setuptools
+
+# Install JupyterLab
+RUN pip install jupyterlab
+
+# Install PyTorch (use specific version and CUDA if needed)
+RUN pip install torch
+
+# Install commonly used libraries
+RUN pip install numpy pandas matplotlib seaborn scikit-learn scipy \
+                pillow tqdm requests h5py opencv-python-headless \
+                transformers datasets pytorch-lightning
+
+# Install optional libraries for deep learning and computer vision
+RUN pip install albumentations torchvision
+
+# Optional: Install visualization and utility libraries
+RUN pip install plotly tensorboard wandb
+
+# Clean up
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
             </code></pre>
           </div>
           <li>docker-compose.ymlを以下のように編集する</li>
@@ -92,11 +113,10 @@ $ docker compose exec python3 bash
         <h3>追記</h3>
         <ul>
             <li>"Ctrl + p + q"でコンテナを抜ける（ショートカットキーを設定する必要があるかも）</li>
-            <li>"docker exec -it [コンテナID] bash"で再接続</li>
-            <li>Jupyter Notebookを起動する</li>
+            <li>再接続</li>
           <div class="example">
             <pre><code>
-$ docker run -v $PWD/opt:/root/opt -w /root/opt -it -p 3030:3030 docker_python-python3 jupyter-lab --ip 0.0.0.0 --port 3030 --allow-root
+docker exec -it [コンテナID] bash
             </code></pre>
           </div>
           <li>新しいコンテナを作る</li>
@@ -105,7 +125,7 @@ $ docker run -v $PWD/opt:/root/opt -w /root/opt -it -p 3030:3030 docker_python-p
 $ docker run -it -p 7070:7070 --name [コンテナ名] [イメージ名]
             </code></pre>
           </div>
-          <li>新しいコンテナ内でJupyter Notebookを起動する</li>
+          <li>コンテナ内でJupyter Notebookを起動する</li>
           <div class="example">
             <pre><code>
 $ jupyter lab --port=7070 --allow-root --ip=0.0.0.0
@@ -121,7 +141,6 @@ $ docker run -it -p 7070:7070 --name [コンテナ名] -v [ホスト側のパス
             <div class="example">
             <pre><code>
 $ docker run -p 7070:7070 -v [ホスト側のパス]:[コンテナ側のパス] --gpus all --shm-size=16g -it gcr.io/kaggle-gpu-images/python:v116 bash
-jupyter lab --port=7070 --allow-root --ip=0.0.0.0
             </code></pre>
           </div>
         </ul>
