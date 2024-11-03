@@ -83,9 +83,9 @@
         </ol>
         <b>工夫</b>
         <ul>
-          <li>不均衡データへの対処： RandomOverSampler と RandomUnderSampler を使ってクラスバランスを調整した</li>
-          <li>アンサンブルモデルの構築： VotingClassifier を使用して Soft Votingした</li>
-          <li>ノイズの追加：最終的な予測結果にノイズを追加することでモデルの過信を防いだ</li>
+          <li>3モデルのアンサンブルを実現するために、バッチサイズを下げた。</li>
+          <li>ガウシアンノイズを入力データに加えることでモデルをロバストにしている人がいたが、テストデータにバイアスがあることを期待して、予測結果にもノイズを加えた。</li>
+          <li>乱数シードを変えて良質なノイズを探した。</li>
         </ul>
         <h3><a href="https://www.kaggle.com/competitions/isic-2024-challenge/discussion/532704">2位(+23)の解法</a></h3>
         <b>全体的なアプローチ</b>
