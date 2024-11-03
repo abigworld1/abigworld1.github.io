@@ -29,12 +29,13 @@
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#abstract">Abstract</a></li>
                 <li><a href="#conclusion">Conclusion</a></li>
+                <li><a href="#model">Model</a></li>
             </ul>
         </section>
         <section id="overview">
             <h2>Overview</h2>
             "<a href="https://arxiv.org/pdf/1604.06057">Hierarchical Deep Reinforcement Learning: Integrating Temporal Abstraction and Intrinsic Motivation</a>" は、h-DQN (階層型Deep Q-Network) を提案しています。このモデルは、異なる時間スケールで動作する階層的な価値関数を統合することで、内発的に動機づけられた探索行動を促し、報酬が遅延する環境において効率的な探索を実現します。<br>
-            このページでは、その内容を順に追っていきます。
+            このページでは、その内容の一部を紹介します。
         </section>
         <section id="abstract">
           <h2>Abstract</h2>
@@ -47,7 +48,7 @@
                 <li>提案手法の有効性を、非常にスパースで遅延したフィードバックが存在する2つの問題で実証する：（1）複雑で離散的な確率的意思決定プロセス、（2）古典的なATARIゲーム「モンテズマの復讐」。</li>
             </ul>
         </section>
-        <section>
+        <section id="conclusion">
             <h2>Conclusion</h2>
             <ul>
                 <li>h-DQNを提案し、異なる時間スケールで動作する階層的な価値関数を持つフレームワークを構築した。</li>
@@ -63,7 +64,7 @@
                 <li>より複雑な非マルコフ環境に対応するためには、柔軟なエピソード記憶モジュールを取り入れることが必要である。</li>
             </ul>
         </section>
-        <section>
+        <section id="model">
             <h2>Model</h2>
             <ul>
                 <li>状態 \( s \in S \)、行動 \( a \in A \)、および遷移関数 \( T : (s, a) \rightarrow s' \) で表されるマルコフ決定過程（MDP）を考える。</li>
