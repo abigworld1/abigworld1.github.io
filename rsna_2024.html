@@ -92,9 +92,20 @@
       <section>
         <h2>解法</h2>
         <h3>自分の解法</h3>
-          <b>大まかな流れ</b>
-          <p></p>
-          <b>工夫</b>
+          <ul>
+              <li>パブリックコードからモデルを引っ張ってきてアンサンブル（YOLO + ViT）</li>
+              <li>target が重症度3クラス（normal/mild, moderate, severe）で順序性があることに注目</li>
+              <ul>
+                  <li>アンサンブルの結果、予測された確率分布が谷の形になっていたらよくない</li>
+                  <ul>
+                      <li>谷の形になる場合は単体モデルの予測を使用 or “moderate”に出力を流して山の形にした</li>
+                  </ul>
+                  <li>中途半端な予測はもったいない</li>
+                  <ul>
+                      <li>「0.5, 0.3, 0.2 → 0.75, 0.15, 0.1」のように確率分布の尖度を大きくした（比例再分配）</li>
+                  </ul>
+              </ul>
+          </ul>
           <h3><a href="https://www.kaggle.com/competitions/rsna-2024-lumbar-spine-degenerative-classification/discussion/539452">2位(-1)の解法</a></h3>
           <b>概要</b>
           <p>小さなモデルのアンサンブル。
