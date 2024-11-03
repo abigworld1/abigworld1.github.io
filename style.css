@@ -166,3 +166,9 @@ pre {
     top: 0;              /* 上端に配置 */
     left: 0;             /* 左端に配置 */
 }
+
+.responsive-image {
+  max-width: 100%;
+  height: auto;
+  width: 500px;
+}
