@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【環境構築 & Git運用】走る作曲家のAIカフェ</title>
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1050827580219099"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>走る作曲家のAIカフェ</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="study.html">勉強</a></li>
+                <li><a href="music.html">音楽</a></li>
+                <li><a href="sports.html">スポーツ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+      <section>
+        <h2>【環境構築 & Git運用】</h2>
+          <p>自分用のメモです。git cloneしたリポジトリ（ここでは、"assignmentTask"）をdockerコンテナ内で開発する手順の例です。</p>
+          <h3>環境構築</h3>
+          <pre><code>
+git clone https://（略）/_git/assignmentTask
+          </code></pre>
+          <pre><code>
+docker run -it --gpus all -v $(pwd)/assignmentTask:/assignmentTask nvidia/cuda:11.7.1-base-ubuntu22.04 bash
+          </code></pre>
+          <pre><code>
+apt-get update && apt-get install -y python3 python3-pip screen git
+          </code></pre>
+          <pre><code>
+ln -s /usr/bin/python3 /usr/bin/python
+          </code></pre>
+          <pre><code>
+pip install numpy matplotlib torch pandas schedulefree
+          </code></pre>
+          <h3>Git運用</h3>
+          <pre><code>
+git checkout -b feature/jsai_ex
+          </code></pre>
+          <pre><code>
+
+          </code></pre>
+          <pre><code>
+
+          </code></pre>
+          <pre><code>
+
+          </code></pre>
+          <pre><code>
+
+          </code></pre>
+          <pre><code>
+
+          </code></pre>
+          <pre><code>
+
+          </code></pre>
+      </section>
+    </main>
+</body>
+</html>
