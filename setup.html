@@ -25,43 +25,41 @@
         <h2>【環境構築 & Git運用】</h2>
           <p>自分用のメモです。git cloneしたリポジトリ（ここでは、"assignmentTask"）をdockerコンテナ内で開発する手順の例です。</p>
           <h3>環境構築</h3>
+          <p>クローンする。</p>
           <pre><code>
 git clone https://（略）/_git/assignmentTask
           </code></pre>
+          <p>コンテナを立ち上げる（GPU使用。assignmentTaskをマウント。docker imageは適宜変更。）</p>
           <pre><code>
 docker run -it --gpus all -v $(pwd)/assignmentTask:/assignmentTask nvidia/cuda:11.7.1-base-ubuntu22.04 bash
           </code></pre>
+          <p>Python, Screen, Gitを使えるようにする。</p>
           <pre><code>
 apt-get update && apt-get install -y python3 python3-pip screen git
           </code></pre>
+          <p>"Python3"→"Python"でコマンド打てるようにする。</p>
           <pre><code>
 ln -s /usr/bin/python3 /usr/bin/python
           </code></pre>
+          <p>諸々インストール。</p>
           <pre><code>
 pip install numpy matplotlib torch pandas schedulefree
           </code></pre>
           <h3>Git運用</h3>
+          <p>まずはcheckout（例として、fix/graph.pyブランチを作る）。</p>
           <pre><code>
-git checkout -b feature/jsai_ex
+git checkout -b fix/graph.py
           </code></pre>
+          <p>変更を加えたら、<code>git add</code>でステージングし、<code>commit</code>で履歴を残す。</p>
           <pre><code>
-
+git add .
+git commit -m "～を変更したよ"
           </code></pre>
+          <p>リモートにプッシュ。</p>
           <pre><code>
-
+git push origin fix/graph.py
           </code></pre>
-          <pre><code>
-
-          </code></pre>
-          <pre><code>
-
-          </code></pre>
-          <pre><code>
-
-          </code></pre>
-          <pre><code>
-
-          </code></pre>
+          <p>Azure DevOps上でPR (Pull Request) を作成し、マージする。</p>
       </section>
     </main>
 </body>
