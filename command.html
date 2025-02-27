@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【環境構築 & Git運用】走る作曲家のAIカフェ</title>
+    <title>【よく使うコマンド】走る作曲家のAIカフェ</title>
     <link rel="stylesheet" href="style.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1050827580219099"
      crossorigin="anonymous"></script>
@@ -22,8 +22,8 @@
     </header>
     <main>
       <section>
-        <h2>【環境構築 & Git運用】</h2>
-          <p>自分用のメモです。git cloneしたリポジトリ（ここでは、"assignmentTask"）をdockerコンテナ内で開発する手順の例です。</p>
+        <h2>よく使うコマンド</h2>
+          <p>自分用のメモです。git cloneしたリポジトリ（ここでは、"assignmentTask"）をdockerコンテナ内で開発する手順の例とか、不要なプロセスの削除とか。</p>
           <h3>環境構築</h3>
           <p>クローンする。</p>
           <pre><code>
@@ -45,7 +45,7 @@ ln -s /usr/bin/python3 /usr/bin/python
           <pre><code>
 pip install numpy matplotlib torch pandas schedulefree
           </code></pre>
-          <h3>Git運用</h3>
+          <h3>Git</h3>
           <p>まずはcheckout（例として、fix/graph.pyブランチを作る）。</p>
           <pre><code>
 git checkout -b fix/graph.py
@@ -60,6 +60,15 @@ git commit -m "～を変更したよ"
 git push origin fix/graph.py
           </code></pre>
           <p>Azure DevOps上でPR (Pull Request) を作成し、マージする。</p>
+          <h3>不要なプロセスの削除</h3>
+          <p>メモリ使用量の多い上位20個のプロセスを表示。</p>
+          <pre><code>
+ps aux --sort=-%mem | head -20
+          </code></pre>
+          <p>メモリ使用量の多い上位20個のプロセスを削除。</p>
+          <pre><code>
+ps aux --sort=-%mem | awk 'NR>1 && NR<=21 {print $2}' | xargs kill -9
+          </code></pre>
       </section>
     </main>
 </body>
