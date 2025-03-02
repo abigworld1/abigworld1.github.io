@@ -1050,6 +1050,403 @@ for i, gender in enumerate(['Mens', 'Womens']):
 
     <p>このように、各チームがどの程度シュートを打ったか、オフェンスリバウンドを取れたか、ターンオーバーをどれくらいしたかなど、長期的な傾向を可視化できる。</p>
 </section>
+<section>
+    <h2>提出セクションと確率行列は、締切前の「Selection Sunday」後に更新されます</h2>
+    <h3>概要</h3>
+    <p>このソリューションは、2019年から2022年、そして2024年にわたってメダルを獲得するための鍵となったものです。特に2022年には金メダルも獲得しました。</p>
+    <p>このソリューションで使用する唯一のモデルは <em>goto_conversion</em> であり、使用しているデータは2024年まで利用できていた 538 のレーティング（2024年以降はペイウォールのため利用不可）だけです。そのため、ソリューションは非常にシンプルですが、リスクを取らない方法でも、メンズとウィメンズ両方の大会で毎年メダルを獲得できるほどの成績（2019年メンズ大会を除く）を挙げています。2019年メンズ大会でも、全参加者の85%より上に位置していたことが実験セクションの証拠からわかります。過度なフィッティングを避けるために、オッカムの剃刀を尊重してシンプルさを追求しています。</p>
+    <p>2024年大会においても、このソリューション単体でメダル獲得が可能でしたが、大会の評価方法が大きく変わったにも関わらず、有効性が示されました。実際、昨年の86位〜100位のリーダーボードスコアとこのソリューションのスコアを比べると、どちらも 0.06035 となっています。また、2024年に 538 のレーティングがペイウォール化されたため、昨年の提出に用いた確率行列は、<em>goto_conversion</em> を使ってベッティングオッズを確率に変換することで作成されています。これらは最初のコードブロックでインタラクティブに表示されており、CSVファイルとしても参照可能です。</p>
+    <p>さらなる高精度を狙う場合、このソリューションをまるごと使うのではなく、複数の手法の一部として組み込むことを推奨します。実際、2024年には少なくとも金メダリスト2人（3位、4位）と銀メダリスト1人（38位）が、このソリューションを自身のソリューションに取り入れて成功したと公表しています（一覧あり）。また、目標（例：金メダルか、あるいは何らかのメダル獲得か）によって戦略を変えるべきである点については、「What-If Leaderboard」セクションを参照してください。</p>
+    <p><em>goto_conversion</em> はもともと、ベッティングオッズを勝率に変換するためのライブラリとして設計されています。乗算ベース（逆数を正規化するだけ）の手法と比べて、このライブラリは「フェイバリット・ロングショット・バイアス（favourite-longshot bias）」を考慮しており、明らかに優位です。フェイバリット・ロングショット・バイアスとは、勝ちやすいイベントのオッズは期待損失が小さく、勝ちにくいイベントのオッズは期待損失が大きいという傾向のことです。Shin法やPower法などもこのバイアスを考慮しようとしますが、<em>goto_conversion</em> のほうが高精度を発揮します。詳細は下記GitHubレポジトリにまとまっています。</p>
+    <p><a href="https://github.com/gotoConversion/goto_conversion" target="_blank">https://github.com/gotoConversion/goto_conversion</a></p>
+    <p>では、この「フェイバリット・ロングショット・バイアス」がなぜこのコンペに関係するのでしょうか。それは、538 のレーティングがレギュラーシーズンのデータからチームの強さを測定していることにあります。強豪チームは、レギュラーシーズン中に主力選手を休ませたり、力を入れない“ガーベージ”な試合・時間帯があり、実際の最大パフォーマンスが数値化されにくいという問題があります。対戦相手の質を調整しても、March Madness のような本気度の高い試合では、より強いチームはレギュラーシーズン以上に支配的な成績を収める可能性が高いのです。これは、乗算ベースの変換を用いると強豪チームの勝率を過小評価するという、フェイバリット・ロングショット・バイアスと同型の問題です。</p>
+    <p>例えば、2回戦で A チームと B チームが対戦する場合を考えます。この試合の勝率を求めるにあたり、</p>
+    <pre><code>P(Team A wins 2nd round match) = P(Team A reaching 3rd round) / P(Team A reaching 2nd round)
+P(Team B wins 2nd round match) = P(Team B reaching 3rd round) / P(Team B reaching 2nd round)
+</code></pre>
+    <p>という計算をすると、<code>P(Team A wins 2nd round match)</code> と <code>P(Team B wins 2nd round match)</code> の合計が1になりません。これが問題の根本です。そこで、<em>goto_conversion</em> を使って「トーナメント進出確率」から「対戦勝率」へ変換し、それぞれの勝率和が1になるように補正する必要があります。</p>
+    <pre><code>goto_conversion([1/P(Team A wins 2nd round match), 1/P(Team B wins 2nd round match)])
+= [P(Team A beats Team B), P(Team B beats Team A)]
+</code></pre>
+    <p>乗算ベースの変換を使うと、強豪チーム（勝ちやすいチーム）の勝率が過小評価されるというフェイバリット・ロングショット・バイアスに陥りやすいのです。</p>
+    <p>なお、<a href="https://fivethirtyeight.com/features/how-our-march-madness-predictions-work-2/" target="_blank">このリンク先</a>によれば、538自身も「March Madness はレギュラーシーズンよりもアップセット（番狂わせ）が起こりにくい」という傾向を発見しています。これは、March Madness のほうが公正かつフェアな条件下で行われることが主な理由だと考えているようです。</p>
+
+    <h3>goto_conversion リポジトリから抽出した、538 スタイルの確率行列を表示</h3>
+    <p><a href="https://github.com/gotoConversion/goto_conversion" target="_blank">https://github.com/gotoConversion/goto_conversion</a></p>
+    <p>以下の行列は、<em>goto_conversion</em> を用いてベッティングオッズを勝率に変換した結果です。</p>
+    <pre><code>import pandas as pd
+import numpy as np
+import plotly.express as px
+
+class Percent(float):
+    def __str__(self):
+        return '{:.1%}'.format(self)
+
+def get_heatMap(output_df, rounds_list, title):
+    output_df = output_df.sort_values(by=output_df.columns.tolist()[-1], ascending=False)
+    players_list = output_df.index.tolist()
+    probabilities_npMatrix = [[Percent(e) for e in l] for l in output_df.values.tolist()]
+    probabilitiesText_npMatrix = np.array(probabilities_npMatrix, dtype='str_')
+
+    fig = px.imshow(probabilities_npMatrix, x=rounds_list, y=players_list, color_continuous_scale='Greens', aspect="auto", width=800, height=1600)
+    fig.update_traces(text=probabilitiesText_npMatrix , texttemplate="%{text}")
+    fig.update_xaxes(side="top")
+    fig.update(layout_coloraxis_showscale=False)
+    fig.update_layout(title=title)
+    fig.show(renderer='iframe')
+    
+kaggleFolderPath = '/kaggle/input/march-machine-learning-mania-2025'
+fivethirtyeightFolderPath = '/kaggle/input/538data'
+#Display Mens Probability Matrix
+
+mensProbabilities_df = pd.read_csv(fivethirtyeightFolderPath + '/mensProbabilitiesTable.csv', index_col = 'player') #source: https://github.com/gotoConversion/goto_conversion
+mensProbabilities_df = mensProbabilities_df.drop('Elo_Rating', axis=1)
+get_heatMap(mensProbabilities_df, rounds_list = ['Reach R2', 'Reach S16', 'Reach E8', 'Reach F4', 'Reach CG', 'Champion'], title = 'Mens March Madness 2024')
+
+#Display Womens Probability Matrix
+
+womensProbabilities_df = pd.read_csv(fivethirtyeightFolderPath + '/womensProbabilitiesTable.csv', index_col = 'player') #source: https://github.com/gotoConversion/goto_conversion
+womensProbabilities_df = womensProbabilities_df.drop('Elo_Rating', axis=1)
+get_heatMap(womensProbabilities_df, rounds_list = ['Reach R2', 'Reach S16', 'Reach E8', 'Reach F4', 'Reach CG', 'Champion'], title = 'Womens March Madness 2024')
+</code></pre>
+
+    <h3>実験</h3>
+    <pre><code>#Install libraries
+
+%pip install goto-conversion
+
+#Load libraries
+
+import goto_conversion
+import math
+import os
+import statistics
+import copy
+
+#Import each year's 538 files before it went behind a paywall
+
+both2019_df = pd.read_csv(fivethirtyeightFolderPath + '/fivethirtyeight_ncaa_forecasts (2).csv') #538 file for 2019
+both2021_df = pd.read_csv(fivethirtyeightFolderPath + '/fivethirtyeight_ncaa_forecasts (3).csv') #538 file for 2021
+both2022_df = pd.read_csv(fivethirtyeightFolderPath + '/fivethirtyeight_ncaa_forecasts (4).csv') #538 file for 2022
+both2023_df = pd.read_csv(fivethirtyeightFolderPath + '/fivethirtyeight_ncaa_forecasts (5).csv') #538 file for 2023
+
+#Import labels
+mensLabels_df = pd.read_csv(kaggleFolderPath + '/MNCAATourneyDetailedResults.csv')
+mensLabels_df = mensLabels_df.sort_values(by=['Season', 'DayNum']).reset_index(drop=True) #ensure ordering of labels to be safe (probably needless line)
+womensLabels_df = pd.read_csv(kaggleFolderPath + '/WNCAATourneyDetailedResults.csv')
+womensLabels_df = womensLabels_df.sort_values(by=['Season', 'DayNum']).reset_index(drop=True) #ensure ordering of labels to be safe (probably needless line)
+
+#Import team spellings to TeamID map
+mensTeamSpellings_df = pd.read_csv(kaggleFolderPath + '/MTeamSpellings.csv', encoding='cp1252')
+womensTeamSpellings_df = pd.read_csv(kaggleFolderPath + '/WTeamSpellings.csv', encoding='cp1252')
+
+#Compute head-to-head probabilities for all matches played in 2014 to 2022 for Mens
+#and 2015 to 2022 for Womens
+
+def get_round_from_index(i, year, gender):
+
+    #Notice round 1 is the first four round,
+    #round 2 is the round of 64 and so on.
+
+    #Notice apart from 2022 and 2023,
+    #Womens tournament did not have a first four round.
+
+    if (gender == 'womens' and year < 2022): #no first four round
+        return 2 + (i // 32) + (i // 48) + (i // 56) + (i // 60) + (i // 62) #e.g. last game of first round will be index 31, last game of tournament will be index 62
+    else: #includes first four round
+        if i <= 3: #first four round match
+            return 1
+        else:
+            return 2 +  (i // 36) + (i // 52) + (i // 60) + (i // 64) + (i // 66)
+
+def get_tourneyProb_from_teamID(teamID, givenYear_tourneyProb_df, spellings_df, year):
+
+    givenTeamID_spellings_list = spellings_df.loc[spellings_df['TeamID'] == teamID,'TeamNameSpelling'].tolist()
+    givenTeamID_tourneyProb_row = givenYear_tourneyProb_df.loc[[x in givenTeamID_spellings_list for x in givenYear_tourneyProb_df['team_name'].str.lower().tolist()]]
+
+    return givenTeamID_tourneyProb_row
+
+def preprocessed_goto_conversion(listOfOdds, total = 1):
+    listOfProbabilities = [1/x for x in listOfOdds]
+    isProbSumBelowTotal = sum(listOfProbabilities) < total
+    if isProbSumBelowTotal: #input to goto_conversion must be odds where sum of inverse odds exceeds or equals 1
+        reversedListOfOdds = [1/(1-x) for x in listOfProbabilities] #unfair odds of losing
+        reversedListOfProbabilities = goto_conversion.goto_conversion(reversedListOfOdds, multiplicativeIfUnprudentOdds = True) #convert the unfair odds of losing to fair probabilities of losing
+        outputListOfProbabilities = [1-x for x in reversedListOfProbabilities] #convert fair probabilities of losing to fair probabilities of winning
+    else:
+        outputListOfProbabilities = goto_conversion.goto_conversion(listOfOdds, multiplicativeIfUnprudentOdds = True)
+    return outputListOfProbabilities
+
+def convert_tourneyProb_to_h2hProb(tourneyProb_df, labels_df, spellings_df, year, gender):
+
+    givenYear_labels_df = labels_df.loc[labels_df['Season'] == year]
+    correctProbs_list = []
+
+    if year >= 2016: #new format of 538 file from 2016 onwards
+        givenYear_tourneyProb_df = tourneyProb_df.loc[tourneyProb_df['gender'] == gender,:]
+    else:
+        givenYear_tourneyProb_df = tourneyProb_df
+
+    for i in range(givenYear_labels_df.shape[0]):
+
+        tourneyMatch_row = givenYear_labels_df.iloc[i,:]
+        tourneyMatch_round = get_round_from_index(i, year, gender)
+
+        wteam_id = tourneyMatch_row['WTeamID']
+        lteam_id = tourneyMatch_row['LTeamID']
+
+        wteam_tourneyProb_row = get_tourneyProb_from_teamID(wteam_id, givenYear_tourneyProb_df, spellings_df, year)
+        lteam_tourneyProb_row = get_tourneyProb_from_teamID(lteam_id, givenYear_tourneyProb_df, spellings_df, year)
+
+        isMoreThanOneRow = year >= 2016
+        if isMoreThanOneRow:
+
+            wteam_firstMatchDay = min(wteam_tourneyProb_row['forecast_date'].tolist())
+            lteam_firstMatchDay = min(lteam_tourneyProb_row['forecast_date'].tolist())
+
+            wteam_tourneyProb_row = wteam_tourneyProb_row.loc[wteam_tourneyProb_row['forecast_date'] == wteam_firstMatchDay,:]
+            lteam_tourneyProb_row = lteam_tourneyProb_row.loc[lteam_tourneyProb_row['forecast_date'] == lteam_firstMatchDay,:]
+
+            if i == 0:
+                print('Key error check to ensure leakage is prevented:')
+                display(wteam_tourneyProb_row)
+                display(lteam_tourneyProb_row)
+
+        if tourneyMatch_round == 1:
+            wteam_winGivenReach_prob = wteam_tourneyProb_row['rd' + str(tourneyMatch_round) + '_win'].values[0]
+            lteam_winGivenReach_prob = lteam_tourneyProb_row['rd' + str(tourneyMatch_round) + '_win'].values[0]
+        else:
+            wteam_winGivenReach_prob = wteam_tourneyProb_row['rd' + str(tourneyMatch_round) + '_win'].values[0] / wteam_tourneyProb_row['rd' + str(tourneyMatch_round - 1) + '_win'].values[0]
+            lteam_winGivenReach_prob = lteam_tourneyProb_row['rd' + str(tourneyMatch_round) + '_win'].values[0] / lteam_tourneyProb_row['rd' + str(tourneyMatch_round - 1) + '_win'].values[0]
+
+        convertedProbs = preprocessed_goto_conversion([1/wteam_winGivenReach_prob, 1/lteam_winGivenReach_prob])
+        correctProbs_list.append(convertedProbs[0])
+
+    return correctProbs_list
+
+
+#2022
+mens2022_correctProbs_list = convert_tourneyProb_to_h2hProb(both2022_df, mensLabels_df, mensTeamSpellings_df, year = 2022, gender = 'mens')
+womens2022_correctProbs_list = convert_tourneyProb_to_h2hProb(both2022_df, womensLabels_df, womensTeamSpellings_df, year = 2022, gender = 'womens')
+
+#2021
+mens2021_correctProbs_list = convert_tourneyProb_to_h2hProb(both2021_df, mensLabels_df, mensTeamSpellings_df, year = 2021, gender = 'mens')
+womens2021_correctProbs_list = convert_tourneyProb_to_h2hProb(both2021_df, womensLabels_df, womensTeamSpellings_df, year = 2021, gender = 'womens')
+
+#2019
+mens2019_correctProbs_list = convert_tourneyProb_to_h2hProb(both2019_df, mensLabels_df, mensTeamSpellings_df, year = 2019, gender = 'mens')
+womens2019_correctProbs_list = convert_tourneyProb_to_h2hProb(both2019_df, womensLabels_df, womensTeamSpellings_df, year = 2019, gender = 'womens')
+
+print('='*50)
+</code></pre>
+
+    <pre><code>Key error check to ensure leakage is prevented:
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+777	mens	2022-03-13	1	0.754715	0.300936	0.087731	0.042307	0.014924	0.004484	0.001805	0	1	84	Indiana	82.98	East	12b	43
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+799	mens	2022-03-13	1	0.245285	0.075549	0.017249	0.005429	0.001224	0.000257	0.000077	0	1	2751	Wyoming	78.52	East	12a	42
+Key error check to ensure leakage is prevented:
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+1608	womens	2022-03-13	1	0.490711	0.182845	0.025318	0.006436	0.000326	0.000063	0.000009	0	1	2168	Dayton	80.91	Greensboro	11a	18
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+1609	womens	2022-03-13	1	0.509289	0.193621	0.027463	0.00625	0.000276	0.000056	0.000008	0	1	305	DePaul	80.54	Greensboro	11b	19
+Key error check to ensure leakage is prevented:
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+731	mens	2021-03-14	1	0.399489	0.093369	0.03908	0.00831	0.001123	0.000348	0.000082	0	1	2181	Drake	77.58	West	11a	18
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+725	mens	2021-03-14	1	0.600511	0.178177	0.08713	0.022539	0.003722	0.001349	0.00037	0	1	2724	Wichita State	79.9	West	11b	19
+Key error check to ensure leakage is prevented:
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+1327	womens	2021-03-14	0	1.0	0.994782	0.908748	0.779738	0.349553	0.252095	0.106927	1	1	239	Baylor	101.12	River Walk	2	124
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+1382	womens	2021-03-14	0	1.0	0.005218	0.00054	0.000045	8.583790e-07	4.701400e-08	9.620000e-10	1	1	2296	Jackson State	68.54	River Walk	15	126
+Key error check to ensure leakage is prevented:
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+790	mens	2019-03-17	1	0.575381	0.216725	0.088893	0.021065	0.003717	0.000991	0.000279	0	1	2057	Belmont	80.67	East	11a	18
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+795	mens	2019-03-17	1	0.424619	0.136819	0.049522	0.012512	0.002353	0.000542	0.000134	0	1	218	Temple	79.39	East	11b	19
+Key error check to ensure leakage is prevented:
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+1413	womens	2019-03-17	0	1.0	0.688352	0.255351	0.041718	0.008579	0.001428	0.000185	1	1	9	Arizona State	88.31	Portland	5	40
+gender	forecast_date	playin_flag	rd1_win	rd2_win	rd3_win	rd4_win	rd5_win	rd6_win	rd7_win	results_to	team_alive	team_id	team_name	team_rating	team_region	team_seed	team_slot
+1432	womens	2019-03-17	0	1.0	0.311648	0.073067	0.00342	0.000248	0.000029	0.000003	1	1	2116	Central Florida	79.89	Portland	12	42
+==================================================
+</code></pre>
+
+    <p><strong>2022年メンズ大会でのノーリスク戦略によるブロンズ（63位相当）の証拠:</strong></p>
+    <pre><code>#Measure 2022 mens comp score
+#Leaderboard: https://www.kaggle.com/competitions/mens-march-mania-2022/leaderboard
+#code below is a copy and paste so the logic behind the output score can be viewed without scrolling
+
+logloss = []
+for i in range(len(mens2022_correctProbs_list)):
+    if i >= 4: #exclude first four matches
+        logloss.append(math.log(mens2022_correctProbs_list[i]))
+scoreWith01Boost = abs(statistics.mean(logloss) - math.log(0.5)/len(logloss)) #score with 0-1 strategy but no risks
+print(scoreWith01Boost)
+print('='*50)
+</code></pre>
+    <pre><code>0.6064976407396272
+==================================================
+</code></pre>
+
+    <p><strong>2022年ウィメンズ大会でのノーリスク戦略によるブロンズ（58位相当）の証拠:</strong></p>
+    <pre><code>#Measure 2022 womens comp score
+#Leaderboard: https://www.kaggle.com/competitions/womens-march-mania-2022/leaderboard
+#code below is a copy and paste so the logic behind the output score can be viewed without scrolling
+
+logloss = []
+for i in range(len(womens2022_correctProbs_list)):
+    if i >= 4: #exclude first four matches
+        logloss.append(math.log(womens2022_correctProbs_list[i]))
+scoreWith01Boost = abs(statistics.mean(logloss) - math.log(0.5)/len(logloss)) #score with 0-1 strategy but no risks
+print(scoreWith01Boost)
+print('='*50)
+</code></pre>
+    <pre><code>0.42749291920371985
+==================================================
+</code></pre>
+
+    <p><strong>2021年メンズ大会でのノーリスク戦略によるブロンズ（63位相当）の証拠:</strong></p>
+    <pre><code>#Measure 2021 mens comp score
+#Leaderboard: https://www.kaggle.com/competitions/ncaam-march-mania-2021/leaderboard
+#code below is a copy and paste so the logic behind the output score can be viewed without scrolling
+
+logloss = []
+for i in range(len(mens2021_correctProbs_list)):
+    if i >= 4: #exclude first four matches
+        logloss.append(math.log(mens2021_correctProbs_list[i]))
+scoreWith01Boost = abs(statistics.mean(logloss) - math.log(0.5)/len(logloss)) #score with 0-1 strategy but no risks
+print(scoreWith01Boost)
+print('='*50)
+</code></pre>
+    <pre><code>0.5930164132974177
+==================================================
+</code></pre>
+
+    <p><strong>2021年ウィメンズ大会でのノーリスク戦略によるシルバー（11位相当）の証拠:</strong></p>
+    <pre><code>#Measure 2021 womens comp score
+#Leaderboard: https://www.kaggle.com/competitions/ncaaw-march-mania-2021/leaderboard
+#code below is a copy and paste so the logic behind the output score can be viewed without scrolling
+
+logloss = []
+for i in range(len(womens2021_correctProbs_list)):
+    logloss.append(math.log(womens2021_correctProbs_list[i]))
+scoreWith01Boost = abs(statistics.mean(logloss) - math.log(0.5)/len(logloss)) #score with 0-1 strategy but no risks
+print(scoreWith01Boost)
+print('='*50)
+</code></pre>
+    <pre><code>0.40810687012546154
+==================================================
+</code></pre>
+
+    <p><strong>2019年メンズ大会でのノーリスク戦略による上位15%（126位相当）の証拠:</strong></p>
+    <pre><code>#Measure 2019 mens comp score
+#Leaderboard: https://www.kaggle.com/competitions/mens-machine-learning-competition-2019/leaderboard
+#code below is a copy and paste so the logic behind the output score can be viewed without scrolling
+
+logloss = []
+for i in range(len(mens2019_correctProbs_list)):
+    if i >= 4: #exclude first four matches
+        logloss.append(math.log(mens2019_correctProbs_list[i]))
+scoreWith01Boost = abs(statistics.mean(logloss) - math.log(0.5)/len(logloss)) #score with 0-1 strategy but no risks
+print(scoreWith01Boost)
+print('='*50)
+</code></pre>
+    <pre><code>0.4645544313328942
+==================================================
+</code></pre>
+
+    <p><strong>2019年ウィメンズ大会でのノーリスク戦略によるシルバー（22位相当）の証拠:</strong></p>
+    <pre><code>#Measure 2019 womens comp score
+#Leaderboard: https://www.kaggle.com/competitions/womens-machine-learning-competition-2019/leaderboard
+#code below is a copy and paste so the logic behind the output score can be viewed without scrolling
+
+logloss = []
+for i in range(len(womens2019_correctProbs_list)):
+    logloss.append(math.log(womens2019_correctProbs_list[i]))
+scoreWith01Boost = abs(statistics.mean(logloss) - math.log(0.5)/len(logloss)) #score with 0-1 strategy but no risks
+print(scoreWith01Boost)
+print('='*50)
+</code></pre>
+    <pre><code>0.35257989400721657
+==================================================
+</code></pre>
+
+    <h3>2023年のWhat-If Leaderboard</h3>
+    <p>2023年は私がメダルを逃した唯一の年でした。しかし私（kaito510）は、リスクである「SDSU が男子決勝戦で UConn に勝利する」という仮定が当たっていれば金メダルを、リスクを取らなければブロンズメダルを獲得できていました。以下の What-If Leaderboard にその証拠が示されています。</p>
+    <p>このセクションでは、そのリスク戦略が数値的・理論的に最適に近かったことを示します。他の過去金メダリストも「あと1試合当たっていれば金メダルだった」という似たようなエピソードを持ちうるでしょう。</p>
+    <p>PS: Tim Yee にリーダーボードスナップショットの提供を感謝します。</p>
+    <pre><code>#Get Inputs
+after125games_df = pd.read_csv('/kaggle/input/mwncaa-lb-raw/Leaderboard_History/march-machine-learning-mania-2023-publicleaderboard_62_63_1157_2023-04-03.csv')
+after125games_df['SumScore'] = after125games_df['Score'] * 125
+
+after126games_df = pd.read_csv('/kaggle/input/mwncaa-lb-raw/Leaderboard_History/march-machine-learning-mania-2023-publicleaderboard_63_63_0924_2023-04-04.csv')
+after126games_df['SumScore'] = after126games_df['Score'] * 126
+
+#Join Leaderboards
+leaderboards_df = pd.merge(after125games_df, after126games_df, on='TeamId')
+print('='*50)
+print('TOP 10 OF 2023 ORIGINAL LEADERBOARD')
+display(leaderboards_df.iloc[:10])
+
+#Compute Leaderoard if Mens Championship Game was flipped
+leaderboards_df['lastGameScore'] = leaderboards_df['SumScore_y'] - leaderboards_df['SumScore_x']
+leaderboards_df['flippedLastGameScore'] = (1 - (leaderboards_df['lastGameScore'] ** 0.5)) ** 2
+leaderboards_df['flippedLastGameLeaderboardScore'] = (leaderboards_df['SumScore_x'] + leaderboards_df['flippedLastGameScore'])/126
+leaderboards_df = leaderboards_df.sort_values(by='flippedLastGameLeaderboardScore')
+leaderboards_df = leaderboards_df.reset_index(drop=True)
+print('='*50)
+print('TOP 10 OF 2023 LEADERBOARD IF MENS CHAMPIONSHIP GAME WAS FLIPPED')
+print('NOTICE kaito510 RANKS IN GOLD MEDAL ZONE (INSIDE TOP 10)')
+print('THE FULL WHAT-IF LEADERBOARD IS AVAILABLE AS AN OUTPUT CSV FILE')
+display(leaderboards_df.iloc[:10])
+leaderboards_df.to_csv('WhatIfLeaderboard2023.csv', index_label='What-If Leaderboard Rank')
+</code></pre>
+
+    <pre><code>==================================================
+TOP 10 OF 2023 ORIGINAL LEADERBOARD
+TeamId	TeamName_x	SubmissionDate_x	Score_x	SumScore_x	TeamName_y	SubmissionDate_y	Score_y	SumScore_y
+0	9989669	RustyB	2023-03-15 00:13:56	0.17365	21.70625	RustyB	2023-03-15 00:13:56	0.17371	21.88746
+1	10057285	NicholasHilton	2023-03-16 14:57:18	0.17520	21.90000	NicholasHilton	2023-03-16 14:57:18	0.17557	22.12182
+2	9961135	tihonby	2023-03-16 15:55:41	0.17521	21.90125	tihonby	2023-03-16 15:55:41	0.17525	22.08150
+3	9963107	mbund1237	2023-03-16 09:47:48	0.17562	21.95250	mbund1237	2023-03-16 09:47:48	0.17619	22.19994
+4	9960844	Matthias	2023-03-16 04:36:40	0.17580	21.97500	Matthias	2023-03-16 04:36:40	0.17522	22.07772
+5	9906483	David Scott	2023-03-14 00:02:27	0.17662	22.07750	David Scott	2023-03-14 00:02:27	0.17651	22.24026
+6	9956125	Jack Lichtenstein	2023-03-16 13:25:36	0.17780	22.22500	Jack Lichtenstein	2023-03-16 13:25:36	0.17704	22.30704
+7	10032902	cjwh	2023-03-14 19:38:35	0.17815	22.26875	cjwh	2023-03-14 19:38:35	0.17800	22.42800
+8	10042829	FNiemann	2023-03-15 23:27:02	0.17833	22.29125	FNiemann	2023-03-15 23:27:02	0.17854	22.49604
+9	9998660	maze508	2023-03-16 15:19:26	0.17875	22.34375	maze508	2023-03-16 15:19:26	0.17843	22.48218
+==================================================
+TOP 10 OF 2023 LEADERBOARD IF MENS CHAMPIONSHIP GAME WAS FLIPPED
+NOTICE kaito510 RANKS IN GOLD MEDAL ZONE (INSIDE TOP 10)
+THE FULL WHAT-IF LEADERBOARD IS AVAILABLE AS AN OUTPUT CSV FILE
+TeamId	TeamName_x	SubmissionDate_x	Score_x	SumScore_x	TeamName_y	SubmissionDate_y	Score_y	SumScore_y	lastGameScore	flippedLastGameScore	flippedLastGameLeaderboardScore
+0	9989669	RustyB	2023-03-15 00:13:56	0.17365	21.70625	RustyB	2023-03-15 00:13:56	0.17371	21.88746	0.18121	3.298346e-01	0.174890
+1	10057285	NicholasHilton	2023-03-16 14:57:18	0.17520	21.90000	NicholasHilton	2023-03-16 14:57:18	0.17557	22.12182	0.22182	2.798646e-01	0.176031
+2	9963107	mbund1237	2023-03-16 09:47:48	0.17562	21.95250	mbund1237	2023-03-16 09:47:48	0.17619	22.19994	0.24744	2.525732e-01	0.176231
+3	9961135	tihonby	2023-03-16 15:55:41	0.17521	21.90125	tihonby	2023-03-16 15:55:41	0.17525	22.08150	0.18025	3.311328e-01	0.176447
+4	9906483	David Scott	2023-03-14 00:02:27	0.17662	22.07750	David Scott	2023-03-14 00:02:27	0.17651	22.24026	0.16276	3.558895e-01	0.178043
+5	9960844	Matthias	2023-03-16 04:36:40	0.17580	21.97500	Matthias	2023-03-16 04:36:40	0.17522	22.07772	0.10272	4.617208e-01	0.178069
+6	10042829	FNiemann	2023-03-15 23:27:02	0.17833	22.29125	FNiemann	2023-03-15 23:27:02	0.17854	22.49604	0.20479	2.997154e-01	0.179293
+7	10032902	cjwh	2023-03-14 19:38:35	0.17815	22.26875	cjwh	2023-03-14 19:38:35	0.17800	22.42800	0.15925	3.611272e-01	0.179602
+8	9956125	Jack Lichtenstein	2023-03-16 13:25:36	0.17780	22.22500	Jack Lichtenstein	2023-03-16 13:25:36	0.17704	22.30704	0.08204	5.091875e-01	0.180430
+9	9898024	kaito510	2023-03-15 11:12:14	0.18188	22.73500	kaito510	2023-03-15 11:12:14	0.18837	23.73462	0.99962	3.610686e-08	0.180437
+</code></pre>
+    <p>この What-If Leaderboard は、「各参加者が提出可能な最大2回の提出のうち、125/126試合終了時点、126/126試合終了時点でどちらの提出をスコアとして採用したかが同じだった」という仮定のもとで算出されています。</p>
+    <p>2023年の評価は Brier Score でした。以下に示すのは、Brier Scoreにおける単一試合のリスク戦略が最適化されるのは「33.3%の勝率を持つチームを勝つ方に賭けたとき」であるという数学的証明です。</p>
+    <p>ある試合にリスクを取る場合の期待リターンを、</p>
+    <pre><code>f(p) = p(1 - p)^2
+</code></pre>
+    <p>とし、ここで <code>p</code> は成功確率、<code>(1-p)^2</code> はリスク成功時のリワードに相当します。すると、導関数 <code>f'(p)</code> と <code>f''(p)</code> は以下のように表せます:</p>
+    <pre><code>f'(p) = -2p + 2p^2 + (1-p)^2
+f''(p) = -4 + 6p
+</code></pre>
+    <p>詳しい計算は省きますが、<code>argmax_p f(p) = 1/3</code> となります。つまり、勝率約33.3%のチームにベットするのが最も期待リターンが高いです。私が取ったリスクは、これに近いものでした。</p>
+
+    <h3>提出</h3>
+    <p>このセクションは「Selection Sunday」後、締切前に作成予定です。</p>
+</section>
 
     </main>
 </body>
