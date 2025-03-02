@@ -288,14 +288,14 @@ ID,Pred
             </ul>
         </section>
 <section>
-    <h2>March Mania 2025 のシンプルなスターターノートブック</h2>
-    <p>March Mania 2025 - スターターノートブック</p>
+    <h2>Simple starter notebook for March Mania 2025</h2>
+    <p><a href="https://www.kaggle.com/code/paultimothymooney/simple-starter-notebook-for-march-mania-2025">Simple starter notebook for March Mania 2025</a></p>
     <h3>大会の目的</h3>
-    <p>この大会の目的は、より小さい TeamID があるマッチアップに勝利する確率を予測することです。過去4年間におけるあらゆる可能なチーム同士の全試合について、その確率を予測します。提出用のサンプルファイルでは、ID にはマッチアップの年と両方のチームIDが含まれています。例えば「2025_1101_1104」という ID は、2025年トーナメントにおける TeamID 1101 と TeamID 1104 の対戦を示します。「Pred」に 0.75 と提出すると、TeamID 1101 がこの対戦に勝つ確率が 0.75 だと考えていることを意味します。</p>
+    <p>この大会の目的は、より小さい TeamID があるマッチアップに勝利する確率を予測することである。過去4年間におけるあらゆる可能なチーム同士の全試合について、その確率を予測する。提出用のサンプルファイルでは、ID にはマッチアップの年と両方のチームIDが含まれている。例えば「2025_1101_1104」という ID は、2025年トーナメントにおける TeamID 1101 と TeamID 1104 の対戦を示す。「Pred」に 0.75 と提出すると、TeamID 1101 がこの対戦に勝つ確率が 0.75 だと考えていることを意味する。</p>
 
     <h3>提出戦略の概要</h3>
-    <p>このスターターノートブックでは、簡単な提出を行います。</p>
-    <p>試合の勝者を予測するにあたり、対戦する両チームのランキングのみを考慮します。最大の差は 15 (1位と16位の差) なので、簡易的な式として「0.5 + 0.03 × (シードの差)」を用い、予測確率を 5% から 95% の範囲で算出します。より高いシード（つまり数字が小さいチーム、1～16）を持つチームが勝ちやすいとみなし、50%以上の確率を割り当てる形です。</p>
+    <p>このスターターノートブックでは、簡単な提出を行う。</p>
+    <p>試合の勝者を予測するにあたり、対戦する両チームのランキングのみを考慮する。最大の差は 15 (1位と16位の差) なので、簡易的な式として「0.5 + 0.03 × (シードの差)」を用い、予測確率を 5% から 95% の範囲で算出する。より高いシード（つまり数字が小さいチーム、1～16）を持つチームが勝ちやすいとみなし、50%以上の確率を割り当てる形である。</p>
 
     <h3>スターターコード</h3>
     <h4>ステップ1: Python パッケージのインポート</h4>
@@ -310,7 +310,7 @@ m_seed = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/MNCAATourn
 seed_df = pd.concat([m_seed, w_seed], axis=0).fillna(0.05)
 submission_df = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/SampleSubmissionStage2.csv')
 </code></pre>
-    <p>チームのランキングは <strong>WNCAATourneySeeds.csv</strong> と <strong>MNCAATourneySeeds.csv</strong> に含まれています。</p>
+    <p>チームのランキングは <strong>WNCAATourneySeeds.csv</strong> と <strong>MNCAATourneySeeds.csv</strong> に含まれている。</p>
     <ul>
         <li><strong>Season</strong>: 年度を示すカラム</li>
         <li><strong>Seed</strong>: カンファレンスにおけるランク (W01 はカンファレンスWで1位)</li>
@@ -326,7 +326,7 @@ Season  Seed  TeamID
 4   1985    W05   1374
     </pre>
 
-    <p><strong>sample_submission.csv</strong> には、<em>year_teamID1_teamID2</em> というフォーマットの "ID" カラムが含まれています。</p>
+    <p><strong>sample_submission.csv</strong> には、<em>year_teamID1_teamID2</em> というフォーマットの "ID" カラムが含まれている。</p>
 
     <p><strong>submission_df.head()</strong></p>
     <pre>
@@ -408,7 +408,7 @@ Name: Pred, dtype: float64
     </pre>
 
     <h4>ステップ5: 評価指標を理解する</h4>
-    <p>実際の試合結果は分からないため、便宜上、<strong>ID</strong> に先に記載されたチーム(TeamID1) がすべて勝利したと仮定します。これを「真の値 (true value)」と呼びます。次に、提出した確率とこの真の値の平均二乗誤差を計算します。これを Brier Score と呼びます。詳しくは <a href="https://en.wikipedia.org/wiki/Brier_score">https://en.wikipedia.org/wiki/Brier_score</a> を参照してください。</p>
+    <p>実際の試合結果は分からないため、便宜上、<strong>ID</strong> に先に記載されたチーム(TeamID1) がすべて勝利したと仮定する。これを「真の値 (true value)」と呼ぶ。次に、提出した確率とこの真の値の平均二乗誤差を計算する。これを Brier Score と呼ぶ。詳しくは <a href="https://en.wikipedia.org/wiki/Brier_score">https://en.wikipedia.org/wiki/Brier_score</a> を参照せよ。</p>
 
     <pre><code># 真の値を格納したデータフレームを作成
 solution_df = submission_df.copy()
