@@ -734,10 +734,10 @@ Submission file saved to submission.csv
     </pre>
 </section>
 <section>
-    <h2>こんにちは！</h2>
-    <p>私は Coz です。ここでは、March Machine Learning Mania 2025 のデータに対して基本的な探索的データ分析 (EDA) を行う手順をご紹介します。機械学習モデルを作成し始める前に、問題を理解するうえで重要となるステップです。</p>
-    <p>この記事では、提供されているデータをどのように探索し、有用な可視化を作成するかを紹介します。</p>
-    <p>もし気に入っていただけたら、ぜひアップボートやコメントをお願いします！</p>
+    <h2>🏀 BBall EDA Tutorial</h2>
+    <p><a href="https://www.kaggle.com/code/clehmann10/bball-eda-tutorial">🏀 BBall EDA Tutorial</a></p>
+    <p>ここでは、March Machine Learning Mania 2025 のデータに対して基本的な探索的データ分析 (EDA) を行う手順を紹介する。機械学習モデルを作成し始める前に、問題を理解するうえで重要となるステップである。</p>
+    <p>この記事では、提供されているデータをどのように探索し、有用な可視化を作成するかを紹介する。</p>
 
     <h3>概要情報</h3>
     <h4>大会の構造とトーナメントについて</h4>
@@ -780,8 +780,8 @@ Submission file saved to submission.csv
     </ul>
 
     <h3>NCAAとは？</h3>
-    <p>NCAA（全米大学体育協会）においては、バスケットボールのようなトーナメント方式で、地域（リージョン）を設けてチームを振り分け、競技を進行させます。これは特に NCAA ディビジョンI男子バスケットボール大会（いわゆる March Madness）で顕著です。</p>
-    <p>下記がリージョンについての概要です:</p>
+    <p>NCAA（全米大学体育協会）においては、バスケットボールのようなトーナメント方式で、地域（リージョン）を設けてチームを振り分け、競技を進行させる。これは特に NCAA ディビジョンI男子バスケットボール大会（いわゆる March Madness）で顕著である。</p>
+    <p>下記がリージョンについての概要である:</p>
     <ul>
         <li><strong>トーナメント構造:</strong> 68チーム（実質的にプレーインを含める）を4つのリージョンに分割。地理名（東、西、南、中西部など）が使われる。</li>
         <li><strong>シーディング:</strong> 各リージョンで1〜16シードに振り分けられ、レギュラーシーズン成績や各種評価指標に基づいて決定される。高シードチームは理論上、より簡単な組み合わせが与えられる。</li>
@@ -789,10 +789,10 @@ Submission file saved to submission.csv
     </ul>
 
     <h3>目的</h3>
-    <p>2025年の March Madness における各試合の結果を、過去のデータのみを使って予測します。目標は、それぞれの対戦の勝利確率を推定するようなモデルを構築し、最終的にベストな全体スコアを得ることです。</p>
+    <p>2025年の March Madness における各試合の結果を、過去のデータのみを使って予測する。目標は、それぞれの対戦の勝利確率を推定するようなモデルを構築し、最終的にベストな全体スコアを得ることである。</p>
 
     <h3>⚙️ セットアップ</h3>
-    <p>まずは必要なライブラリをインポートし、EDA に向けた設定やツールを準備します。</p>
+    <p>まずは必要なライブラリをインポートし、EDA に向けた設定やツールを準備する。</p>
 
     <pre><code># Essential Imports
 import numpy as np
@@ -812,8 +812,8 @@ warnings.filterwarnings("ignore")
 </code></pre>
 
     <h3>📂 ファイルの準備</h3>
-    <p>提供されたファイルをざっと確認してみます。各ファイルの説明は競技データページにも掲載されています（<a href="https://www.kaggle.com/competitions/march-machine-learning-mania-2025/data">https://www.kaggle.com/competitions/march-machine-learning-mania-2025/data</a>）。</p>
-    <p>主催者は以下の5つのセクションに分割しています:</p>
+    <p>提供されたファイルをざっと確認してみる。各ファイルの説明は競技データページにも掲載されている（<a href="https://www.kaggle.com/competitions/march-machine-learning-mania-2025/data">https://www.kaggle.com/competitions/march-machine-learning-mania-2025/data</a>）。</p>
+    <p>主催者は以下の5つのセクションに分割している:</p>
     <ol>
         <li>The Basics - 最小限の予測モデルを構築して提出するために必要な基本的なデータ。</li>
         <li>Team Box Scores - 1試合ごとのスタッツ (フリースロー数、リバウンド、ターンオーバーなど)。</li>
@@ -822,7 +822,7 @@ warnings.filterwarnings("ignore")
         <li>Supplements - 追加の情報(コーチ、カンファレンス、チーム名のスペル、NITその他のデータなど)。</li>
     </ol>
     <p><strong>競技ディレクトリ:</strong> <code>/kaggle/input/march-machine-learning-mania-2025</code></p>
-    <p>中には以下のファイルが含まれています（全てリストアップ）:</p>
+    <p>中には以下のファイルが含まれている（全てリストアップ）:</p>
     <ul>
         <li>(File) Conferences.csv, Size: 1643 bytes</li>
         <li>(File) SeedBenchmarkStage1.csv, Size: 10649275 bytes</li>
@@ -862,7 +862,7 @@ warnings.filterwarnings("ignore")
     </ul>
 
     <h3>📊 データセクション 1 - The Basics</h3>
-    <p>最も基本的な予測モデルの構築と提出に必要なデータが含まれています。</p>
+    <p>最も基本的な予測モデルの構築と提出に必要なデータが含まれている。</p>
     <ul>
         <li>チームIDとチーム名</li>
         <li>1984-85シーズン以降のトーナメントシード情報</li>
@@ -870,7 +870,7 @@ warnings.filterwarnings("ignore")
         <li>シーズンレベルの詳細（日付やリージョン名など）</li>
         <li>ステージ1のサンプル提出ファイル</li>
     </ul>
-    <p>シーズンを識別する際は、通常シーズンが終わる年（年度末）で呼ぶ慣習を踏襲します。</p>
+    <p>シーズンを識別する際は、通常シーズンが終わる年（年度末）で呼ぶ慣習を踏襲する。</p>
 
     <h4>Teams</h4>
     <p><strong>ファイル:</strong> <code>MTeams.csv</code> および <code>WTeams.csv</code></p>
@@ -892,7 +892,7 @@ for gender in ['Mens', 'Womens']:
     display(df.head())
 </code></pre>
 
-    <p>このように、Women'sの方には <code>FirstD1Season</code> や <code>LastD1Season</code> がないことが確認できます。また男子と女子ではチーム数が若干異なります。</p>
+    <p>このように、Women'sの方には <code>FirstD1Season</code> や <code>LastD1Season</code> がないことが確認できる。また男子と女子ではチーム数が若干異なる。</p>
 
     <pre><code># Find unique values in Team Names
 series1 = mens_df['TeamName']
@@ -904,14 +904,14 @@ unique_values = pd.concat([unique_in_series1, unique_in_series2])
 print(unique_values)
 </code></pre>
 
-    <p>この結果、「Citadel」と「VMI」が男子のみで女子に含まれていないことが分かりました。</p>
+    <p>この結果、「Citadel」と「VMI」が男子のみで女子に含まれていないことが分かった。</p>
 
     <h4>Seasons</h4>
     <p><strong>ファイル:</strong> <code>MSeasons.csv</code> および <code>WSeasons.csv</code></p>
     <ul>
         <li><strong>Season:</strong> NCAAトーナメントが行われた年。</li>
-        <li><strong>DayZero:</strong> DayNum=0 に対応する日付。<code>MSeasons.csv</code> と <code>WSeasons.csv</code> で同じ DayZero を共有しています。</li>
-        <li><strong>RegionW, RegionX, RegionY, RegionZ:</strong> 大会の4つの地域をアルファベット順に W, X, Y, Z で表すための名称です。</li>
+        <li><strong>DayZero:</strong> DayNum=0 に対応する日付。<code>MSeasons.csv</code> と <code>WSeasons.csv</code> で同じ DayZero を共有している。</li>
+        <li><strong>RegionW, RegionX, RegionY, RegionZ:</strong> 大会の4つの地域をアルファベット順に W, X, Y, Z で表すための名称。</li>
     </ul>
 
     <pre><code>mens_df = load_csv(os.path.join(comp_dir, 'MSeasons.csv'))
@@ -936,7 +936,7 @@ for gender in ['Mens', 'Womens']:
     ...
 </code></pre>
 
-    <p>このシード情報とリージョンの組み合わせが、本大会の対戦構造を把握する上で重要です。</p>
+    <p>このシード情報とリージョンの組み合わせが、本大会の対戦構造を把握する上で重要である。</p>
 
     <h4>Regular Season Results</h4>
     <p><strong>ファイル:</strong> <code>MRegularSeasonCompactResults.csv</code> および <code>WRegularSeasonCompactResults.csv</code></p>
@@ -954,7 +954,7 @@ for gender in ['Mens', 'Womens']:
     ...
 </code></pre>
 
-    <p>得点分布を可視化するなど、基礎的なEDAを行えます。</p>
+    <p>得点分布を可視化するなど、基礎的なEDAを行える。</p>
 
     <pre><code># Look at distributions of winning and losing scores across seasons
 for gender in ['Mens', 'Womens']:
@@ -989,7 +989,7 @@ ss_df.head()
 
     <h3>📊 データセクション 2 - Team Box Scores</h3>
     <p>2003年以降（男子）・2010年以降（女子）の全試合（レギュラーシーズン、カンファレンストーナメント、NCAAトーナメント）におけるチーム別の詳細スタッツを提供。</p>
-    <p>Team Box Scores は "Detailed Results" ファイルに含まれています。Compact Results と同様の前8列 (Season, DayNum, WTeamID, WScore, LTeamID, LScore, WLoc, NumOT) に加えて、勝敗チーム別に多くの追加情報があります:</p>
+    <p>Team Box Scores は "Detailed Results" ファイルに含まれている。Compact Results と同様の前8列 (Season, DayNum, WTeamID, WScore, LTeamID, LScore, WLoc, NumOT) に加えて、勝敗チーム別に多くの追加情報がある:</p>
     <ul>
         <li><strong>WFGM, WFGA:</strong> 勝利チームのフィールドゴール成功数と試投数</li>
         <li><strong>WFGM3, WFGA3:</strong> 勝利チームの3ポイント成功数と試投数</li>
@@ -998,11 +998,11 @@ ss_df.head()
         <li><strong>WAst, WTO, WStl, WBlk, WPF:</strong> アシスト、ターンオーバー、スティール、ブロック、ファウルなど</li>
         <li>敗者側についても同様に LFGM, LFGA, ... LPF まで。</li>
     </ul>
-    <p>2点シュートだけ見たい場合は、<code>FGM - FGM3</code> などの計算が必要です。得点合計は <code>(2 * FGM) + FGM3 + FTM</code> で求められます。</p>
+    <p>2点シュートだけ見たい場合は、<code>FGM - FGM3</code> などの計算が必要である。得点合計は <code>(2 * FGM) + FGM3 + FTM</code> で求められる。</p>
 
     <h4>レギュラーシーズン Detailed Results</h4>
     <p><strong>ファイル:</strong> <code>MRegularSeasonDetailedResults.csv</code> および <code>WRegularSeasonDetailedResults.csv</code></p>
-    <p>2003年(男子)・2010年(女子)以降の各試合に関する詳細スタッツが含まれます。</p>
+    <p>2003年(男子)・2010年(女子)以降の各試合に関する詳細スタッツが含まれる。</p>
 
     <pre><code>mens_df = load_csv(os.path.join(comp_dir, 'MRegularSeasonDetailedResults.csv'))
 womens_df = load_csv(os.path.join(comp_dir, 'WRegularSeasonDetailedResults.csv'))
@@ -1015,7 +1015,7 @@ for gender in ['Mens', 'Womens']:
     <pre><code>mens_df.columns
 </code></pre>
 
-    <p>上記のような列があり、それぞれ「W/L+要素名」という形式で記録されています。例えば、<code>WFGM</code> と <code>LFGM</code> は勝利チームと敗北チームのフィールドゴール成功数を表します。</p>
+    <p>上記のような列があり、それぞれ「W/L+要素名」という形式で記録されている。例えば、<code>WFGM</code> と <code>LFGM</code> は勝利チームと敗北チームのフィールドゴール成功数を表す。</p>
 
     <pre><code>prefix_dict = {
     'W': 'Winning Team',
@@ -1041,14 +1041,14 @@ for gender in ['Mens', 'Womens']:
     ...
 </code></pre>
 
-    <p>上記コード例では、各要素について「勝利チーム - 敗北チーム」の差分を計算し、ヒストグラムを描画して分布を見ています。たとえばフィールドゴール成功数の差やターンオーバー数の差を比較することで、試合の特徴を把握できます。</p>
+    <p>上記コード例では、各要素について「勝利チーム - 敗北チーム」の差分を計算し、ヒストグラムを描画して分布を見ている。たとえばフィールドゴール成功数の差やターンオーバー数の差を比較することで、試合の特徴を把握できる。</p>
 
     <pre><code>fig, axes = plt.subplots(1, 2, figsize=(40, 20))
 for i, gender in enumerate(['Mens', 'Womens']):
     ...
 </code></pre>
 
-    <p>このように、各チームがどの程度シュートを打ったか、オフェンスリバウンドを取れたか、ターンオーバーをどれくらいしたかなど、長期的な傾向を可視化できます。</p>
+    <p>このように、各チームがどの程度シュートを打ったか、オフェンスリバウンドを取れたか、ターンオーバーをどれくらいしたかなど、長期的な傾向を可視化できる。</p>
 </section>
 
     </main>
