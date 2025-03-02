@@ -30,9 +30,13 @@
         <section>
           <h2>Overview</h2>
           <p>2025年の大学バスケットボールの男子・女子両方のトーナメントの結果を予測し、考え得るすべての試合の予測を提出する。</p>
+        </section>
+        <section>
           <h2>Description</h2>
           <p>このコンペティションでは、過去のNCAAの試合データが提供され、NCAA男子および女子のディビジョン1バスケットボールトーナメントの結果を予測する。</p>
           <p>トーナメント開始前のリーダーボードは2021～2024年のスコアのみを反映する。2025年の試合が始まり次第、Kaggle は結果を随時反映し、スコアを更新していく。</p>
+        </section>
+        <section>
           <h2>Evaluation</h2>
           <p>提出物は、予測した確率と実際の試合結果との間の<a href="https://qiita.com/Derek/items/e382c087afd616a0053e">Brier Score</a>に基づいて評価される（このコンテキストでは平均二乗誤差（Mean Squared Error）と同等）。</p>
           <p>各試合にはユニークなIDが付与されており、以下の形式で作成される：</p>
@@ -283,6 +287,148 @@ ID,Pred
                 <li><strong>EarlyDayNum, LateDayNum</strong>：そのラウンドが行われうる最も早い日、最も遅い日の DayNum。ラウンドによって2日間設定されることがある。</li>
             </ul>
         </section>
+<section>
+    <h2>Simple starter notebook for March Mania 2025</h2>
+    <p>March Mania 2025 - Starter Notebook</p>
+    <h3>Goal of the competition</h3>
+    <p>The goal of this competition is to predict the probability that the smaller TeamID will win a given matchup. You will predict the probability for every possible matchup between every possible team over the past 4 years. You'll be given a sample submission file where the ID value indicates the year of the matchup as well as the identities of both teams within the matchup. For example, for an ID of 2025_1101_1104 you would need to predict the outcome of the matchup between TeamID 1101 vs TeamID 1104 during the 2025 tournament. Submitting a PRED of 0.75 indicates that you think that the probability of TeamID 1101 winning that particular matchup is equal to 0.75.</p>
+
+    <h3>Overview of our submission strategy</h3>
+    <p>For this starter notebook, we will make a simple submission.</p>
+    <p>We can predict the winner of a match by considering the respective rankings of the opposing teams, only. Since the largest possible difference is 15 (which is #16 minus #1), we use a rudimentary formula that's 0.5 plus 0.03 times the difference in seeds, leading to a range of predictions spanning from 5% up to 95%. The stronger-seeded team (with a lower seed number from 1 to 16) will be the favorite and will have a prediction above 50%.</p>
+
+    <h3>Starter Code</h3>
+    <h4>Step 1: Import Python packages</h4>
+    <pre><code>import numpy as np
+import pandas as pd
+from sklearn.metrics import brier_score_loss, mean_squared_error
+</code></pre>
+
+    <h4>Step 2: Explore the data</h4>
+    <pre><code>w_seed = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/WNCAATourneySeeds.csv')
+m_seed = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/MNCAATourneySeeds.csv')
+seed_df = pd.concat([m_seed, w_seed], axis=0).fillna(0.05)
+submission_df = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/SampleSubmissionStage2.csv')
+</code></pre>
+    <p>Team rankings are present in the files <strong>WNCAATourneySeeds.csv</strong> and <strong>MNCAATourneySeeds.csv</strong>.</p>
+    <ul>
+        <li>The "Season" column indicates the year</li>
+        <li>The "Seed" column indicates the ranking for a given conference (W01 = ranking 1 in conference W)</li>
+        <li>The "TeamID" column contains a unique identifier for every team</li>
+    </ul>
+    <p><strong>seed_df.head()</strong></p>
+    <pre>
+Season  Seed  TeamID
+0   1985    W01   1207
+1   1985    W02   1210
+2   1985    W03   1228
+3   1985    W04   1260
+4   1985    W05   1374
+    </pre>
+
+    <p>The <strong>sample_submission.csv</strong> file contains an "ID" column with the format <em>year_teamID1_teamID2</em>.</p>
+
+    <p><strong>submission_df.head()</strong></p>
+    <pre>
+                ID      Pred
+0   2025_1101_1102    0.5
+1   2025_1101_1103    0.5
+2   2025_1101_1104    0.5
+3   2025_1101_1105    0.5
+4   2025_1101_1106    0.5
+    </pre>
+
+    <h4>Step 3: Extract game info and team rankings</h4>
+    <pre><code>def extract_game_info(id_str):
+    # Extract year and team_ids
+    parts = id_str.split('_')
+    year = int(parts[0])
+    teamID1 = int(parts[1])
+    teamID2 = int(parts[2])
+    return year, teamID1, teamID2
+
+def extract_seed_value(seed_str):
+    # Extract seed value
+    try:
+        return int(seed_str[1:])
+    # Set seed to 16 for unselected teams and errors
+    except ValueError:
+        return 16
+
+# Reformat the data
+submission_df[['Season', 'TeamID1', 'TeamID2']] = submission_df['ID'].apply(extract_game_info).tolist()
+seed_df['SeedValue'] = seed_df['Seed'].apply(extract_seed_value)
+
+# Merge seed information for TeamID1
+submission_df = pd.merge(submission_df, seed_df[['Season', 'TeamID', 'SeedValue']],
+                         left_on=['Season', 'TeamID1'], right_on=['Season', 'TeamID'],
+                         how='left')
+submission_df = submission_df.rename(columns={'SeedValue': 'SeedValue1'}).drop(columns=['TeamID'])
+
+# Merge seed information for TeamID2
+submission_df = pd.merge(submission_df, seed_df[['Season', 'TeamID', 'SeedValue']],
+                         left_on=['Season', 'TeamID2'], right_on=['Season', 'TeamID'],
+                         how='left')
+submission_df = submission_df.rename(columns={'SeedValue': 'SeedValue2'}).drop(columns=['TeamID'])
+</code></pre>
+
+    <h4>Step 4: Make your predictions</h4>
+    <pre><code># Calculate seed difference
+submission_df['SeedDiff'] = submission_df['SeedValue1'] - submission_df['SeedValue2']
+
+# Update 'Pred' column
+submission_df['Pred'] = 0.5 + (0.03 * submission_df['SeedDiff'])
+
+# Drop unnecessary columns
+submission_df = submission_df[['ID', 'Pred']].fillna(0.5)
+
+# Preview your submission
+submission_df.head()
+</code></pre>
+
+    <pre>
+                ID      Pred
+0   2025_1101_1102    0.5
+1   2025_1101_1103    0.5
+2   2025_1101_1104    0.5
+3   2025_1101_1105    0.5
+4   2025_1101_1106    0.5
+    </pre>
+
+    <pre>
+count    131407.0
+mean          0.5
+std           0.0
+min           0.5
+25%           0.5
+50%           0.5
+75%           0.5
+max           0.5
+Name: Pred, dtype: float64
+    </pre>
+
+    <h4>Step 5: Understand the metric</h4>
+    <p>We don't know the outcomes of the games, so instead let's assume that the team that was listed first won every single matchup. This is what we'll call our "true value". Next, we'll calculate the average squared difference between the probabilities in our submission and that ground truth value. We'll call this the "Brier score". <a href="https://en.wikipedia.org/wiki/Brier_score">https://en.wikipedia.org/wiki/Brier_score</a></p>
+
+    <pre><code># Create a dataframe of ground truth values
+solution_df = submission_df.copy()
+solution_df['Pred'] = 1
+
+# Now calculate the Brier score
+y_true = solution_df['Pred']
+y_pred = submission_df['Pred']
+brier_score = brier_score_loss(y_true, y_pred)
+print(f"Brier Score: {brier_score}")
+</code></pre>
+
+    <pre>
+Brier Score: 0.25
+    </pre>
+
+    <h4>Step 6: Make your submission</h4>
+    <pre><code>submission_df.to_csv('/kaggle/working/submission.csv', index=False)
+</code></pre>
+</section>
     </main>
 </body>
 </html>
