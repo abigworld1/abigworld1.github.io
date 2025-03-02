@@ -1445,9 +1445,220 @@ f''(p) = -4 + 6p
     <p>詳しい計算は省くが、<code>argmax_p f(p) = 1/3</code> となる。つまり、勝率約33.3%のチームにベットするのが最も期待リターンが高い。</p>
 
     <h3>提出</h3>
-    <p>このセクションは「Selection Sunday」後、締切前に作成予定です。</p>
+    <p>このセクションは「Selection Sunday」後、締切前に作成予定である。</p>
 </section>
+```html
+<section>
+    <h2>Calculate ELO-Ratings</h2>
+    <p><a href="https://www.kaggle.com/code/lennarthaupts/calculate-elo-ratings">Calculate ELO-Ratings</a></p>
+    <p>このノートブックでは、メンズ・ウィメンズ双方のレギュラーシーズンおよびトーナメント期間における Elo レーティングを計算するための関数をまとめています。最終的に、それぞれのチームについて以下の情報を含む CSV ファイルを生成します:</p>
+    <ul>
+        <li><strong>Rating_Mean</strong>: レギュラーシーズン中のチームの平均レーティング</li>
+        <li><strong>Rating_Median</strong>: レギュラーシーズン中のチームのレーティング中央値</li>
+        <li><strong>Rating_Last</strong>: レギュラーシーズン/トーナメント前の最終レーティング</li>
+        <li><strong>Rating_Std</strong>: レギュラーシーズン中のチームのレーティングの標準偏差</li>
+        <li><strong>Rating_Max</strong>: シーズン内での最高レーティング</li>
+        <li><strong>Rating_Min</strong>: シーズン内での最低レーティング</li>
+        <li><strong>Rating_Trend</strong>: シーズンを通してのレーティングの傾向（回帰直線の傾き）</li>
+    </ul>
 
+    <h2>関数一覧</h2>
+
+    <pre><code>def calculate_elo(teams, data, initial_rating=2000, k=140, alpha=None, weights=False, nan_score=1):
+    '''
+    与えられた試合結果データを用いて、各チームの Elo レーティングを計算する関数。
+
+    パラメータ:
+    - teams (array-like): TeamID の配列。
+    - data (pd.DataFrame): 時系列順に整列された試合データが入った DataFrame。
+    - initial_rating (float): 未ランクチームの初期レーティング (デフォルト: 2000)。
+    - k (float): K ファクター。各試合がチームのレーティングに与える影響度 (デフォルト: 140)。
+    - alpha (float or None): 勝点差 (margin of victory) に対する調整パラメータ。None の場合は不使用。
+    - weights (bool または array-like): 試合ごとに重み付けを行うかどうか、または重みの配列。
+    - nan_score (int): NaN スコアが発生した際に用いる値 (デフォルト: 1)。
+
+    戻り値:
+    - list: 勝利チーム (WTeam) の試合ごとのレーティング履歴。
+    - list: 敗北チーム (LTeam) の試合ごとのレーティング履歴。
+    - list: (1-rateW)**2 を保持したリスト (本ノートブックでは tourney 用の損失計算に用いられる)。
+    '''
+    
+    # 各チームの現在のレーティングを格納する辞書
+    team_dict = {}
+    for team in teams:
+        team_dict[team] = initial_rating
+        
+    # 試合ごとのレーティングを保持するリスト
+    r1, r2 = [], []
+    loss = []
+    margin_of_victory = 1
+    weight = 1
+
+    # 試合データを順に処理
+    for wteam, lteam, ws, ls, w in tqdm(zip(data.WTeamID, data.LTeamID, data.WScore, data.LScore, data.weight), total=len(data)):
+
+        # 現在のレーティングから期待勝率を計算
+        rateW = 1 / (1 + 10 ** ((team_dict[lteam] - team_dict[wteam]) / initial_rating))
+        rateL = 1 / (1 + 10 ** ((team_dict[wteam] - team_dict[lteam]) / initial_rating))
+        
+        if alpha:
+            margin_of_victory = (ws - ls) / alpha
+        if isinstance(weights, (list, np.ndarray, pd.Series)):
+            weight = w
+
+        # 勝利チーム・敗北チームのレーティングを更新
+        team_dict[wteam] += w * k * margin_of_victory * (1 - rateW)
+        team_dict[lteam] += w * k * margin_of_victory * (0 - rateL)
+
+        # レーティングが 1 未満にならないように補正
+        if team_dict[lteam] &lt; 1:
+            team_dict[lteam] = 1
+            
+        # リストに追加
+        r1.append(team_dict[wteam])
+        r2.append(team_dict[lteam])
+        loss.append((1 - rateW)**2)
+        
+    return r1, r2, loss
+</code></pre>
+
+    <pre><code>def create_elo_data(teams, data, initial_rating=2000, k=140, alpha=None, weights=None, nan_score=1):
+    '''
+    与えられた試合データに基づいて Elo レーティングのサマリ情報を作成し、DataFrame として返す。
+
+    パラメータ:
+    - teams (array-like): TeamID の配列。
+    - data (pd.DataFrame): 時系列順の試合データ。
+    - initial_rating (float): 未ランクチームの初期レーティング (デフォルト: 2000)。
+    - k (float): K ファクター (デフォルト: 140)。
+    - alpha (float or None): 勝点差に対する調整パラメータ。None の場合は不使用。
+    - weights (array-like): 試合ごとの重み。
+    - nan_score (int): NaN スコア用の値。
+
+    戻り値:
+    - DataFrame: 各シーズンにおけるチームの Elo レーティング統計をまとめたもの。
+    '''
+    
+    if isinstance(weights, (list, np.ndarray, pd.Series)):
+        data['weight'] = weights
+    else:
+        data['weight'] = 1
+    
+    # Elo レーティングを計算
+    r1, r2, loss = calculate_elo(teams, data, initial_rating, k, alpha, weights, nan_score)
+    # トーナメント試合に対する損失を計算
+    loss = np.mean(np.array(loss)[data.tourney == 1])
+    print(f"Loss: {loss}")
+    
+    # レーティングを結合
+    seasons = np.concatenate([data.Season, data.Season])
+    days = np.concatenate([data.DayNum, data.DayNum])
+    teams = np.concatenate([data.WTeamID, data.LTeamID])
+    tourney = np.concatenate([data.tourney, data.tourney])
+    ratings = np.concatenate([r1, r2])
+
+    rating_df = pd.DataFrame({
+        'Season': seasons,
+        'DayNum': days,
+        'TeamID': teams,
+        'Rating': ratings,
+        'Tourney': tourney
+    })
+
+    # データフレームをソートし、トーナメントデータを除去 (レギュラーシーズンのみを対象)
+    rating_df.sort_values(['TeamID', 'Season', 'DayNum'], inplace=True)
+    rating_df = rating_df[rating_df['Tourney'] == 0]
+    grouped = rating_df.groupby(['TeamID', 'Season'])
+
+    # 基本統計量を計算
+    results = grouped['Rating'].agg(['mean', 'median', 'std', 'min', 'max', 'last'])
+    results.columns = ['Rating_Mean', 'Rating_Median', 'Rating_Std', 'Rating_Min', 'Rating_Max', 'Rating_Last']
+
+    # シーズン中のレーティング傾向 (直線近似による slope) を算出
+    results['Rating_Trend'] = grouped.apply(lambda x: linregress(range(len(x)), x['Rating']).slope, include_groups=False)
+    results.reset_index(inplace=True)
+    
+    return results
+</code></pre>
+
+    <h2>関数の適用と結果の保存</h2>
+    <pre><code># Load and Process Data Men's Tourney
+regular_m = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/MRegularSeasonCompactResults.csv')
+tourney_m = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/MNCAATourneyCompactResults.csv')
+teams_m = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/MTeams.csv')
+
+regular_m['tourney'] = 0
+tourney_m['tourney'] = 1
+regular_m['weight'] = 1
+tourney_m['weight'] = 0.7
+
+data_m = pd.concat([regular_m, tourney_m])
+data_m.sort_values(['Season', 'DayNum'], inplace=True)
+data_m.reset_index(inplace=True, drop=True)
+
+elo_df_men = create_elo_data(teams_m.TeamID, data_m, initial_rating=1200, k=125, alpha=None, weights=data_m['weight'])
+elo_df_men.tail(10)
+</code></pre>
+
+    <pre>
+100%|██████████| 194314/194314 [00:00<00:00, 325018.30it/s]
+Loss: 0.1881333201818146
+TeamID	Season	Rating_Mean	Rating_Median	Rating_Std	Rating_Min	Rating_Max	Rating_Last	Rating_Trend
+13378	1476	2023	931.719917	895.701809	136.140818	738.312853	1194.639608	738.312853	-13.415252
+13379	1476	2024	375.030934	354.742230	261.932970	45.364699	783.904415	69.180722	-28.922216
+13380	1476	2025	332.910031	408.517470	165.452593	30.663400	550.679074	550.679074	20.115646
+13381	1477	2023	903.287972	877.330304	183.711694	552.118002	1207.753474	552.118002	-18.574070
+13382	1477	2024	500.435154	480.375796	107.970960	357.339166	697.426537	455.729827	-8.976228
+13383	1477	2025	256.819308	232.467177	138.317277	64.871652	478.517464	80.523774	-16.052359
+13384	1478	2024	879.306603	857.121073	126.023701	675.262993	1153.694341	786.575661	-12.825440
+13385	1478	2025	571.190891	597.778335	152.797560	284.086649	796.885877	423.262874	-19.608908
+13386	1479	2025	909.181190	875.531385	158.116054	681.700618	1216.762951	712.665898	-17.849765
+13387	1480	2025	793.734459	776.159447	188.046123	533.504639	1190.078762	550.690294	-22.878171
+    </pre>
+
+    <pre><code># Load and Process Data Women's Tourney
+regular_w = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/WRegularSeasonCompactResults.csv')
+tourney_w = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/WNCAATourneyCompactResults.csv')
+teams_w = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/WTeams.csv')
+
+regular_w['tourney'] = 0
+tourney_w['tourney'] = 1
+regular_w['weight'] = 0.95
+tourney_w['weight'] = 1
+
+data_w = pd.concat([regular_w, tourney_w])
+data_w.sort_values(['Season', 'DayNum'], inplace=True)
+data_w.reset_index(inplace=True, drop=True)
+
+elo_df_women = create_elo_data(teams_w.TeamID, data_w, initial_rating=1250, k=190, alpha=None, weights=data_w['weight'])
+elo_df_women.tail(10)
+</code></pre>
+
+    <pre>
+100%|██████████| 137598/137598 [00:00<00:00, 354494.60it/s]
+Loss: 0.1483454322346713
+TeamID	Season	Rating_Mean	Rating_Median	Rating_Std	Rating_Min	Rating_Max	Rating_Last	Rating_Trend
+9478	3476	2023	701.604422	720.891767	339.329028	185.602422	1183.286208	392.359804	-39.189339
+9479	3476	2024	143.129769	117.100816	113.165166	1.000000	379.755627	1.000000	-9.653575
+9480	3476	2025	305.590100	277.290534	172.276385	1.000000	634.183027	634.183027	23.370195
+9481	3477	2023	988.267178	1009.667424	158.067372	660.393955	1244.578235	778.100265	-12.410493
+9482	3477	2024	924.706036	940.654548	135.760741	669.628320	1157.732083	946.939107	-5.602031
+9483	3477	2025	575.578475	512.644009	228.773333	239.052658	937.534498	454.944394	-31.105176
+9484	3478	2024	1185.516582	1175.426668	84.995414	996.142176	1382.898414	1302.646546	5.665515
+9485	3478	2025	801.128851	822.816418	328.567411	274.330634	1301.312040	274.330634	-45.280168
+9486	3479	2025	688.425546	568.621038	265.071498	384.911203	1249.092197	482.821730	-34.877765
+9487	3480	2025	976.235545	1007.630886	104.452027	752.318229	1150.055611	1026.768844	-11.447173
+    </pre>
+
+    <pre><code># Save to csv
+elo_df_men.to_csv('mens_elo_rating.csv')
+elo_df_women.to_csv('womens_elo_rating.csv')
+</code></pre>
+
+    <h3>トップ20チーム (最新データ更新: 2025年2月21日)</h3>
+    <p>ここに、最新データ（2025年2月21日時点）に基づいたレーティングの高いチーム上位20を掲載予定です。たとえば、<em>elo_df_men</em> または <em>elo_df_women</em> をソートし、<code>Rating_Last</code> などを基準にスライスして表示します。</p>
+</section>
+```
     </main>
 </body>
 </html>
