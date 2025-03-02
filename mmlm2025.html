@@ -288,33 +288,33 @@ ID,Pred
             </ul>
         </section>
 <section>
-    <h2>Simple starter notebook for March Mania 2025</h2>
-    <p>March Mania 2025 - Starter Notebook</p>
-    <h3>Goal of the competition</h3>
-    <p>The goal of this competition is to predict the probability that the smaller TeamID will win a given matchup. You will predict the probability for every possible matchup between every possible team over the past 4 years. You'll be given a sample submission file where the ID value indicates the year of the matchup as well as the identities of both teams within the matchup. For example, for an ID of 2025_1101_1104 you would need to predict the outcome of the matchup between TeamID 1101 vs TeamID 1104 during the 2025 tournament. Submitting a PRED of 0.75 indicates that you think that the probability of TeamID 1101 winning that particular matchup is equal to 0.75.</p>
+    <h2>March Mania 2025 のシンプルなスターターノートブック</h2>
+    <p>March Mania 2025 - スターターノートブック</p>
+    <h3>大会の目的</h3>
+    <p>この大会の目的は、より小さい TeamID があるマッチアップに勝利する確率を予測することです。過去4年間におけるあらゆる可能なチーム同士の全試合について、その確率を予測します。提出用のサンプルファイルでは、ID にはマッチアップの年と両方のチームIDが含まれています。例えば「2025_1101_1104」という ID は、2025年トーナメントにおける TeamID 1101 と TeamID 1104 の対戦を示します。「Pred」に 0.75 と提出すると、TeamID 1101 がこの対戦に勝つ確率が 0.75 だと考えていることを意味します。</p>
 
-    <h3>Overview of our submission strategy</h3>
-    <p>For this starter notebook, we will make a simple submission.</p>
-    <p>We can predict the winner of a match by considering the respective rankings of the opposing teams, only. Since the largest possible difference is 15 (which is #16 minus #1), we use a rudimentary formula that's 0.5 plus 0.03 times the difference in seeds, leading to a range of predictions spanning from 5% up to 95%. The stronger-seeded team (with a lower seed number from 1 to 16) will be the favorite and will have a prediction above 50%.</p>
+    <h3>提出戦略の概要</h3>
+    <p>このスターターノートブックでは、簡単な提出を行います。</p>
+    <p>試合の勝者を予測するにあたり、対戦する両チームのランキングのみを考慮します。最大の差は 15 (1位と16位の差) なので、簡易的な式として「0.5 + 0.03 × (シードの差)」を用い、予測確率を 5% から 95% の範囲で算出します。より高いシード（つまり数字が小さいチーム、1～16）を持つチームが勝ちやすいとみなし、50%以上の確率を割り当てる形です。</p>
 
-    <h3>Starter Code</h3>
-    <h4>Step 1: Import Python packages</h4>
+    <h3>スターターコード</h3>
+    <h4>ステップ1: Python パッケージのインポート</h4>
     <pre><code>import numpy as np
 import pandas as pd
 from sklearn.metrics import brier_score_loss, mean_squared_error
 </code></pre>
 
-    <h4>Step 2: Explore the data</h4>
+    <h4>ステップ2: データの確認</h4>
     <pre><code>w_seed = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/WNCAATourneySeeds.csv')
 m_seed = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/MNCAATourneySeeds.csv')
 seed_df = pd.concat([m_seed, w_seed], axis=0).fillna(0.05)
 submission_df = pd.read_csv('/kaggle/input/march-machine-learning-mania-2025/SampleSubmissionStage2.csv')
 </code></pre>
-    <p>Team rankings are present in the files <strong>WNCAATourneySeeds.csv</strong> and <strong>MNCAATourneySeeds.csv</strong>.</p>
+    <p>チームのランキングは <strong>WNCAATourneySeeds.csv</strong> と <strong>MNCAATourneySeeds.csv</strong> に含まれています。</p>
     <ul>
-        <li>The "Season" column indicates the year</li>
-        <li>The "Seed" column indicates the ranking for a given conference (W01 = ranking 1 in conference W)</li>
-        <li>The "TeamID" column contains a unique identifier for every team</li>
+        <li><strong>Season</strong>: 年度を示すカラム</li>
+        <li><strong>Seed</strong>: カンファレンスにおけるランク (W01 はカンファレンスWで1位)</li>
+        <li><strong>TeamID</strong>: 各チームに付与された固有の識別子</li>
     </ul>
     <p><strong>seed_df.head()</strong></p>
     <pre>
@@ -326,7 +326,7 @@ Season  Seed  TeamID
 4   1985    W05   1374
     </pre>
 
-    <p>The <strong>sample_submission.csv</strong> file contains an "ID" column with the format <em>year_teamID1_teamID2</em>.</p>
+    <p><strong>sample_submission.csv</strong> には、<em>year_teamID1_teamID2</em> というフォーマットの "ID" カラムが含まれています。</p>
 
     <p><strong>submission_df.head()</strong></p>
     <pre>
@@ -338,9 +338,9 @@ Season  Seed  TeamID
 4   2025_1101_1106    0.5
     </pre>
 
-    <h4>Step 3: Extract game info and team rankings</h4>
+    <h4>ステップ3: 試合情報とチームのランクを抽出</h4>
     <pre><code>def extract_game_info(id_str):
-    # Extract year and team_ids
+    # 年とチームIDを抽出
     parts = id_str.split('_')
     year = int(parts[0])
     teamID1 = int(parts[1])
@@ -348,41 +348,41 @@ Season  Seed  TeamID
     return year, teamID1, teamID2
 
 def extract_seed_value(seed_str):
-    # Extract seed value
+    # シード値を抽出
     try:
         return int(seed_str[1:])
-    # Set seed to 16 for unselected teams and errors
+    # 選抜されなかったチームやエラーの場合は16を割り当て
     except ValueError:
         return 16
 
-# Reformat the data
+# データの再整形
 submission_df[['Season', 'TeamID1', 'TeamID2']] = submission_df['ID'].apply(extract_game_info).tolist()
 seed_df['SeedValue'] = seed_df['Seed'].apply(extract_seed_value)
 
-# Merge seed information for TeamID1
+# TeamID1 のシード情報をマージ
 submission_df = pd.merge(submission_df, seed_df[['Season', 'TeamID', 'SeedValue']],
                          left_on=['Season', 'TeamID1'], right_on=['Season', 'TeamID'],
                          how='left')
 submission_df = submission_df.rename(columns={'SeedValue': 'SeedValue1'}).drop(columns=['TeamID'])
 
-# Merge seed information for TeamID2
+# TeamID2 のシード情報をマージ
 submission_df = pd.merge(submission_df, seed_df[['Season', 'TeamID', 'SeedValue']],
                          left_on=['Season', 'TeamID2'], right_on=['Season', 'TeamID'],
                          how='left')
 submission_df = submission_df.rename(columns={'SeedValue': 'SeedValue2'}).drop(columns=['TeamID'])
 </code></pre>
 
-    <h4>Step 4: Make your predictions</h4>
-    <pre><code># Calculate seed difference
+    <h4>ステップ4: 予測の作成</h4>
+    <pre><code># シード差を計算
 submission_df['SeedDiff'] = submission_df['SeedValue1'] - submission_df['SeedValue2']
 
-# Update 'Pred' column
+# 'Pred' カラムの更新
 submission_df['Pred'] = 0.5 + (0.03 * submission_df['SeedDiff'])
 
-# Drop unnecessary columns
+# 不要なカラムを削除
 submission_df = submission_df[['ID', 'Pred']].fillna(0.5)
 
-# Preview your submission
+# 提出データのプレビュー
 submission_df.head()
 </code></pre>
 
@@ -407,14 +407,14 @@ max           0.5
 Name: Pred, dtype: float64
     </pre>
 
-    <h4>Step 5: Understand the metric</h4>
-    <p>We don't know the outcomes of the games, so instead let's assume that the team that was listed first won every single matchup. This is what we'll call our "true value". Next, we'll calculate the average squared difference between the probabilities in our submission and that ground truth value. We'll call this the "Brier score". <a href="https://en.wikipedia.org/wiki/Brier_score">https://en.wikipedia.org/wiki/Brier_score</a></p>
+    <h4>ステップ5: 評価指標を理解する</h4>
+    <p>実際の試合結果は分からないため、便宜上、<strong>ID</strong> に先に記載されたチーム(TeamID1) がすべて勝利したと仮定します。これを「真の値 (true value)」と呼びます。次に、提出した確率とこの真の値の平均二乗誤差を計算します。これを Brier Score と呼びます。詳しくは <a href="https://en.wikipedia.org/wiki/Brier_score">https://en.wikipedia.org/wiki/Brier_score</a> を参照してください。</p>
 
-    <pre><code># Create a dataframe of ground truth values
+    <pre><code># 真の値を格納したデータフレームを作成
 solution_df = submission_df.copy()
 solution_df['Pred'] = 1
 
-# Now calculate the Brier score
+# Brier Score を計算
 y_true = solution_df['Pred']
 y_pred = submission_df['Pred']
 brier_score = brier_score_loss(y_true, y_pred)
@@ -425,10 +425,11 @@ print(f"Brier Score: {brier_score}")
 Brier Score: 0.25
     </pre>
 
-    <h4>Step 6: Make your submission</h4>
+    <h4>ステップ6: 提出を作成</h4>
     <pre><code>submission_df.to_csv('/kaggle/working/submission.csv', index=False)
 </code></pre>
 </section>
+
     </main>
 </body>
 </html>
