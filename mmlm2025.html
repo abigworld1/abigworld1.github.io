@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【March Machine Learning Mania 2025 | Kaggle】走る作曲家のAIカフェ</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1050827580219099"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>走る作曲家のAIカフェ</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="study.html">勉強</a></li>
+                <li><a href="music.html">音楽</a></li>
+                <li><a href="sports.html">スポーツ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>March Machine Learning Mania 2025</h2>
+            <p><a href="https://www.kaggle.com/competitions/march-machine-learning-mania-2025">March Machine Learning Mania 2025</a></p>
+        </section>
+        <section>
+          <h2>Overview</h2>
+          <p>2025年の大学バスケットボールの男子・女子両方のトーナメントの結果を予測し、考え得るすべての試合の予測を提出する。</p>
+          <h2>Description</h2>
+          <p>このコンペティションでは、過去のNCAAの試合データが提供され、NCAA男子および女子のディビジョン1バスケットボールトーナメントの結果を予測する。</p>
+          <p>トーナメント開始前のリーダーボードは2021～2024年のスコアのみを反映する。2025年の試合が始まり次第、Kaggle は結果を随時反映し、スコアを更新していく。</p>
+          <h2>Evaluation</h2>
+          <p>提出物は、予測した確率と実際の試合結果との間の<a href="https://qiita.com/Derek/items/e382c087afd616a0053e">Brier Score</a>に基づいて評価される（このコンテキストでは、これは平均二乗誤差（Mean Squared Error）と同等である）。</p>
+          <p>各試合にはユニークなIDが付与されており、以下の形式で作成される：</p>
+          <pre><code>
+[シーズン]_[チームID1]_[チームID2]
+          </code></pre>
+          <p>例えば、「2025_1101_1102」は、2025年におけるチーム1101とチーム1102の仮想対戦を表す。</p>
+          <p>提出時は、チームIDが小さい方を先に記述 し、そのチームが勝つ確率（0〜1）を予測する。</p>
+          <p>男子チームと女子チームのTeamIdは重複しないため、男女を区別せずに1つのファイルで提出できる。</p>
+          <p>提出ファイルの例：</p>
+          <pre><code>
+ID,Pred
+2025_1101_1102,0.5
+2025_1101_1103,0.5
+2025_1101_1104,0.5
+...
+          </code></pre>
+          <p><code>Pred</code>列には、チームIDの小さい方が勝つ確率（0〜1の範囲）を記載する。</p>
+          <p>2025年のトーナメントが始まるまでは、提出ファイルが正しいフォーマットであるかどうかを確認するために、スコアが 0.0 で表示される。実際の試合結果が反映され次第、Kaggleがリスコアし、リーダーボードが更新される。</p>
+        </section>
+    </main>
+</body>
+</html>
