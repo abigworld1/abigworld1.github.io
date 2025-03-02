@@ -432,6 +432,7 @@ Brier Score: 0.25
 <section>
     <h2>March ML Mania 2025 - Brier Score Prediction</h2>
     <p><a href="https://www.kaggle.com/code/jocelyndumlao/march-ml-mania-2025-brier-score-prediction">March ML Mania 2025 - Brier Score Prediction</a></p>
+    <p>このノートブックでは、NCAAディビジョンI男子・女子バスケットボールの過去データを活用し、March Madnessトーナメントの試合結果を予測する。提供されているデータセットには、チーム情報、試合結果、トーナメントのシード情報などが含まれる。データファイルの名前には男性（M）、女性（W）のプレフィックスが付与されており、中には両方に適用されるデータもある。</p>
     <h3>目的:</h3>
     <p>このコンペティションの評価指標である Brier スコアを最小化すること。</p>
 
@@ -449,8 +450,8 @@ Brier Score: 0.25
         <li>アイテム <code>i</code> に割り当てられた可能な結果への予測確率</li>
         <li>アイテム <code>i</code> の実際の結果 <code>o<sub>i</sub></code></li>
     </ul>
-    <p>したがって、Brier スコアが低いほど、予測が適切にキャリブレーションされていることを意味します。一般的な形式では、このスコアは 0 から 1 の間の値をとります。これは、予測確率（0～1 のみ）と実際の結果（0 か 1 のみ）との最大差を平方した値が 1 になるためです。オリジナルの(1950 年) Brier スコアの定義では、この範囲が 0 から 2 の間でした。</p>
-    <p>Brier スコアは、真偽 (true/false) のいずれかとなるバイナリ・カテゴリカルな結果には適切ですが、3 種類以上の値を取る順序変数 (ordinal) には不向きです。</p>
+    <p>したがって、Brier スコアが低いほど、予測が適切にキャリブレーションされていることを意味する。一般的な形式では、このスコアは 0 から 1 の間の値をとる。これは、予測確率（0～1 のみ）と実際の結果（0 か 1 のみ）との最大差を平方した値が 1 になるためである。オリジナルの(1950 年) Brier スコアの定義では、この範囲が 0 から 2 の間だった。</p>
+    <p>Brier スコアは、真偽 (true/false) のいずれかとなるバイナリ・カテゴリカルな結果には適切だが、3 種類以上の値を取る順序変数 (ordinal) には不向きである。</p>
     <p>リンク: <a href="https://en.wikipedia.org/wiki/Brier_score">https://en.wikipedia.org/wiki/Brier_score</a></p>
 
     <h3>ライブラリのインポート</h3>
@@ -732,7 +733,323 @@ Cross-validated LogLoss: 0.2823
 Submission file saved to submission.csv
     </pre>
 </section>
+<section>
+    <h2>こんにちは！</h2>
+    <p>私は Coz です。ここでは、March Machine Learning Mania 2025 のデータに対して基本的な探索的データ分析 (EDA) を行う手順をご紹介します。機械学習モデルを作成し始める前に、問題を理解するうえで重要となるステップです。</p>
+    <p>この記事では、提供されているデータをどのように探索し、有用な可視化を作成するかを紹介します。</p>
+    <p>もし気に入っていただけたら、ぜひアップボートやコメントをお願いします！</p>
 
+    <h3>概要情報</h3>
+    <h4>大会の構造とトーナメントについて</h4>
+    <p><strong>トーナメント形式:</strong></p>
+    <ul>
+        <li>男子・女子トーナメントともにシングルエリミネーション形式を採用。</li>
+        <li>例年3月から4月にかけて開催。</li>
+        <li>男子・女子ともに64チーム（プレーインゲームを含めて64チームに絞られる）で行われる。</li>
+        <li>シーディング（シード割り当て）は、レギュラーシーズンやカンファレンスの結果、対戦相手の強さなどを総合的に評価し、選考委員会が決定。</li>
+    </ul>
+    <p><strong>地域区分:</strong></p>
+    <ul>
+        <li>男子・女子の両大会は「東」「西」「南」「中西部」の4つの地域（リージョン）に分かれる。</li>
+        <li>各リージョンには1〜16のシードで割り振られたチームが入り、高いシードのチームが優勢とされる。</li>
+    </ul>
+    <p><strong>対戦とアップセット:</strong></p>
+    <ul>
+        <li>対戦カード、シード、結果に関するデータは、歴史的に注目すべきトピック（例: 16番シードが1番シードに勝つなど）を分析する際の鍵となる。</li>
+        <li>ラウンドの進行: 1回戦→2回戦→スウィート16→エリート8→ファイナル4→決勝。</li>
+    </ul>
+    <p><strong>過去のデータ:</strong></p>
+    <ul>
+        <li>チームの実績: 過去の優勝チーム、準優勝チーム、深いラウンドまで進んだチームのデータを見れば、シードやカンファレンス、特定チームの特徴などの傾向を分析可能。</li>
+        <li>選手の成績: 得点、リバウンド、アシストなどを追跡すれば、選手の貢献度や試合結果への影響を把握できる。</li>
+        <li>試合の統計: 得点、シュート成功率、ターンオーバー、ファウルなどから、勝敗に関わる要因を洗い出すことが可能。</li>
+    </ul>
+
+    <h3>データ分析の主な指標</h3>
+    <p><strong>シードとパフォーマンスの関係:</strong> 高シードのチームは低シードよりもパフォーマンスが高い傾向があるが、時折番狂わせ（アップセット）が起こる。</p>
+    <p><strong>歴史的傾向やパターン:</strong></p>
+    <ul>
+        <li>アップセット: 早いラウンドで起こる下位シードの勝利の数や頻度。</li>
+        <li>スウィート16 / エリート8 進出率: 上位シードが後のラウンドにどの程度進むかを分析。</li>
+        <li>ファイナル4や決勝: 特定のチームやカンファレンスが安定して良い成績を残すかを見る。</li>
+    </ul>
+    <p><strong>チームやカンファレンスのパフォーマンス:</strong></p>
+    <ul>
+        <li>カンファレンスの強さ: ACC、Big Ten、SEC など特定カンファレンスの大会全体や重要なラウンドでの成績。</li>
+        <li>チームの特徴: 攻撃重視か守備重視か、ターンオーバー率、フィールドゴール成功率、ベンチ層の厚さなど。</li>
+    </ul>
+
+    <h3>NCAAとは？</h3>
+    <p>NCAA（全米大学体育協会）においては、バスケットボールのようなトーナメント方式で、地域（リージョン）を設けてチームを振り分け、競技を進行させます。これは特に NCAA ディビジョンI男子バスケットボール大会（いわゆる March Madness）で顕著です。</p>
+    <p>下記がリージョンについての概要です:</p>
+    <ul>
+        <li><strong>トーナメント構造:</strong> 68チーム（実質的にプレーインを含める）を4つのリージョンに分割。地理名（東、西、南、中西部など）が使われる。</li>
+        <li><strong>シーディング:</strong> 各リージョンで1〜16シードに振り分けられ、レギュラーシーズン成績や各種評価指標に基づいて決定される。高シードチームは理論上、より簡単な組み合わせが与えられる。</li>
+        <li><strong>進行:</strong> リージョン内で対戦を重ね、リージョンの勝者（地域優勝校）がファイナル4に進出する。</li>
+    </ul>
+
+    <h3>目的</h3>
+    <p>2025年の March Madness における各試合の結果を、過去のデータのみを使って予測します。目標は、それぞれの対戦の勝利確率を推定するようなモデルを構築し、最終的にベストな全体スコアを得ることです。</p>
+
+    <h3>⚙️ セットアップ</h3>
+    <p>まずは必要なライブラリをインポートし、EDA に向けた設定やツールを準備します。</p>
+
+    <pre><code># Essential Imports
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+import os
+import ipywidgets as widgets
+from IPython.display import display
+import warnings
+
+# Niche Imports
+import chardet
+
+warnings.filterwarnings("ignore")
+</code></pre>
+
+    <h3>📂 ファイルの準備</h3>
+    <p>提供されたファイルをざっと確認してみます。各ファイルの説明は競技データページにも掲載されています（<a href="https://www.kaggle.com/competitions/march-machine-learning-mania-2025/data">https://www.kaggle.com/competitions/march-machine-learning-mania-2025/data</a>）。</p>
+    <p>主催者は以下の5つのセクションに分割しています:</p>
+    <ol>
+        <li>The Basics - 最小限の予測モデルを構築して提出するために必要な基本的なデータ。</li>
+        <li>Team Box Scores - 1試合ごとのスタッツ (フリースロー数、リバウンド、ターンオーバーなど)。</li>
+        <li>Geography - 試合の開催都市などの地理情報。</li>
+        <li>Public Rankings - 週ごと(男子のみ)のランキングデータ (Pomeroy, Sagarin, RPI, ESPNなど)。</li>
+        <li>Supplements - 追加の情報(コーチ、カンファレンス、チーム名のスペル、NITその他のデータなど)。</li>
+    </ol>
+    <p><strong>競技ディレクトリ:</strong> <code>/kaggle/input/march-machine-learning-mania-2025</code></p>
+    <p>中には以下のファイルが含まれています（全てリストアップ）:</p>
+    <ul>
+        <li>(File) Conferences.csv, Size: 1643 bytes</li>
+        <li>(File) SeedBenchmarkStage1.csv, Size: 10649275 bytes</li>
+        <li>(File) WNCAATourneyDetailedResults.csv, Size: 89624 bytes</li>
+        <li>(File) WRegularSeasonCompactResults.csv, Size: 3949227 bytes</li>
+        <li>(File) MNCAATourneySeedRoundSlots.csv, Size: 15904 bytes</li>
+        <li>(File) MRegularSeasonDetailedResults.csv, Size: 11613384 bytes</li>
+        <li>(File) MNCAATourneyCompactResults.csv, Size: 75699 bytes</li>
+        <li>(File) MGameCities.csv, Size: 2724091 bytes</li>
+        <li>(File) WSecondaryTourneyCompactResults.csv, Size: 28919 bytes</li>
+        <li>(File) WGameCities.csv, Size: 2621798 bytes</li>
+        <li>(File) MSeasons.csv, Size: 1819 bytes</li>
+        <li>(File) WNCAATourneySlots.csv, Size: 34266 bytes</li>
+        <li>(File) MSecondaryTourneyTeams.csv, Size: 27572 bytes</li>
+        <li>(File) Cities.csv, Size: 9612 bytes</li>
+        <li>(File) MTeamSpellings.csv, Size: 22758 bytes</li>
+        <li>(File) MRegularSeasonCompactResults.csv, Size: 5591072 bytes</li>
+        <li>(File) MMasseyOrdinals.csv, Size: 119629314 bytes</li>
+        <li>(File) MSecondaryTourneyCompactResults.csv, Size: 61633 bytes</li>
+        <li>(File) WTeams.csv, Size: 6179 bytes</li>
+        <li>(File) WConferenceTourneyGames.csv, Size: 160940 bytes</li>
+        <li>(File) MNCAATourneySlots.csv, Size: 50374 bytes</li>
+        <li>(File) MNCAATourneySeeds.csv, Size: 38514 bytes</li>
+        <li>(File) WNCAATourneyCompactResults.csv, Size: 49594 bytes</li>
+        <li>(File) WSeasons.csv, Size: 1468 bytes</li>
+        <li>(File) WNCAATourneySeeds.csv, Size: 25184 bytes</li>
+        <li>(File) MTeamCoaches.csv, Size: 403931 bytes</li>
+        <li>(File) MConferenceTourneyGames.csv, Size: 171066 bytes</li>
+        <li>(File) WRegularSeasonDetailedResults.csv, Size: 7925867 bytes</li>
+        <li>(File) MNCAATourneyDetailedResults.csv, Size: 138174 bytes</li>
+        <li>(File) WTeamSpellings.csv, Size: 22606 bytes</li>
+        <li>(File) MTeamConferences.csv, Size: 230800 bytes</li>
+        <li>(File) MTeams.csv, Size: 10030 bytes</li>
+        <li>(File) WTeamConferences.csv, Size: 163878 bytes</li>
+        <li>(File) SampleSubmissionStage1.csv, Size: 10142167 bytes</li>
+        <li>(File) WSecondaryTourneyTeams.csv, Size: 13080 bytes</li>
+    </ul>
+
+    <h3>📊 データセクション 1 - The Basics</h3>
+    <p>最も基本的な予測モデルの構築と提出に必要なデータが含まれています。</p>
+    <ul>
+        <li>チームIDとチーム名</li>
+        <li>1984-85シーズン以降のトーナメントシード情報</li>
+        <li>1984-85シーズン以降のレギュラーシーズン、カンファレンストーナメント、NCAAトーナメントの最終スコア</li>
+        <li>シーズンレベルの詳細（日付やリージョン名など）</li>
+        <li>ステージ1のサンプル提出ファイル</li>
+    </ul>
+    <p>シーズンを識別する際は、通常シーズンが終わる年（年度末）で呼ぶ慣習を踏襲します。</p>
+
+    <h4>Teams</h4>
+    <p><strong>ファイル:</strong> <code>MTeams.csv</code> および <code>WTeams.csv</code></p>
+    <ul>
+        <li><strong>TeamID:</strong> 各大学チームを識別する4桁の番号。男子は1000〜1999、女子は3000〜3999。</li>
+        <li><strong>TeamName:</strong> チーム名を16文字以内で簡略表示したもの。</li>
+        <li><strong>FirstD1Season, LastD1Season:</strong> データセットにおいて、その学校がディビジョンIだった初年度・最終年度（男子のみ）。女子には含まれない。</li>
+    </ul>
+
+    <pre><code>mens_df = load_csv(os.path.join(comp_dir, 'MTeams.csv'))
+womens_df = load_csv(os.path.join(comp_dir, 'WTeams.csv'))
+for gender in ['Mens', 'Womens']:
+    print(f"Investigating {gender} Team")
+    if gender == 'Mens':
+        df = mens_df
+    else:
+        df = womens_df
+    display(df.describe())
+    display(df.head())
+</code></pre>
+
+    <p>このように、Women'sの方には <code>FirstD1Season</code> や <code>LastD1Season</code> がないことが確認できます。また男子と女子ではチーム数が若干異なります。</p>
+
+    <pre><code># Find unique values in Team Names
+series1 = mens_df['TeamName']
+series2 = womens_df['TeamName']
+unique_in_series1 = series1[~series1.isin(series2)]
+unique_in_series2 = series2[~series2.isin(series1)]
+
+unique_values = pd.concat([unique_in_series1, unique_in_series2])
+print(unique_values)
+</code></pre>
+
+    <p>この結果、「Citadel」と「VMI」が男子のみで女子に含まれていないことが分かりました。</p>
+
+    <h4>Seasons</h4>
+    <p><strong>ファイル:</strong> <code>MSeasons.csv</code> および <code>WSeasons.csv</code></p>
+    <ul>
+        <li><strong>Season:</strong> NCAAトーナメントが行われた年。</li>
+        <li><strong>DayZero:</strong> DayNum=0 に対応する日付。<code>MSeasons.csv</code> と <code>WSeasons.csv</code> で同じ DayZero を共有しています。</li>
+        <li><strong>RegionW, RegionX, RegionY, RegionZ:</strong> 大会の4つの地域をアルファベット順に W, X, Y, Z で表すための名称です。</li>
+    </ul>
+
+    <pre><code>mens_df = load_csv(os.path.join(comp_dir, 'MSeasons.csv'))
+womens_df = load_csv(os.path.join(comp_dir, 'WSeasons.csv'))
+for gender in ['Mens', 'Womens']:
+    ...
+</code></pre>
+
+    <p>メンズは1985～2025、ウィメンズは1998～2025 と年度範囲が異なることに注意。</p>
+
+    <h4>Tourney Seeds</h4>
+    <p><strong>ファイル:</strong> <code>MNCAATourneySeeds.csv</code> および <code>WNCAATourneySeeds.csv</code></p>
+    <ul>
+        <li><strong>Season:</strong> 大会の年度</li>
+        <li><strong>Seed:</strong> 「W01」「X02」「Y03」「Z16」など、先頭の文字がリージョン(W, X, Y, Z)、続く2桁がシード番号(01〜16)。プレーインの場合は最後に <code>a</code> や <code>b</code> が付く。</li>
+        <li><strong>TeamID:</strong> チームを識別するID。</li>
+    </ul>
+
+    <pre><code>mens_df = load_csv(os.path.join(comp_dir, 'MNCAATourneySeeds.csv'))
+womens_df = load_csv(os.path.join(comp_dir, 'WNCAATourneySeeds.csv'))
+for gender in ['Mens', 'Womens']:
+    ...
+</code></pre>
+
+    <p>このシード情報とリージョンの組み合わせが、本大会の対戦構造を把握する上で重要です。</p>
+
+    <h4>Regular Season Results</h4>
+    <p><strong>ファイル:</strong> <code>MRegularSeasonCompactResults.csv</code> および <code>WRegularSeasonCompactResults.csv</code></p>
+    <ul>
+        <li><strong>Season, DayNum:</strong> 試合年度と、シーズン中の日数（0〜132）。</li>
+        <li><strong>WTeamID, WScore:</strong> 勝利チームのIDとスコア。</li>
+        <li><strong>LTeamID, LScore:</strong> 敗北チームのIDとスコア。</li>
+        <li><strong>WLoc:</strong> 勝利チームのホーム/アウェイ/中立地 (H, A, N)。</li>
+        <li><strong>NumOT:</strong> 試合のオーバータイム回数。</li>
+    </ul>
+
+    <pre><code>mens_df = load_csv(os.path.join(comp_dir, 'MRegularSeasonCompactResults.csv'))
+womens_df = load_csv(os.path.join(comp_dir, 'WRegularSeasonCompactResults.csv'))
+for gender in ['Mens', 'Womens']:
+    ...
+</code></pre>
+
+    <p>得点分布を可視化するなど、基礎的なEDAを行えます。</p>
+
+    <pre><code># Look at distributions of winning and losing scores across seasons
+for gender in ['Mens', 'Womens']:
+    ...
+</code></pre>
+
+    <h4>Tourney Results</h4>
+    <p><strong>ファイル:</strong> <code>MNCAATourneyCompactResults.csv</code> および <code>WNCAATourneyCompactResults.csv</code></p>
+    <ul>
+        <li>NCAAトーナメントでの試合結果を示す。構造はレギュラーシーズンのCompactResultsと同じ。</li>
+        <li>男子はすべて中立地(N)、女子は状況により中立地にならない場合がある。</li>
+        <li>DayNum を見れば、大まかにどのラウンドかを推定できる（男子は134〜154、女子は変動あり）。</li>
+    </ul>
+
+    <pre><code>mens_df = load_csv(os.path.join(comp_dir, 'MNCAATourneyCompactResults.csv'))
+womens_df = load_csv(os.path.join(comp_dir, 'WNCAATourneyCompactResults.csv'))
+for gender in ['Mens', 'Womens']:
+    ...
+</code></pre>
+
+    <h4>Sample Submission</h4>
+    <p><strong>ファイル:</strong> <code>SampleSubmissionStage1.csv</code></p>
+    <ul>
+        <li>Stage 1 のサンプル提出フォーマット。すべての可能性のある対戦において勝率0.5を仮置きしている。</li>
+        <li><strong>ID:</strong> <code>SSSS_XXXX_YYYY</code> の形式で、<code>SSSS</code> は年度、<code>XXXX</code> は小さい方のTeamID、<code>YYYY</code> は大きい方のTeamID。</li>
+        <li><strong>Pred:</strong> <code>XXXX</code> 側チームの勝利確率。</li>
+    </ul>
+
+    <pre><code>ss_df = load_csv(os.path.join(comp_dir, 'SampleSubmissionStage1.csv'))
+ss_df.head()
+</code></pre>
+
+    <h3>📊 データセクション 2 - Team Box Scores</h3>
+    <p>2003年以降（男子）・2010年以降（女子）の全試合（レギュラーシーズン、カンファレンストーナメント、NCAAトーナメント）におけるチーム別の詳細スタッツを提供。</p>
+    <p>Team Box Scores は "Detailed Results" ファイルに含まれています。Compact Results と同様の前8列 (Season, DayNum, WTeamID, WScore, LTeamID, LScore, WLoc, NumOT) に加えて、勝敗チーム別に多くの追加情報があります:</p>
+    <ul>
+        <li><strong>WFGM, WFGA:</strong> 勝利チームのフィールドゴール成功数と試投数</li>
+        <li><strong>WFGM3, WFGA3:</strong> 勝利チームの3ポイント成功数と試投数</li>
+        <li><strong>WFTM, WFTA:</strong> 勝利チームのフリースロー成功数と試投数</li>
+        <li><strong>WOR, WDR:</strong> 勝利チームのオフェンスリバウンドとディフェンスリバウンド</li>
+        <li><strong>WAst, WTO, WStl, WBlk, WPF:</strong> アシスト、ターンオーバー、スティール、ブロック、ファウルなど</li>
+        <li>敗者側についても同様に LFGM, LFGA, ... LPF まで。</li>
+    </ul>
+    <p>2点シュートだけ見たい場合は、<code>FGM - FGM3</code> などの計算が必要です。得点合計は <code>(2 * FGM) + FGM3 + FTM</code> で求められます。</p>
+
+    <h4>レギュラーシーズン Detailed Results</h4>
+    <p><strong>ファイル:</strong> <code>MRegularSeasonDetailedResults.csv</code> および <code>WRegularSeasonDetailedResults.csv</code></p>
+    <p>2003年(男子)・2010年(女子)以降の各試合に関する詳細スタッツが含まれます。</p>
+
+    <pre><code>mens_df = load_csv(os.path.join(comp_dir, 'MRegularSeasonDetailedResults.csv'))
+womens_df = load_csv(os.path.join(comp_dir, 'WRegularSeasonDetailedResults.csv'))
+for gender in ['Mens', 'Womens']:
+    ...
+</code></pre>
+
+    <p>特に興味深いのは、2003年以前(男子)・2010年以前(女子)だと、レギュラーシーズンのDetailedデータが存在しない点。</p>
+
+    <pre><code>mens_df.columns
+</code></pre>
+
+    <p>上記のような列があり、それぞれ「W/L+要素名」という形式で記録されています。例えば、<code>WFGM</code> と <code>LFGM</code> は勝利チームと敗北チームのフィールドゴール成功数を表します。</p>
+
+    <pre><code>prefix_dict = {
+    'W': 'Winning Team',
+    'L': 'Losing Team',
+}
+suffix_dict = {
+    'FGM': 'Field goals made', 
+    'FGA': 'Field goals attempted', 
+    'FGM3': 'Three pointers made', 
+    'FGA3': 'Three pointers attempted', 
+    'FTM': 'Free throws made', 
+    'FTA': 'Free throws attempted', 
+    'OR': 'Offensive rebounds', 
+    'DR': 'Defensive rebounds', 
+    'Ast': 'Assists', 
+    'TO': 'Turnovers committed', 
+    'Stl': 'Steals', 
+    'Blk': 'Blocks', 
+    'PF': 'Personal fouls committed',
+}
+
+for gender in ['Mens', 'Womens']:
+    ...
+</code></pre>
+
+    <p>上記コード例では、各要素について「勝利チーム - 敗北チーム」の差分を計算し、ヒストグラムを描画して分布を見ています。たとえばフィールドゴール成功数の差やターンオーバー数の差を比較することで、試合の特徴を把握できます。</p>
+
+    <pre><code>fig, axes = plt.subplots(1, 2, figsize=(40, 20))
+for i, gender in enumerate(['Mens', 'Womens']):
+    ...
+</code></pre>
+
+    <p>このように、各チームがどの程度シュートを打ったか、オフェンスリバウンドを取れたか、ターンオーバーをどれくらいしたかなど、長期的な傾向を可視化できます。</p>
+</section>
 
     </main>
 </body>
