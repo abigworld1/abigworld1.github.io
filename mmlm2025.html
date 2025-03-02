@@ -34,14 +34,14 @@
           <p>このコンペティションでは、過去のNCAAの試合データが提供され、NCAA男子および女子のディビジョン1バスケットボールトーナメントの結果を予測する。</p>
           <p>トーナメント開始前のリーダーボードは2021～2024年のスコアのみを反映する。2025年の試合が始まり次第、Kaggle は結果を随時反映し、スコアを更新していく。</p>
           <h2>Evaluation</h2>
-          <p>提出物は、予測した確率と実際の試合結果との間の<a href="https://qiita.com/Derek/items/e382c087afd616a0053e">Brier Score</a>に基づいて評価される（このコンテキストでは、これは平均二乗誤差（Mean Squared Error）と同等である）。</p>
+          <p>提出物は、予測した確率と実際の試合結果との間の<a href="https://qiita.com/Derek/items/e382c087afd616a0053e">Brier Score</a>に基づいて評価される（このコンテキストでは平均二乗誤差（Mean Squared Error）と同等）。</p>
           <p>各試合にはユニークなIDが付与されており、以下の形式で作成される：</p>
           <pre><code>
 [シーズン]_[チームID1]_[チームID2]
           </code></pre>
-          <p>例えば、「2025_1101_1102」は、2025年におけるチーム1101とチーム1102の仮想対戦を表す。</p>
-          <p>提出時は、チームIDが小さい方を先に記述 し、そのチームが勝つ確率（0〜1）を予測する。</p>
-          <p>男子チームと女子チームのTeamIdは重複しないため、男女を区別せずに1つのファイルで提出できる。</p>
+          <p>たとえば「2025_1101_1102」であれば、2025年におけるチーム1101と1102の対戦を表す。</p>
+          <p>提出時は、チームIDが小さい方を先に記述し、そのチームが勝つ確率（0〜1）を予測する。</p>
+          <p>男子チームと女子チームの TeamID は重複しないので、1つのファイルで男女混合の予測を提出できる。</p>
           <p>提出ファイルの例：</p>
           <pre><code>
 ID,Pred
@@ -50,8 +50,238 @@ ID,Pred
 2025_1101_1104,0.5
 ...
           </code></pre>
-          <p><code>Pred</code>列には、チームIDの小さい方が勝つ確率（0〜1の範囲）を記載する。</p>
-          <p>2025年のトーナメントが始まるまでは、提出ファイルが正しいフォーマットであるかどうかを確認するために、スコアが 0.0 で表示される。実際の試合結果が反映され次第、Kaggleがリスコアし、リーダーボードが更新される。</p>
+          <p><code>Pred</code>には、TeamID が小さい方のチームが勝つ確率（0〜1）を記載する。</p>
+          <p>2025年のトーナメントが始まるまでは、提出ファイルのフォーマットが正しいか確認する目的でスコアが0.0で表示される。試合結果が反映され次第リーダーボードが再計算される。</p>
+        </section>
+        <section>
+            <h2>Dataset Description</h2>
+            <p>毎シーズン、NCAA®ディビジョンIの大学バスケットボールチーム同士による数千試合が行われ、3月中旬から4月上旬にかけて開催される March Madness®（全米選手権） 男子・女子トーナメントにつながる。本コンペでは、過去の膨大な試合データを提供し、それを用いて March Madness® の試合結果を独自に予測できる。</p>
+            <p>データファイルには男子（Men’s）と女子（Women’s）の両方が含まれる。</p>
+            <ul>
+                <li>男子データのみ含むファイル：ファイル名が <code>M</code> で始まる（例：<code>MRegularSeasonCompactResults.csv</code>）</li>
+                <li>女子データのみ含むファイル：ファイル名が <code>W</code> で始まる（例：<code>WRegularSeasonCompactResults.csv</code>）</li>
+                <li>男女共通のファイル：<code>Cities.csv</code> や <code>Conferences.csv</code> など</li>
+            </ul>
+            <p>外部のデータとコンペのデータをマッチングするために、以下のファイルが提供されている：</p>
+            <ul>
+                <li><code>MTeamSpellings.csv</code>（男子用）</li>
+                <li><code>WTeamSpellings.csv</code>（女子用）</li>
+            </ul>
+            <p>これらを利用し、外部で参照されるチーム名を本コンペの TeamID に対応づけられる。</p>
+            <p>すべてのファイルは今シーズン（2024-25）の1月28日までのデータを含む。3月中旬頃に残りの試合を反映した更新ファイルが提供される見込み。</p>
+        </section>
+        <section>
+            <h2>Data Section 1 - 基本データ</h2>
+            <p>ここでは、シンプルな予測モデルを構築し、予測を提出するために必要なすべての情報を提供しています。</p>
+            <p>チームIDとチーム名<br>
+            1984-85シーズン以降のトーナメントシード<br>
+            1984-85シーズン以降の全レギュラーシーズン、カンファレンストーナメント、NCAA®トーナメントの最終スコア<br>
+            シーズンに関する詳細（試合日やリージョン情報など）<br>
+            ステージ1の提出例ファイル</p>
+            <p>慣例として、特定のシーズンを識別する際は開始年ではなく終了年で表現します。</p>
+
+            <h3>Data Section 1 ファイル: MTeams.csv と WTeams.csv</h3>
+            <p>これらのファイルには、データセットに含まれる各大学チームに関する情報が含まれています。</p>
+            <ul>
+                <li><strong>TeamID</strong>：4桁のID。NCAA®男子または女子チームを一意に識別します。男子チームは1000〜1999、女子チームは3000〜3999の範囲。</li>
+                <li><strong>TeamName</strong>：16文字以内でコンパクトに表記されたチーム名。</li>
+                <li><strong>FirstD1Season</strong>：このデータセットで、そのチームが初めてディビジョンIとして登録されているシーズン（男子のみのカラム）。</li>
+                <li><strong>LastD1Season</strong>：同データセットで、そのチームが最後にディビジョンIとして登録されているシーズン（男子のみのカラム）。現在もディビジョンIに属するチームは 2025 が記載される。</li>
+            </ul>
+
+            <h3>Data Section 1 ファイル: MSeasons.csv と WSeasons.csv</h3>
+            <p>過去のシーズン情報、およびシーズン単位での追加情報（例：DayZero, 地域名）を含むファイル。</p>
+            <ul>
+                <li><strong>Season</strong>：その年のトーナメントが行われた年。</li>
+                <li><strong>DayZero</strong>：各シーズンの DayNum=0 に対応する日付。すべての試合日付を同一の枠組みに合わせており、男子トーナメントの決勝戦は毎年 DayNum=154（月曜日）と定義される。<br>
+                （例：あるシーズンの DayZero が 10/31 なら、DayNum=7 は 11/07 にあたる、など）</li>
+                <li><strong>RegionW, RegionX, RegionY, RegionZ</strong>：最終トーナメントにおける4つの地域（リージョン）に、W, X, Y, Z のラベルを付与する。アルファベット順で最も早い地域がW、そのWと対戦する地域がX、残り2地域のうちアルファベット順で早いほうがY、遅いほうがZ として割り当てる。</li>
+            </ul>
+
+            <h3>Data Section 1 ファイル: MNCAATourneySeeds.csv と WNCAATourneySeeds.csv</h3>
+            <p>各NCAA®トーナメントでのシード情報を示すファイル。各シーズン64～68チーム分のシード（プレーインがある場合など）を掲載。近年は計68チーム（4試合のプレーインを含む）が定着している。実際のトーナメントシードや参加チームが確定するのは2025年のセレクションサンデー（3/16, DayNum=132）以降。</p>
+            <ul>
+                <li><strong>Season</strong>：そのトーナメントが行われた年。</li>
+                <li><strong>Seed</strong>：3～4文字で構成されるシード。最初の文字 W/X/Y/Z は地域を表し、次の2桁がシード番号（01〜16）。プレーインの場合は最後に a, b が付与され、同じ3文字のシードを持つチーム同士が対戦する。a, b は TeamID の小さい順で割り当て。</li>
+                <li><strong>TeamID</strong>：MTeams.csv や WTeams.csv で定義されるチームID。</li>
+            </ul>
+
+            <h3>Data Section 1 ファイル: MRegularSeasonCompactResults.csv と WRegularSeasonCompactResults.csv</h3>
+            <p>過去シーズンにおけるレギュラーシーズン（DayNum 0〜132）の試合結果をまとめたファイル。男子は1985シーズン（64チーム制の初年）から、女子は1998シーズンから。</p>
+            <ul>
+                <li><strong>Season</strong>：MSeasons.csv/WSeasons.csv の年（最終的なトーナメントが行われる年）。</li>
+                <li><strong>DayNum</strong>：0〜132の範囲。DayZero からのオフセット。</li>
+                <li><strong>WTeamID</strong>：試合に勝利したチーム（Home/Away/Neutral問わず）。</li>
+                <li><strong>WScore</strong>：勝利チームの得点。</li>
+                <li><strong>LTeamID</strong>：敗戦チーム。</li>
+                <li><strong>LScore</strong>：敗戦チームの得点。</li>
+                <li><strong>WLoc</strong>：勝利チームの会場区分（H=ホーム、A=アウェイ、N=中立）。</li>
+                <li><strong>NumOT</strong>：延長回数（0以上の整数）。</li>
+            </ul>
+
+            <h3>Data Section 1 ファイル: MNCAATourneyCompactResults.csv と WNCAATourneyCompactResults.csv</h3>
+            <p>過去シーズンにおけるNCAA®トーナメント試合結果ファイル。基本的には RegularSeasonCompactResults.csv と同じ形式で、男子の場合は全試合が中立（WLoc=N）として記載。女子は大会によっては中立ではない場合もある。</p>
+            <p>男子の場合、DayNum からおおよそのラウンドが推定可能（ただし2021年など特異例もある）。一般的なスケジュールは：</p>
+            <ul>
+                <li>DayNum=134 or 135：火曜・水曜のプレーイン → 64チームに絞る</li>
+                <li>DayNum=136 or 137：木曜・金曜の1回戦 → 64→32チーム</li>
+                <li>DayNum=138 or 139：土曜・日曜の2回戦 → 32→16チーム</li>
+                <li>DayNum=143 or 144：木曜・金曜の3回戦（スウィート16） → 16→8チーム</li>
+                <li>DayNum=145 or 146：土曜・日曜の4回戦（エリート8） → 8→4チーム</li>
+                <li>DayNum=152：土曜の5回戦（ファイナル4） → 4→2チーム</li>
+                <li>DayNum=154：月曜の6回戦（決勝） → 2→優勝1チーム</li>
+            </ul>
+
+            <h3>Data Section 1 ファイル: SampleSubmissionStage1.csv</h3>
+            <p>ステージ1コンペの提出ファイル形式を示したサンプル。全試合の勝率を50%とする場合の例が掲載されている。</p>
+            <p>必要な予測を把握するには、このサンプルファイルの行をパースすればよい。</p>
+            <ul>
+                <li><strong>ID</strong>：<code>SSSS_XXXX_YYYY</code> 形式の14文字列。SSSSはシーズン、XXXXはTeamIDが小さい方、YYYYは大きい方。</li>
+                <li><strong>Pred</strong>：IDで指定された「小さい方のTeamIDのチームが勝つ確率」を記載。</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Data Section 2 - チーム別ボックススコア</h2>
+            <p>2003シーズン（男子）または2010シーズン（女子）以降のレギュラーシーズン、カンファレンストーナメント、NCAA®トーナメントの試合におけるチーム単位の詳細スタッツを記録しています（フリースロー試投数、ディフェンスリバウンド数、ターンオーバー数など）。</p>
+            <p>ボックススコアは「Detailed Results」ファイルに含まれ、「Compact Results」ファイルの拡張版といえます。</p>
+            <p>Detailed Resultsファイルでは、最初の8列（Season, DayNum, WTeamID, WScore, LTeamID, LScore, WLoc, NumOT）はCompact Resultsと同じですが、追加のカラムが多数含まれます。カラム名の頭文字 “W” または “L” は勝利チーム・敗戦チームを示します。</p>
+            <ul>
+                <li>WFGM（勝チームのフィールドゴール成功数）</li>
+                <li>WFGA（勝チームのフィールドゴール試投数）</li>
+                <li>WFGM3（勝チームの3ポイント成功数）</li>
+                <li>WFGA3（勝チームの3ポイント試投数）</li>
+                <li>WFTM（勝チームのフリースロー成功数）</li>
+                <li>WFTA（勝チームのフリースロー試投数）</li>
+                <li>WOR（勝チームのオフェンスリバウンド数）</li>
+                <li>WDR（勝チームのディフェンスリバウンド数）</li>
+                <li>WAst（勝チームのアシスト数）</li>
+                <li>WTO（勝チームのターンオーバー）</li>
+                <li>WStl（勝チームのスティール）</li>
+                <li>WBlk（勝チームのブロック）</li>
+                <li>WPF（勝チームのパーソナルファウル）</li>
+                <li>... 敗戦チームについてもLFGM ～ LPF の同様のカラムがある</li>
+            </ul>
+            <p>注：フィールドゴール成功数 (WFGM/LFGM) は、2ポイントと3ポイントの合計。3ポイントだけを知りたい場合は (WFGM - WFGM3) で2ポイントを求めるなど工夫が必要。総得点は 2×FGM + FGM3 + FTM で計算可能。</p>
+
+            <h3>Data Section 2 ファイル: MRegularSeasonDetailedResults.csv と WRegularSeasonDetailedResults.csv</h3>
+            <p>レギュラーシーズンのチーム別ボックススコア。男子は2003シーズン以降、女子は2010シーズン以降。CompactResults に含まれる試合は、これらの DetailedResults にも含まれる。</p>
+            <p>女子データでは初期のシーズン（2010～2012）で約1.5%の試合データが欠損。2013年以降はほぼ完全。過去に一部シーズンでパーソナルファウルが0になっていた試合があったが、現在は修正済。</p>
+
+            <h3>Data Section 2 ファイル: MNCAATourneyDetailedResults.csv と WNCAATourneyDetailedResults.csv</h3>
+            <p>NCAA®トーナメントのチーム別ボックススコア。男子は2003シーズン以降、女子は2010シーズン以降。CompactResults と同じ試合が DetailedResults にも対応して存在する。</p>
+        </section>
+
+        <section>
+            <h2>Data Section 3 - 地理情報</h2>
+            <p>2010シーズン以降のレギュラーシーズン、カンファレンストーナメント、NCAA®トーナメントの試合が行われた都市情報を提供します。</p>
+
+            <h3>Data Section 3 ファイル: Cities.csv</h3>
+            <p>試合が開催された都市のマスタ一覧。Cities や Conferences は男女共通のため、M/Wで分けられていない。CityID は過去のデータとも対応。</p>
+            <ul>
+                <li><strong>CityID</strong>：4桁のID。都市を一意に識別。</li>
+                <li><strong>City</strong>：都市名。</li>
+                <li><strong>State</strong>：州の略称。米国50州以外の場合は別の略称を使用（例：メキシコ・カンクン＝MX）。</li>
+            </ul>
+
+            <h3>Data Section 3 ファイル: MGameCities.csv と WGameCities.csv</h3>
+            <p>2010シーズン以降のすべての試合について、実際に行われた都市を示すファイル。レギュラーシーズン、NCAA®トーナメント、二次的なトーナメント（NIT等）が含まれる。2009シーズン以前の試合は未掲載。女子では2010～2012シーズンの約1～2%が欠損の場合あり。2013年以降は100%カバー。</p>
+            <ul>
+                <li><strong>Season, DayNum, WTeamID, LTeamID</strong>：これら4つで試合を一意に識別。他の情報（スコア等）はCompactResultsやDetailedResultsを参照。</li>
+                <li><strong>CRType</strong>：Regular / NCAA / Secondary（セカンダリートーナメント）の別。</li>
+                <li><strong>CityID</strong>：Cities.csv の CityID。</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Data Section 4 - 公開ランキング</h2>
+            <p>2003シーズン以降の男子チームの週次ランキング。Pomeroy, Sagarin, RPI, ESPN など多数のシステムを含む。</p>
+
+            <h3>Data Section 4 ファイル: MMasseyOrdinals.csv</h3>
+            <p>ケネス・マッセイ（Kenneth Massey）のサイトで集計された多数のランキングシステムによる男子チームの順位（#1, #2, #3 ...）を一覧化したファイル。</p>
+            <ul>
+                <li><strong>Season</strong>：MSeasons.csv のシーズン。</li>
+                <li><strong>RankingDayNum</strong>：0～133の整数。DayZero と同じ基準で定義。RankingDayNum ＝ 110 なら DayNum 109 までの試合結果を反映し、DayNum 110 以降の試合予測に用いる、などの指針。</li>
+                <li><strong>SystemName</strong>：各ランキングシステムを表す3文字程度の略称。年によって多少変化あり。</li>
+                <li><strong>TeamID</strong>：MTeams.csv のTeamID。</li>
+                <li><strong>OrdinalRank</strong>：そのシステムにおける順位（#1～#351 など）。年によってはチーム数が増えて最大ランクも変化する。</li>
+            </ul>
+            <p>注：これらのランキングを予測に利用する場合、リリース時期などによっては最新データが間に合わない場合もある点に注意。</p>
+        </section>
+
+        <section>
+            <h2>Data Section 5 - 補足情報</h2>
+            <p>コーチ情報、カンファレンス所属、チーム名の別表記、ブラケット構造、NITなどの二次トーナメント試合結果などを含む。</p>
+
+            <h3>Data Section 5 ファイル: MTeamCoaches.csv</h3>
+            <p>シーズンごとのヘッドコーチ情報。シーズン途中の交代がある場合は DayNum の範囲で管理。長期在任コーチは複数行にわたって記載されることもある。</p>
+            <ul>
+                <li><strong>Season</strong>：MSeasons.csv のシーズン。</li>
+                <li><strong>TeamID</strong>：対象チームのID。</li>
+                <li><strong>FirstDayNum, LastDayNum</strong>：そのコーチがヘッドコーチを務めた期間を表す DayNum の範囲。</li>
+                <li><strong>CoachName</strong>：ヘッドコーチ名を <code>first_last</code> のようにアンダースコアで区切った小文字表記。</li>
+            </ul>
+
+            <h3>Data Section 5 ファイル: Conferences.csv</h3>
+            <p>1985年以降に存在したディビジョンIカンファレンスの一覧。略称と正式名称のみ記載。合併や名称変更などの履歴は追跡していない。</p>
+            <ul>
+                <li><strong>ConfAbbrev</strong>：カンファレンスの略称。他のファイルで参照。</li>
+                <li><strong>Description</strong>：カンファレンスの正式名称。</li>
+            </ul>
+
+            <h3>Data Section 5 ファイル: MTeamConferences.csv と WTeamConferences.csv</h3>
+            <p>シーズンごとのチームとカンファレンスの対応表。年ごとに所属が変更されるケースも反映されている。</p>
+            <ul>
+                <li><strong>Season</strong>：対応する MSeasons.csv / WSeasons.csv のシーズン。</li>
+                <li><strong>TeamID</strong>：チームのID。</li>
+                <li><strong>ConfAbbrev</strong>：上記 Conferences.csv で定義された略称。</li>
+            </ul>
+
+            <h3>Data Section 5 ファイル: MConferenceTourneyGames.csv と WConferenceTourneyGames.csv</h3>
+            <p>各年のカンファレンストーナメント（セレクションサンデー以前に終了）の試合情報。男子は2001シーズン、女子は2002シーズンから。</p>
+            <ul>
+                <li><strong>ConfAbbrev</strong>：どのカンファレンスのトーナメントか。</li>
+                <li><strong>Season, DayNum, WTeamID, LTeamID</strong>：試合を一意に識別。他の詳細は RegularSeasonCompactResults および DetailedResults で確認。</li>
+            </ul>
+
+            <h3>Data Section 5 ファイル: MSecondaryTourneyTeams.csv と WSecondaryTourneyTeams.csv</h3>
+            <p>NCAA®トーナメント以外の男子・女子のポストシーズントーナメント（NITなど）に参加したチームの一覧。</p>
+            <ul>
+                <li><strong>Season</strong>：本ファイル上のシーズン年。</li>
+                <li><strong>SecondaryTourney</strong>：トーナメント略称（NIT や WNITなど）。</li>
+                <li><strong>TeamID</strong>：該当チームのID。</li>
+            </ul>
+
+            <h3>Data Section 5 ファイル: MSecondaryTourneyCompactResults.csv と WSecondaryTourneyCompactResults.csv</h3>
+            <p>二次ポストシーズントーナメント（NIT, CBI, CIT, V16, TBC など）の試合結果。基本的には他の Compact Results と同様だが、SecondaryTourney カラムが付加されている。DayNum=132以降の試合なので RegularSeasonCompactResults には含まれない。</p>
+            <ul>
+                <li><strong>SecondaryTourney</strong>：NIT / CBI / CIT / V16（Vegas16）/ TBC（The Basketball Classic）など。</li>
+            </ul>
+
+            <h3>Data Section 5 ファイル: MTeamSpellings.csv と WTeamSpellings.csv</h3>
+            <p>チーム名の別表記を示す。外部データのチーム名を本コンペの TeamID にひも付ける用途に使う。</p>
+            <ul>
+                <li><strong>TeamNameSpelling</strong>：すべて小文字で表記されたチーム名表記。</li>
+                <li><strong>TeamID</strong>：対応する MTeams.csv / WTeams.csv の TeamID。</li>
+            </ul>
+
+            <h3>Data Section 5 ファイル: MNCAATourneySlots と WNCAATourneySlots</h3>
+            <p>NCAA®トーナメントで、各シードがどのように対戦相手と組まれていくかを示すファイル。トーナメントの各ラウンドごとに<strong>Slot</strong>を使って表現。</p>
+            <ul>
+                <li><strong>Season</strong>：MSeasons.csv / WSeasons.csv のシーズン。</li>
+                <li><strong>Slot</strong>：トーナメントゲームを一意に示すID。プレーイン用は3文字（例：W16, Z13）、通常ラウンドは4文字（例：R1W1など）。</li>
+                <li><strong>StrongSeed</strong>：本来シードが上位のチームが入る枠。Round 1 なら W01 などのチームシード、Round2 以降は別の Slot が指定される。</li>
+                <li><strong>WeakSeed</strong>：シード下位のチームが入る枠。</li>
+            </ul>
+
+            <h3>Data Section 5 ファイル: MNCAATourneySeedRoundSlots.csv</h3>
+            <p>男子のトーナメント構造を一元的に表したファイル。プレーインシードの位置に関わらず、各シードがどのラウンドでどの Slot を使い、どの DayNum（早い/遅い）に試合をする可能性があるかを示す。女子はスケジュールが大きく異なる年が多いため対応ファイルはない。2021年の男子は特例的なスケジュールだった。</p>
+            <ul>
+                <li><strong>Seed</strong>：チームのトーナメントシード。</li>
+                <li><strong>GameRound</strong>：0（プレーイン）～6までのラウンド番号。0=プレーイン、1/2=1週目、3/4=2週目、5/6=準決勝/決勝。</li>
+                <li><strong>GameSlot</strong>：そのラウンドでの試合 Slot。</li>
+                <li><strong>EarlyDayNum, LateDayNum</strong>：そのラウンドが行われうる最も早い日、最も遅い日の DayNum。ラウンドによって2日間設定されることがある。</li>
+            </ul>
         </section>
     </main>
 </body>
