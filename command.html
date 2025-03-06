@@ -60,6 +60,38 @@ git commit -m "～を変更したよ"
 git push origin fix/graph.py
           </code></pre>
           <p>Azure DevOps上でPR (Pull Request) を作成し、マージする。</p>
+          <p><b>変更を破棄してブランチをリセットしたい場合</b></p>
+          <p>1. コミットされていないすべての変更を破棄</p>
+          <pre><code>
+git reset --hard
+          </code></pre>
+          <p>2. Git に追跡されていないファイルやフォルダを削除</p>
+          <pre><code>
+git clean -df
+          </code></pre>
+          <p>3. メインブランチに切り替え</p>
+          <pre><code>
+git checkout main
+          </code></pre>
+          <p>4. 不要なブランチを削除</p>
+          <pre><code>
+git branch -D &lt;現在のブランチ名&gt;
+          </code></pre>
+          <p><b>よく出るエラー【その１】: <code>index.lock</code>が存在しているため、Git の操作ができなくなる。</b></p>
+          <p>具体的には、以下が表示され、<code>git</code>コマンドを打てなくなる。</p>
+          <pre><code>
+fatal: Unable to create '/home/hirayama/assignmentTask/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+          </code></pre>
+          <p>この場合、以下のコマンドを実行してロックファイルを削除すれば、解決する。</p>
+          <pre><code>
+rm -f /home/hirayama/assignmentTask/.git/index.lock
+          </code></pre>
           <h3>不要なプロセスの削除</h3>
           <p>メモリ使用量の多い上位20個のプロセスを表示。</p>
           <pre><code>
