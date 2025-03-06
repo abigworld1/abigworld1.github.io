@@ -46,20 +46,32 @@ ln -s /usr/bin/python3 /usr/bin/python
 pip install numpy matplotlib torch pandas schedulefree
           </code></pre>
           <h3>Git</h3>
-          <p>まずはcheckout（例として、fix/graph.pyブランチを作る）。</p>
+          <p><b>基本的な流れ</b></p>
+          <p>1. まずはcheckout（例として、fix/graph.pyブランチを作る）。</p>
           <pre><code>
 git checkout -b fix/graph.py
           </code></pre>
-          <p>変更を加えたら、<code>git add</code>でステージングし、<code>commit</code>で履歴を残す。</p>
+          <p>2. 変更を加えたら、<code>git add</code>でステージングし、<code>commit</code>で履歴を残す。</p>
           <pre><code>
 git add .
 git commit -m "～を変更したよ"
           </code></pre>
-          <p>リモートにプッシュ。</p>
+          <p>3. リモートにプッシュ。</p>
           <pre><code>
 git push origin fix/graph.py
           </code></pre>
-          <p>Azure DevOps上でPR (Pull Request) を作成し、マージする。</p>
+          <p>4. Azure DevOps上でPR (Pull Request) を作成し、マージする。</p>
+          <p></p>
+          <p><b>リモートの最新の状態に更新したい場合（<code>main</code>しかない想定）</b></p>
+          <p>1. リモートの最新情報を取得。</p>
+          <pre><code>
+git fetch origin
+          </code></pre>
+          <p>2. 最新の<code>main</code>を取得。</p>
+          <pre><code>
+git pull origin main
+          </code></pre>
+          <p></p>
           <p><b>変更を破棄してブランチをリセットしたい場合</b></p>
           <p>1. コミットされていないすべての変更を破棄</p>
           <pre><code>
