@@ -199,9 +199,7 @@
             \[
             \begin{align}
             q_{\pi}(s, a) 
-            &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\
-            
-            pi(a'|s')q_{\pi}(s', a')\}
+            &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi(a'|s')q_{\pi}(s', a')\}
             \end{align}
             \]
             </div>
@@ -210,7 +208,7 @@
             \[
             \begin{align}
             q_{*}(s, a) 
-            &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'}\pi_{*}(a'|s')q_{*}(s', a')\}
+            &= \sum_{s'}p(s'|s, a)\{r(s, a, s')+\gamma\sum_{a'} \pi_{*}(a'|s')q_{*}(s', a')\}
             \end{align}
             \]
             </div>
