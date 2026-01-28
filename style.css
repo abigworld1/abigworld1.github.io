@@ -449,10 +449,10 @@ iframe {
     overflow: hidden;
     max-width: 80%;
     margin: 1rem auto;
-    background: var(--card-bg);
-    border: 1px solid var(--accent);
+    background: transparent;
+    border: none;
     border-radius: 10px;
-    box-shadow: var(--shadow);
+    box-shadow: none;
 }
 
 .video-container iframe {
@@ -537,14 +537,14 @@ pre {
     }
 
     nav ul {
-        gap: 0.5rem;
-        flex-wrap: wrap;
+        gap: 0.25rem;
+        flex-wrap: nowrap;
         justify-content: center;
     }
 
     nav ul li a {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.8rem;
     }
 
     .hero {
