@@ -56,6 +56,11 @@ a:hover {
     color: var(--primary-dark);
 }
 
+main a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
 /* ===== Header ===== */
 header {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
