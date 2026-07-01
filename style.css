@@ -132,6 +132,15 @@ nav ul li a.active {
     color: var(--white);
 }
 
+.language-switch a {
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
+}
+
+.language-switch a:hover {
+    border-color: var(--white);
+}
+
 /* ===== Hero Section ===== */
 .hero {
     background: linear-gradient(135deg, var(--card-bg) 0%, #f0ebe0 100%);
@@ -556,7 +565,7 @@ pre {
 
     nav ul {
         gap: 0.25rem;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         justify-content: center;
     }
 
