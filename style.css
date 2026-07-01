@@ -79,7 +79,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0;
+    padding: 0 5.5rem 0 0;
     text-align: left;
 }
 
@@ -132,9 +132,21 @@ nav ul li a.active {
     color: var(--white);
 }
 
+.language-switch {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+}
+
 .language-switch a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.25rem 0.75rem;
+    background-color: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.45);
     border-radius: 999px;
+    font-size: 0.85rem;
 }
 
 .language-switch a:hover {
@@ -553,10 +565,20 @@ pre {
 
 /* ===== Responsive Design ===== */
 @media (max-width: 768px) {
+    header {
+        padding: 2.75rem 1rem 1rem;
+    }
+
     .header-container {
         flex-direction: column;
         gap: 1rem;
-        padding: 1rem;
+        padding: 0;
+        text-align: center;
+    }
+
+    .language-switch {
+        top: 0.5rem;
+        right: 0.5rem;
     }
 
     header h1 {
